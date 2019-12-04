@@ -24,5 +24,5 @@
     <mvc:default-servlet-handler/>
 
     <!-- 静态资源映射位置 -->
-    <mvc:resources mapping="/jsp/**" location="/WEB-INF/static/"/>
+    <mvc:resources mapping="/**" location="/WEB-INF/static/"/>
 </beans>
