@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
     <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
     <script>
-
     </script>
 </head>
 <body>
