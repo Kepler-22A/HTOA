@@ -1,9 +1,7 @@
 package com.kepler.vo;
 
-
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "emp")
@@ -14,7 +12,7 @@ public class EmpVo {
     private String empName ;
     private int  depId ;
     private char sex ;
-    private DateTime Birthday ;//出生日期
+    private Date Birthday ;//出生日期
     private String Cardno ; //身份证号
     private String nation ;//籍贯
     private String Phone ;//手机号码
@@ -31,8 +29,8 @@ public class EmpVo {
     private String accountName ;//账户名称
     private String bankNumber ;//银行账号
     private String alipay ;//支付宝账号(唯一）
-    private DateTime hireDay ;//入职日期
-    private DateTime fireDay ;//离职日期
+    private Date hireDay ;//入职日期
+    private Date fireDay ;//离职日期
     private String password ;//登录密码
     private int status ;//状态
     private int postId ;//职务id
@@ -104,11 +102,11 @@ public class EmpVo {
         this.sex = sex;
     }
 
-    public DateTime getBirthday() {
+    public Date getBirthday() {
         return Birthday;
     }
 
-    public void setBirthday(DateTime birthday) {
+    public void setBirthday(Date birthday) {
         Birthday = birthday;
     }
 
@@ -116,19 +114,19 @@ public class EmpVo {
         return Cardno;
     }
 
-    public DateTime getHireDay() {
+    public Date getHireDay() {
         return hireDay;
     }
 
-    public void setHireDay(DateTime hireDay) {
+    public void setHireDay(Date hireDay) {
         this.hireDay = hireDay;
     }
 
-    public DateTime getFireDay() {
+    public Date getFireDay() {
         return fireDay;
     }
 
-    public void setFireDay(DateTime fireDay) {
+    public void setFireDay(Date fireDay) {
         this.fireDay = fireDay;
     }
 

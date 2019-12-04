@@ -1,8 +1,5 @@
 package com.kepler.dao;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -43,6 +40,7 @@ public class BaseDao {
 
     public List hqlQuery(String hql){//使用hql的形式执行查询，自定义hql语句
         Session session = getSession();
+
         List list = (session.createQuery(hql)).list();
         session.flush();
         session.close();

@@ -1,8 +1,7 @@
 package com.kepler.vo;
 
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name ="weekly" )
@@ -12,7 +11,7 @@ public class WeeklyVo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  int worklogid;
     private  String empId;
-    private DateTime Workday;//填写日期
+    private Date Workday;//填写日期
     private String weekCur;//本周情况描述
     private String studentQuestion;//问题学生情况反馈
     private String Idea;//意见
@@ -48,11 +47,11 @@ public class WeeklyVo {
         this.empId = empId;
     }
 
-    public DateTime getWorkday() {
+    public Date getWorkday() {
         return Workday;
     }
 
-    public void setWorkday(DateTime workday) {
+    public void setWorkday(Date workday) {
         Workday = workday;
     }
 

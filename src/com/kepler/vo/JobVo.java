@@ -1,8 +1,7 @@
 package com.kepler.vo;
 
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "job")
@@ -13,8 +12,8 @@ public class JobVo {
     private String EmpId;
     private String companyName;//公司名称
     private String degree;//岗位
-    private DateTime startDate;//入职时间
-    private DateTime endDate;//离职时间
+    private Date startDate;//入职时间
+    private Date endDate;//离职时间
     private String reason;//离职原因
     private String Remark;//说明
 
@@ -66,19 +65,19 @@ public class JobVo {
     }
 
 
-    public DateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
