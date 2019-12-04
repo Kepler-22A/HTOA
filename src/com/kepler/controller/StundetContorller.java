@@ -2,6 +2,7 @@ package com.kepler.controller;
 
 import com.kepler.service.EmpService;
 import com.kepler.service.StudentService;
+import com.kepler.vo.StudentFloorVo;
 import com.kepler.vo.StudentHuorVo;
 import org.activiti.engine.*;
 import org.springframework.stereotype.Controller;
@@ -35,8 +36,16 @@ public class StundetContorller {
     @RequestMapping("/studenthuor")
     public String studenthuor(Model model){
         List<StudentHuorVo>  list = sts.listhour();
-        System.out.println(list.get(0).getHuorName());
+//        System.out.println(list.get(0).getHuorName());
         model.addAttribute("huorlist",list);
         return "studentHour";
+    }
+
+    @RequestMapping("/studentFloor")
+    public String studentFloor(Model model){
+        List<StudentFloorVo>  list = sts.listfloor();
+        System.out.println(list.size());
+        model.addAttribute("floorlist",list);
+        return "studentFloor";
     }
 }
