@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class StudentHuorVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Hourid;//宿舍主键id
+    private int hourid;//宿舍主键id
     private String huorName;//宿舍房号(508)
     private String addr;//宿舍地址
     private int count;//宿舍人数
@@ -18,7 +18,7 @@ public class StudentHuorVo {
     @Override
     public String toString() {
         return "StudentHuorVo{" +
-                "Hourid=" + Hourid +
+                "Hourid=" + hourid +
                 ", huorName='" + huorName + '\'' +
                 ", addr='" + addr + '\'' +
                 ", count=" + count +
@@ -29,11 +29,11 @@ public class StudentHuorVo {
     }
 
     public int getHourid() {
-        return Hourid;
+        return hourid;
     }
 
     public void setHourid(int hourid) {
-        Hourid = hourid;
+        hourid = hourid;
     }
 
     public String getHuorName() {
