@@ -1,5 +1,6 @@
 package com.kepler.controller;
 
+import com.kepler.service.TestService;
 import com.kepler.service.impl.TestServiceImpl;
 import com.kepler.vo.empVo;
 import org.activiti.engine.*;
@@ -23,7 +24,7 @@ public class TestController {
     private RepositoryService repositoryService;
 
     @Resource
-    private TestServiceImpl service;
+    private TestService service;
 
     @RequestMapping("/Test")
     public String toBase(){

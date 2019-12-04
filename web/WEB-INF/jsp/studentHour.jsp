@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>宿舍管理</title>
@@ -43,13 +44,14 @@
         </tr>
         </thead>
         <tbody>
+        <c:forEach items="${huorlist}" var="list">
         <tr align="center">
-            <td>1</td>
-            <td>0</td>
-            <td>406</td>
-            <td>5</td>
-            <td>8</td>
-            <td>5栋</td>
+            <td>${list.hourid}</td>
+            <td>${list.huoeIddsc}</td>
+            <td>${list.huorName}</td>
+            <td>${list.floorId}</td>
+            <td>${list.count}</td>
+            <td>${list.addr}</td>
             <td align="left"> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-delete"></i> 删除</button>
                 &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-edit"></i>编辑</button>
                 &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-search"></i>查看宿舍学员</button>
@@ -57,6 +59,7 @@
             </td>
 
         </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>
