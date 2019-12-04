@@ -1,15 +1,15 @@
 package com.kepler.vo;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "StaffTable")
-public class StaffTableVo {
+@Table(name = "empVo")
+public class empVo {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  String staffId ;
-    private String staffName;
+    private int empId ;
+    private String empName;
     private int  depId ;
     private char sex ;
     private Date Birthday ;//出生日期
@@ -36,21 +36,20 @@ public class StaffTableVo {
     private int postId ;//职务id
     private String postName ;//职务名称
 
-
-    public String getStaffId() {
-        return staffId;
+    public int getEmpId() {
+        return empId;
     }
 
-    public void setStaffId(String staffId) {
-        this.staffId = staffId;
+    public void setEmpId(int empId) {
+        this.empId = empId;
     }
 
-    public String getStaffName() {
-        return staffName;
+    public String getEmpName() {
+        return empName;
     }
 
-    public void setStaffName(String staffName) {
-        this.staffName = staffName;
+    public void setEmpName(String empName) {
+        this.empName = empName;
     }
 
     public int getDepId() {
@@ -255,9 +254,9 @@ public class StaffTableVo {
 
     @Override
     public String toString() {
-        return "EmpVo{" +
-                "staffId='" + staffId + '\'' +
-                ", staffName='" + staffName + '\'' +
+        return "empVo{" +
+                "empId=" + empId +
+                ", empName='" + empName + '\'' +
                 ", depId=" + depId +
                 ", sex=" + sex +
                 ", Birthday=" + Birthday +
