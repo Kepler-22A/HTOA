@@ -50,8 +50,9 @@
             <td>5</td>
             <td>8</td>
             <td>5栋</td>
-            <td> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon"></i> 删除</button>
-                &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon"></i>编辑</button>
+            <td align="left"> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-delete"></i> 删除</button>
+                &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+                &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-search"></i>查看宿舍学员</button>
 
             </td>
 
