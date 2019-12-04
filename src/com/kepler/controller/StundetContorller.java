@@ -9,4 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("student")
 public class StundetContorller {
+
+    @RequestMapping("/test2")
+    public String test2(){
+        return "studentHour";
+    }
 }

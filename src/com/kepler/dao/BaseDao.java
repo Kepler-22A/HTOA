@@ -2,8 +2,10 @@ package com.kepler.dao;
 import org.hibernate.*;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.List;
 
+@Transactional
 public class BaseDao {
     @Resource
     SessionFactory sessionFactory;

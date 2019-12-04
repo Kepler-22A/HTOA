@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by ASUS on 2019/12/4.
  */
 @Controller
-@RequestMapping("system")
-public class SystemSetController {
+@RequestMapping("class")
+public class ClassController {
 }
