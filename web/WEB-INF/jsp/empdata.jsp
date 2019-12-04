@@ -19,7 +19,7 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>员工资料</legend>
+    <legend>员工资料表</legend>
 </fieldset>
 
 <div class="layui-form">
