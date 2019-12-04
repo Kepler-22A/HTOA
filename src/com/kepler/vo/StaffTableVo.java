@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "staff")
-public class staffVo {
+@Table(name = "StaffTable")
+public class StaffTableVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  String staffId ;
