@@ -2,7 +2,7 @@ package com.kepler.vo;
 
 import javax.persistence.*;
 
-@Table(name = "Print")
+@Table(name = "PrintTable")
 @Entity
 public class PrintVo {//打印数据表，有框打印，无框打印
     @Id

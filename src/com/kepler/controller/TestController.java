@@ -1,8 +1,6 @@
 package com.kepler.controller;
 
 import com.kepler.service.impl.TestServiceImpl;
-import com.kepler.vo.JobVo;
-import com.kepler.vo.TestVo;
 import org.activiti.engine.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +26,6 @@ public class TestController {
 
     @RequestMapping("/Test")
     public String toBase(){
-        JobVo test = new JobVo();
-        test.setRemark("sss");
-        service.save(test);
 
         return "Login";
     }

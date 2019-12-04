@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "empVo")
-public class EmpVo {
+@Table(name = "staff")
+public class staffVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  String empId ;
-    private String empName ;
+    private  String staffId ;
+    private String staffName;
     private int  depId ;
     private char sex ;
     private Date Birthday ;//出生日期
@@ -37,53 +37,20 @@ public class EmpVo {
     private String postName ;//职务名称
 
 
-    @Override
-    public String toString() {
-        return "EmpVo{" +
-                "empId='" + empId + '\'' +
-                ", empName='" + empName + '\'' +
-                ", depId=" + depId +
-                ", sex=" + sex +
-                ", Birthday=" + Birthday +
-                ", Cardno='" + Cardno + '\'' +
-                ", nation='" + nation + '\'' +
-                ", Phone='" + Phone + '\'' +
-                ", QQcode='" + QQcode + '\'' +
-                ", Weixin='" + Weixin + '\'' +
-                ", Email='" + Email + '\'' +
-                ", married='" + married + '\'' +
-                ", University='" + University + '\'' +
-                ", Major='" + Major + '\'' +
-                ", Education='" + Education + '\'' +
-                ", Address='" + Address + '\'' +
-                ", remark='" + remark + '\'' +
-                ", Bank='" + Bank + '\'' +
-                ", accountName='" + accountName + '\'' +
-                ", bankNumber='" + bankNumber + '\'' +
-                ", alipay='" + alipay + '\'' +
-                ", hireDay=" + hireDay +
-                ", fireDay=" + fireDay +
-                ", password='" + password + '\'' +
-                ", status=" + status +
-                ", postId=" + postId +
-                ", postName='" + postName + '\'' +
-                '}';
+    public String getStaffId() {
+        return staffId;
     }
 
-    public String getEmpId() {
-        return empId;
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
     }
 
-    public void setEmpId(String empId) {
-        this.empId = empId;
+    public String getStaffName() {
+        return staffName;
     }
 
-    public String getEmpName() {
-        return empName;
-    }
-
-    public void setEmpName(String empName) {
-        this.empName = empName;
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 
     public int getDepId() {
@@ -112,38 +79,6 @@ public class EmpVo {
 
     public String getCardno() {
         return Cardno;
-    }
-
-    public Date getHireDay() {
-        return hireDay;
-    }
-
-    public void setHireDay(Date hireDay) {
-        this.hireDay = hireDay;
-    }
-
-    public Date getFireDay() {
-        return fireDay;
-    }
-
-    public void setFireDay(Date fireDay) {
-        this.fireDay = fireDay;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
     }
 
     public void setCardno(String cardno) {
@@ -270,7 +205,21 @@ public class EmpVo {
         this.alipay = alipay;
     }
 
+    public Date getHireDay() {
+        return hireDay;
+    }
 
+    public void setHireDay(Date hireDay) {
+        this.hireDay = hireDay;
+    }
+
+    public Date getFireDay() {
+        return fireDay;
+    }
+
+    public void setFireDay(Date fireDay) {
+        this.fireDay = fireDay;
+    }
 
     public String getPassword() {
         return password;
@@ -280,6 +229,21 @@ public class EmpVo {
         this.password = password;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
 
     public String getPostName() {
         return postName;
@@ -287,5 +251,38 @@ public class EmpVo {
 
     public void setPostName(String postName) {
         this.postName = postName;
+    }
+
+    @Override
+    public String toString() {
+        return "EmpVo{" +
+                "staffId='" + staffId + '\'' +
+                ", staffName='" + staffName + '\'' +
+                ", depId=" + depId +
+                ", sex=" + sex +
+                ", Birthday=" + Birthday +
+                ", Cardno='" + Cardno + '\'' +
+                ", nation='" + nation + '\'' +
+                ", Phone='" + Phone + '\'' +
+                ", QQcode='" + QQcode + '\'' +
+                ", Weixin='" + Weixin + '\'' +
+                ", Email='" + Email + '\'' +
+                ", married='" + married + '\'' +
+                ", University='" + University + '\'' +
+                ", Major='" + Major + '\'' +
+                ", Education='" + Education + '\'' +
+                ", Address='" + Address + '\'' +
+                ", remark='" + remark + '\'' +
+                ", Bank='" + Bank + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", bankNumber='" + bankNumber + '\'' +
+                ", alipay='" + alipay + '\'' +
+                ", hireDay=" + hireDay +
+                ", fireDay=" + fireDay +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", postId=" + postId +
+                ", postName='" + postName + '\'' +
+                '}';
     }
 }
