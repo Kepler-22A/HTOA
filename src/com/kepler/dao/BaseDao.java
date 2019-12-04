@@ -79,4 +79,21 @@ public class BaseDao {
 
         session.close();
     }
+    /**
+     * 查int
+     */
+    public int executeIntSQL(String sql) {
+        Session session =  getSession();
+        Query sqlquery =session.createSQLQuery(sql);
+
+        String result = sqlquery.list()+"";
+        System.out.printf(result);
+
+        result = result.substring(1,result.length()-1);
+        int i = Integer.parseInt(result+"");
+
+        session.flush();
+        session.close();
+        return i;
+    }
 }

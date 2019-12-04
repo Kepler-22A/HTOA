@@ -1,6 +1,7 @@
 package com.kepler.controller;
 
 import com.kepler.service.impl.TestServiceImpl;
+import com.kepler.vo.empVo;
 import org.activiti.engine.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,18 @@ public class TestController {
 
     @RequestMapping("/Test")
     public String toBase(){
+        return "Login";
+    }
+    @RequestMapping("/login")
+    public String toBase(empVo empVo){
+        int i = service.selectLogin(empVo.getEmpName(),empVo.getPassword());
+        System.out.println(i);
 
+        if(i==1){
+            System.out.print("登录成功！！");
+            return "cheshi";
+        }
+        System.out.print("登录失败！！！");
         return "Login";
     }
 }

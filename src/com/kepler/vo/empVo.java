@@ -8,10 +8,11 @@ import java.util.Date;
 @Table(name = "empVo")
 public class empVo {
     @Id
-    private int empId ;
-    private String empName;
-    private int  depId ;
-    private char sex ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int empId ;//员工id
+    private String empName;//员工名字
+    private int  depId ;//部门设置id
+    private String sex ;//性别
     private Date Birthday ;//出生日期
     private String Cardno ; //身份证号
     private String nation ;//籍贯
@@ -60,11 +61,11 @@ public class empVo {
         this.depId = depId;
     }
 
-    public char getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(char sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
