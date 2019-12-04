@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Student")//学生基本信息表
-public class Student {
+public class StudentVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Studid;//学生主键
@@ -56,7 +56,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "StudentVo{" +
                 "Studid=" + Studid +
                 ", password='" + password + '\'' +
                 ", stuname='" + stuname + '\'' +

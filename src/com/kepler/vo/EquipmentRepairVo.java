@@ -32,7 +32,7 @@ public class EquipmentRepairVo {
                 ", equipmentType='" + equipmentType + '\'' +
                 ", status=" + status +
                 ", Classes=" + Classes +
-                ", Student='" + Student + '\'' +
+                ", StudentVo='" + Student + '\'' +
                 ", remark='" + remark + '\'' +
                 ", depId=" + depId +
                 ", userType=" + userType +

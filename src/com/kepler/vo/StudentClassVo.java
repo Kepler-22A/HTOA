@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "StudentClass")//班级详情表
-public class StudentClass {
+public class StudentClassVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int classid;//主键
@@ -21,7 +21,7 @@ public class StudentClass {
 
     @Override
     public String toString() {
-        return "StudentClass{" +
+        return "StudentClassVo{" +
                 "classid=" + classid +
                 ", classno='" + classno + '\'' +
                 ", className='" + className + '\'' +

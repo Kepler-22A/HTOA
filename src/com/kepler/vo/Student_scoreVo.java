@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Student_score")//学生成绩表
-public class Student_score {
+public class Student_scoreVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int scoreId;//成绩主键id
@@ -21,7 +21,7 @@ public class Student_score {
 
     @Override
     public String toString() {
-        return "Student_score{" +
+        return "Student_scoreVo{" +
                 "scoreId=" + scoreId +
                 ", stuid=" + stuid +
                 ", score=" + score +

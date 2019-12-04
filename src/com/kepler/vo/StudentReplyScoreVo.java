@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "StudentReplyScore")//学生答辩总成绩表
-public class StudentReplyScore {
+public class StudentReplyScoreVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int replyId;//成绩主键id
@@ -22,7 +22,7 @@ public class StudentReplyScore {
 
     @Override
     public String toString() {
-        return "StudentReplyScore{" +
+        return "StudentReplyScoreVo{" +
                 "replyId=" + replyId +
                 ", StudentId=" + StudentId +
                 ", projectId=" + projectId +
