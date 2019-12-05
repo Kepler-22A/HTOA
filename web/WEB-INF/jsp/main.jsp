@@ -77,7 +77,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">教务管理</a>
+                    <a href="javascript:;">教务管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">学生资料</a></dd>
                         <dd><a href="javascript:;">考试成绩</a></dd>
@@ -91,7 +91,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">后勤管理</a>
+                    <a href="javascript:;">后勤管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">宿舍管理</a></dd>
                         <dd><a href="javascript:;">楼栋管理</a></dd>
@@ -99,7 +99,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">考核管理</a>
+                    <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">考核指标</a></dd>
                         <dd><a href="javascript:;">员工考核</a></dd>
@@ -107,19 +107,19 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">财务管理</a>
+                    <a href="javascript:;">财务管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">学费管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">问题反馈</a>
+                    <a href="javascript:;">问题反馈</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">问题反馈</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">招生就业</a>
+                    <a href="javascript:;">招生就业</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">招生信息</a></dd>
                         <dd><a href="javascript:;">合作伙伴</a></dd>
@@ -127,32 +127,32 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">继续教育</a>
+                    <a href="javascript:;">继续教育</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">继续教育</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">文件管理</a>
+                    <a href="javascript:;">文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">资料文档</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">系统报表</a>
+                    <a href="javascript:;">系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">系统报表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">安全管理</a>
+                    <a href="javascript:;">安全管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">权限管理</a></dd>
                         <dd><a href="javascript:;">系统日志</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">系统设置</a>
+                    <a href="javascript:;">系统设置</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">系统设置</a></dd>
                     </dl>
