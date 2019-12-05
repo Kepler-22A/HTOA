@@ -50,6 +50,12 @@ public class BaseDao {
         return list;
     }
 
+    //根据ID获取对象
+    public Object getObject(Class cla,Integer id){
+        return getSession().get(cla,id);
+    }
+
+
     public List findAll(String ClassName){//使用hql的形式执行查询，仅支持单表
         Session session = getSession();
         List list = (session.createQuery("from " + ClassName)).list();
