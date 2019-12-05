@@ -31,15 +31,19 @@ public class TestController {
         return "Login";
     }
     @RequestMapping("/login")
-    public String toBase(empVo empVo){
+    public String login(empVo empVo){
         int i = service.selectLogin(empVo.getEmpName(),empVo.getPassword());
         System.out.println(i);
 
         if(i==1){
             System.out.print("登录成功！！");
-            return "cheshi";
+            return "main";
         }
         System.out.print("登录失败！！！");
         return "Login";
+    }
+    @RequestMapping("/cheshi")
+    public String cheshi(){
+        return "cheshi";
     }
 }
