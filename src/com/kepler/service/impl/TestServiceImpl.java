@@ -11,6 +11,6 @@ import org.springframework.stereotype.Service;
 public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int selectLogin(String name, String pwd) {
-        return selectLogin(name,pwd);
+        return executeIntSQL("select  count(*) from empVo where empName='"+name+"' and password='"+pwd+"'");
     }
 }
