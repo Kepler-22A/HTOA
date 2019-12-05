@@ -8,6 +8,7 @@ import org.activiti.engine.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -45,8 +46,13 @@ public class StundetContorller {
 
     //添加宿舍信息
     @RequestMapping("/addhour")
+    @ResponseBody
     public String addhour(StudentHuorVo studentHuorVo){
-        sts.addhour(studentHuorVo);
+        if (studentHuorVo.getHourid()!=0){
+            sts.updatehour(studentHuorVo);
+        }else {
+            sts.addhour(studentHuorVo);
+        }
         return "redirect:studenthuor";
     }
 

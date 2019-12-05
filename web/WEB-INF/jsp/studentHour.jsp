@@ -32,6 +32,18 @@
             });
 
         }
+        //修改
+        function  update() {
+
+            layer.open({
+                type: 1,
+                title:"修改",
+                area:['400px','350px'],
+                content: $("#test"),
+                yes:function(index,layero){
+                }
+            });
+        }
 
 
         function guanbi() {
@@ -74,10 +86,9 @@
             <td>${list.count}</td>
             <td>${list.addr}</td>
             <td align="left"> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-delete"></i> 删除</button>
-                &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+                &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update()"><i class="layui-icon layui-icon-edit"></i>编辑</button>
                 &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-search"></i>查看宿舍学员</button>
             </td>
-
         </tr>
         </c:forEach>
         </tbody>
