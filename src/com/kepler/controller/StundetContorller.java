@@ -33,6 +33,7 @@ public class StundetContorller {
     @Resource
     private StudentService sts;
 
+    //宿舍管理
     @RequestMapping("/studenthuor")
     public String studenthuor(Model model){
         List<StudentHuorVo>  list = sts.listhour();
@@ -41,6 +42,7 @@ public class StundetContorller {
         return "studentHour";
     }
 
+    //楼栋管理
     @RequestMapping("/studentFloor")
     public String studentFloor(Model model){
         List<StudentFloorVo>  list = sts.listfloor();
