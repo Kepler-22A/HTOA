@@ -62,6 +62,12 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
+                    <a href="javascript:;">通知公告</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">公告发布</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
                     <a href="javascript:;">员工管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">员工资料</a></dd>
@@ -69,8 +75,87 @@
                         <dd><a href="javascript:;">谈心记录</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">教务管理</a></li>
-                <li class="layui-nav-item"><a href="">后勤管理</a></li>
+                <li class="layui-nav-item">
+                    <a href="">教务管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">学生资料</a></dd>
+                        <dd><a href="javascript:;">考试成绩</a></dd>
+                        <dd><a href="javascript:;">答辩成绩</a></dd>
+                        <dd><a href="javascript:;">班级管理</a></dd>
+                        <dd><a href="javascript:;">班级分配</a></dd>
+                        <dd><a href="javascript:;">课程类别</a></dd>
+                        <dd><a href="javascript:;">课程管理</a></dd>
+                        <dd><a href="javascript:;">试讲培训</a></dd>
+                        <dd><a href="javascript:;">值班管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">后勤管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">宿舍管理</a></dd>
+                        <dd><a href="javascript:;">楼栋管理</a></dd>
+                        <dd><a href="javascript:;">维修管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">考核管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">考核指标</a></dd>
+                        <dd><a href="javascript:;">员工考核</a></dd>
+                        <dd><a href="javascript:;">教师考评</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">财务管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">学费管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">问题反馈</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">问题反馈</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">招生就业</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">招生信息</a></dd>
+                        <dd><a href="javascript:;">合作伙伴</a></dd>
+                        <dd><a href="javascript:;">招生追踪</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">继续教育</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">继续教育</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">文件管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">资料文档</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">系统报表</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">系统报表</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">安全管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">权限管理</a></dd>
+                        <dd><a href="javascript:;">系统日志</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="">系统设置</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">系统设置</a></dd>
+                    </dl>
+                </li>
 
 
             </ul>
@@ -79,8 +164,8 @@
     <div class="layui-body">
         <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
             <ul class="layui-tab-title">
-                <li class="layui-this" lay-id="11">网站设置<>
-                <li lay-id="22">用户管理<>
+                <li class="layui-this" lay-id="11">网站设置
+                <li lay-id="22">用户管理
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">内容1</div>
