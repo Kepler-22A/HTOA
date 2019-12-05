@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -42,6 +43,13 @@ public class StundetContorller {
         return "studentHour";
     }
 
+    //添加宿舍信息
+    @RequestMapping("/addhour")
+    public String addhour(StudentHuorVo studentHuorVo){
+        sts.addhour(studentHuorVo);
+        return "redirect:studenthuor";
+    }
+
     //楼栋管理
     @RequestMapping("/studentFloor")
     public String studentFloor(Model model){
@@ -50,4 +58,6 @@ public class StundetContorller {
         model.addAttribute("floorlist",list);
         return "studentFloor";
     }
+
+
 }

@@ -91,9 +91,9 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">后勤管理</a>
+                    <a class="" href="javascript:;">后勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">宿舍管理</a></dd>
+                        <dd><a data-url="/student/studenthuor" data-id="41" data-title="宿舍管理"  class="site-demo-active" data-type="tabAdd">宿舍管理</a></dd>
                         <dd><a href="javascript:;">楼栋管理</a></dd>
                         <dd><a href="javascript:;">维修管理</a></dd>
                     </dl>
