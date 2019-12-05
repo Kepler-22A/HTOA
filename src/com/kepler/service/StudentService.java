@@ -2,8 +2,11 @@ package com.kepler.service;
 
 import com.kepler.vo.StudentFloorVo;
 import com.kepler.vo.StudentHuorVo;
+import com.kepler.vo.StudentVo;
 
 import java.util.List;
+import java.util.Map;
+
 /**
  * Created by ASUS on 2019/12/4.
  */
@@ -21,4 +24,6 @@ public interface StudentService {
     public List listbyId(int id);
     //楼栋管理
     public  List<StudentFloorVo> listfloor();
+    //查询学生资料
+    public List<StudentVo> liststudentdata();
 }

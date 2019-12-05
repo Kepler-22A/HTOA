@@ -9,7 +9,6 @@
 <html>
 <head>
     <title>layout 后台大布局 - Layui</title>
-    <%--<link rel="stylesheet" href="../src/css/layui.css">--%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
 
 </head>
@@ -77,9 +76,9 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">教务管理</a>
+                    <a href="javascript:;">教务管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">学生资料</a></dd>
+                        <dd><a data-url="/student/studentdata" data-id="21" data-title="学生资料"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生资料</a></dd>
                         <dd><a href="javascript:;">考试成绩</a></dd>
                         <dd><a href="javascript:;">答辩成绩</a></dd>
                         <dd><a href="javascript:;">班级管理</a></dd>
