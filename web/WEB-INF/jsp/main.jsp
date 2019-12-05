@@ -53,7 +53,8 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">个人主页</a>
                     <dl class="layui-nav-child">
-                        <dd><a data-url="a" data-id="11" data-title="选项a" href="#" class="site-demo-active" data-type="tabAdd">测试</a></dd>
+                        <dd><a data-url="/Controller/cheshi" data-id="11" data-title="选项1"  class="site-demo-active" data-type="tabAdd">测试</a></dd>
+                        <dd><a data-url="/Controller/cheshi" data-id="22" data-title="选项2"  class="site-demo-active" data-type="tabAdd">测试2</a></dd>
                         <dd><a href="javascript:;">我的邮件</a></dd>
                         <dd><a href="javascript:;">个人请假</a></dd>
                         <dd><a href="javascript:;">我的周报</a></dd>
@@ -164,12 +165,10 @@
     <div class="layui-body">
         <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
             <ul class="layui-tab-title">
-                <li class="layui-this" lay-id="11">网站设置
-                <li lay-id="22">用户管理
+                <li class="layui-this">首页</li>
             </ul>
             <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">内容1</div>
-                <div class="layui-tab-item">内容2</div>
+                <div class="layui-tab-item layui-show">欢迎进入宏图办公！！</div>
             </div>
         </div>
     </div>
