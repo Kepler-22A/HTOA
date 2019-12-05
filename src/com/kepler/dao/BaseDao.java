@@ -31,6 +31,8 @@ public class BaseDao {
 
         Query query = session.createSQLQuery(sql);
 
+        query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);//让返回回来的数据以map键值对的形式呈现
+
         List list = query.list();
 
         session.flush();

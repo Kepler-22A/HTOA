@@ -23,47 +23,50 @@
 </fieldset>
 
 <div class="layui-form">
-    <table class="layui-table" align="center">
-        <colgroup>
-            <col width="150">
-            <col width="150">
-            <col width="200">
-            <col>
-        </colgroup>
-        <thead>
-        <tr>
+    <table id="demo" lay-filter="test"></table>
+    <script>
+        layui.use('table', function(){
+            var table = layui.table;
 
-            <th>员工编号</th>
-            <th>员工姓名</th>
-            <th>部门</th>
-            <th>职务</th>
-            <th>性别</th>
-            <th>手机号码</th>
-            <th>家庭住址</th>
-            <th>状态</th>
-            <th>设置状态</th>
-            <th>初始密码</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr align="center">
-            <td>1</td>
-            <td>某某</td>
-            <td>开发</td>
-            <td>学生</td>
-            <td>男</td>
-            <td>123456768</td>
-            <td>赣州</td>
-            <td>启用</td>
-            <td><a href="#">禁用</a></td>
-            <td><a href="#">重置密码</a></td>
-            <td> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon"></i> 删除</button>
-                &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon"></i>编辑</button></td>
+            //第一个实例
+            table.render({
+                elem: '#demo'
+                ,height: 450
+                ,url: '/emp/empDataList' //数据接口
+                ,page: true //开启分页
+                ,cols: [[ //表头
+                    {field: 'empId', title: '员工编号', width:100, sort: true, fixed: 'left'}
+                    ,{field: 'empName', title: '员工姓名', width:100}
+                    ,{field: 'depName', title: '部门', width:80}
+                    ,{field: 'postName', title: '职务', width:200}
+                    ,{field: 'sex', title: '性别', width: 60}
+                    ,{field: 'phone', title: '手机号码', width: 200}
+                    ,{field: 'address', title: '家庭住址', width: 200}
+                    ,{field: 'status', title: '状态', width: 60}
+                    ,{field: '', title: '设置状态', width: 100,templet:'#empStatusA'}
+                    ,{field: 'password', title: '初始密码', width: 135}
+                    ,{field: '', title: '操作', width: 115 ,toolbar:'#barDemo'}
+                ]]
+            });
 
-        </tr>
-        </tbody>
-    </table>
+        });
+    </script>
+    <script type="text/html" id="empStatusA">
+        {{# if(d.status == 1) { }}
+            <a href="emp/updateEmpStatus/{{d.empId}}/{{d.status}}"  class="layui-table-link">
+                禁用
+            </a>
+        {{# }else if(d.status == 0){ }}
+            <a href="<%=request.getContextPath()%>/emp/updateEmpStatus/{{d.empId}}/{{d.status}}"  class="layui-table-link">
+                启用
+            </a>
+        {{# } }}
+
+    </script>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    </script>
 </div>
 
 </body>
