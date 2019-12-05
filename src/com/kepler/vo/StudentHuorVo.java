@@ -33,7 +33,7 @@ public class StudentHuorVo {
     }
 
     public void setHourid(int hourid) {
-        hourid = hourid;
+        this.hourid = hourid;
     }
 
     public String getHuorName() {
