@@ -79,6 +79,8 @@ public class BaseDao {
         Session session = getSession();
         session.delete(o);
 
+        session.flush();
+
         session.close();
     }
 
