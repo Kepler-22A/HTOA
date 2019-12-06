@@ -7,6 +7,7 @@ import com.kepler.vo.StudentHuorVo;
 import com.kepler.vo.StudentVo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,8 +36,10 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     }
 
     @Override
-    public List listbyId(int id) {
-        return null;
+    public List listbyId(Class className,int id) {
+        List list = new ArrayList();
+        list.add(getObject(className,id));
+        return list;
     }
 
     @Override
