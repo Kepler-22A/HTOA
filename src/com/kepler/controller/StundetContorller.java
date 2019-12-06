@@ -96,6 +96,21 @@ public class StundetContorller {
 
         return "redirect:/student/studenthuor";
     }
+    //删除宿舍资料
+    @RequestMapping(value = "/delhour")
+    public void delhour(StudentHuorVo studentHuorVo,HttpServletResponse response){
+        System.out.println("idaaaaaaaaaa为："+studentHuorVo.getHourid());
+        sts.deletehour(studentHuorVo.getHourid());
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print("");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //楼栋管理
     @RequestMapping("/studentFloor")

@@ -42,6 +42,16 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
         return list;
     }
 
+
+    @Override
+    public void deletehour(int id) {
+        StudentHuorVo studentHuorVo = new StudentHuorVo();
+        studentHuorVo.setHourid(id);
+
+        delete(studentHuorVo);
+    }
+
+
     @Override
     public List<StudentFloorVo> listfloor() {
         return hqlQuery("from StudentFloorVo");

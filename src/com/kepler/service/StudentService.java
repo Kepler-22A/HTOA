@@ -21,9 +21,12 @@ public interface StudentService {
     //修改宿舍信息
     public void updatehour(StudentHuorVo studentHuorVo);
     //根据id查找宿舍信息
-    public List listbyId(Class className,int id);
+    public List listbyId(Class className, int id);
     //楼栋管理
     public  List<StudentFloorVo> listfloor();
+    //删除宿舍资料
+    public void deletehour(int id);
+
     //查询学生资料
     public List<StudentVo> liststudentdata();
 }
