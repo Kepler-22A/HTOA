@@ -29,7 +29,21 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     }
 
     @Override
-    public void upDataEmpStatus(empVo emp) {
+    public void upDataEmpStatus(int empId) {
+        empVo emp = (empVo) getObject((new empVo()).getClass(),empId);
+        if(emp.getStatus() == 0){
+            emp.setStatus(1);
+        }else {
+            emp.setStatus(0);
+        }
+
         update(emp);
+    }
+
+    @Override
+    public void delEmp(int empId) {
+        empVo emp = new empVo();
+        emp.setEmpId(empId);
+        delete(emp);
     }
 }

@@ -25,6 +25,7 @@
 
     <!-- 静态资源映射位置 -->
     <mvc:resources mapping="/**" location="/WEB-INF/static/"/>
+    <mvc:resources mapping="/**" location="/WEB-INF/jsp/"/>
 
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">

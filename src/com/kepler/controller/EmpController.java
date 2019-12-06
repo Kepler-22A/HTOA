@@ -53,19 +53,21 @@ public class EmpController {//员工的Controller
     }
 
     //阳于12-5 11点10分开始编辑，用于empData页面改变员工状态
-    @RequestMapping("/updateEmpStatus/{empId}/{status}")
-    public String updateEmpStatus(@PathVariable (value = "empId")int empId, @PathVariable (value = "status")int status){
-        empVo emp = new empVo();
-        emp.setEmpId(empId);
-        if(status == 0){
-            status = 1;
-        }else {
-            status = 0;
-        }
-        emp.setStatus(status);
-        es.upDataEmpStatus(emp);
+    @RequestMapping("/updateEmpStatus/{empId}")
+    public String updateEmpStatus(@PathVariable (value = "empId")int empId){
+        es.upDataEmpStatus(empId);
 
-        return "empdata";
+        return "redirect:/emp/toEmpData";
+    }
+
+    //阳于12-6 10:00开始编辑，用于删除员工
+    @RequestMapping(value = "delEmp/{empId}")
+    public String delEmp(@PathVariable (value = "empId")int empId){
+
+        System.out.println(empId);
+        es.delEmp(empId);
+
+        return "redirect:/emp/toEmpData";
     }
 
 }

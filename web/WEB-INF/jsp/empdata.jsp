@@ -33,6 +33,7 @@
                 elem: '#demo'
                 ,height: 450
                 ,url: '/emp/empDataList' //数据接口
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,page: true //开启分页
                 ,cols: [[ //表头
                     {field: 'empId', title: '员工编号', width:100, sort: true, fixed: 'left'}
@@ -53,11 +54,11 @@
     </script>
     <script type="text/html" id="empStatusA">
         {{# if(d.status == 1) { }}
-            <a href="emp/updateEmpStatus/{{d.empId}}/{{d.status}}"  class="layui-table-link">
+            <a href="<%=request.getContextPath()%>/emp/updateEmpStatus/{{d.empId}}"  class="layui-table-link">
                 禁用
             </a>
         {{# }else if(d.status == 0){ }}
-            <a href="<%=request.getContextPath()%>/emp/updateEmpStatus/{{d.empId}}/{{d.status}}"  class="layui-table-link">
+            <a href="<%=request.getContextPath()%>/emp/updateEmpStatus/{{d.empId}}"  class="layui-table-link">
                 启用
             </a>
         {{# } }}
@@ -65,9 +66,19 @@
     </script>
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="<%=request.getContextPath()%>/emp/delEmp/{{ d.empId }}">删除</a>
     </script>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" >添加员工</button>
+            </div>
+    </script>
+
+
 </div>
+<form >
+
+</form>
 
 </body>
 </html>
