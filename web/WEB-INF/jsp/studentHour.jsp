@@ -22,24 +22,38 @@
     <script type="text/javascript">
         //添加
         function add() {
+            $("#test").attr("action","${pageContext.request.contextPath}/student/addhour");
+            $("#hourid").val(0);
             layer.open({
                 type: 1,
                 title:"新增",
                 area:['400px','350px'],
                 content: $("#test"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
                 yes:function(index,layero){
                 }
             });
 
         }
         //修改
-        function  update() {
+        function  update(hourid) {
 
+            $.post("/student/selStudnetAddhourById",{id : hourid},function (d) {
+                $("#test").attr("action","${pageContext.request.contextPath}/student/updateHour/" + d.studentHour.hourid);
+                $("#hourid").val(d.studentHour.hourid);
+                $("#huoeIddsc").val(d.studentHour.huoeIddsc);
+                $("#floorId").val(d.studentHour.floorId);
+                $("#count").val(d.studentHour.count);
+                $("#huorName").val(d.studentHour.huorName);
+                $("#numberBeds").val(d.studentHour.numberBeds);
+                $("#addr").val(d.studentHour.addr);
+            },"json");
             layer.open({
                 type: 1,
                 title:"修改",
                 area:['400px','350px'],
                 content: $("#test"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
                 yes:function(index,layero){
                 }
             });
@@ -47,7 +61,7 @@
 
 
         function guanbi() {
-             parent.location.reload();
+            parent.location.reload();
         }
     </script>
 </head>
@@ -78,18 +92,18 @@
         </thead>
         <tbody>
         <c:forEach items="${huorlist}" var="list">
-        <tr align="center">
-            <td>${list.hourid}</td>
-            <td>${list.huoeIddsc}</td>
-            <td>${list.huorName}</td>
-            <td>${list.floorId}</td>
-            <td>${list.count}</td>
-            <td>${list.addr}</td>
-            <td align="left"> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-delete"></i> 删除</button>
-                &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update()"><i class="layui-icon layui-icon-edit"></i>编辑</button>
-                &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-search"></i>查看宿舍学员</button>
-            </td>
-        </tr>
+            <tr align="center">
+                <td>${list.hourid}</td>
+                <td>${list.huoeIddsc}</td>
+                <td>${list.huorName}</td>
+                <td>${list.floorId}</td>
+                <td>${list.count}</td>
+                <td>${list.addr}</td>
+                <td align="left"> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-delete"></i> 删除</button>
+                    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update(${list.hourid})"><i class="layui-icon layui-icon-edit"></i>编辑</button>
+                    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-search"></i>查看宿舍学员</button>
+                </td>
+            </tr>
         </c:forEach>
         </tbody>
     </table>
@@ -97,33 +111,44 @@
 <%--弹出层--%>
 <form  class="layui-form" id="test" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/addhour">
     <div class="layui-form-item">
+        <div class="layui-input-inline">
+            <input id="hourid" type="hidden" name="hourid"  required  lay-verify="required" autocomplete="off"  class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label">排编序号</label>
         <div class="layui-input-inline">
-            <input type="text" name="huoeIddsc" required  lay-verify="required" autocomplete="off" class="layui-input">
+            <input id="huoeIddsc" type="text" name="huoeIddsc" required  lay-verify="required" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">宿舍楼栋</label>
         <div class="layui-input-inline">
-            <input type="text" name="floorId" required lay-verify="required"autocomplete="off" class="layui-input">
+            <input id="floorId" type="text" name="floorId" required lay-verify="required"autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">宿舍人数</label>
+        <div class="layui-input-inline">
+            <input id="count" type="text" name="count" required lay-verify="required"autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">宿舍房号</label>
         <div class="layui-input-inline">
-            <input type="text" name="huorName" required lay-verify="required"autocomplete="off" class="layui-input">
+            <input  id="huorName" type="text" name="huorName" required lay-verify="required"autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">床位数</label>
         <div class="layui-input-inline">
-            <input type="text" name="numberBeds" required lay-verify="required"autocomplete="off" class="layui-input">
+            <input id="numberBeds" type="text" name="numberBeds" required lay-verify="required"autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">宿舍地址</label>
         <div class="layui-input-inline">
-            <input type="text" name="addr" required lay-verify="required"autocomplete="off" class="layui-input">
+            <input id="addr" type="text" name="addr" required lay-verify="required"autocomplete="off" class="layui-input">
         </div>
     </div>
     <div align="center">
