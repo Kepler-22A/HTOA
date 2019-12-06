@@ -43,7 +43,6 @@
                 $("#hourid").val(d.studentHour.hourid);
                 $("#huoeIddsc").val(d.studentHour.huoeIddsc);
                 $("#floorId").val(d.studentHour.floorId);
-                $("#count").val(d.studentHour.count);
                 $("#huorName").val(d.studentHour.huorName);
                 $("#numberBeds").val(d.studentHour.numberBeds);
                 $("#addr").val(d.studentHour.addr);
@@ -58,6 +57,16 @@
                 }
             });
         }
+        //删除
+        function  delhour(hourid) {
+            if(confirm("确认删除？")){
+                $.post("${pageContext.request.contextPath}/student/delhour",{hourid:hourid},
+                    function (data) {
+                        parent.location.reload();
+                    });
+            }
+
+        }
 
 
         function guanbi() {
@@ -71,43 +80,53 @@
 </fieldset>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="add()" type="button" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i> 添加</button>
 <div class="layui-form">
-    <table class="layui-table" align="center">
-        <colgroup>
-            <col width="150">
-            <col width="150">
-            <col width="200">
-            <col>
-        </colgroup>
-        <thead>
-        <tr>
-
-            <th>编号</th>
-            <th>排编序号</th>
-            <th>宿舍房号</th>
-            <th>宿舍楼栋</th>
-            <th>床位数</th>
-            <th>宿舍地址</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${huorlist}" var="list">
-            <tr align="center">
-                <td>${list.hourid}</td>
-                <td>${list.huoeIddsc}</td>
-                <td>${list.huorName}</td>
-                <td>${list.floorId}</td>
-                <td>${list.count}</td>
-                <td>${list.addr}</td>
-                <td align="left"> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-delete"></i> 删除</button>
-                    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update(${list.hourid})"><i class="layui-icon layui-icon-edit"></i>编辑</button>
-                    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-search"></i>查看宿舍学员</button>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
+    <table id="studentHourTable" class="layui-table" align="center">
     </table>
 </div>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#studentHourTable'
+            ,url:'/student/JSONStudentHourData'
+            ,toolbar: '#toolbarDemo'
+            ,height:400
+            ,cols: [[
+                ,{field:'hourid', width:80, title: '编号', sort: true}
+                ,{field:'huoeIddsc', width:110, title: '排编序号', sort: true}
+                ,{field:'huorName', width:110, title: '宿舍房号', sort: true}
+                ,{field:'floorId', width:110, title: '宿舍楼栋'}
+                ,{field:'numberBeds', width:110, title: '床位数', sort: true}
+                ,{field:'addr', width:110, title: '宿舍地址'}
+                ,{field:'', width:320, title: '操作', templet:"#dus"}
+            ]]
+            ,page: true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;  //获取选中行数据
+                    layer.alert(JSON.stringify(data));
+                    break;
+            };
+        });
+    });
+</script>
+<script type="text/html" id="dus">
+
+    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="delhour('{{ d.hourid }}')">
+        <i class="layui-icon layui-icon-delete"></i> 删除
+    </button>
+    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{ d.hourid }}')">
+        <i class="layui-icon layui-icon-edit"></i>编辑
+    </button>
+    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal">
+        <i class="layui-icon layui-icon-search"></i>查看宿舍学员
+    </button>
+</script>
 <%--弹出层--%>
 <form  class="layui-form" id="test" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/addhour">
     <div class="layui-form-item">
@@ -127,12 +146,12 @@
             <input id="floorId" type="text" name="floorId" required lay-verify="required"autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
+   <%-- <div class="layui-form-item">
         <label class="layui-form-label">宿舍人数</label>
         <div class="layui-input-inline">
             <input id="count" type="text" name="count" required lay-verify="required"autocomplete="off" class="layui-input">
         </div>
-    </div>
+    </div>--%>
     <div class="layui-form-item">
         <label class="layui-form-label">宿舍房号</label>
         <div class="layui-input-inline">

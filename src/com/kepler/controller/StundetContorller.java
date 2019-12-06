@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -66,11 +67,35 @@ public class StundetContorller {
 
     //宿舍管理
     @RequestMapping("/studenthuor")
-    public String studenthuor(Model model){
-        List<StudentHuorVo>  list = sts.listhour();
-//        System.out.println(list.get(0).getHuorName());
-        model.addAttribute("huorlist",list);
+    public String studenthuor(){
+
         return "studentHour";
+    }
+
+    //表格数据
+    @RequestMapping(value = "/JSONStudentHourData")
+    public void JSONStudentHourData(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        List<StudentHuorVo>  list = sts.listhour();
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("count",list.size());
+        jo.put("code",0);
+        jo.put("data",list);
+
+
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     //添加宿舍信息
