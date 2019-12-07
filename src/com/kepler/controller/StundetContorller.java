@@ -140,11 +140,48 @@ public class StundetContorller {
     //楼栋管理
     @RequestMapping("/studentFloor")
     public String studentFloor(Model model){
-        List<StudentFloorVo>  list = sts.listfloor();
-        System.out.println(list.size());
-        model.addAttribute("floorlist",list);
         return "studentFloor";
     }
+
+    //添加楼栋
+    @RequestMapping("/addfloor")
+    public String addfloor(StudentFloorVo studentFloorVo){
+        sts.addfloor(studentFloorVo);
+       return "redirect:studentFloor";
+    }
+    //表格数据
+    @RequestMapping(value = "/JSONStudentFloorData")
+    public void JSONStudentFloorData(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        List<StudentFloorVo>  list = sts.listfloor();
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("count",list.size());
+        jo.put("code",0);
+        jo.put("data",list);
+
+
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    //删除楼栋
+    @RequestMapping("/delFloor")
+    public void delFloor(StudentFloorVo studentFloorVo){
+        sts.deletefloor(studentFloorVo.getFloorId());
+    }
+
 
     //林5号10点 开始编辑，用于跳转学生资料展示页面
     @RequestMapping(value = "/studentdata")

@@ -15,7 +15,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
     <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
-    <script>
+    <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        //添加
+        function add() {
+            layer.open({
+                type: 1,
+                title:"新增",
+                area:['400px','160px'],
+                content: $("#addfloor"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
+                yes:function(index,layero){
+                }
+            });
+
+        }
+
+
+        //删除
+        function  delfloor(floorId) {
+            if(confirm("确认删除？")){
+                $.post("${pageContext.request.contextPath}/student/delFloor",{floorId:floorId},
+
+                    function (data) {
+
+                    });
+                parent.location.reload();
+            }
+
+        }
+        //关闭
+        function guanbi() {
+            parent.location.reload();
+        }
     </script>
 </head>
 <body>
@@ -25,33 +58,53 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="add()" type="button" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i> 添加</button>
 
 <div class="layui-form">
-    <table class="layui-table" align="center">
-        <colgroup>
-            <col width="150">
-            <col width="150">
-            <col width="200">
-            <col>
-        </colgroup>
-        <thead>
-        <tr>
-
-            <th>编号</th>
-            <th>楼栋名称</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${floorlist}" var="list">
-            <tr align="center">
-                <td>${list.floorId}1</td>
-                <td>${list.floorName}5</td>
-                <td align="left"> <button type="button" class="layui-btn layui-btn-sm layui-btn-normal"><i class="layui-icon layui-icon-delete"></i> 删除</button>
-                </td>
-            </tr>
-        </c:forEach>
+    <table class="layui-table" align="center" id="studentFloorTable">
         </tbody>
+        <script>
+            layui.use('table', function(){
+                var table = layui.table;
+                table.render({
+                    elem: '#studentFloorTable'
+                    ,url:'/student/JSONStudentFloorData'
+                    ,toolbar: '#toolbarDemo'
+                    ,height:400
+                    ,cols: [[
+                        {field:'floorId', width:100, title: '编号', sort: true}
+                        ,{field:'floorName', width:110, title: '楼栋名称', sort: true}
+                        ,{field:'', width:150, title: '操作', templet:"#dus"}
+                    ]]
+                    ,page: true
+                });
+                //头工具栏事件
+                table.on('toolbar(test)', function(obj){
+                    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+                    switch(obj.event){
+                        case 'getCheckData':
+                            var data = checkStatus.data;  //获取选中行数据
+                            layer.alert(JSON.stringify(data));
+                            break;
+                    };
+                });
+            });
+        </script>
+        <script type="text/html" id="dus">
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="delfloor('{{ d.floorId }}')">
+                <i class="layui-icon layui-icon-delete"></i> 删除
+            </button>
+        </script>
     </table>
 </div>
-
+<form  class="layui-form" id="addfloor" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/addfloor">
+    <div class="layui-form-item">
+        <label class="layui-form-label">楼栋名称:</label>
+        <div class="layui-input-inline">
+            <input id="floorName" type="text" name="floorName" required  lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div align="center">
+        <input type="submit" value="提交" style="height: 30px;width: 50px;">
+        <input type="button" value="取消" style="height: 30px;width: 50px;" onclick="guanbi()">
+    </div>
+</form>
 </body>
 </html>

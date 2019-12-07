@@ -90,10 +90,10 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">后勤管理</a>
+                    <a href="#">后勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">宿舍管理</a></dd>
-                        <dd><a href="javascript:;">楼栋管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studenthuor" data-id="31" data-title="宿舍管理"  class="site-demo-active" style="cursor:pointer" data-type="studenthuor">宿舍管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentFloor" data-id="32" data-title="楼栋管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">楼栋管理</a></dd>
                         <dd><a href="javascript:;">维修管理</a></dd>
                     </dl>
                 </li>

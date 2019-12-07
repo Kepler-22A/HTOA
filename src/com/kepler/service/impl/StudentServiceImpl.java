@@ -51,10 +51,23 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
         delete(studentHuorVo);
     }
 
+    @Override
+    public void deletefloor(int id) {
+        StudentFloorVo studentFloorVo = new StudentFloorVo();
+        studentFloorVo.setFloorId(id);
+
+        delete(studentFloorVo);
+    }
+
 
     @Override
     public List<StudentFloorVo> listfloor() {
         return hqlQuery("from StudentFloorVo");
+    }
+
+    @Override
+    public void addfloor(StudentFloorVo studentFloorVo) {
+        save(studentFloorVo);
     }
 
     @Override

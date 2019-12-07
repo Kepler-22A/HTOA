@@ -27,7 +27,7 @@
             layer.open({
                 type: 1,
                 title:"新增",
-                area:['400px','350px'],
+                area:['400px','360px'],
                 content: $("#test"),
                 closeBtn :0, //隐藏弹出层的关闭按钮
                 yes:function(index,layero){
@@ -50,7 +50,7 @@
             layer.open({
                 type: 1,
                 title:"修改",
-                area:['400px','350px'],
+                area:['400px','360px'],
                 content: $("#test"),
                 closeBtn :0, //隐藏弹出层的关闭按钮
                 yes:function(index,layero){
@@ -68,7 +68,7 @@
 
         }
 
-
+        //关闭
         function guanbi() {
             parent.location.reload();
         }
@@ -84,6 +84,11 @@
     </table>
 </div>
 <script>
+    layui.use('form', function(){
+        var form = layui.form;
+        form.render("select");
+    });
+
     layui.use('table', function(){
         var table = layui.table;
         table.render({
@@ -92,7 +97,7 @@
             ,toolbar: '#toolbarDemo'
             ,height:400
             ,cols: [[
-                ,{field:'hourid', width:80, title: '编号', sort: true}
+                {field:'hourid', width:80, title: '编号', sort: true}
                 ,{field:'huoeIddsc', width:110, title: '排编序号', sort: true}
                 ,{field:'huorName', width:110, title: '宿舍房号', sort: true}
                 ,{field:'floorId', width:110, title: '宿舍楼栋'}
@@ -143,9 +148,23 @@
     <div class="layui-form-item">
         <label class="layui-form-label">宿舍楼栋</label>
         <div class="layui-input-inline">
-            <input id="floorId" type="text" name="floorId" required lay-verify="required"autocomplete="off" class="layui-input">
+            <input id="floorId" type="text" name="floorId" required  lay-verify="required" autocomplete="off" class="layui-input">
         </div>
     </div>
+   <%-- <div class="layui-form-item">
+        <label class="layui-form-label">宿舍楼栋</label>
+        <div class="layui-input-block">
+            <select  id="floorId" name="floorId" lay-filter="loudong">
+                <option value=""></option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+    </div>--%>
    <%-- <div class="layui-form-item">
         <label class="layui-form-label">宿舍人数</label>
         <div class="layui-input-inline">
