@@ -47,7 +47,7 @@
         }
         //关闭
         function guanbi() {
-            parent.location.reload();
+            layer.close(layer.index);
         }
     </script>
 </head>

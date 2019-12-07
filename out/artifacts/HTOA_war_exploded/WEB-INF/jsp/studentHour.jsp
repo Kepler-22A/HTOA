@@ -17,6 +17,7 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/layui/lay/modules/layer.js" charset="utf-8"></script>
     <script>
     </script>
     <script type="text/javascript">
@@ -70,7 +71,13 @@
 
         //关闭
         function guanbi() {
-            parent.location.reload();
+            layer.close(layer.index);
+            // // 获得frame索引
+            // var index = parent.layer.getFrameIndex(window.name);
+            // //关闭当前frame
+            // parent.layer.close(index);
+            // window.parent.location.reload();
+            // parent.location.reload();
         }
     </script>
 </head>
