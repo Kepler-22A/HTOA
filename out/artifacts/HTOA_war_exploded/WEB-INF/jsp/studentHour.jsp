@@ -24,6 +24,7 @@
         //添加
         function add() {
             $("#test").attr("action","${pageContext.request.contextPath}/student/addhour");
+            document.getElementById("test").reset();
             $("#hourid").val(0);
             layer.open({
                 type: 1,

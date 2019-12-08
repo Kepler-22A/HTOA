@@ -108,7 +108,7 @@ public class StundetContorller {
         }else {
             sts.addhour(studentHuorVo);
         }
-        return "redirect:/studenthuor";
+        return "redirect:/student/studenthuor";
     }
 
 
