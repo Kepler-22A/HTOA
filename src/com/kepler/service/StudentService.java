@@ -32,4 +32,12 @@ public interface StudentService {
     public void deletefloor(int id);
     //查询学生资料
     public List<StudentVo> liststudentdata();
+    //添加学生
+    public void studentADD(StudentVo vo);
+    //根据学生id查询出数据
+    public List<StudentVo> selectStudentIdData(int id);
+    //修改学生
+    public void updateStudentData(StudentVo vo);
+    //删除学生
+    public void deleStudentDatas(StudentVo vo);
 }

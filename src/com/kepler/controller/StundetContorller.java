@@ -13,9 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -186,8 +191,6 @@ public class StundetContorller {
     //林5号10点 开始编辑，用于跳转学生资料展示页面
     @RequestMapping(value = "/studentdata")
     public String studentData(){
-
-
         return "studentData";
     }
     @RequestMapping(value = "/data")
@@ -200,11 +203,57 @@ public class StundetContorller {
         json.put("count",sum.size());
         json.put("msg","");
         json.put("data",sum);
-        System.out.println(json);
         pwt.print(json.toString());
     }
-    @RequestMapping(value = "/addstudent")//去添加学生的页面
-    public String addstudent(){
-        return "addstudent";
+    @RequestMapping(value = "/studentadd")//学生添加操作
+    public String studentadd(HttpServletRequest request,StudentVo vo,String shijian,String shijian2){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(shijian);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date = java.sql.Date.valueOf(shijian);
+
+        vo.setBirthday(date);
+        Date date1 = null;
+        try {
+            date1 = format.parse(shijian2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date1 = java.sql.Date.valueOf(shijian2);
+
+        vo.setBirthday(date);
+        vo.setEntertime(date1);
+
+        sts.studentADD(vo);
+        return "redirect:/student/studentdata";
+    }
+    //根据学生id查询出学生资料
+    @RequestMapping(value = "/selectStudentID")
+    public void selectStudentID(int id,HttpServletResponse response) throws IOException {
+        List list = sts.selectStudentIdData(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("StudentVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+        pwt.print(json.toJSONString());
+    }
+    //根据学生id查询出学生资料
+    @RequestMapping(value = "/UpdateStudentID/{Studid}")
+    public String UpdateStudentID(@PathVariable(value = "Studid")int Studid,StudentVo vo){
+        sts.updateStudentData(vo);
+        return "redirect:/student/studentdata";
+    }
+    //删除学生
+    @RequestMapping(value = "/delstudent/{Studid}")
+    public String delstudent(@PathVariable(value = "Studid")int Studid,StudentVo vo){
+        vo.setStudid(Studid);
+        sts.deleStudentDatas(vo);
+        return "redirect:/student/studentdata";
     }
 }

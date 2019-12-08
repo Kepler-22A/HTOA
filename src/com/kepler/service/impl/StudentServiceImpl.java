@@ -74,4 +74,24 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public List<StudentVo> liststudentdata() {
         return hqlQuery("from StudentVo");
     }
+
+    @Override
+    public void studentADD(StudentVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<StudentVo> selectStudentIdData(int id) {
+        return sqlQuery("select * from Student where Studid ="+id);
+    }
+
+    @Override
+    public void updateStudentData(StudentVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public void deleStudentDatas(StudentVo vo) {
+        delete(vo);
+    }
 }

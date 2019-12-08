@@ -9,50 +9,51 @@ public class StudentVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Studid;//学生主键
-    private String password;//登入密码
-    private String stuname;//学生姓名
-    private String middleschool;//毕业学校
-    private String sex;//性别
-    private String age;//年龄
-    private Date birthday;//出生年月
-    private String phone;//学生电话
-    private String addr;//家庭地址
+    private String password;//登入密码1
+    private String stuname;//学生姓名1
+    private String middleschool;//毕业学校1
+    private String sex;//性别1
+    private String age;//年龄1
+    private Date birthday;//出生年月1
+    private String phone;//学生电话1
+    private String addr;//家庭地址1
     private int clazz;//班级外键id
     private int huor;//宿舍外键id
-    private Date entertime;//入学时间
-    private String introduretech;//介绍老师
+    private Date entertime;//入学时间1
+    private String introduretech;//介绍老师1
     private int stat;//学生状态
-    private String nation;//民族
-    private String natives;//籍贯
-    private int residence;//户口性质
-    private String cardid;//身份证号
-    private String professional;//就读专业
-    private int prolevel;//专业类别
-    private int studytype;//学习类别
-    private String parents;//家长姓名
-    private String parentsphone;//家长电话
-    private String intrphone;//老师电话
-    private String audition;//面试人
-    private String auditionoption;//面试人意见
-    private int isvocational;//是否中专
-    private String vocationalsch;//中专学校
-    private int vocationalflag;//中专学籍
+    private String nation;//民族1
+    private String natives;//籍贯1
+    private int residence;//户口性质1
+    private String cardid;//身份证号1
+    private String professional;//就读专业1
+    private int prolevel;//专业类别1
+    private int studytype;//学习类别1
+    private String parents;//家长姓名1
+    private String parentsphone;//家长电话1
+    private String intrphone;//老师电话1
+    private String audition;//面试人1
+    private String auditionoption;//面试人意见1
+    private int isvocational;//是否中专1
+    private String vocationalsch;//中专学校1
+    private int vocationalflag;//中专学籍1
     private int enrollno;//省录取号
     private Float qkMoney;//欠款金额
-    private Float score;//录取成绩
+    private Float score;//录取成绩1
     private String dibao;//是否低保
     private String sourceType;//生源类型
     private String guarantee;//担保人
     private String soldier;//是否当兵
     private String registration;//报名号
-    private String zhuxiao;//是否住校
-    private String remark;//备注
+    private String zhuxiao;//是否住校1
+    private String remark;//备注1
     private String tuixue;//退学
     private String xiuxue;//休学
     private String stuno;//学号
-    private String computer;//是否送电脑
-    private String collar;//是否领用
-    private String grants;//助学金
+    private String computer;//是否送电脑1
+    private String collar;//是否领用1
+    private String grants;//助学金1
+
 
     @Override
     public String toString() {
