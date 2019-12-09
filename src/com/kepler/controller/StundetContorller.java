@@ -3,6 +3,7 @@ package com.kepler.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.StudentService;
+import com.kepler.vo.EquipmentRepairVo;
 import com.kepler.vo.StudentFloorVo;
 import com.kepler.vo.StudentHuorVo;
 import com.kepler.vo.StudentVo;
@@ -185,6 +186,32 @@ public class StundetContorller {
     @RequestMapping("/delFloor")
     public void delFloor(StudentFloorVo studentFloorVo){
         sts.deletefloor(studentFloorVo.getFloorId());
+    }
+
+    //设备维修
+    @RequestMapping("/equipmentRepair")
+    public String equipmentRepair(){
+        return "text";
+    }
+    //查设备维修数据
+    @RequestMapping(value = "/equipmentRepairdata")
+    public void equipmentRepairdata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List<EquipmentRepairVo> list = sts.listEquipmentData();
+        json.put("code",0);
+        json.put("count",list.size());
+        json.put("msg","");
+        json.put("data",list);
+        pwt.print(json.toString());
+    }
+
+    //添加设备维修记录
+    @RequestMapping("/addequipment")
+    public String addequipment(){
+
+        return "redirect:/student/equipmentRepair";
     }
 
 

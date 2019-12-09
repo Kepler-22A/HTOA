@@ -1,5 +1,6 @@
 package com.kepler.service;
 
+import com.kepler.vo.EquipmentRepairVo;
 import com.kepler.vo.StudentFloorVo;
 import com.kepler.vo.StudentHuorVo;
 import com.kepler.vo.StudentVo;
@@ -30,6 +31,8 @@ public interface StudentService {
     public void addfloor(StudentFloorVo studentFloorVo);
     //删除楼栋
     public void deletefloor(int id);
+    //查设备维修数据
+    public List<EquipmentRepairVo> listEquipmentData();
     //查询学生资料
     public List<StudentVo> liststudentdata();
     //添加学生

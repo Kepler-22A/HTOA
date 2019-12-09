@@ -2,6 +2,7 @@ package com.kepler.service.impl;
 
 import com.kepler.dao.BaseDao;
 import com.kepler.service.StudentService;
+import com.kepler.vo.EquipmentRepairVo;
 import com.kepler.vo.StudentFloorVo;
 import com.kepler.vo.StudentHuorVo;
 import com.kepler.vo.StudentVo;
@@ -57,6 +58,11 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
         studentFloorVo.setFloorId(id);
 
         delete(studentFloorVo);
+    }
+
+    @Override
+    public List<EquipmentRepairVo> listEquipmentData() {
+        return hqlQuery("from EquipmentRepairVo");
     }
 
 
