@@ -94,7 +94,7 @@
                     <dl class="layui-nav-child">
                         <dd><a data-url="${pageContext.request.contextPath}/student/studenthuor" data-id="31" data-title="宿舍管理"  class="site-demo-active" style="cursor:pointer" data-type="studenthuor">宿舍管理</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentFloor" data-id="32" data-title="楼栋管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">楼栋管理</a></dd>
-                        <dd><a href="javascript:;">维修管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/equipmentRepair" data-id="33" data-title="维修管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

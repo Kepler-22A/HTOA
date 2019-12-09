@@ -191,7 +191,7 @@ public class StundetContorller {
     //设备维修
     @RequestMapping("/equipmentRepair")
     public String equipmentRepair(){
-        return "text";
+        return "equipmentRepair";
     }
     //查设备维修数据
     @RequestMapping(value = "/equipmentRepairdata")
