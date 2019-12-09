@@ -11,12 +11,63 @@
     <title>Title</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
-    <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/layui/lay/modules/layer.js" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 </head>
+<body>
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" onclick="add()">添加维修记录</button>
+        </div>
+    </script>
+    <form  class="layui-form" id="sss" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/addequipment" >
+            <div style="width: 56%;height: auto;margin-top: 1%">
+            <div style="width:110%;height:100%;float: left">
+            <div class="layui-form-item">
+            <label class="layui-form-label">设备名称</label>
+            <div class="layui-input-block">
+            <input id="equipmentType" type="text" name="equipmentType" required  lay-verify="required" placeholder="请输入设备名称" autocomplete="off" class="layui-input">
+            </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
+                    <div class="layui-input-block">
+                        <input id="Student" type="text" name="Student" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+            </div>
+
+            </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">班级或部门</label>
+                    <div class="layui-input-block">
+                        <input id="Classes" type="text" name="Student" required  lay-verify="required" placeholder="请输入部门" autocomplete="off" class="layui-input">
+                    </div>
+            </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">类别</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="userType" value="学生" title="学生">
+                        <input type="radio" name="userType" value="员工" title="员工" checked>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                        <button type="button" class="layui-btn layui-btn-primary" onclick="guanbi()">返回</button>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+        </form>
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" onclick="update('{{ d.studid }}')">修改</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delhour('{{ d.studid }}')">删除</a>
+    </script>
+</body>
+<script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript">
     //添加
     function add() {
@@ -83,150 +134,97 @@
         parent.location.reload();
     }
 </script>
-<body>
-    <table class="layui-hide" id="test" lay-filter="test"></table>
-    <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" onclick="add()">添加维修记录</button>
-        </div>
-    </script>
-        <form  class="layui-form" id="sss" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/addequipment" >
-            <div style="width: 56%;height: auto;margin-top: 1%">
-            <div style="width:110%;height:100%;float: left">
-            <div class="layui-form-item">
-            <label class="layui-form-label">设备名称</label>
-            <div class="layui-input-block">
-            <input id="equipmentType" type="text" name="equipmentType" required  lay-verify="required" placeholder="请输入设备名称" autocomplete="off" class="layui-input">
-            </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">姓名</label>
-                    <div class="layui-input-block">
-                        <input id="Student" type="text" name="Student" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-            </div>
+<script type="text/javascript">
+    layui.use('table', function() {
+        var table = layui.table;
 
-            </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">班级或部门</label>
-                    <div class="layui-input-block">
-                        <input id="Classes" type="text" name="Student" required  lay-verify="required" placeholder="请输入部门" autocomplete="off" class="layui-input">
-                    </div>
-            </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">类别</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="userType" value="学生" title="学生">
-                        <input type="radio" name="userType" value="员工" title="员工" checked>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                        <button type="button" class="layui-btn layui-btn-primary" onclick="guanbi()">返回</button>
-                    </div>
-                </div>
-            </div>
+        table.render({
+            elem: '#test'
+            , url: '/student/equipmentRepairdata'
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
+            }]
+            , title: '设备维修数据表'
+            , cols: [[
+                {type: 'checkbox'}
+                , {field: 'equipmentId', title: '编号', width: 80, fixed: 'left', unresize: true, sort: true}
+                , {field: 'equipmentType', title: '维修设备名称', width: 150, edit: 'text'}
+                , {field: 'Student', title: '姓名', width: 80, edit: 'text', sort: true}
+                , {field: 'Classes', title: '部门或班级', width: 150, edit: 'text', sort: true}
+                , {field: 'userType', title: '类别', width: 100}
+                , {field: 'startTime', title: '申请时间',width:150}
+                , {field: 'endTime', title: '完成时间', width: 150}//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                , {field: 'status', title: '状态', width: 100, sort: true}///!!!!!!!!!!!!!!!!!!!!!!!!
+            ]]
+            , page: true
+        });
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
 
-            </div>
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+        //Demo
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
 
-        </form>
-
-            <script type="text/html" id="barDemo">
-            <a class="layui-btn layui-btn-xs" onclick="update('{{ d.studid }}')">修改</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delhour('{{ d.studid }}')">删除</a>
-    </script>
-    <script type="text/javascript">
-        layui.use('table', function() {
-            var table = layui.table;
-
-            table.render({
-                elem: '#test'
-                , url: '/student/equipmentRepairdata'
-                , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-                , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-                    title: '提示'
-                    , layEvent: 'LAYTABLE_TIPS'
-                    , icon: 'layui-icon-tips'
-                }]
-                , title: '设备维修数据表'
-                , cols: [[
-                    {type: 'checkbox'}
-                    , {field: 'equipmentId', title: '编号', width: 80, fixed: 'left', unresize: true, sort: true}
-                    , {field: 'equipmentType', title: '维修设备名称', width: 150, edit: 'text'}
-                    , {field: 'Student', title: '姓名', width: 80, edit: 'text', sort: true}
-                    , {field: 'Classes', title: '部门或班级', width: 150, edit: 'text', sort: true}
-                    , {field: 'userType', title: '类别', width: 100}
-                    , {field: 'startTime', title: '申请时间',width:150}
-                    , {field: 'endTime', title: '完成时间', width: 150}//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    , {field: 'status', title: '状态', width: 100, sort: true}///!!!!!!!!!!!!!!!!!!!!!!!!
-                ]]
-                , page: true
-            });
-            //头工具栏事件
-            table.on('toolbar(test)', function(obj){
-                var checkStatus = table.checkStatus(obj.config.id);
-                switch(obj.event){
-                    case 'getCheckData':
-                        var data = checkStatus.data;
-                        layer.alert(JSON.stringify(data));
-                        break;
-                    case 'getCheckLength':
-                        var data = checkStatus.data;
-                        layer.msg('选中了：'+ data.length + ' 个');
-                        break;
-                    case 'isAll':
-                        layer.msg(checkStatus.isAll ? '全选': '未全选');
-                        break;
-
-                    //自定义头工具栏右侧图标 - 提示
-                    case 'LAYTABLE_TIPS':
-                        layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                        break;
-                };
-            });
-            //Demo
-            layui.use('laydate', function(){
-                var laydate = layui.laydate;
-
-                //执行一个laydate实例
-                laydate.render({
-                    elem: '#rutime' //指定元素
-                });
-            });
-
-            layui.use('laydate', function(){
-                var laydate = layui.laydate;
-
-                //执行一个laydate实例
-                laydate.render({
-                    elem: '#srtime' //指定元素
-                });
-            });
-
-            //监听行工具事件
-            table.on('tool(test)', function(obj){
-                var data = obj.data;
-                //console.log(obj)
-                if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        layer.close(index);
-                    });
-                } else if(obj.event === 'edit'){
-                    layer.prompt({
-                        formType: 2
-                        ,value: data.email
-                    }, function(value, index){
-                        obj.update({
-                            email: value
-                        });
-                        layer.close(index);
-                    });
-                }
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#rutime' //指定元素
             });
         });
 
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
 
-    </script>
-</body>
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#srtime' //指定元素
+            });
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+
+
+</script>
 </html>

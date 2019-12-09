@@ -24,19 +24,19 @@ public class StudentVo {
     private int stat;//学生状态
     private String nation;//民族1
     private String natives;//籍贯1
-    private int residence;//户口性质1
+    private int residence;//户口性质1            1.农业  2.非农
     private String cardid;//身份证号1
     private String professional;//就读专业1
-    private int prolevel;//专业类别1
+    private int prolevel;//专业类别1             1.中技  2.高技  3.3+2
     private int studytype;//学习类别1
     private String parents;//家长姓名1
     private String parentsphone;//家长电话1
     private String intrphone;//老师电话1
     private String audition;//面试人1
     private String auditionoption;//面试人意见1
-    private int isvocational;//是否中专1
+    private int isvocational;//是否中专1          1.否   2.是
     private String vocationalsch;//中专学校1
-    private int vocationalflag;//中专学籍1
+    private int vocationalflag;//中专学籍1    1.已退 2.保留
     private int enrollno;//省录取号
     private Float qkMoney;//欠款金额
     private Float score;//录取成绩1

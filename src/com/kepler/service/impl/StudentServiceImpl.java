@@ -6,6 +6,7 @@ import com.kepler.vo.EquipmentRepairVo;
 import com.kepler.vo.StudentFloorVo;
 import com.kepler.vo.StudentHuorVo;
 import com.kepler.vo.StudentVo;
+import com.kepler.vo.Student_scoreVo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -99,5 +100,11 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     @Override
     public void deleStudentDatas(StudentVo vo) {
         delete(vo);
+    }
+
+    @Override
+    public List<Student_scoreVo> listStudentScore() {
+        return sqlQuery("select scoreId,t.stuname,s.score,Rescore,courseName,courseTypeName,termName,scoreTime,o.empName,s.remark from Student_score s,Student t,Course c,CourseType u,Term e,empVo o where\n" +
+                " s.stuid = t.Studid and s.courseId =c.courseID and c.courseTypeID=u.courseTypeID and s.termid=e.termID and s.Empid=o.empId");
     }
 }

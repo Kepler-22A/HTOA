@@ -141,8 +141,9 @@
 
             <label class="layui-form-label">籍贯</label>
             <div class="layui-input-inline">
+                <select name="">
 
-
+                </select>
             </div>
         </div>
     </form>

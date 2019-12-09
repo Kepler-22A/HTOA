@@ -78,9 +78,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">教务管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a data-url="/student/studentdata" data-id="21" data-title="学生资料"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生资料</a></dd>
-                        <dd><a href="javascript:;">考试成绩</a></dd>
-                        <dd><a href="javascript:;">答辩成绩</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentdata" data-id="21" data-title="学生资料"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生资料</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentScore" data-id="22" data-title="学生成绩"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生成绩</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentReplyScore" data-id="23" data-title="答辩成绩"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生成绩</a></dd>
                         <dd><a href="javascript:;">班级管理</a></dd>
                         <dd><a href="javascript:;">班级分配</a></dd>
                         <dd><a href="javascript:;">课程类别</a></dd>

@@ -56,7 +56,7 @@
             layer.open({
                 type: 1,
                 title:"修改",
-                area:['1200px','700px'],
+                area:['70%','70%'],
                 content: $("#sss"),
                 closeBtn :0, //隐藏弹出层的关闭按钮
                 yes:function(index,layero){
@@ -76,6 +76,7 @@
 
 
         function guanbi() {
+            url:'${pageContext.request.contextPath}/student/studentdata'
             layer.close(layer.index);
         }
     </script>
@@ -96,8 +97,6 @@
     <input type="hidden" value="1" name="enrollno">
     <input type="hidden" value="0.0" name="qkMoney">
     <input type="hidden" value="0.0" name="score">
-    <input type="hidden" value="1" name="residence">
-    <input type="hidden" value="1" name="prolevel">
     <input type="hidden" value="1" name="studytype">
     <input type="hidden" value="1" name="vocationalflag">
     <input type="hidden" value="100" name="clazz"/>
@@ -111,6 +110,10 @@
     <input type="hidden" value="1" name="tuixue"/>
     <input type="hidden" value="1" name="xiuxue"/>
     <input type="hidden" value="x100" name="stuno"/>
+    <input type="hidden" value="是" name="grants"/>
+    <input type="hidden" value="是" name="computer"/>
+    <input type="hidden" value="是" name="collar"/>
+    <input type="hidden" value="是" name="zhuxiao"/>
     <input type="button" value="赋值" onclick="fuzhi()">
     <div style="width: 56%;height: auto;margin-top: 1%">
         <div style="width:50%;height:100%;float: left">
@@ -176,20 +179,16 @@
                     <input id="u" type="text" name="natives" required  lay-verify="required" placeholder="籍贯" autocomplete="off" class="layui-input">
                 </div>
             </div>
-
             <div class="layui-form-item">
-                <label class="layui-form-label">身份证号</label>
+                <label class="layui-form-label">户口性质</label>
                 <div class="layui-input-block">
-                    <input id="o" type="text" name="cardid" required  lay-verify="required" placeholder="请输入11位完整的号码" autocomplete="off" class="layui-input">
+                    <select name="residence" lay-verify="required">
+                        <option value="">请选择</option>
+                        <option value="1">农业</option>
+                        <option value="2">非农</option>
+                    </select>
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">就读专业</label>
-                <div class="layui-input-block">
-                    <input id="p" type="text" name="professional" required  lay-verify="required" placeholder="请输入就读专业" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-
             <div class="layui-form-item layui-form-text">
                 <label class="layui-form-label">面试人建议</label>
                 <div class="layui-input-block">
@@ -233,8 +232,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">是否中专</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="isvocational" value="1" title="是">
-                    <input type="radio" name="isvocational" value="0" title="否" checked>
+                    <select name="isvocational" lay-verify="required">
+                        <option value="">请选择</option>
+                        <option value="1">是</option>
+                        <option value="0">否</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -251,31 +253,26 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">是否住校</label>
+                <label class="layui-form-label">身份证号</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="zhuxiao" value="是" title="是">
-                    <input type="radio" name="zhuxiao" value="否" title="否" checked>
+                    <input id="o" type="text" name="cardid" required  lay-verify="required" placeholder="请输入11位完整的号码" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">是否送电脑</label>
+                <label class="layui-form-label">就读专业</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="computer" value="是" title="是">
-                    <input type="radio" name="computer" value="否" title="否" checked>
+                    <input id="p" type="text" name="professional" required  lay-verify="required" placeholder="请输入就读专业" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">是否领用</label>
+                <label class="layui-form-label">专业类别</label>
                 <div class="layui-input-block">
-                    <input type="radio" name="collar" value="是" title="是">
-                    <input type="radio" name="collar" value="否" title="否" checked>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">是否助学金</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="grants" value="是" title="是">
-                    <input type="radio" name="grants" value="否" title="否" checked>
+                    <select name="prolevel" lay-verify="required">
+                        <option value="">请选择</option>
+                        <option value="1">中技</option>
+                        <option value="2">高技</option>
+                        <option value="3">3+2</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -363,18 +360,19 @@
             //执行一个laydate实例
             laydate.render({
                 elem: '#rutime' //指定元素
+                ,theme: '#393D89'
             });
         });
-
+        //Demo
         layui.use('laydate', function(){
             var laydate = layui.laydate;
 
             //执行一个laydate实例
             laydate.render({
                 elem: '#srtime' //指定元素
+                ,theme: '#393D49'
             });
         });
-
         //监听行工具事件
         table.on('tool(test)', function(obj){
             var data = obj.data;
@@ -424,6 +422,7 @@
             return true;
         });
     });
+
 </script>
 
 </body>

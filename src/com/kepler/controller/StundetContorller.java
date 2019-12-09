@@ -283,4 +283,25 @@ public class StundetContorller {
         sts.deleStudentDatas(vo);
         return "redirect:/student/studentdata";
     }
+    //林12-9写查询学生成绩页面
+    @RequestMapping(value = "/studentScore")//跳转到学生成绩页面
+    public String studentfengshu(){
+        return "studentScore";
+    }
+    @RequestMapping(value = "/Ling_Score")
+    public void Ling_Score(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list = sts.listStudentScore();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    @RequestMapping(value = "/studentReplyScore")//跳转到答辩页面
+    public String studentReplyScore(){
+        return "studentReplyScore";
+    }
 }

@@ -4,6 +4,7 @@ import com.kepler.vo.EquipmentRepairVo;
 import com.kepler.vo.StudentFloorVo;
 import com.kepler.vo.StudentHuorVo;
 import com.kepler.vo.StudentVo;
+import com.kepler.vo.Student_scoreVo;
 
 import java.util.List;
 import java.util.Map;
@@ -43,4 +44,6 @@ public interface StudentService {
     public void updateStudentData(StudentVo vo);
     //删除学生
     public void deleStudentDatas(StudentVo vo);
+    //查询学生成绩
+    public List<Student_scoreVo> listStudentScore();
 }
