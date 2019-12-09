@@ -70,4 +70,10 @@ public class EmpController {//员工的Controller
         return "redirect:/emp/toEmpData";
     }
 
+    public String addEmp(empVo emp){
+
+
+        return "redirect:/emp/toEmpData";
+    }
+
 }
