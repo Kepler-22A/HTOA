@@ -6,6 +6,7 @@ import com.kepler.service.EmpService;
 import com.kepler.vo.empVo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,5 +46,33 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
         empVo emp = new empVo();
         emp.setEmpId(empId);
         delete(emp);
+    }
+
+    @Override
+    public List getNationList(String type, String position) {
+        List list = new ArrayList();
+        if ("省".equals(type)){
+            list = sqlQuery("select cityname from city where citytype in ('省','直辖市')");
+        }else if ("市".equals(type) && !"北京市".equals(position) && !"天津市".equals(position)){
+            list = sqlQuery("select cityname from city where citytype in ('市') and py = '" + position + "'");
+        }else if("县".equals(type) || "北京市".equals(position) || "天津市".equals(position)){
+            list = sqlQuery("select cityname from city where citytype in ('区','县') and py = '" + position + "'");
+        }
+        return list;
+    }
+
+    @Override
+    public void addEmp(empVo emp) {
+        save(emp);
+    }
+
+    @Override
+    public List sqlPostAndDepId(String postName) {
+        return sqlQuery("select postId,depId from post where postName = '" + postName + "'");
+    }
+
+    @Override
+    public int addCharEmp(int postId,int empId) {
+        return sqlUpdate("insert into CharEmp values((select characterId from characters where postId = " + postId + ")," + empId + ")");
     }
 }

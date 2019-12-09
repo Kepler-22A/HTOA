@@ -27,7 +27,6 @@
                 yes:function(index,layero){
                 }
             });
-
         }
         //修改
         function  update(hourid) {

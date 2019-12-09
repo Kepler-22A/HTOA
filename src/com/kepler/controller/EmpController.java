@@ -1,5 +1,6 @@
 package com.kepler.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.vo.empVo;
@@ -11,7 +12,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -61,7 +68,7 @@ public class EmpController {//员工的Controller
     }
 
     //阳于12-6 10:00开始编辑，用于删除员工
-    @RequestMapping(value = "delEmp/{empId}")
+    @RequestMapping(value = "/delEmp/{empId}")
     public String delEmp(@PathVariable (value = "empId")int empId){
 
         System.out.println(empId);
@@ -70,10 +77,70 @@ public class EmpController {//员工的Controller
         return "redirect:/emp/toEmpData";
     }
 
+    @RequestMapping(value = "/addEmp")
     public String addEmp(empVo emp){
 
 
         return "redirect:/emp/toEmpData";
     }
 
+    @RequestMapping(value = "/getNationList")
+    public void getNationList(String type,String position,HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+        List list = es.getNationList(type,position);
+        JSONArray ja = new JSONArray();
+
+        for (Object o : list){
+            Map cityName = (HashMap)o;
+            ja.add(cityName.get("cityname"));
+        }
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/empAdd")
+    public String empAdd(empVo emp, String nation_1, String nation_2, String nation_3, String BirthdayEX,String hireDayEX){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date d1 = null;
+        try {
+            d1 = format.parse(BirthdayEX);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        d1 = java.sql.Date.valueOf(BirthdayEX);
+
+        emp.setBirthday(d1);
+
+        Date d2 = null;
+        try {
+            d2 = format.parse(hireDayEX);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        d2 = java.sql.Date.valueOf(hireDayEX);
+
+        emp.setHireDay(d2);
+
+        emp.setNation(nation_1+nation_2+nation_3);
+
+        for(Object o : es.sqlPostAndDepId(emp.getPostName())){
+            HashMap map = (HashMap)o;
+            emp.setPostId(Integer.parseInt(map.get("postId")+""));
+            emp.setDepId(Integer.parseInt(map.get("depId")+""));
+        }
+
+        System.out.println(emp);
+
+        es.addEmp(emp);
+
+        es.addCharEmp(emp.getPostId(),emp.getEmpId());
+
+        return "redirect:/emp/toEmpData";
+    }
 }
