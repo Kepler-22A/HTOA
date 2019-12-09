@@ -21,7 +21,7 @@
             layer.open({
                 type: 1,
                 title:"新增",
-                area:['1200px','700px'],
+                area:['70%','70%'],
                 content: $("#sss"),
                 closeBtn :0, //隐藏弹出层的关闭按钮
                 yes:function(index,layero){
@@ -76,8 +76,7 @@
 
 
         function guanbi() {
-            url:'${pageContext.request.contextPath}/student/studentdata'
-            parent.location.reload();
+            layer.close(layer.index);
         }
     </script>
 
@@ -399,7 +398,7 @@
         });
     });
     function fuzhi() {
-        document.getElementById("q").value="姓名";
+        document.getElementById("q").value="刘世阳";
         document.getElementById("w").value="123456";
         document.getElementById("e").value="18";
         document.getElementById("r").value="99999999";
