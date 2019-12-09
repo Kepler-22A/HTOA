@@ -98,11 +98,11 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">考核管理</a>
+                    <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">考核指标</a></dd>
-                        <dd><a href="javascript:;">员工考核</a></dd>
-                        <dd><a href="javascript:;">教师考评</a></dd>
+                        <dd><a data-url="/Controller/examine" data-id="31" data-title="考核指标" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考核指标</a></dd>
+                        <dd><a data-url="/Controller/empExamine" data-id="32" data-title="员工考核" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">员工考核</a></dd>
+                        <dd><a data-url="/Controller/teacherExamine" data-id="33" data-title="教师考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">教师考评</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
