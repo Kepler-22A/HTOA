@@ -3,11 +3,14 @@ package com.kepler.service.impl;
 import com.kepler.dao.BaseDao;
 import com.kepler.service.ClassService;
 import com.kepler.service.EmpService;
+import com.kepler.vo.CharEmpVo;
 import com.kepler.vo.empVo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -46,6 +49,13 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
         empVo emp = new empVo();
         emp.setEmpId(empId);
         delete(emp);
+
+        CharEmpVo charEmp = selCharEmpVoByEmpId(empId);
+        delete(charEmp);
+    }
+
+    @Override
+    public void delCharEmp(int empId) {
     }
 
     @Override
@@ -72,7 +82,49 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     }
 
     @Override
+    public empVo selEmpById(int empId) {
+        return (empVo) getObject(empVo.class,empId);
+    }
+
+    @Override
+    public void updataEmpVo(empVo emp) {
+        update(emp);
+    }
+
+    @Override
     public int addCharEmp(int postId,int empId) {
         return sqlUpdate("insert into CharEmp values((select characterId from characters where postId = " + postId + ")," + empId + ")");
+    }
+
+    @Override
+    public CharEmpVo selCharEmpVoByEmpId(int empId) {
+        List list = sqlQuery("select * from CharEmp where empId = " + empId);
+
+        CharEmpVo charEmp = new CharEmpVo();
+
+        for (Object o : list){
+            Map map = (HashMap)o;
+            charEmp.setCharEmpId(Integer.parseInt(map.get("charEmpId")+""));
+            charEmp.setCharacterId(Integer.parseInt(map.get("characterId")+""));
+            charEmp.setEmpId(map.get("empId")+"");
+        }
+
+        return charEmp;
+    }
+
+    @Override
+    public int selCharacterIdByPostId(int postId) {
+        int characterId = 0;
+        for (Object o : sqlQuery("select characterId from characters where postId = " + postId)){
+            System.out.println(o+"");
+            characterId = Integer.parseInt(((HashMap)o).get("characterId")+"");
+        }
+
+        return characterId;
+    }
+
+    @Override
+    public void updateCharEmp(CharEmpVo charEmp) {
+        update(charEmp);
     }
 }
