@@ -251,6 +251,10 @@
     //     addShiOption($("#nation_1").val());
     // });
 
+    function closeForm() {
+        layer.closeAll();
+    }
+
     layui.use(['layer', 'jquery', 'form'], function() {
         var layer = layui.layer,
             $ = layui.jquery,
@@ -267,7 +271,9 @@
             //     ,'密码必须6到12位，且不能出现空格'
             // ]
             ,postName: function(value){
-                if(value != "专职班主任" || value != "讲师" || value != "学工主任" || value != "教研副主任" || value != "教研主任"){
+                if(value == "专职班主任" || value == "讲师" || value == "学工主任" || value == "教研副主任" || value == "教研主任"){
+
+                }else {
                     return '请输入正确的职务名';
                 }
             }
@@ -297,7 +303,7 @@
                 }
             }
             ,Email:[
-                /^[a-z0-9A-Z]+[- | a-z0-9A-Z . _]+@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-z]{2,}$/
+                /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
                 ,'请输入正确的邮箱格式！'
             ]
             ,University: function (value) {
@@ -326,10 +332,6 @@
             }
         });
 
-    }
-
-    function closeForm() {
-        layer.close(layer.index);
     }
 
     layui.use('form', function(){
