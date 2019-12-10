@@ -62,6 +62,10 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     }
 
     @Override
+    public void AddEuipment(EquipmentRepairVo equipmentRepairVo) {
+        save(equipmentRepairVo);
+    }
+    @Override
     public List<EquipmentRepairVo> listEquipmentData() {
         return hqlQuery("from EquipmentRepairVo");
     }
@@ -75,6 +79,26 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     @Override
     public void addfloor(StudentFloorVo studentFloorVo) {
         save(studentFloorVo);
+    }
+
+    @Override
+    public List listEquipmentbyId(Class className, int id) {
+        List list = new ArrayList();
+        list.add(getObject(className,id));
+        return list;
+    }
+
+    @Override
+    public void updateEquiment(EquipmentRepairVo equipmentRepairVo) {
+        update(equipmentRepairVo);
+    }
+
+    @Override
+    public void delEquipment(int id) {
+        EquipmentRepairVo equipmentRepairVo = new EquipmentRepairVo();
+        equipmentRepairVo.setEquipmentId(id);
+
+        delete(equipmentRepairVo);
     }
 
     @Override

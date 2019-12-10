@@ -34,6 +34,14 @@ public interface StudentService {
     public void deletefloor(int id);
     //查设备维修数据
     public List<EquipmentRepairVo> listEquipmentData();
+    //添加设备维修记录
+    public void AddEuipment(EquipmentRepairVo equipmentRepairVo);
+    //根据id查找设备维修信息
+    public List listEquipmentbyId(Class className, int id);
+    //修改设备信息
+    public void updateEquiment(EquipmentRepairVo equipmentRepairVo);
+    //删除设备维修记录
+    public void delEquipment(int id);
     //查询学生资料
     public List<StudentVo> liststudentdata();
     //添加学生

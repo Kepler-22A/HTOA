@@ -206,14 +206,69 @@ public class StundetContorller {
         json.put("data",list);
         pwt.print(json.toString());
     }
+    @RequestMapping(value = "/selEquipmentById")
+    public void selEquipmentById(int id, HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
 
+        List list = sts.listEquipmentbyId((new EquipmentRepairVo()).getClass(),id);
+
+        JSONObject jo = new JSONObject();
+
+        for (Object o : list){
+            jo.put("equipment",(EquipmentRepairVo)o);
+        }
+
+
+        System.out.println(jo);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     //添加设备维修记录
     @RequestMapping("/addequipment")
-    public String addequipment(){
+    public String addequipment(EquipmentRepairVo equipmentRepairVo){
+        equipmentRepairVo.setStartTime(new Date());
+        sts.AddEuipment(equipmentRepairVo);
+        return "redirect:/student/equipmentRepair";
+    }
+    //修改设备维修信息
+    @RequestMapping("/updateEquiment/{equipmentId}")
+    public String updateEquiment(EquipmentRepairVo equipmentRepairVo, @PathVariable(value = "equipmentId")int equipmentId){
+//        System.out.println(hourid);
+        equipmentRepairVo.setEquipmentId(equipmentId);
+//        System.out.println(studentHuorVo);
+        sts.updateEquiment(equipmentRepairVo);
 
         return "redirect:/student/equipmentRepair";
     }
+    //完成设备维修
+    @RequestMapping("/finishEquipment/{equipmentId}")
+    public String FinishEquipment(@PathVariable(value = "equipmentId")int equipmentId){
 
+        List list = sts.listEquipmentbyId(EquipmentRepairVo.class,equipmentId);
+        EquipmentRepairVo equipmentRepairVo = new EquipmentRepairVo();
+        for (Object o : list){
+            equipmentRepairVo = (EquipmentRepairVo)o;
+        }
+        equipmentRepairVo.setEndTime(new Date());
+        equipmentRepairVo.setStatus(1);  //0 未完成  1 完成
+//        System.out.println(equipmentRepairVo);
+        sts.updateEquiment(equipmentRepairVo);
+
+        return "redirect:/student/equipmentRepair";
+    }
+    //刪除設備維修記錄
+    @RequestMapping("/delEquipment")
+    public String delEquipment(EquipmentRepairVo equipmentRepairVo){
+        sts.delEquipment(equipmentRepairVo.getEquipmentId());
+        return "equipmentRepair";
+    }
+//--------------------------------------------------------------------------------------------------------------
 
     //林5号10点 开始编辑，用于跳转学生资料展示页面
     @RequestMapping(value = "/studentdata")
