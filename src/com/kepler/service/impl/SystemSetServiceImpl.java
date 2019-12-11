@@ -3,6 +3,7 @@ package com.kepler.service.impl;
 import com.kepler.dao.BaseDao;
 import com.kepler.service.ClassService;
 import com.kepler.service.SystemSetService;
+import com.kepler.vo.ClassTypeVo;
 import com.kepler.vo.StudentFallVo;
 import org.springframework.stereotype.Service;
 
@@ -40,4 +41,36 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
 
         delete(studentFallVo);
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public List<ClassTypeVo> listClassTyopeData() {
+        return  hqlQuery("from ClassTypeVo");
+    }
+
+    @Override
+    public void AddClassType(ClassTypeVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<ClassTypeVo> selectClassById(int id) {
+        return sqlQuery("select * from classType where calssTypeId ="+id);
+    }
+
+    @Override
+    public void updateClassData(ClassTypeVo vo) {
+        update(vo);
+    }
+
+
+    @Override
+    public void deleClassDatas(int id) {
+        ClassTypeVo classTypeVo = new ClassTypeVo();
+        classTypeVo.setCalssTypeId(id);
+
+        delete(classTypeVo);
+    }
+    //------------------------------------------------------------------------------------------------------------------
 }

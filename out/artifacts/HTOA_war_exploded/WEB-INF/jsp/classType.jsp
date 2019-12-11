@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>届别设置</title>
+    <title>班级类别</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -20,6 +20,7 @@
     <script type="text/javascript">
         //添加
         function add() {
+            // $("#addfloor").reset();
             layer.open({
                 type: 1,
                 title:"新增",
@@ -32,15 +33,13 @@
                     return false;
                 }
             });
-
         }
         //修改
-        function  update(fallid) {
-            $.post("${pageContext.request.contextPath}/system/selectSystemID",{id : fallid},function (d) {
-                $("#addfloor").attr("action","${pageContext.request.contextPath}/system/UpdateSystemID/" + d.StudentFallVo.fallid);
-                $("#fallid").val(d.StudentFallVo.fallid);
-                $("#level").val(d.StudentFallVo.level);
-                $("#remark").val(d.StudentFallVo.remark);
+        function  update(calssTypeId) {
+            $.post("${pageContext.request.contextPath}/system/selectClassID",{id : calssTypeId},function (d) {
+                $("#addfloor").attr("action","${pageContext.request.contextPath}/system/UpdateClassID/" + d.ClassTypeVo.calssTypeId);
+                $("#calssTypeId").val(d.ClassTypeVo.calssTypeId);
+                $("#classTypeName").val(d.ClassTypeVo.classTypeName);
             },"json");
             layer.open({
                 type: 1,
@@ -56,22 +55,20 @@
             });
         }
 
-
         //删除
-        function  del(fallid) {
+        function  del(calssTypeId) {
             layer.confirm('是否要删除？', {
                 icon:3,
                 btn: ['确认','取消'] //按钮
             }, function(){
-                $.post("${pageContext.request.contextPath}/system/delSystem",{fallid:fallid},
+                $.post("${pageContext.request.contextPath}/system/delClassType",{calssTypeId:calssTypeId},
                     function (data) {
-                         parent.location.reload();
+                        parent.location.reload();
                     });
                 layer.msg('已删除', {
                     icon: 1,
                     time:2000
                 });
-
 
             }, function(){
                 layer.msg('已取消', {
@@ -93,56 +90,50 @@
 </script>
 <div class="layui-form">
     <table class="layui-table" align="center" id="Table" lay-filter="Table" ></table>
-        </tbody>
-        <script>
-            layui.use('table', function(){
-                var table = layui.table;
-                table.render({
-                    elem: '#Table'
-                    ,url:'/system/data'
-                    ,toolbar: '#toolbarDemo'
-                    ,height:400
-                    ,cols: [[
-                        {field:'fallid', width:100, title: '编号', sort: true}
-                        ,{field:'level', width:250, title: '届别名称', sort: true}
-                        ,{field:'remark', width:250, title: '说明', sort: true}
-                        ,{width:180, title: '操作', toolbar:'#dus' }
-                    ]]
-                    ,page: true
-                });
-                //头工具栏事件
-                table.on('toolbar(Table)', function(obj){
-                    var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
-                    switch(obj.event){
-                        case 'getCheckData':
-                            var data = checkStatus.data;  //获取选中行数据
-                            layer.alert(JSON.stringify(data));
-                            break;
-                    };
-                });
+    </tbody>
+    <script>
+        layui.use('table', function(){
+            var table = layui.table;
+            table.render({
+                elem: '#Table'
+                ,url:'/system/classtypedata'
+                ,toolbar: '#toolbarDemo'
+                ,height:400
+                ,cols: [[
+                    {field:'calssTypeId', width:100, title: '编号', sort: true}
+                    ,{field:'classTypeName', width:250, title: '班级类别名称', sort: true}
+                    ,{width:180, title: '操作', toolbar:'#dus' }
+                ]]
+                ,page: true
             });
-        </script>
-        <script type="text/html" id="dus">
-            <button type="button"  class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{ d.fallid }}')">
-                <i class="layui-icon layui-icon-edit"></i>编辑
-            </button>
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="del('{{ d.fallid }}')">
-                <i class="layui-icon layui-icon-delete"></i> 删除
-            </button>
-        </script>
+            //头工具栏事件
+            table.on('toolbar(Table)', function(obj){
+                var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+                switch(obj.event){
+                    case 'getCheckData':
+                        var data = checkStatus.data;  //获取选中行数据
+                        layer.alert(JSON.stringify(data));
+                        break;
+                };
+            });
+        });
+    </script>
+    <script type="text/html" id="dus">
+        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{d.calssTypeId}}')">
+            <i class="layui-icon layui-icon-edit"></i>编辑
+        </button>
+        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="del('{{ d.calssTypeId }}')">
+            <i class="layui-icon layui-icon-delete"></i> 删除
+        </button>
+
+    </script>
 
 </div>
-    <form  class="layui-form"id="addfloor"  style="display: none" method="post" action="${pageContext.request.contextPath}/system/addSystem">
-        <div class="layui-form-item">
-            <label class="layui-form-label">届别名称:</label>
+    <form  class="layui-form" id="addfloor" style="display: none" method="post" action="${pageContext.request.contextPath}/system/addClassType">
+        <div class="layui-form-item" style="margin-top: 20px;">
+            <label class="layui-form-label" style="width: 100px;">班级类别名称:</label>
             <div class="layui-input-inline">
-                <input id="level" type="text" name="level" required  lay-verify="required" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">说明:</label>
-            <div class="layui-input-inline">
-                <input id="remark" type="text" name="remark" required  lay-verify="required" autocomplete="off" class="layui-input">
+                <input id="classTypeName" type="text" name="classTypeName" required  lay-verify="required" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div align="center">

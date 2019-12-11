@@ -24,8 +24,9 @@
 <div class="layui-fluid" style="padding: 25px 30px 75px ;">
     <div class="layui-row">
         <div class="layui-col-sm3" align="center">
-            <div class="grid-demo grid-demo-bg1"><a href="${pageContext.request.contextPath}/"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
-            <div style="font-size: 20px;">1111</div>
+            <div class="grid-demo grid-demo-bg1">
+                <a href="${pageContext.request.contextPath}/system/systemdata" data-id="301" data-title="届别设置"  class="site-demo-active" style="cursor:pointer" data-type="systemdata"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
+            <div style="font-size: 20px;">届别设置</div>
         </div>
         <div class="layui-col-sm3" align="center">
             <div class="grid-demo"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>
@@ -40,6 +41,7 @@
             <div>5555</div>
         </div>
     </div>
+
 </div>
 <div class="layui-fluid" style="padding: 25px 30px 75px ;">
     <div class="layui-row">

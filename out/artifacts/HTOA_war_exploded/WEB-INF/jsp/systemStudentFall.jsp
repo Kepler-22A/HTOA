@@ -34,7 +34,27 @@
             });
 
         }
-
+        //修改
+        function  update(fallid) {
+            $.post("${pageContext.request.contextPath}/system/selectSystemID",{id : fallid},function (d) {
+                $("#addfloor").attr("action","${pageContext.request.contextPath}/system/UpdateSystemID/" + d.StudentFallVo.fallid);
+                $("#fallid").val(d.StudentFallVo.fallid);
+                $("#level").val(d.StudentFallVo.level);
+                $("#remark").val(d.StudentFallVo.remark);
+            },"json");
+            layer.open({
+                type: 1,
+                title:"修改",
+                area:['400px','200px'],
+                content: $("#addfloor"),
+                closeBtn :1,
+                cancel:function(index,layero){
+                    layer.close(index);
+                    $("#addfloor").hide(); //jquery方式关闭
+                    return false;
+                }
+            });
+        }
 
 
         //删除
@@ -51,6 +71,7 @@
                     icon: 1,
                     time:2000
                 });
+
 
             }, function(){
                 layer.msg('已取消', {
@@ -99,43 +120,19 @@
                             break;
                     };
                 });
-
-                //修改
-                table.on('tool(Table)',function (obj) {
-                    var data = obj.data
-                    if(obj.event === 'edit'){
-                        $("#fallid").val(data.fallid);
-                        $("#level").val(data.level);
-                        $("#remark").val(data.remark);
-                    layer.open({
-                        type: 1,
-                        title:"修改",
-                        skin: 'layui-layer-demo', //样式类名
-                        area:['400px','200px'],
-                        closeBtn: 1, //显示关闭按钮
-                        content: $("#addfloor"),
-                        cancel: function(index, layero){
-                            layer.close(index);
-                            $("#addfloor").hide(); //jquery方式关闭
-                            return false;
-                        }
-                    });
-                    }
-                });
             });
         </script>
         <script type="text/html" id="dus">
+            <button type="button"  class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{ d.fallid }}')">
+                <i class="layui-icon layui-icon-edit"></i>编辑
+            </button>
             <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="del('{{ d.fallid }}')">
                 <i class="layui-icon layui-icon-delete"></i> 删除
-            </button>
-            <button type="button" lay-event="edit" class="layui-btn layui-btn-sm layui-btn-normal" >
-                <i class="layui-icon layui-icon-edit"></i>编辑
             </button>
         </script>
 
 </div>
-<div id="addfloor" style="display: none">
-    <form  class="layui-form" method="post" action="${pageContext.request.contextPath}/system/addSystem">
+    <form  class="layui-form"id="addfloor"  style="display: none" method="post" action="${pageContext.request.contextPath}/system/addSystem">
         <div class="layui-form-item">
             <label class="layui-form-label">届别名称:</label>
             <div class="layui-input-inline">
@@ -152,6 +149,5 @@
             <input type="submit" value="提交" style="height: 30px;width: 50px;">
         </div>
     </form>
-</div>
 </body>
 </html>

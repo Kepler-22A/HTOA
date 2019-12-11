@@ -3,6 +3,7 @@ package com.kepler.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.SystemSetService;
+import com.kepler.vo.ClassTypeVo;
 import com.kepler.vo.StudentFallVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ public class SystemSetController {
     @Resource
     private SystemSetService sys;
 
+    //--------------------------------届别设置-------------------------------------------------------------------------------
         @RequestMapping("/test")
         public String test(){
             return "systemSet";
@@ -78,5 +80,54 @@ public class SystemSetController {
     public String delstudent(StudentFallVo vo){
         sys.deleSystemDatas(vo.getFallid());
         return "redirect:/system/systemdata";
+    }
+
+    //--------------------------------班级类别-------------------------------------------------------------------------------
+    @RequestMapping("/classtype")
+    public String classType(){
+        return "classType";
+    }
+    //  //查询班级类别数据
+    @RequestMapping(value = "/classtypedata")
+    public void classtypedata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List<ClassTypeVo> sum = sys.listClassTyopeData();
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
+    //添加班级类型数据
+    @RequestMapping(value = "/addClassType")
+    public String addClassType(HttpServletRequest request, ClassTypeVo vo){
+        sys.AddClassType(vo);
+        return "redirect:/system/classtype";
+    }
+    //根据班级id查询出数据
+    @RequestMapping(value = "/selectClassID")
+    public void selectClassID(int id,HttpServletResponse response) throws IOException {
+        List list = sys.selectClassById(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("ClassTypeVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+        pwt.print(json.toJSONString());
+    }
+    //修改班级数据
+    @RequestMapping(value = "/UpdateClassID/{calssTypeId}")
+    public String UpdateClassID(@PathVariable(value = "calssTypeId")int calssTypeId, ClassTypeVo vo){
+        sys.updateClassData(vo);
+        return "redirect:/system/classtype";
+    }
+    //删除班级数据
+    @RequestMapping(value = "/delClassType")
+    public String delClassType(ClassTypeVo vo){
+        sys.deleClassDatas(vo.getCalssTypeId());
+        return "redirect:/system/classtype";
     }
 }
