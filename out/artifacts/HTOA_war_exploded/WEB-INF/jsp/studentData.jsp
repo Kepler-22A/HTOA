@@ -75,8 +75,7 @@
 
 
         function guanbi() {
-            url:'${pageContext.request.contextPath}/student/studentdata'
-            layer.close(layer.index);
+            layer.closeAll();
         }
     </script>
 
