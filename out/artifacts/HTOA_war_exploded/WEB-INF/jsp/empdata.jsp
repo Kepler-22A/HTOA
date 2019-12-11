@@ -13,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="/tableFilter.css" media="all">
     <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
     <script>
@@ -67,8 +68,8 @@
 
     </script>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="<%=request.getContextPath()%>/emp/delEmp/{{ d.empId }}">删除</a>
+        <a class="layui-btn layui-btn-xs" href="javascript:update('{{ d.empId }}')" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="" onclick="sss('{{ d.empId }}')">删除</a>
     </script>
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
@@ -81,26 +82,25 @@
 
 <form id="empDataForm" style="display: none" class="layui-form" action="" method="post">
     <div class="layui-form-item">
-        <input type="hidden" name="empId" value="0">
-        <input type="hidden" name="depId" value="3">
-        <input type="hidden" name="remark" value="xxx">
-        <input type="hidden" name="Bank" value="中国工商">
-        <input type="hidden" name="accountName" value="99999999999">
-        <input type="hidden" name="bankNumber" value="999999999999">
-        <input type="hidden" name="alipay" value="99999999">
-        <input type="hidden" name="password" value="123456">
-        <input type="hidden" name="postId" value="3">
-        <input type="hidden" name="status" value="1">
-        <input type="hidden" name="nation" value="xxx">
+        <input id="empId" type="hidden" name="empId" value="0">
+        <input id="remark" type="hidden" name="remark" value="xxx">
+        <input id="Bank" type="hidden" name="Bank" value="中国工商">
+        <input id="accountName" type="hidden" name="accountName" value="99999999999">
+        <input id="bankNumber" type="hidden" name="bankNumber" value="999999999999">
+        <input id="alipay" type="hidden" name="alipay" value="99999999">
+        <input id="password" type="hidden" name="password" value="123456">
+        <input id="postId" type="hidden" name="postId" value="3">
+        <input id="status" type="hidden" name="status" value="1">
+        <input id="nation" type="hidden" name="nation" value="xxx">
         <label class="layui-form-label">员工姓名</label>
         <div class="layui-input-inline">
-            <input type="text" name="empName" lay-verify="empName" autocomplete="off" placeholder="请输入员工姓名" class="layui-input">
+            <input id="empName" type="text" name="empName" lay-verify="empName" autocomplete="off" placeholder="请输入员工姓名" class="layui-input">
         </div>
 
         <div class="layui-inline">
             <label class="layui-form-label">部门名称</label>
             <div class="layui-input-inline">
-                <select name="depId">
+                <select id="depId" name="depId">
                     <option value="1">宏图</option>
                     <option value="2">教研部</option>
                     <option value="3">学工部</option>
@@ -114,19 +114,22 @@
     <div class="layui-form-item">
         <label class="layui-form-label">职务名称</label>
         <div class="layui-input-inline">
-            <input type="text" name="postName" lay-verify="postName" autocomplete="off" placeholder="请输入职务名称" class="layui-input">
+<%--            <input id="postName" type="text" name="postName" lay-verify="postName" autocomplete="off" placeholder="请输入职务名称" class="layui-input">--%>
+            <select id="postName" name="postName">
+
+            </select>
         </div>
 
         <label class="layui-form-label">家庭住址</label>
         <div class="layui-input-inline">
-            <input type="text" name="Address" lay-verify="Address" autocomplete="off" placeholder="请输入家庭住址" class="layui-input">
+            <input id="Address" type="text" name="Address" lay-verify="Address" autocomplete="off" placeholder="请输入家庭住址" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">性别</label>
         <div class="layui-input-inline">
-            <select name="sex">
+            <select id="sex" name="sex">
                 <option value="男">男</option>
                 <option value="女">女</option>
             </select>
@@ -134,14 +137,14 @@
 
         <label class="layui-form-label">身份证号</label>
         <div class="layui-input-inline">
-            <input type="text" name="Cardno" lay-verify="Cardno" autocomplete="off" placeholder="请输入身份证号" class="layui-input">
+            <input id="Cardno" type="text" name="Cardno" lay-verify="Cardno" autocomplete="off" placeholder="请输入身份证号" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item layui-form">
         <label class="layui-form-label">出生日期</label>
         <div class="layui-input-inline">
-            <input type="date" name="BirthdayEX" lay-verify="title" autocomplete="off" placeholder="出生日期" class="layui-input">
+            <input id="BirthdayEX" type="date" name="BirthdayEX" lay-verify="title" autocomplete="off" placeholder="出生日期" class="layui-input">
         </div>
 
         <label class="layui-form-label">籍贯</label>
@@ -165,31 +168,31 @@
     <div class="layui-form-item">
         <label class="layui-form-label">电话号码</label>
         <div class="layui-input-inline">
-            <input type="text" name="Phone" lay-verify="Phone" autocomplete="off" placeholder="请输入电话号码" class="layui-input">
+            <input id="Phone" type="text" name="Phone" lay-verify="Phone" autocomplete="off" placeholder="请输入电话号码" class="layui-input">
         </div>
 
         <label class="layui-form-label">QQ号码</label>
         <div class="layui-input-inline">
-            <input type="text" name="QQcode" lay-verify="QQcode" autocomplete="off" placeholder="请输入QQ号码" class="layui-input">
+            <input id="QQcode" type="text" name="QQcode" lay-verify="QQcode" autocomplete="off" placeholder="请输入QQ号码" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">微信号码</label>
         <div class="layui-input-inline">
-            <input type="text" name="Weixin" lay-verify="Weixin" autocomplete="off" placeholder="请输入微信号码" class="layui-input">
+            <input id="Weixin" type="text" name="Weixin" lay-verify="Weixin" autocomplete="off" placeholder="请输入微信号码" class="layui-input">
         </div>
 
         <label class="layui-form-label">邮箱地址</label>
         <div class="layui-input-inline">
-            <input type="text" name="Email" lay-verify="Email" autocomplete="off" placeholder="请输入邮箱地址" class="layui-input">
+            <input id="Email" type="text" name="Email" lay-verify="Email" autocomplete="off" placeholder="请输入邮箱地址" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">婚姻状况</label>
         <div class="layui-input-inline">
-            <select name="married">
+            <select id="married" name="married">
                 <option value="">----未选择----</option>
                 <option value="已婚">已婚</option>
                 <option value="未婚">未婚</option>
@@ -200,19 +203,19 @@
 
         <label class="layui-form-label">毕业学校</label>
         <div class="layui-input-inline">
-            <input type="text" name="University" lay-verify="University" autocomplete="off" placeholder="请输入毕业学校" class="layui-input">
+            <input id="University" type="text" name="University" lay-verify="University" autocomplete="off" placeholder="请输入毕业学校" class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item">
         <label class="layui-form-label">专业</label>
         <div class="layui-input-inline">
-            <input type="text" name="Major" lay-verify="Major" autocomplete="off" placeholder="请输入您的专业" class="layui-input">
+            <input id="Major" type="text" name="Major" lay-verify="Major" autocomplete="off" placeholder="请输入您的专业" class="layui-input">
         </div>
 
         <label class="layui-form-label">学历</label>
         <div class="layui-input-inline">
-            <select name="Education">
+            <select id="Education" name="Education">
                 <option value="">----未选择----</option>
                 <option value="高中以下">高中以下</option>
                 <option value="专科">专科</option>
@@ -225,12 +228,12 @@
     <div class="layui-form-item">
         <label class="layui-form-label">入职日期</label>
         <div class="layui-input-inline">
-            <input type="date" name="hireDayEX" lay-verify="title" autocomplete="off" placeholder="入职日期" class="layui-input">
+            <input id="hireDayEX" type="date" name="hireDayEX" lay-verify="title" autocomplete="off" placeholder="入职日期" class="layui-input">
         </div>
 
         <label class="layui-form-label">登录密码</label>
         <div class="layui-input-inline">
-            <input type="text" name="password" disabled="disabled" lay-verify="title" autocomplete="off" placeholder="登录密码默认123456" class="layui-input">
+            <input id="passwordEX" type="text" name="password" disabled="disabled" lay-verify="title" autocomplete="off" placeholder="登录密码默认123456" class="layui-input">
         </div>
     </div>
 
@@ -253,6 +256,28 @@
 
     function closeForm() {
         layer.closeAll();
+        $("#empName").val("");
+        $("#depId").val("1");
+        // $("#depId option[value='"+d.emp.depId+"']").attr("selected", true);
+        // $("#select_id option[text='jquery']").attr("selected", true);
+        $("#postName").val("教研主任");
+        $("#Address").val("");
+        $("#sex").val("男");
+        $("#Cardno").val("");
+        $("#BirthdayEX").val("");
+        $("#Phone").val("");
+        $("#QQcode").val("");
+        $("#Weixin").val("");
+        $("#Email").val("");
+        $("#married").val("----未选择----");
+        $("#University").val("");
+        $("#Major").val("");
+        $("#Education").val("----未选择----");
+
+        $("#nation_1").val("北京市");
+        $("#hireDayEX").val("");
+
+        addShiOption("北京市");
     }
 
     layui.use(['layer', 'jquery', 'form'], function() {
@@ -270,13 +295,13 @@
             //     /^[\S]{6,12}$/
             //     ,'密码必须6到12位，且不能出现空格'
             // ]
-            ,postName: function(value){
-                if(value == "专职班主任" || value == "讲师" || value == "学工主任" || value == "教研副主任" || value == "教研主任"){
-
-                }else {
-                    return '请输入正确的职务名';
-                }
-            }
+            // ,postName: function(value){
+            //     if(value == "专职班主任" || value == "讲师" || value == "学工主任" || value == "教研副主任" || value == "教研主任"){
+            //
+            //     }else {
+            //         return '请输入正确的职务名';
+            //     }
+            // }
             ,Address: function (value) {
                 if (value == '' || value == null){
                     return '请输入家庭住址';
@@ -334,15 +359,102 @@
 
     }
 
+    function  update(empId) {
+        $.post("${pageContext.request.contextPath}/emp/selEmpById/"+empId,{},function (d) {
+            $("#empDataForm").attr("action","${pageContext.request.contextPath}/emp/empUpdate/");
+            $("#empId").val(d.emp.empId);
+            $("#remark").val(d.emp.remark);
+            $("#Bank").val(d.emp.bank);
+            $("#accountName").val(d.emp.accountName);
+            $("#bankNumber").val(d.emp.bankNumber);
+            $("#alipay").val(d.emp.alipay);
+            $("#password").val(d.emp.password);
+            $("#postId").val(d.emp.postId);
+            $("#status").val(d.emp.status);
+            $("#nation").val(d.emp.nation);
+            $("#empName").val(d.emp.empName);
+            $("#depId").val(d.emp.depId);
+            // $("#depId option[value='"+d.emp.depId+"']").attr("selected", true);
+            // $("#select_id option[text='jquery']").attr("selected", true);
+            $("#postName").val(d.emp.postName);
+            $("#Address").val(d.emp.address);
+            $("#sex").val(d.emp.sex);
+            $("#Cardno").val(d.emp.cardno);
+            $("#BirthdayEX").val(getDateYYYYmmdd(d.emp.birthday));
+            $("#Phone").val(d.emp.phone);
+            $("#QQcode").val(d.emp.qQcode);
+            $("#Weixin").val(d.emp.weixin);
+            $("#Email").val(d.emp.email);
+            $("#married").val(d.emp.married);
+            $("#University").val(d.emp.university);
+            $("#Major").val(d.emp.major);
+            $("#Education").val(d.emp.education);
+            var nation = d.emp.nation;
+            if (nation.indexOf('省') == -1 || nation.indexOf('省') == null){
+                $("#nation_1").val(nation.substr(0,nation.indexOf('市')+1));
+
+                addShiOption(nation.substr(0,nation.indexOf('市')+1));
+                $("#nation_2").val(nation.substr(nation.indexOf('市')+1,nation.length));
+            }else {
+                $("#nation_1").val(nation.substr(0,nation.indexOf('省')+1));
+
+                addShiOption(nation.substr(0,nation.indexOf('省')+1));
+                $("#nation_2").val(nation.substring(nation.indexOf('省')+1,nation.indexOf('市')+1));
+
+                addXianOption(nation.substring(nation.indexOf('省')+1,nation.indexOf('市')+1));
+                $("#nation_3").val(nation.substr(nation.indexOf('市')+1,nation.length+1));
+            }
+            $("#hireDayEX").val(getDateYYYYmmdd(d.emp.hireDay));
+            $("#password").val(d.emp.password);
+
+            layui.form.render('select');
+        },"json");
+        layer.open({
+            type: 1,
+            title:"修改",
+            area:['45%','75%'],
+            content: $("#empDataForm"),
+            closeBtn :0, //隐藏弹出层的关闭按钮
+            yes:function(index,layero){
+            }
+        });
+    }
+
+    function sss(empId) {
+        if(confirm('确认删除？')){
+            $.post('<%=request.getContextPath()%>/emp/delEmp/' + empId, {}, function () {
+
+            }, 'json');
+        }
+    }
+
     layui.use('form', function(){
         var form = layui.form;
         //监听提交
         form.on('submit(formDemo)', function(data){
-            layer.msg("成功添加");
+            layer.msg("操作成功！");
             return true;
         });
     });
 
+    function getDateYYYYmmdd(datelong){
+        var ddd = new Date(datelong);
+        var day =ddd.getDate();
+        var month = ddd.getMonth()+1;
+
+        if(ddd.getMonth()<10){
+            var month = "0"+(ddd.getMonth()+1);
+        }
+
+        if(ddd.getDate()<10){
+            day = "0"+ddd.getDate();
+        }
+
+        var datew = ddd.getFullYear()+"-"+month+"-"+day;
+        var datew = datew.toString();
+
+        return datew;
+    }
 
     //监听省&直辖市的select是否改变
     layui.use(['layer', 'jquery', 'form'], function () {
@@ -368,6 +480,7 @@
 
     //此方法根据省&直辖市select的变化改变所属市&区
     function addShiOption(position) {
+        $.ajaxSettings.async = false;
         $.post("/emp/getNationList",{type:'市',position:position},function (data) {
             var form = layui.form;
             var nation_2_text = "";
@@ -378,10 +491,12 @@
             form.render('select');
             addXianOption($("#nation_2").val());
         },"json");
+        $.ajaxSettings.async = true;
     }
 
     //此方法根据市select的变化改变所属县
     function addXianOption(position) {
+        $.ajaxSettings.async = false;
         $.post("/emp/getNationList",{type:'县',position:position},function (data) {
             var form = layui.form;
             var nation_3_text = "";
@@ -391,10 +506,21 @@
             $("#nation_3").html(nation_3_text);
             form.render('select');
         },"json");
+        $.ajaxSettings.async = true;
     }
 
     //当页面加载完成时初步加载省select
     $(document).ready(function () {
+        $.post("/emp/getPostName",{},function (data) {
+            var form = layui.form;
+            var postName_text = "";
+            $.each(data,function (index,obj) {
+                postName_text += "<option value='" + obj + "'>" + obj + "</option>";
+            });
+            $("#postName").html(postName_text);
+            form.render('select');
+        },'json')
+
         $.post("/emp/getNationList",{type:'省',position:''},function (data) {
             var form = layui.form;
             var nation_1_text = "";

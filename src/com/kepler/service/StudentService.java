@@ -1,10 +1,6 @@
 package com.kepler.service;
 
-import com.kepler.vo.EquipmentRepairVo;
-import com.kepler.vo.StudentFloorVo;
-import com.kepler.vo.StudentHuorVo;
-import com.kepler.vo.StudentVo;
-import com.kepler.vo.Student_scoreVo;
+import com.kepler.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -54,4 +50,16 @@ public interface StudentService {
     public void deleStudentDatas(StudentVo vo);
     //查询学生成绩
     public List<Student_scoreVo> listStudentScore();
+    //查询出学生答辩成绩
+    public List<StudentReplyScoreVo>listStudentReplyScore();
+    //查询出老师的名字
+    public List listTeacherName();
+    //查询出班主任的名字
+    public List listClassTeacherName();
+    //查询出班级类别
+    public List listClassType();
+    //查询出系列
+    public List listDept();
+    //查询专业名称
+    public List listmajorId();
 }
