@@ -3,10 +3,7 @@ package com.kepler.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.StudentService;
-import com.kepler.vo.EquipmentRepairVo;
-import com.kepler.vo.StudentFloorVo;
-import com.kepler.vo.StudentHuorVo;
-import com.kepler.vo.StudentVo;
+import com.kepler.vo.*;
 import org.activiti.engine.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -358,5 +355,100 @@ public class StundetContorller {
     @RequestMapping(value = "/studentReplyScore")//跳转到答辩页面
     public String studentReplyScore(){
         return "studentReplyScore";
+    }
+    @RequestMapping(value = "/Ling_ReplyScore")
+    public void Ling_ScoreReplyScore(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list = sts.listStudentReplyScore();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        System.out.println(list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    //跳转到班级管理页面
+    @RequestMapping(value = "/studentClass")
+    public String studentClass(){
+        return "studentClass";
+    }
+    //查询班级信息
+    @RequestMapping(value = "/selectstudentClass")
+    public void selectstudentClass(){
+
+    }
+    //添加班级信息
+    //12-10
+    //根据ajax查询老师的名字
+    @RequestMapping(value = "/teacherNameAjax")
+    public void teacherNameAjax(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        //查询出老师的名字
+        List<empVo> list = sts.listTeacherName();
+        jsonObject.put("name",list);
+        System.out.println(jsonObject.toJSONString());
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
+    }
+    //根据ajax查询班主任的名字
+    @RequestMapping(value = "/ClassTeacherNameAjax")
+    public void ClassTeacherNameAjax(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        //查询出老师的名字
+        List<empVo> list = sts.listClassTeacherName();
+        jsonObject.put("name1",list);
+        System.out.println(jsonObject.toJSONString());
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
+    }
+    //根据ajax查询班级类别的名字
+    @RequestMapping(value = "/ClassTypeAjax")
+    public void ClassTypeAjax(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        //查询出老师的名字
+        List<empVo> list = sts.listClassType();
+        jsonObject.put("name2",list);
+        System.out.println(jsonObject.toJSONString());
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
+    }
+    //根据ajax查询系列
+    @RequestMapping(value = "/selectdeptId")
+    public void selectdeptId(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        //查询出老师的名字
+        List<empVo> list = sts.listDept();
+        jsonObject.put("name3",list);
+        System.out.println(jsonObject.toJSONString());
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
+    }
+    //根据Ajax查询专业名称
+    @RequestMapping(value = "/selectmajorId")
+    public void selectmajorId(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        //查询出老师的名字
+        List<empVo> list = sts.listmajorId();
+        jsonObject.put("name4",list);
+        System.out.println(jsonObject.toJSONString());
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
     }
 }

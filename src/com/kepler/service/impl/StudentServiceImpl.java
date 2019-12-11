@@ -2,11 +2,7 @@ package com.kepler.service.impl;
 
 import com.kepler.dao.BaseDao;
 import com.kepler.service.StudentService;
-import com.kepler.vo.EquipmentRepairVo;
-import com.kepler.vo.StudentFloorVo;
-import com.kepler.vo.StudentHuorVo;
-import com.kepler.vo.StudentVo;
-import com.kepler.vo.Student_scoreVo;
+import com.kepler.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -130,5 +126,35 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public List<Student_scoreVo> listStudentScore() {
         return sqlQuery("select scoreId,t.stuname,s.score,Rescore,courseName,courseTypeName,termName,scoreTime,o.empName,s.remark from Student_score s,Student t,Course c,CourseType u,Term e,empVo o where\n" +
                 " s.stuid = t.Studid and s.courseId =c.courseID and c.courseTypeID=u.courseTypeID and s.termid=e.termID and s.Empid=o.empId");
+    }
+
+    @Override
+    public List<StudentReplyScoreVo> listStudentReplyScore() {
+        return sqlQuery("select replyId,u.stuname,className,projectId,score1,score2,score3,score4,score5,score6,score7,s.Remark from studentReplyScore s,Student u,StudentClass l where s.empId=u.Studid and u.clazz =l.classid");
+    }
+
+    @Override
+    public List<empVo> listTeacherName() {
+        return sqlQuery("select empId,empName from empVo where postId = 3");//讲师
+    }
+
+    @Override
+    public List<empVo> listClassTeacherName() {
+        return sqlQuery("select empId,empName from empVo where postId = 5"); //班主任
+    }
+
+    @Override
+    public List listClassType() {
+        return sqlQuery("select calssTypeId,classTypeName from classType");//班级类别
+    }
+
+    @Override
+    public List listDept() {
+        return sqlQuery("select deptID,deptName from Dept");//系列
+    }
+
+    @Override
+    public List listmajorId() {
+        return sqlQuery("select majorID,majorName from Major");//专业
     }
 }
