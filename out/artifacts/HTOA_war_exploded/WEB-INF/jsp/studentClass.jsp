@@ -19,7 +19,7 @@
     <script type="text/javascript">
         //添加
         function add() {
-            $("#sss").attr("action","${pageContext.request.contextPath}/student/studentClass");
+            $("#sss").attr("action","${pageContext.request.contextPath}/student/studentClassAdd");
             layer.open({
                 type: 1,
                 title:"新增",
@@ -30,13 +30,42 @@
                 }
             });
         }
+        function guanbi() {
+            layer.closeAll();
+        }
+        function  update(hourid) {
+            $.post("${pageContext.request.contextPath}/student/selectStudentClassID",{id : hourid},function (d) {//去后台查询数据
+                $("#sss").attr("action","${pageContext.request.contextPath}/student/UpdateStudentClassID/" + d.StudentVo.classid);
+                $("#classid").val(d.StudentVo.classid);
+                $("#a").val(d.StudentVo.classno);
+                $("#b").val(d.StudentVo.className);
+                $("#count").val(50);
 
+            },"json");
+            layer.open({
+                type: 1,
+                title:"修改",
+                area:['70%','70%'],
+                content: $("#sss"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
+                yes:function(index,layero){
+                }
+            });
+        }
+        //删除
+        function  delhourstudent(classid) {
+            if(confirm("确认删除？")){
+                $.post("${pageContext.request.contextPath}/student/delstudentClassID/"+classid,
+                    function (data) {
+                        parent.location.reload();
+                    });
+            }
 
+        }
     </script>
 </head>
 <body>
 <table class="layui-hide" id="test" lay-filter="test"></table>
-
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
@@ -45,13 +74,12 @@
         <button class="layui-btn layui-btn-sm" onclick="add()">添加学生</button>
     </div>
 </script>
-
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-xs" onclick="update('{{ d.classid }}')">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delhourstudent('{{ d.classid }}')">删除</a>
 </script>
-<form  class="layui-form" id="sss" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/studentadd">
-    <input type="hidden" name="count" value="50"/><!--班级人数-->
+<form  class="layui-form" id="sss" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/studentClassAdd">
+    <input type="hidden" name="count" value="50" id="count"/><!--班级人数-->
     <div style="width: 56%;height: auto;margin-top: 1%">
         <div style="width:50%;height:100%;float: left">
             <div class="layui-form-item">
@@ -116,7 +144,7 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">级别</label>
+            <label class="layui-form-label">届别</label>
             <div class="layui-input-block">
                 <select name="falled" lay-verify="required" id="falled">
                     <option value="">请选择</option>
@@ -143,7 +171,7 @@
 
         table.render({
             elem: '#test'
-            <%--,url:'${pageContext.request.contextPath}/student'--%>
+            ,url:'${pageContext.request.contextPath}/student/selectstudentClass'
             ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
@@ -153,18 +181,15 @@
             ,title: '用户数据表'
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-                ,{field:'username', title:'用户名', width:120, edit: 'text'}
-                ,{field:'email', title:'邮箱', width:150, edit: 'text', templet: function(res){
-                        return '<em>'+ res.email +'</em>'
-                    }}
-                ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
-                ,{field:'city', title:'城市', width:100}
-                ,{field:'sign', title:'签名'}
-                ,{field:'experience', title:'积分', width:80, sort: true}
-                ,{field:'ip', title:'IP', width:120}
-                ,{field:'logins', title:'登入次数', width:100, sort: true}
-                ,{field:'joinTime', title:'加入时间', width:120}
+                ,{field:'classid', title:'序号', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'classno', title:'班级编号', width:120, edit: 'text'}
+                ,{field:'className', title:'班级昵称', width:150, edit: 'text', sort: true}
+                ,{field:'js', title:'授课老师', width:100,edit: 'text'}
+                ,{field:'bzt', title:'班主任',width:100,edit: 'text'}
+                ,{field:'classTypeName', title:'班级类别', width:80, sort: true,edit: 'text'}
+                ,{field:'falled', title:'届别', width:120,edit: 'text'}
+                ,{field:'deptName', title:'系名称', width:150, sort: true,edit: 'text'}
+                ,{field:'MajorName', title:'专业名称', width:150,edit: 'text'}
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
             ]]
             ,page: true
@@ -185,6 +210,7 @@
                 case 'isAll':
                     layer.msg(checkStatus.isAll ? '全选': '未全选');
                     break;
+
 
                 //自定义头工具栏右侧图标 - 提示
                 case 'LAYTABLE_TIPS':

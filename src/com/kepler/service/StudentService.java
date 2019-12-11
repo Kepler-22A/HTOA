@@ -62,4 +62,14 @@ public interface StudentService {
     public List listDept();
     //查询专业名称
     public List listmajorId();
+    //保存班级管理的数据
+    public void studentClassAdd(StudentClassVo vo);
+    //查询出班级信息
+    public List<StudentClassVo> selectStudentClass();
+    //根据id查询出班级管理信息
+    public List<StudentClassVo> seleceStudentClassID(int id);
+    //根据班级管理id修改出班级管理
+    public void updateStudentClassData(StudentClassVo vo);
+    //删除学生
+    public void deleStudentClassTeacherDatas(StudentClassVo vo);
 }
