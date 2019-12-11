@@ -105,6 +105,26 @@ public class EmpController {//员工的Controller
         }
     }
 
+    @RequestMapping(value = "/getPostName")
+    public void getPostName(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+        List list = es.getPostName();
+        JSONArray ja = new JSONArray();
+
+        for (Object o : list){
+            Map postName = (HashMap)o;
+            ja.add(postName.get("postName"));
+        }
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @RequestMapping(value = "/empAdd")
     public String empAdd(empVo emp, String nation_1, String nation_2, String nation_3, String BirthdayEX,String hireDayEX){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");

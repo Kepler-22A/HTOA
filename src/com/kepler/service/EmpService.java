@@ -13,6 +13,7 @@ public interface EmpService {
     void upDataEmpStatus(int empId);//修改员工状态
     void delEmp(int empId);//删除员工
     void delCharEmp(int empId);
+    List getPostName();
     List getNationList(String type,String position); //获取城市列表
     void addEmp(empVo emp); //添加员工
     List sqlPostAndDepId(String postName);

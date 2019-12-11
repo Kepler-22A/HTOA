@@ -59,6 +59,11 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     }
 
     @Override
+    public List getPostName() {
+        return sqlQuery("select postName from post");
+    }
+
+    @Override
     public List getNationList(String type, String position) {
         List list = new ArrayList();
         if ("省".equals(type)){

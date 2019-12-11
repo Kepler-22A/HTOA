@@ -13,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="/tableFilter.css" media="all">
     <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
     <script>
@@ -68,7 +69,7 @@
     </script>
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" href="javascript:update('{{ d.empId }}')" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="<%=request.getContextPath()%>/emp/delEmp/{{ d.empId }}">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="" onclick="sss('{{ d.empId }}')">删除</a>
     </script>
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
@@ -113,7 +114,10 @@
     <div class="layui-form-item">
         <label class="layui-form-label">职务名称</label>
         <div class="layui-input-inline">
-            <input id="postName" type="text" name="postName" lay-verify="postName" autocomplete="off" placeholder="请输入职务名称" class="layui-input">
+<%--            <input id="postName" type="text" name="postName" lay-verify="postName" autocomplete="off" placeholder="请输入职务名称" class="layui-input">--%>
+            <select id="postName" name="postName">
+
+            </select>
         </div>
 
         <label class="layui-form-label">家庭住址</label>
@@ -252,6 +256,28 @@
 
     function closeForm() {
         layer.closeAll();
+        $("#empName").val("");
+        $("#depId").val("1");
+        // $("#depId option[value='"+d.emp.depId+"']").attr("selected", true);
+        // $("#select_id option[text='jquery']").attr("selected", true);
+        $("#postName").val("教研主任");
+        $("#Address").val("");
+        $("#sex").val("男");
+        $("#Cardno").val("");
+        $("#BirthdayEX").val("");
+        $("#Phone").val("");
+        $("#QQcode").val("");
+        $("#Weixin").val("");
+        $("#Email").val("");
+        $("#married").val("----未选择----");
+        $("#University").val("");
+        $("#Major").val("");
+        $("#Education").val("----未选择----");
+
+        $("#nation_1").val("北京市");
+        $("#hireDayEX").val("");
+
+        addShiOption("北京市");
     }
 
     layui.use(['layer', 'jquery', 'form'], function() {
@@ -269,13 +295,13 @@
             //     /^[\S]{6,12}$/
             //     ,'密码必须6到12位，且不能出现空格'
             // ]
-            ,postName: function(value){
-                if(value == "专职班主任" || value == "讲师" || value == "学工主任" || value == "教研副主任" || value == "教研主任"){
-
-                }else {
-                    return '请输入正确的职务名';
-                }
-            }
+            // ,postName: function(value){
+            //     if(value == "专职班主任" || value == "讲师" || value == "学工主任" || value == "教研副主任" || value == "教研主任"){
+            //
+            //     }else {
+            //         return '请输入正确的职务名';
+            //     }
+            // }
             ,Address: function (value) {
                 if (value == '' || value == null){
                     return '请输入家庭住址';
@@ -336,7 +362,6 @@
     function  update(empId) {
         $.post("${pageContext.request.contextPath}/emp/selEmpById/"+empId,{},function (d) {
             $("#empDataForm").attr("action","${pageContext.request.contextPath}/emp/empUpdate/");
-            console.log(d.emp);
             $("#empId").val(d.emp.empId);
             $("#remark").val(d.emp.remark);
             $("#Bank").val(d.emp.bank);
@@ -364,7 +389,21 @@
             $("#University").val(d.emp.university);
             $("#Major").val(d.emp.major);
             $("#Education").val(d.emp.education);
+            var nation = d.emp.nation;
+            if (nation.indexOf('省') == -1 || nation.indexOf('省') == null){
+                $("#nation_1").val(nation.substr(0,nation.indexOf('市')+1));
 
+                addShiOption(nation.substr(0,nation.indexOf('市')+1));
+                $("#nation_2").val(nation.substr(nation.indexOf('市')+1,nation.length));
+            }else {
+                $("#nation_1").val(nation.substr(0,nation.indexOf('省')+1));
+
+                addShiOption(nation.substr(0,nation.indexOf('省')+1));
+                $("#nation_2").val(nation.substring(nation.indexOf('省')+1,nation.indexOf('市')+1));
+
+                addXianOption(nation.substring(nation.indexOf('省')+1,nation.indexOf('市')+1));
+                $("#nation_3").val(nation.substr(nation.indexOf('市')+1,nation.length+1));
+            }
             $("#hireDayEX").val(getDateYYYYmmdd(d.emp.hireDay));
             $("#password").val(d.emp.password);
 
@@ -381,11 +420,19 @@
         });
     }
 
+    function sss(empId) {
+        if(confirm('确认删除？')){
+            $.post('<%=request.getContextPath()%>/emp/delEmp/' + empId, {}, function () {
+
+            }, 'json');
+        }
+    }
+
     layui.use('form', function(){
         var form = layui.form;
         //监听提交
         form.on('submit(formDemo)', function(data){
-            layer.msg("成功添加");
+            layer.msg("操作成功！");
             return true;
         });
     });
@@ -433,6 +480,7 @@
 
     //此方法根据省&直辖市select的变化改变所属市&区
     function addShiOption(position) {
+        $.ajaxSettings.async = false;
         $.post("/emp/getNationList",{type:'市',position:position},function (data) {
             var form = layui.form;
             var nation_2_text = "";
@@ -443,10 +491,12 @@
             form.render('select');
             addXianOption($("#nation_2").val());
         },"json");
+        $.ajaxSettings.async = true;
     }
 
     //此方法根据市select的变化改变所属县
     function addXianOption(position) {
+        $.ajaxSettings.async = false;
         $.post("/emp/getNationList",{type:'县',position:position},function (data) {
             var form = layui.form;
             var nation_3_text = "";
@@ -456,10 +506,21 @@
             $("#nation_3").html(nation_3_text);
             form.render('select');
         },"json");
+        $.ajaxSettings.async = true;
     }
 
     //当页面加载完成时初步加载省select
     $(document).ready(function () {
+        $.post("/emp/getPostName",{},function (data) {
+            var form = layui.form;
+            var postName_text = "";
+            $.each(data,function (index,obj) {
+                postName_text += "<option value='" + obj + "'>" + obj + "</option>";
+            });
+            $("#postName").html(postName_text);
+            form.render('select');
+        },'json')
+
         $.post("/emp/getNationList",{type:'省',position:''},function (data) {
             var form = layui.form;
             var nation_1_text = "";
