@@ -18,9 +18,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -322,7 +320,7 @@ public class StundetContorller {
         }
         pwt.print(json.toJSONString());
     }
-    //根据学生id查询出学生资料
+    //根据学生id修改出学生资料
     @RequestMapping(value = "/UpdateStudentID/{Studid}")
     public String UpdateStudentID(@PathVariable(value = "Studid")int Studid,StudentVo vo){
         sts.updateStudentData(vo);
@@ -366,7 +364,6 @@ public class StundetContorller {
         jsonObject.put("count",list.size());
         jsonObject.put("msg","");
         jsonObject.put("data",list);
-        System.out.println(list);
         ptw.print(jsonObject.toJSONString());
     }
     //跳转到班级管理页面
@@ -376,8 +373,16 @@ public class StundetContorller {
     }
     //查询班级信息
     @RequestMapping(value = "/selectstudentClass")
-    public void selectstudentClass(){
-
+    public void selectstudentClass(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list = sts.selectStudentClass();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
     }
     //添加班级信息
     //12-10
@@ -390,7 +395,6 @@ public class StundetContorller {
         //查询出老师的名字
         List<empVo> list = sts.listTeacherName();
         jsonObject.put("name",list);
-        System.out.println(jsonObject.toJSONString());
         pwt.print(jsonObject.toJSONString());
         pwt.flush();
         pwt.close();
@@ -404,7 +408,6 @@ public class StundetContorller {
         //查询出老师的名字
         List<empVo> list = sts.listClassTeacherName();
         jsonObject.put("name1",list);
-        System.out.println(jsonObject.toJSONString());
         pwt.print(jsonObject.toJSONString());
         pwt.flush();
         pwt.close();
@@ -418,7 +421,6 @@ public class StundetContorller {
         //查询出老师的名字
         List<empVo> list = sts.listClassType();
         jsonObject.put("name2",list);
-        System.out.println(jsonObject.toJSONString());
         pwt.print(jsonObject.toJSONString());
         pwt.flush();
         pwt.close();
@@ -432,7 +434,6 @@ public class StundetContorller {
         //查询出老师的名字
         List<empVo> list = sts.listDept();
         jsonObject.put("name3",list);
-        System.out.println(jsonObject.toJSONString());
         pwt.print(jsonObject.toJSONString());
         pwt.flush();
         pwt.close();
@@ -446,9 +447,44 @@ public class StundetContorller {
         //查询出老师的名字
         List<empVo> list = sts.listmajorId();
         jsonObject.put("name4",list);
-        System.out.println(jsonObject.toJSONString());
         pwt.print(jsonObject.toJSONString());
         pwt.flush();
         pwt.close();
+    }
+    //班级管理信息提交
+    @RequestMapping(value = "/studentClassAdd")
+    public String studentClass(StudentClassVo vo){
+        sts.studentClassAdd(vo);
+        return "redirect:/student/studentClass";
+    }
+    //根据班级管理id查询出班级管理信息
+    @RequestMapping(value = "/selectStudentClassID")
+    public void selectStudentClassID(int id,HttpServletResponse response) throws IOException {
+        List list = sts.seleceStudentClassID(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("StudentVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+        pwt.print(json.toJSONString());
+    }
+    //根据班级管理id修改出班级管理
+    @RequestMapping(value = "/UpdateStudentClassID/{classid}")
+    public String UpdateStudentClassID(@PathVariable(value = "classid")int classid,StudentClassVo vo){
+        sts.updateStudentClassData(vo);
+        return "redirect:/student/studentClass";
+    }
+    //删除学生
+    @RequestMapping(value = "/delstudentClassID/{classid}")
+    public String delstudentClassID(@PathVariable(value = "classid")int Studid,StudentClassVo vo){
+        vo.setClassid(Studid);
+        sts.deleStudentClassTeacherDatas(vo);
+        return "redirect:/student/studentClass";
+    }
+    //班级分配
+    @RequestMapping(value = "/studentClassFenPei")
+    public String studentClassFenPei(){
+        return "studentClassFenPei";
     }
 }

@@ -157,4 +157,31 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public List listmajorId() {
         return sqlQuery("select majorID,majorName from Major");//专业
     }
+
+    @Override
+    public void studentClassAdd(StudentClassVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<StudentClassVo> selectStudentClass() {
+        return sqlQuery("select  classid,classno,className,e. empName as bzt,ee.empName as js,classTypeName,falled,deptName,MajorName from StudentClass s  left join  empVo e on  s.classTeacher = e.empid left join empVo ee on s.teacher = ee.empId \n" +
+                "left join classType c on s.classType = c.calssTypeId left join Dept d on s.deptId =d.deptId left join Major m on s.majorId = m.majorID");
+    }
+
+    @Override
+    public List<StudentClassVo> seleceStudentClassID(int id) {
+        return sqlQuery("select  classid,classno,className,e. empName as bzt,ee.empName as js,classTypeName,falled,deptName,MajorName from StudentClass s  left join  empVo e on  s.classTeacher = e.empid left join empVo ee on s.teacher = ee.empId \n" +
+                "left join classType c on s.classType = c.calssTypeId left join Dept d on s.deptId =d.deptId left join Major m on s.majorId = m.majorID where  classid ="+id);
+    }
+
+    @Override
+    public void updateStudentClassData(StudentClassVo vo) {
+         update(vo);
+    }
+
+    @Override
+    public void deleStudentClassTeacherDatas(StudentClassVo vo) {
+        delete(vo);
+    }
 }

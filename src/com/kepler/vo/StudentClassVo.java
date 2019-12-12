@@ -7,17 +7,18 @@ import javax.persistence.*;
 public class StudentClassVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int classid;//主键
-    private String classno;//班级编号
-    private String className;//班级昵称
-    private int count;//班级人数
-    private String teacher;//授课老师员工表外键
-    private String classTeacher;//班主任员工表外键
-    private int classType;//班级类别,关联班级类别表
-    private String remark;//备注
-    private int falled;//关联班级类别
-    private int deptId;//关联系
-    private int majorId;//关联专业表
+    private int classid;//主键  1
+    private String classno;//班级编号 1
+    private String className;//班级昵称1
+    private int count;//班级人数1
+    private String teacher;//授课老师员工表外键1
+    private String classTeacher;//班主任员工表外键1
+    private int classType;//班级类别,关联班级类别表1
+    private String remark;//备注1
+    private int falled;//关联班级类别1
+    private int deptId;//关联系1
+    private int majorId;//关联专业表1
+
 
     @Override
     public String toString() {

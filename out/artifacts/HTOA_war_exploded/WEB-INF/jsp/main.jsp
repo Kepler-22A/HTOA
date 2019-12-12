@@ -82,7 +82,7 @@
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentScore" data-id="22" data-title="学生成绩"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生成绩</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentReplyScore" data-id="23" data-title="答辩成绩"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">答辩成绩</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentClass" data-id="24" data-title="班级管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">班级管理</a></dd>
-                        <dd><a href="javascript:;">班级分配</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentClassFenPei" data-id="25" data-title="班级分配"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">班级分配</a></dd>
                         <dd><a href="javascript:;">课程类别</a></dd>
                         <dd><a href="javascript:;">课程管理</a></dd>
                         <dd><a href="javascript:;">试讲培训</a></dd>
