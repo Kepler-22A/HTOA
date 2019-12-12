@@ -1,6 +1,8 @@
 package com.kepler.service;
 
 import com.kepler.vo.ClassTypeVo;
+import com.kepler.vo.DeptVo;
+import com.kepler.vo.ProjectVo;
 import com.kepler.vo.StudentFallVo;
 
 import java.util.List;
@@ -33,4 +35,29 @@ public interface SystemSetService {
     public void updateClassData(ClassTypeVo vo);
     //删除班级类别数据
     public void deleClassDatas(int id);
+
+    //------------------------------------------项目答辩--------------------------------------------------------------
+
+    //查询项目答辩数据
+    public List<ProjectVo> listProjectData();
+    //添加项目答辩数据
+    public void AddProject(ProjectVo vo);
+    //根据项目答辩id查询出数据
+    public List<ProjectVo> selectProjectById(int id);
+    //修改项目答辩数据
+    public void updateProjectData(ProjectVo vo);
+    //删除项目答辩数据
+    public void deleProjectDatas(int id);
+
+    //------------------------------------------院系设置--------------------------------------------------------------
+    //查询院系数据
+    public List<DeptVo> listDeptData();
+    //添加院系数据
+    public void AddDept(DeptVo vo);
+    //根据院系id查询出数据
+    public List<DeptVo> selectDeptById(int id);
+    //修改院系数据
+    public void updateDeptData(DeptVo vo);
+    //删除院系数据
+    public void deleDeptDatas(int id);
 }

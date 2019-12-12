@@ -29,16 +29,19 @@
             <div style="font-size: 20px;">届别设置</div>
         </div>
         <div class="layui-col-sm3" align="center">
-            <div class="grid-demo"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>
-            <div>2222</div>
+            <div class="grid-demo grid-demo-bg1">
+                <a href="${pageContext.request.contextPath}/system/classtype" data-id="302" data-title="班级类别"  class="site-demo-active" style="cursor:pointer" data-type="classtype"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
+            <div style="font-size: 20px;">班级类别</div>
         </div>
         <div class="layui-col-sm3" align="center">
-            <div class="grid-demo grid-demo-bg1"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>
-            <div>3333</div>
+            <div class="grid-demo grid-demo-bg1">
+                <a href="${pageContext.request.contextPath}/system/project" data-id="303" data-title="项目答辩"  class="site-demo-active" style="cursor:pointer" data-type="classtype"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
+            <div style="font-size: 20px;">项目答辩</div>
         </div>
         <div class="layui-col-sm3" align="center">
-            <div class="grid-demo"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>
-            <div>5555</div>
+            <div class="grid-demo grid-demo-bg1">
+                <a href="${pageContext.request.contextPath}/system/dept" data-id="304" data-title="院系设置"  class="site-demo-active" style="cursor:pointer" data-type="dept"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
+            <div style="font-size: 20px;">院系设置</div>
         </div>
     </div>
 

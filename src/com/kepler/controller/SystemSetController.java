@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.SystemSetService;
 import com.kepler.vo.ClassTypeVo;
+import com.kepler.vo.DeptVo;
+import com.kepler.vo.ProjectVo;
 import com.kepler.vo.StudentFallVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -129,5 +131,105 @@ public class SystemSetController {
     public String delClassType(ClassTypeVo vo){
         sys.deleClassDatas(vo.getCalssTypeId());
         return "redirect:/system/classtype";
+    }
+    //---------------------------------------------------------------------------------------------------
+
+    @RequestMapping("/project")
+    public String project(){
+        return "systemProject";
+    }
+    //  //查询项目答辩数据
+    @RequestMapping(value = "/projectdata")
+    public void projectdata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List<ProjectVo> sum = sys.listProjectData();
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
+    //添加项目答辩数据
+    @RequestMapping(value = "/addProject")
+    public String addProject(HttpServletRequest request, ProjectVo vo){
+        sys.AddProject(vo);
+        return "redirect:/system/project";
+    }
+    //根据项目答辩id查询出数据
+    @RequestMapping(value = "/selectProjectID")
+    public void selectProjectID(int id,HttpServletResponse response) throws IOException {
+        List list = sys.selectProjectById(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("ProjectVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+//        System.out.println("json:"+json);
+        pwt.print(json.toJSONString());
+    }
+    //修改项目答辩数据
+    @RequestMapping(value = "/UpdateProjectID/{projectId}")
+    public String UpdateProjectID(@PathVariable(value = "projectId")int projectId, ProjectVo vo){
+        sys.updateProjectData(vo);
+        System.out.println(vo);
+        return "redirect:/system/project";
+    }
+    //删除项目答辩数据
+    @RequestMapping(value = "/delProject")
+    public String delProject(ProjectVo vo){
+        sys.deleProjectDatas(vo.getProjectId());
+        return "redirect:/system/project";
+    }
+    //---------------------------------------------------------------------------------------------
+    @RequestMapping("/dept")
+    public String dept(){
+        return "systemDept";
+    }
+    //  //查询项目答辩数据
+    @RequestMapping(value = "/deptdata")
+    public void deptdata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List<DeptVo> sum = sys.listDeptData();
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
+    //添加项目答辩数据
+    @RequestMapping(value = "/addDept")
+    public String addDept(HttpServletRequest request, DeptVo vo){
+        sys.AddDept(vo);
+        return "redirect:/system/dept";
+    }
+    //根据项目答辩id查询出数据
+    @RequestMapping(value = "/selectDeptID")
+    public void selectDeptID(int id,HttpServletResponse response) throws IOException {
+        List list = sys.selectDeptById(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("DeptVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+//        System.out.println("json:"+json);
+        pwt.print(json.toJSONString());
+    }
+    //修改项目答辩数据
+    @RequestMapping(value = "/UpdateDeptID/{deptID}")
+    public String UpdateDeptID(@PathVariable(value = "deptID")int deptID, DeptVo vo){
+        sys.updateDeptData(vo);
+        return "redirect:/system/dept";
+    }
+    //删除项目答辩数据
+    @RequestMapping(value = "/delDept")
+    public String delDept(DeptVo vo) {
+        sys.deleDeptDatas(vo.getDeptID());
+        return "redirect:/system/dept";
     }
 }

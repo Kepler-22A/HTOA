@@ -124,14 +124,16 @@
 
         },'json');
         $.ajaxSettings.async = true;
-        parent.location.reload();
+        $(".layui-laypage-btn")[0].click();
+        // parent.location.reload();
     }
     //删除
     function  delhour(equipmentId) {
         if(confirm("确认删除？")){
             $.post("${pageContext.request.contextPath}/student/delEquipment",{equipmentId:equipmentId},
                 function (data) {
-                    parent.location.reload();
+                    $(".layui-laypage-btn")[0].click();
+                    // parent.location.reload();
                 });
         }
 

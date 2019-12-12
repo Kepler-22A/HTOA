@@ -100,9 +100,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a data-url="/Controller/examine" data-id="31" data-title="考核指标" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考核指标</a></dd>
-                        <dd><a data-url="/Controller/empExamine" data-id="32" data-title="员工考核" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">员工考核</a></dd>
-                        <dd><a data-url="/Controller/teacherExamine" data-id="33" data-title="教师考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">教师考评</a></dd>
+                        <dd><a data-url="/Controller/examine" data-id="34" data-title="考核指标" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考核指标</a></dd>
+                        <dd><a data-url="/Controller/empExamine" data-id="35" data-title="员工考核" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">员工考核</a></dd>
+                        <dd><a data-url="/Controller/teacherExamine" data-id="36" data-title="教师考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">教师考评</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -151,13 +151,11 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">系统设置</a>
+                    <a href="#">系统设置</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">系统设置</a></dd>
+                        <dd><a data-url="/system/test" data-id="37" data-title="系统设置" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">系统设置</a></dd>
                     </dl>
                 </li>
-
-
             </ul>
         </div>
     </div>

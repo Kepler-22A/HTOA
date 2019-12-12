@@ -41,7 +41,8 @@
                     function (data) {
 
                     });
-                parent.location.reload();
+                $(".layui-laypage-btn")[0].click();
+                // parent.location.reload();
             }
 
         }

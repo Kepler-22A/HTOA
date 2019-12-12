@@ -64,7 +64,8 @@
             if(confirm("确认删除？")){
                 $.post("${pageContext.request.contextPath}/student/delhour",{hourid:hourid},
                     function (data) {
-                        parent.location.reload();
+                        $(".layui-laypage-btn")[0].click();
+                        // parent.location.reload();
                     });
             }
 
