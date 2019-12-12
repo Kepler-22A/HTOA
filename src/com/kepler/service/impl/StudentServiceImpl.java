@@ -2,11 +2,7 @@ package com.kepler.service.impl;
 
 import com.kepler.dao.BaseDao;
 import com.kepler.service.StudentService;
-import com.kepler.vo.EquipmentRepairVo;
-import com.kepler.vo.StudentFloorVo;
-import com.kepler.vo.StudentHuorVo;
-import com.kepler.vo.StudentVo;
-import com.kepler.vo.Student_scoreVo;
+import com.kepler.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,6 +58,10 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     }
 
     @Override
+    public void AddEuipment(EquipmentRepairVo equipmentRepairVo) {
+        save(equipmentRepairVo);
+    }
+    @Override
     public List<EquipmentRepairVo> listEquipmentData() {
         return hqlQuery("from EquipmentRepairVo");
     }
@@ -75,6 +75,26 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     @Override
     public void addfloor(StudentFloorVo studentFloorVo) {
         save(studentFloorVo);
+    }
+
+    @Override
+    public List listEquipmentbyId(Class className, int id) {
+        List list = new ArrayList();
+        list.add(getObject(className,id));
+        return list;
+    }
+
+    @Override
+    public void updateEquiment(EquipmentRepairVo equipmentRepairVo) {
+        update(equipmentRepairVo);
+    }
+
+    @Override
+    public void delEquipment(int id) {
+        EquipmentRepairVo equipmentRepairVo = new EquipmentRepairVo();
+        equipmentRepairVo.setEquipmentId(id);
+
+        delete(equipmentRepairVo);
     }
 
     @Override
@@ -106,5 +126,62 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public List<Student_scoreVo> listStudentScore() {
         return sqlQuery("select scoreId,t.stuname,s.score,Rescore,courseName,courseTypeName,termName,scoreTime,o.empName,s.remark from Student_score s,Student t,Course c,CourseType u,Term e,empVo o where\n" +
                 " s.stuid = t.Studid and s.courseId =c.courseID and c.courseTypeID=u.courseTypeID and s.termid=e.termID and s.Empid=o.empId");
+    }
+
+    @Override
+    public List<StudentReplyScoreVo> listStudentReplyScore() {
+        return sqlQuery("select replyId,u.stuname,className,projectId,score1,score2,score3,score4,score5,score6,score7,s.Remark from studentReplyScore s,Student u,StudentClass l where s.empId=u.Studid and u.clazz =l.classid");
+    }
+
+    @Override
+    public List<empVo> listTeacherName() {
+        return sqlQuery("select empId,empName from empVo where postId = 3");//讲师
+    }
+
+    @Override
+    public List<empVo> listClassTeacherName() {
+        return sqlQuery("select empId,empName from empVo where postId = 5"); //班主任
+    }
+
+    @Override
+    public List listClassType() {
+        return sqlQuery("select calssTypeId,classTypeName from classType");//班级类别
+    }
+
+    @Override
+    public List listDept() {
+        return sqlQuery("select deptID,deptName from Dept");//系列
+    }
+
+    @Override
+    public List listmajorId() {
+        return sqlQuery("select majorID,majorName from Major");//专业
+    }
+
+    @Override
+    public void studentClassAdd(StudentClassVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<StudentClassVo> selectStudentClass() {
+        return sqlQuery("select  classid,classno,className,e. empName as bzt,ee.empName as js,classTypeName,falled,deptName,MajorName from StudentClass s  left join  empVo e on  s.classTeacher = e.empid left join empVo ee on s.teacher = ee.empId \n" +
+                "left join classType c on s.classType = c.calssTypeId left join Dept d on s.deptId =d.deptId left join Major m on s.majorId = m.majorID");
+    }
+
+    @Override
+    public List<StudentClassVo> seleceStudentClassID(int id) {
+        return sqlQuery("select  classid,classno,className,e. empName as bzt,ee.empName as js,classTypeName,falled,deptName,MajorName from StudentClass s  left join  empVo e on  s.classTeacher = e.empid left join empVo ee on s.teacher = ee.empId \n" +
+                "left join classType c on s.classType = c.calssTypeId left join Dept d on s.deptId =d.deptId left join Major m on s.majorId = m.majorID where  classid ="+id);
+    }
+
+    @Override
+    public void updateStudentClassData(StudentClassVo vo) {
+         update(vo);
+    }
+
+    @Override
+    public void deleStudentClassTeacherDatas(StudentClassVo vo) {
+        delete(vo);
     }
 }

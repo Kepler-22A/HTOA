@@ -64,7 +64,8 @@
             if(confirm("确认删除？")){
                 $.post("${pageContext.request.contextPath}/student/delhour",{hourid:hourid},
                     function (data) {
-                        parent.location.reload();
+                        $(".layui-laypage-btn")[0].click();
+                        // parent.location.reload();
                     });
             }
 
@@ -76,6 +77,7 @@
 
            // parent.location.reload();
             url:'${pageContext.request.contextPath}/student/studenthuor'
+            $("#addfloor").hide(); //jquery方式关闭
             layer.close(layer.index);
             // // 获得frame索引
             // var index = parent.layer.getFrameIndex(window.name);

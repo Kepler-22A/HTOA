@@ -80,9 +80,9 @@
                     <dl class="layui-nav-child">
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentdata" data-id="21" data-title="学生资料"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生资料</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentScore" data-id="22" data-title="学生成绩"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生成绩</a></dd>
-                        <dd><a data-url="${pageContext.request.contextPath}/student/studentReplyScore" data-id="23" data-title="答辩成绩"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生成绩</a></dd>
-                        <dd><a href="javascript:;">班级管理</a></dd>
-                        <dd><a href="javascript:;">班级分配</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentReplyScore" data-id="23" data-title="答辩成绩"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">答辩成绩</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentClass" data-id="24" data-title="班级管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">班级管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentClassFenPei" data-id="25" data-title="班级分配"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">班级分配</a></dd>
                         <dd><a href="javascript:;">课程类别</a></dd>
                         <dd><a href="javascript:;">课程管理</a></dd>
                         <dd><a href="javascript:;">试讲培训</a></dd>
@@ -92,9 +92,9 @@
                 <li class="layui-nav-item">
                     <a href="#">后勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a data-url="${pageContext.request.contextPath}/student/studenthuor" data-id="41" data-title="宿舍管理"  class="site-demo-active" style="cursor:pointer" data-type="studenthuor">宿舍管理</a></dd>
-                        <dd><a data-url="${pageContext.request.contextPath}/student/studentFloor" data-id="34" data-title="楼栋管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">楼栋管理</a></dd>
-                        <dd><a data-url="${pageContext.request.contextPath}/student/equipmentRepair" data-id="43" data-title="维修管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">维修管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studenthuor" data-id="31" data-title="宿舍管理"  class="site-demo-active" style="cursor:pointer" data-type="studenthuor">宿舍管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentFloor" data-id="32" data-title="楼栋管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">楼栋管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/equipmentRepair" data-id="33" data-title="维修管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -160,26 +160,23 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">系统设置</a>
+                    <a href="#">系统设置</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">系统设置</a></dd>
+                        <dd><a data-url="/system/test" data-id="37" data-title="系统设置" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">系统设置</a></dd>
                     </dl>
                 </li>
-
-
             </ul>
         </div>
     </div>
-    <!-- 内容固定区域 -->
     <div class="layui-body">
         <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
-        <ul class="layui-tab-title">
-            <li class="layui-this">首页</li>
-        </ul>
-        <div class="layui-tab-content">
-            <div class="layui-tab-item layui-show">欢迎进入宏图办公！！</div>
+            <ul class="layui-tab-title">
+                <li class="layui-this">首页</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">欢迎进入宏图办公！！</div>
+            </div>
         </div>
-    </div>
     </div>
 
     <div class="layui-footer">
