@@ -13,7 +13,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
-    <link rel="stylesheet" href="/tableFilter.css" media="all">
     <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
     <script>
@@ -26,33 +25,58 @@
 <div class="layui-form">
     <div style="width: 1365px;margin: 0 auto">
         <table id="demo" lay-filter="test"></table>
+        <div style="width: 1365px;height: 250px;background-color: #dcebf7" class="layui-tab">
+            <ul class="layui-tab-title">
+                <li class="layui-this">网站设置</li>
+                <li>用户管理</li>
+                <li>权限分配</li>
+                <li>商品管理</li>
+                <li>订单管理</li>
+            </ul>
+        </div>
     </div>
     <script>
-        layui.use('table', function(){
-            var table = layui.table;
+        function reload(){
+            layui.use('table', function(){
+                var table = layui.table;
 
-            //第一个实例
-            table.render({
-                elem: '#demo'
-                ,height: 523
-                ,url: '/emp/empDataList' //数据接口
-                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-                ,page: true //开启分页
-                ,cols: [[ //表头
-                    {field: 'empId', title: '员工编号', width:100, sort: true, fixed: 'left'}
-                    ,{field: 'empName', title: '员工姓名', width:100}
-                    ,{field: 'depName', title: '部门', width:80}
-                    ,{field: 'postName', title: '职务', width:200}
-                    ,{field: 'sex', title: '性别', width: 60}
-                    ,{field: 'phone', title: '手机号码', width: 200}
-                    ,{field: 'address', title: '家庭住址', width: 200}
-                    ,{field: 'status', title: '状态', width: 60}
-                    ,{field: '', title: '设置状态', width: 100,templet:'#empStatusA'}
-                    ,{field: 'password', title: '初始密码', width: 135}
-                    ,{field: '', title: '操作', width: 115 ,toolbar:'#barDemo'}
-                ]]
+                //第一个实例
+                table.render({
+                    elem: '#demo'
+                    ,height: 523
+                    ,url: '/emp/empDataList' //数据接口
+                    ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                    ,page: true //开启分页
+                    ,cols: [[ //表头
+                        {field: 'empId', title: '员工编号', width:100, sort: true, fixed: 'left'}
+                        ,{field: 'empName', title: '员工姓名', width:100}
+                        ,{field: 'depName', title: '部门', width:80}
+                        ,{field: 'postName', title: '职务', width:200}
+                        ,{field: 'sex', title: '性别', width: 60}
+                        ,{field: 'phone', title: '手机号码', width: 200}
+                        ,{field: 'address', title: '家庭住址', width: 200}
+                        ,{field: 'status', title: '状态', width: 60}
+                        ,{field: '', title: '设置状态', width: 100,templet:'#empStatusA'}
+                        ,{field: 'password', title: '初始密码', width: 135}
+                        ,{field: '', title: '操作', width: 115 ,toolbar:'#barDemo'}
+                    ]]
+                });
+
+                //监听行单击事件
+                table.on('row(test)', function(obj){
+                    console.log(obj.tr) //得到当前行元素对象
+                    console.log(obj.data) //得到当前行数据
+                });
+
             });
+        };
 
+        reload();
+
+        layui.use('element', function(){
+            var element = layui.element;
+
+            //…
         });
     </script>
     <script type="text/html" id="empStatusA">
@@ -69,11 +93,12 @@
     </script>
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-xs" href="javascript:update('{{ d.empId }}')" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="" onclick="sss('{{ d.empId }}')">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="deleteEmp('{{ d.empId }}')">删除</a>
     </script>
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" onclick="add()">添加员工</button>
+            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
         </div>
     </script>
 
@@ -249,17 +274,11 @@
 </form>
 
 <script>
-    // $('#nation_1').change(function () {
-    //     console.log("aaa");
-    //     addShiOption($("#nation_1").val());
-    // });
 
     function closeForm() {
         layer.closeAll();
         $("#empName").val("");
         $("#depId").val("1");
-        // $("#depId option[value='"+d.emp.depId+"']").attr("selected", true);
-        // $("#select_id option[text='jquery']").attr("selected", true);
         $("#postName").val("教研主任");
         $("#Address").val("");
         $("#sex").val("男");
@@ -374,8 +393,6 @@
             $("#nation").val(d.emp.nation);
             $("#empName").val(d.emp.empName);
             $("#depId").val(d.emp.depId);
-            // $("#depId option[value='"+d.emp.depId+"']").attr("selected", true);
-            // $("#select_id option[text='jquery']").attr("selected", true);
             $("#postName").val(d.emp.postName);
             $("#Address").val(d.emp.address);
             $("#sex").val(d.emp.sex);
@@ -420,12 +437,27 @@
         });
     }
 
-    function sss(empId) {
-        if(confirm('确认删除？')){
-            $.post('<%=request.getContextPath()%>/emp/delEmp/' + empId, {}, function () {
+    function deleteEmp(empId) {
 
-            }, 'json');
-        }
+        layer.confirm('是否要删除？', {
+            icon:3,
+            btn: ['确认','取消'] //按钮
+        }, function(){+
+            $.post('<%=request.getContextPath()%>/emp/delEmp/' + empId,{},
+                function (data) {
+                    reload();
+                });
+            layer.msg('已删除', {
+                icon: 1,
+                time:2000
+            });
+
+        }, function(){
+            layer.msg('已取消', {
+                icon:0,
+                time: 2000 //20s后自动关闭
+            });
+        });
     }
 
     layui.use('form', function(){

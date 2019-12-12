@@ -76,6 +76,7 @@
 
            // parent.location.reload();
             url:'${pageContext.request.contextPath}/student/studenthuor'
+            $("#addfloor").hide(); //jquery方式关闭
             layer.close(layer.index);
             // // 获得frame索引
             // var index = parent.layer.getFrameIndex(window.name);
