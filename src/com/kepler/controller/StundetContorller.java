@@ -482,4 +482,9 @@ public class StundetContorller {
         sts.deleStudentClassTeacherDatas(vo);
         return "redirect:/student/studentClass";
     }
+    //班级分配
+    @RequestMapping(value = "/studentClassFenPei")
+    public String studentClassFenPei(){
+        return "studentClassFenPei";
+    }
 }
