@@ -48,7 +48,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+            <ul class="layui-nav layui-nav-tree"  lay-filter="demo">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">个人主页</a>
                     <dl class="layui-nav-child">
@@ -92,9 +92,9 @@
                 <li class="layui-nav-item">
                     <a href="#">后勤管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a data-url="${pageContext.request.contextPath}/student/studenthuor" data-id="31" data-title="宿舍管理"  class="site-demo-active" style="cursor:pointer" data-type="studenthuor">宿舍管理</a></dd>
-                        <dd><a data-url="${pageContext.request.contextPath}/student/studentFloor" data-id="32" data-title="楼栋管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">楼栋管理</a></dd>
-                        <dd><a data-url="${pageContext.request.contextPath}/student/equipmentRepair" data-id="33" data-title="维修管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">维修管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studenthuor" data-id="41" data-title="宿舍管理"  class="site-demo-active" style="cursor:pointer" data-type="studenthuor">宿舍管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/studentFloor" data-id="34" data-title="楼栋管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">楼栋管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/equipmentRepair" data-id="43" data-title="维修管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">维修管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -102,7 +102,16 @@
                     <dl class="layui-nav-child">
                         <dd><a data-url="/Controller/examine" data-id="31" data-title="考核指标" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考核指标</a></dd>
                         <dd><a data-url="/Controller/empExamine" data-id="32" data-title="员工考核" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">员工考核</a></dd>
-                        <dd><a data-url="/Controller/teacherExamine" data-id="33" data-title="教师考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">教师考评</a></dd>
+                        <dd>
+                            <li class="layui-nav-item">
+                                <a href="javascript:;">教师考评</a>
+                                <dl class="layui-nav-child">
+                                    <dd><a data-url="/Controller/template" data-id="33" data-title="考评模板" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评模板</a></dd>
+                                    <dd><a data-url="/Controller/checkTask" data-id="34" data-title="考评任务" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评任务</a></dd>
+                                    <dd><a data-url="/Controller/myCheck" data-id="35" data-title="我的考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">我的考评</a></dd>
+                                </dl>
+                            </li>
+                        </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -161,15 +170,16 @@
             </ul>
         </div>
     </div>
+    <!-- 内容固定区域 -->
     <div class="layui-body">
         <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
-            <ul class="layui-tab-title">
-                <li class="layui-this">首页</li>
-            </ul>
-            <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">欢迎进入宏图办公！！</div>
-            </div>
+        <ul class="layui-tab-title">
+            <li class="layui-this">首页</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">欢迎进入宏图办公！！</div>
         </div>
+    </div>
     </div>
 
     <div class="layui-footer">
@@ -179,19 +189,19 @@
 </div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
-    layui.use('element', function() {
+    layui.use('element',function() {
         var $ = layui.jquery;
         var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
         //触发事件
-        var active = {
+        window.active = {
             //在这里给active绑定几项事件，后面可通过active调用这些事件
             tabAdd: function(url,id,name) {
                 //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="'+id+'" scrolling="auto" frameborder="0" src="'+url+'.html" style="width:100%;height:99%;"></iframe>',
+                    content: '<iframe data-id="'+id+'" scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:99%;"></iframe>',
                     id: id //规定好的id
                 })
 
@@ -202,11 +212,11 @@
                 element.tabChange('demo', id); //根据传入的id传入到指定的tab项
             },
             tabDelete: function (id) {
-                element.tabDelete("demo", id);//删除
+                element.tabDelete('demo', id);//删除
             }
             , tabDeleteAll: function (ids) {//删除所有
                 $.each(ids, function (i,item) {
-                    element.tabDelete("demo", item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
+                    element.tabDelete('demo', item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
                 })
             }
         };

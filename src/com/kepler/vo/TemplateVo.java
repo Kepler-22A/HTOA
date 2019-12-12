@@ -4,22 +4,52 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "template")
-public class TemplateVo {
+public class TemplateVo {//考核模板！！
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int templateId;
+    private int empId ;//关联员工表
+    private int depId ;//被考核职位
     private String templateName ;
-    private String templateType ;
-    private String templateJob;
+    private String templateType ;//考核类型 月底 ，年度
+    private String templateTime ;//创建时间
+    private String remark ;//备注
 
     @Override
     public String toString() {
         return "TemplateVo{" +
                 "templateId=" + templateId +
+                ", empId=" + empId +
+                ", depId=" + depId +
                 ", templateName='" + templateName + '\'' +
                 ", templateType='" + templateType + '\'' +
-                ", templateJob='" + templateJob + '\'' +
+                ", templateTime=" + templateTime +
+                ", remark='" + remark + '\'' +
                 '}';
+    }
+
+    public int getDepId() {
+        return depId;
+    }
+
+    public void setDepId(int depId) {
+        this.depId = depId;
+    }
+
+    public int getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(int empId) {
+        this.empId = empId;
+    }
+
+    public String getTemplateTime() {
+        return templateTime;
+    }
+
+    public void setTemplateTime(String templateTime) {
+        this.templateTime = templateTime;
     }
 
     public int getTemplateId() {
@@ -46,11 +76,10 @@ public class TemplateVo {
         this.templateType = templateType;
     }
 
-    public String getTemplateJob() {
-        return templateJob;
+    public String getRemark() {
+        return remark;
     }
-
-    public void setTemplateJob(String templateJob) {
-        this.templateJob = templateJob;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
