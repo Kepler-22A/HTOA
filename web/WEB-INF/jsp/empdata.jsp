@@ -296,7 +296,25 @@
         $("#nation_1").val("北京市");
         $("#hireDayEX").val("");
 
-        addShiOption("北京市");
+        $.post("/emp/getNationList",{type:'市',position:'北京市'},function (data) {
+            var form = layui.form;
+            var nation_2_text = "";
+            $.each(data,function (index,obj) {
+                nation_2_text += "<option value='" + obj + "'>" + obj + "</option>";
+            });
+            $("#nation_2").html(nation_2_text);
+            form.render('select');
+        },"json");
+
+        $.post("/emp/getNationList",{type:'县',position:'东城区'},function (data) {
+            var form = layui.form;
+            var nation_3_text = "";
+            $.each(data,function (index,obj) {
+                nation_3_text += "<option value='" + obj + "'>" + obj + "</option>";
+            });
+            $("#nation_3").html(nation_3_text);
+            form.render('select');
+        },"json");
     }
 
     layui.use(['layer', 'jquery', 'form'], function() {
