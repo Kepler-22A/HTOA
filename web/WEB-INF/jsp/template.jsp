@@ -21,7 +21,7 @@
     <button class="layui-btn" data-type="reload">搜索</button>
         <button class="layui-btn"  onclick="add()" style="cursor:pointer">添加</button>
 </div>
-    <table class="layui-hide" id="test"></table>
+    <table class="layui-hide" id="test" lay-filter="testTable"></table>
     <script type="text/html" id="barDemo">
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="update">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
@@ -46,7 +46,45 @@
                 ,id: 'testReload'
                 ,page: true
             });
+            table.on('tool(testTable)', function (data) {
+                switch (data.event) {
+                    case 'del':
+                        // data.del();
+                        // layer.confirm('玩玩而已不用担心一会还会回来的。', function(index){
+                        //     obj.del();
+                        //     layer.close(index);
+                        // });
+                        // 只做测试数据的删除用，url的删除一般都是发交易然后重载表格就可以了
+                        var tableObj = tableIns;
+                        var config = tableObj.config;
+                        var dataTemp = config.data;
+                        var page = config.page;
+                        // 得到tr的data-index
+                        var trElem = data.tr.first();
+                        var index = trElem.data('index');
+                        // 计算出在data中的index
+                        var dataIndex = index + page.limit * (page.curr - 1);
+                        // 删除对应下标的数据
+                        dataTemp.splice(dataIndex, 1);
 
+                        // 新的页数
+                        var pageNew = Math.ceil(dataTemp.length / page.limit);
+
+                        // 重新接收reload返回的对象，这个很重要
+                        tableIns = table.reload(config.id, $.extend(true, {
+                            // 更新数据
+                            data: dataTemp
+                        }, config.page ? {
+                            // 如果删除了数据之后页数变了，打开前一页
+                            page: {
+                                curr: page.curr > pageNew ? ((page.curr - 1) || 1) : page.curr
+                            }
+                        } : {}));
+                        break;
+                    default:
+                        break;
+                }
+            });
             // 搜索
             var $ = layui.$, active = {
                 reload: function(){
@@ -72,8 +110,8 @@
         });
         //新增tab页
         function add() {
-                parent.active.tabAdd("/Controller/addTemplate", 36, "新增考评");
-                parent.active.tabChange(36)
+                parent.active.tabAdd("/Controller/addTemplate", 46, "新增考评");
+                parent.active.tabChange(46)
         }
     </script>
 </body>

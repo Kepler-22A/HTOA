@@ -16,7 +16,7 @@
     <fieldset class="layui-elem-field layui-field-title">
         <legend>新增模板</legend>
     </fieldset>
-    <form class="layui-form layui-form-pane" lay-filter="example" action="${pageContext.request.contextPath}/Controller/AddTemplate">
+    <form class="layui-form layui-form-pane" lay-filter="example" action="${pageContext.request.contextPath}/Controller/addTemplate">
         <div class="layui-form-item">
             <label class="layui-form-label">模板名称</label>
             <div class="layui-input-inline">
@@ -33,7 +33,8 @@
                 </select>
             </div>
             <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-setval">赋值</button>
-            <button type="submit" class="layui-btn"  lay-filter="demo1">保存</button>
+            <button type="button" class="layui-btn layui-btn-normal" id="LAY-component-form-getval">取值</button>
+            <button type="submit" class="layui-btn"  lay-filter="demo1">立即提交</button>
         </div>
         <div class="layui-form-item" >
             <label class="layui-form-label">考核部门</label>
@@ -115,16 +116,12 @@
             var h = $(window).height() -41- 10 - 60 -10-44 -10;
             $("iframe").css("height",h+"px");
         }
-        //关闭tab页
-        // $(window).resize(function () {
-        //     FrameWH();
-        // })
     });
     layui.use('form', function(){
         var form = layui.form;
         form.render();
     });
-    //新增模板，项目
+    //项目部分！！
     layui.use(['jquery', 'laydate', 'util', 'layer', 'table', 'form'], function ($, laydate, util, layer, table, form) {
         var tableIns = table.render({
             elem: '#testTable',
@@ -187,6 +184,7 @@
                     //     layer.close(index);
                     // });
                     // 只做测试数据的删除用，url的删除一般都是发交易然后重载表格就可以了
+
                     var tableObj = tableIns;
                     var config = tableObj.config;
                     var dataTemp = config.data;
@@ -216,8 +214,6 @@
                 default:
                     break;
             }
-        });
-        table.on('tool(testTable)', function (data) {
             switch (data.event) {
                 case 'del':
                     // data.del();
@@ -226,6 +222,7 @@
                     //     layer.close(index);
                     // });
                     // 只做测试数据的删除用，url的删除一般都是发交易然后重载表格就可以了
+
                     var tableObj = tableIns2;
                     var config = tableObj.config;
                     var dataTemp = config.data;
@@ -255,8 +252,6 @@
                 default:
                     break;
             }
-        });
-        table.on('tool(testTable)', function (data) {
             switch (data.event) {
                 case 'del':
                     // data.del();
@@ -265,6 +260,7 @@
                     //     layer.close(index);
                     // });
                     // 只做测试数据的删除用，url的删除一般都是发交易然后重载表格就可以了
+
                     var tableObj = tableIns3;
                     var config = tableObj.config;
                     var dataTemp = config.data;
@@ -294,8 +290,6 @@
                 default:
                     break;
             }
-        });
-        table.on('tool(testTable)', function (data) {
             switch (data.event) {
                 case 'del':
                     // data.del();
@@ -304,6 +298,7 @@
                     //     layer.close(index);
                     // });
                     // 只做测试数据的删除用，url的删除一般都是发交易然后重载表格就可以了
+
                     var tableObj = tableIns4;
                     var config = tableObj.config;
                     var dataTemp = config.data;
@@ -334,6 +329,7 @@
                     break;
             }
         });
+
 
         // 新增一条记录
         $('#createNew').click(function () {
@@ -408,10 +404,10 @@
         $('#getAllData2').click(function () {
             layer.alert(JSON.stringify(tableIns2.config.data));
         });
-        $('#getAllData2').click(function () {
+        $('#getAllData3').click(function () {
             layer.alert(JSON.stringify(tableIns3.config.data));
         });
-        $('#getAllData2').click(function () {
+        $('#getAllData4').click(function () {
             layer.alert(JSON.stringify(tableIns4.config.data));
         });
     });
@@ -427,16 +423,15 @@
                ,"remark":"日常考评"
             });
         });
-        // //表单取值
-        // layui.$('#LAY-component-form-getval').on('click', function(){
-        //     var data = form.val('example');
-        //     alert(JSON.stringify(data));
-        // });
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function(){
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
 
         //监听提交
         form.on('submit(demo1)', function(data){
             layer.alert(JSON.stringify(data.field), {
-                url:'/Controller/addTemplate',
                 title: '最终的提交信息'
             })
             return false;

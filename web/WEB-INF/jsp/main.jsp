@@ -48,7 +48,7 @@
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="demo">
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">个人主页</a>
                     <dl class="layui-nav-child">
@@ -70,7 +70,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">员工管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">员工资料</a></dd>
+                        <dd><a data-url="/emp/toEmpData" data-id="125" data-title="员工资料"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工资料</a></dd>
                         <dd><a href="javascript:;">周报管理</a></dd>
                         <dd><a href="javascript:;">谈心记录</a></dd>
                     </dl>
@@ -100,15 +100,15 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a data-url="/Controller/examine" data-id="31" data-title="考核指标" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考核指标</a></dd>
-                        <dd><a data-url="/Controller/empExamine" data-id="32" data-title="员工考核" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">员工考核</a></dd>
+                        <dd><a data-url="/Controller/examine" data-id="41" data-title="考核指标" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考核指标</a></dd>
+                        <dd><a data-url="/Controller/empExamine" data-id="42" data-title="员工考核" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">员工考核</a></dd>
                         <dd>
                             <li class="layui-nav-item">
                                 <a href="javascript:;">教师考评</a>
                                 <dl class="layui-nav-child">
-                                    <dd><a data-url="/Controller/template" data-id="33" data-title="考评模板" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评模板</a></dd>
-                                    <dd><a data-url="/Controller/checkTask" data-id="34" data-title="考评任务" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评任务</a></dd>
-                                    <dd><a data-url="/Controller/myCheck" data-id="35" data-title="我的考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">我的考评</a></dd>
+                                    <dd><a data-url="/Controller/template" data-id="43" data-title="考评模板" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评模板</a></dd>
+                                    <dd><a data-url="/Controller/checkTask" data-id="44" data-title="考评任务" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评任务</a></dd>
+                                    <dd><a data-url="/Controller/myCheck" data-id="45" data-title="我的考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">我的考评</a></dd>
                                 </dl>
                             </li>
                         </dd>
@@ -255,7 +255,6 @@
         })
 
     });
-
 </script>
 </body>
 </html>
