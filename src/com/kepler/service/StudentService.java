@@ -72,4 +72,12 @@ public interface StudentService {
     public void updateStudentClassData(StudentClassVo vo);
     //删除学生
     public void deleStudentClassTeacherDatas(StudentClassVo vo);
+    //查询出分配班级的信息
+    public List listClasstree();
+    //根据班级分配时间来查询这一年有的班级
+    public List selectClass(String id);
+
+    //之定义sql语句方法
+    //根据点击班级分配然后查询数据
+    public List Customss(String cuntom);
 }

@@ -184,4 +184,18 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public void deleStudentClassTeacherDatas(StudentClassVo vo) {
         delete(vo);
     }
+    @Override
+    public List listClasstree() {
+        return sqlQuery("select * from StudentClass");
+    }
+
+    @Override
+    public List selectClass(String id) {
+        return sqlQuery("select classid,className from StudentClass where falled ="+id);
+    }
+
+    @Override
+    public List Customss(String cuntom) {
+        return sqlQuery("select className,stuname,sex,phone from Student s,StudentClass t where s.clazz = t.classno and className = '"+cuntom+"'");
+    }
 }
