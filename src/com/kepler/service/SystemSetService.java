@@ -83,4 +83,15 @@ public interface SystemSetService {
     public void updateSchoolData(ApplicationSchoolVo vo);
     //删除报考学校数据
     public void deleSchoolDatas(int id);
+    //------------------------------------------学期设置--------------------------------------------------------------
+    //查询学期数据
+    public List<TermVo> listTermData();
+    //添加学期数据
+    public void AddTerm(TermVo vo);
+    //根据学期id查询出数据
+    public List<TermVo> selectTermById(int id);
+    //修改学期数据
+    public void updateTermData(TermVo vo);
+    //删除学期数据
+    public void deleTermDatas(int id);
 }

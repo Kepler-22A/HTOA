@@ -59,8 +59,10 @@
             <div style="font-size: 20px;">报考学校</div>
         </div>
         <div class="layui-col-sm3" align="center">
-            <div class="grid-demo grid-demo-bg1"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>
-            <div>3333</div>
+            <div class="grid-demo grid-demo-bg1">
+                <a href="${pageContext.request.contextPath}/system/term" data-id="307" data-title="学期设置"  class="site-demo-active" style="cursor:pointer" data-type="term"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
+            <div style="font-size: 20px;">学期设置</div>
+        </div>
         </div>
         <div class="layui-col-sm3" align="center">
             <div class="grid-demo"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>

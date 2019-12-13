@@ -313,7 +313,7 @@ public class SystemSetController {
     public String school(){
         return "systemApplicationSchool";
     }
-    //  //查询项目答辩数据
+    //  //查询数据
     @RequestMapping(value = "/schooldata")
     public void schooldata(HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("utf-8");
@@ -326,13 +326,13 @@ public class SystemSetController {
         json.put("data",sum);
         pwt.print(json.toString());
     }
-    //添加项目答辩数据
+    //添加数据
     @RequestMapping(value = "/addSchool")
     public String addSchool(HttpServletRequest request, ApplicationSchoolVo vo){
         sys.AddSchool(vo);
         return "redirect:/system/school";
     }
-    //根据项目答辩id查询出数据
+    //根据id查询出数据
     @RequestMapping(value = "/selectSchoolID")
     public void selectSchoolID(int id,HttpServletResponse response) throws IOException {
         List list = sys.selectSchoolById(id);
@@ -345,16 +345,67 @@ public class SystemSetController {
 //        System.out.println("json:"+json);
         pwt.print(json.toJSONString());
     }
-    //修改项目答辩数据
+    //修改数据
     @RequestMapping(value = "/UpdateSchoolID/{appId}")
     public String UpdateSchoolID(@PathVariable(value = "appId")int appId, ApplicationSchoolVo vo){
         sys.updateSchoolData(vo);
         return "redirect:/system/school";
     }
-    //删除项目答辩数据
+    //删除数据
     @RequestMapping(value = "/delSchool")
     public String delSchool(ApplicationSchoolVo vo) {
         sys.deleSchoolDatas(vo.getAppId());
         return "redirect:/system/school";
     }
+    //---------------------------------------------------------------------------------------------
+
+    @RequestMapping("/term")
+    public String term(){
+        return "systemTerm";
+    }
+    //  //查询数据
+    @RequestMapping(value = "/termdata")
+    public void termdata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List<TermVo> sum = sys.listTermData();
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
+    //添加数据
+    @RequestMapping(value = "/addTerm")
+    public String addTerm(HttpServletRequest request, TermVo vo){
+        sys.AddTerm(vo);
+        return "redirect:/system/term";
+    }
+    //根据id查询出数据
+    @RequestMapping(value = "/selectTermID")
+    public void selectTermID(int id,HttpServletResponse response) throws IOException {
+        List list = sys.selectTermById(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("Term",o);//返回的数据格式一定要和前端的格式一样
+        }
+//        System.out.println("json:"+json);
+        pwt.print(json.toJSONString());
+    }
+    //修改数据
+    @RequestMapping(value = "/UpdateTermID/{termID}")
+    public String UpdateTermID(@PathVariable(value = "termID")int termID, TermVo vo){
+        sys.updateTermData(vo);
+        return "redirect:/system/term";
+    }
+    //删除数据
+    @RequestMapping(value = "/delTerm")
+    public String delTerm(TermVo vo) {
+        sys.deleTermDatas(vo.getTermID());
+        return "redirect:/system/term";
+    }
+
 }

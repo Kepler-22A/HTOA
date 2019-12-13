@@ -190,4 +190,32 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
         delete(applicationSchoolVo);
     }
     //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public List<TermVo> listTermData() {
+        return hqlQuery("from TermVo");
+    }
+
+    @Override
+    public void AddTerm(TermVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<TermVo> selectTermById(int id) {
+        return sqlQuery("select * from Term where termID ="+id);
+    }
+
+    @Override
+    public void updateTermData(TermVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public void deleTermDatas(int id) {
+        TermVo termVo = new TermVo();
+        termVo.setTermID(id);
+        delete(termVo);
+    }
+    //------------------------------------------------------------------------------------------------------------------
 }
