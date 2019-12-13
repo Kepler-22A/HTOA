@@ -49,12 +49,14 @@
 <div class="layui-fluid" style="padding: 25px 30px 75px ;">
     <div class="layui-row">
         <div class="layui-col-sm3" align="center">
-            <div class="grid-demo grid-demo-bg1"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>
-            <div>院系管理</div>
+            <div class="grid-demo grid-demo-bg1">
+                <a href="${pageContext.request.contextPath}/system/major" data-id="305" data-title="专业设置"  class="site-demo-active" style="cursor:pointer" data-type="major"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
+            <div style="font-size: 20px;">专业设置</div>
         </div>
         <div class="layui-col-sm3" align="center">
-            <div class="grid-demo"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>
-            <div>2222</div>
+            <div class="grid-demo grid-demo-bg1">
+                <a href="${pageContext.request.contextPath}/system/school" data-id="306" data-title="报考学校"  class="site-demo-active" style="cursor:pointer" data-type="school"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
+            <div style="font-size: 20px;">报考学校</div>
         </div>
         <div class="layui-col-sm3" align="center">
             <div class="grid-demo grid-demo-bg1"><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;"></i></div>

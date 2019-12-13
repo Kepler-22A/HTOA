@@ -3,10 +3,7 @@ package com.kepler.service.impl;
 import com.kepler.dao.BaseDao;
 import com.kepler.service.ClassService;
 import com.kepler.service.SystemSetService;
-import com.kepler.vo.ClassTypeVo;
-import com.kepler.vo.DeptVo;
-import com.kepler.vo.ProjectVo;
-import com.kepler.vo.StudentFallVo;
+import com.kepler.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -131,6 +128,66 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
         deptVo.setDeptID(id);
 
         delete(deptVo);
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    @Override
+    public List<MajorVo> listMajorData() {
+        return sqlQuery("select *,(select deptName from dept d where d.deptId = m.deptId) as deptName from major m");
+    }
+
+    @Override
+    public void AddMajor(MajorVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<MajorVo> selectMajorById(int id) {
+        return  sqlQuery("select * from Major where majorID ="+id);
+    }
+
+    @Override
+    public void updateMajorData(MajorVo vo) {
+            update(vo);
+    }
+
+    @Override
+    public void delMajorDatas(int id) {
+        MajorVo majorVo = new MajorVo();
+        majorVo.setMajorID(id);
+        delete(majorVo);
+    }
+
+    @Override
+    public List selDept() {
+        return sqlQuery("select * from dept");
+    }
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public List<ApplicationSchoolVo> listSchoolData() {
+        return hqlQuery("from ApplicationSchoolVo");
+    }
+
+    @Override
+    public void AddSchool(ApplicationSchoolVo vo) {
+            save(vo);
+    }
+
+    @Override
+    public List<ApplicationSchoolVo> selectSchoolById(int id) {
+        return sqlQuery("select * from ApplicationSchool where appId ="+id);
+    }
+
+    @Override
+    public void updateSchoolData(ApplicationSchoolVo vo) {
+            update(vo);
+    }
+
+    @Override
+    public void deleSchoolDatas(int id) {
+        ApplicationSchoolVo applicationSchoolVo = new ApplicationSchoolVo();
+        applicationSchoolVo.setAppId(id);
+        delete(applicationSchoolVo);
     }
     //------------------------------------------------------------------------------------------------------------------
 }

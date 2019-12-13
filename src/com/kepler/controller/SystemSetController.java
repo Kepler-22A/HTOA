@@ -1,12 +1,10 @@
 package com.kepler.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.SystemSetService;
-import com.kepler.vo.ClassTypeVo;
-import com.kepler.vo.DeptVo;
-import com.kepler.vo.ProjectVo;
-import com.kepler.vo.StudentFallVo;
+import com.kepler.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +17,9 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -231,5 +231,130 @@ public class SystemSetController {
     public String delDept(DeptVo vo) {
         sys.deleDeptDatas(vo.getDeptID());
         return "redirect:/system/dept";
+    }
+
+    //---------------------------------------------------------------------------------------------
+    @RequestMapping("/major")
+    public String major(){
+        return "systemMajor";
+    }
+    //  //查询专业数据
+    @RequestMapping(value = "/majordata")
+    public void majordata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List<MajorVo> sum = sys.listMajorData();
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
+    //添加专业数据
+    @RequestMapping(value = "/addMajor")
+    public String addMajor(HttpServletRequest request, MajorVo vo,int deptId){
+        sys.AddMajor(vo);
+        return "redirect:/system/major";
+    }
+    //根据专业id查询出数据
+    @RequestMapping(value = "/selectMajorID")
+    public void selectMajorID(int id,HttpServletResponse response) throws IOException {
+        List list = sys.selectMajorById(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("MajorVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+//        System.out.println("json:"+json);
+        pwt.print(json.toJSONString());
+    }
+    //修改专业数据
+    @RequestMapping(value = "/UpdateMajorID/{majorID}")
+    public String UpdateMajorID(@PathVariable(value = "majorID")int majorID, MajorVo vo){
+        sys.updateMajorData(vo);
+        return "redirect:/system/major";
+    }
+    //删除专业数据
+    @RequestMapping(value = "/delMajor")
+    public String delMajor(MajorVo vo) {
+        System.out.println("id为："+vo.getMajorID());
+       sys.delMajorDatas(vo.getMajorID());
+        return "redirect:/system/major";
+    }
+
+    @RequestMapping(value = "/selDept")
+    public void selDept(HttpServletResponse response){
+            response.setCharacterEncoding("utf-8");
+
+            List list = sys.selDept();
+
+            JSONArray ja = new JSONArray();
+
+            for (Object o : list){
+                Map map = (HashMap)o;
+
+                ja.add(map);
+            }
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.println(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    @RequestMapping("/school")
+    public String school(){
+        return "systemApplicationSchool";
+    }
+    //  //查询项目答辩数据
+    @RequestMapping(value = "/schooldata")
+    public void schooldata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List<ApplicationSchoolVo> sum = sys.listSchoolData();
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
+    //添加项目答辩数据
+    @RequestMapping(value = "/addSchool")
+    public String addSchool(HttpServletRequest request, ApplicationSchoolVo vo){
+        sys.AddSchool(vo);
+        return "redirect:/system/school";
+    }
+    //根据项目答辩id查询出数据
+    @RequestMapping(value = "/selectSchoolID")
+    public void selectSchoolID(int id,HttpServletResponse response) throws IOException {
+        List list = sys.selectSchoolById(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("School",o);//返回的数据格式一定要和前端的格式一样
+        }
+//        System.out.println("json:"+json);
+        pwt.print(json.toJSONString());
+    }
+    //修改项目答辩数据
+    @RequestMapping(value = "/UpdateSchoolID/{appId}")
+    public String UpdateSchoolID(@PathVariable(value = "appId")int appId, ApplicationSchoolVo vo){
+        sys.updateSchoolData(vo);
+        return "redirect:/system/school";
+    }
+    //删除项目答辩数据
+    @RequestMapping(value = "/delSchool")
+    public String delSchool(ApplicationSchoolVo vo) {
+        sys.deleSchoolDatas(vo.getAppId());
+        return "redirect:/system/school";
     }
 }
