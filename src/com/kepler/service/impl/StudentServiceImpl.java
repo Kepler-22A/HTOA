@@ -196,6 +196,12 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
 
     @Override
     public List Customss(String cuntom) {
-        return sqlQuery("select className,stuname,sex,phone from Student s,StudentClass t where s.clazz = t.classno and className = '"+cuntom+"'");
+        return sqlQuery("select Studid,className,stuname,sex,phone from Student s,StudentClass t where s.clazz = t.classno and className = '"+cuntom+"'");
+    }
+
+    @Override
+    public List selectNOClassStudentData() {
+        return sqlQuery("select distinct Studid,stuname,cardid,sex,phone,middleschool,clazz,introduretech,classTypeName from Student t left join StudentClass s on t.clazz = s.classid left join classType\n" +
+                "e on s.classid = e.calssTypeId");
     }
 }

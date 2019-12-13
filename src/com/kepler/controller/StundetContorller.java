@@ -522,6 +522,7 @@ public class StundetContorller {
         objects.add(map);
         out.print(objects.toJSONString());
     }
+    //点击班级分配信息查询出班级信息
     @RequestMapping(value = "/selectClassTree/{SJ}")
     public void selectClassTree(@PathVariable(value = "SJ") String ClassName,HttpServletResponse response) throws IOException {
         ClassName = new String(ClassName.getBytes("ISO-8859-1"),"UTF-8");
@@ -529,6 +530,19 @@ public class StundetContorller {
         response.setCharacterEncoding("utf-8");
         PrintWriter ptw = response.getWriter();
         JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    //查询出还没有分班的学生
+    @RequestMapping(value = "/selectNOClassStudentData")
+    public void selectNOClassStudentData(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list = sts.selectNOClassStudentData();
         jsonObject.put("code",0);
         jsonObject.put("count",list.size());
         jsonObject.put("msg","");

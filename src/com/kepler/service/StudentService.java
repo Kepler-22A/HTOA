@@ -76,8 +76,8 @@ public interface StudentService {
     public List listClasstree();
     //根据班级分配时间来查询这一年有的班级
     public List selectClass(String id);
-
-    //之定义sql语句方法
     //根据点击班级分配然后查询数据
     public List Customss(String cuntom);
+    //查询出没有分班的学生
+   public List selectNOClassStudentData();
 }

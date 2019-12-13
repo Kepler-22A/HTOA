@@ -97,7 +97,7 @@
     <input type="hidden" value="0.0" name="score">
     <input type="hidden" value="1" name="studytype">
     <input type="hidden" value="1" name="vocationalflag">
-    <input type="hidden" value="100" name="clazz"/>
+    <input type="hidden" value="0" name="clazz"/><!--默认给这个学生没有班-->
     <input type="hidden" value="100" name="huor"/>
     <input type="hidden" value="1" name="stat"/>
     <input type="hidden" value="否" name="dibao"/>
