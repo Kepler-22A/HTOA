@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.vo.CharEmpVo;
+import com.kepler.vo.JobVo;
 import com.kepler.vo.empVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -78,6 +80,7 @@ public class EmpController {//员工的Controller
         return "redirect:/emp/toEmpData";
     }
 
+    //新增员工
     @RequestMapping(value = "/addEmp")
     public String addEmp(empVo emp){
 
@@ -85,6 +88,7 @@ public class EmpController {//员工的Controller
         return "redirect:/emp/toEmpData";
     }
 
+    //得到城市列表
     @RequestMapping(value = "/getNationList")
     public void getNationList(String type,String position,HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
@@ -105,6 +109,7 @@ public class EmpController {//员工的Controller
         }
     }
 
+    //得到岗位名
     @RequestMapping(value = "/getPostName")
     public void getPostName(HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
@@ -125,6 +130,7 @@ public class EmpController {//员工的Controller
         }
     }
 
+    //新增员工
     @RequestMapping(value = "/empAdd")
     public String empAdd(empVo emp, String nation_1, String nation_2, String nation_3, String BirthdayEX,String hireDayEX){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -175,6 +181,7 @@ public class EmpController {//员工的Controller
         return "redirect:/emp/toEmpData";
     }
 
+    //查找员工根据员工Id
     @RequestMapping(value = "/selEmpById/{id}")
     public void selEmpById(@PathVariable(value = "id") int empId,HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
@@ -194,6 +201,7 @@ public class EmpController {//员工的Controller
         }
     }
 
+    //修改员工信息
     @RequestMapping(value = "/empUpdate")
     public String empUpdate(empVo emp, String nation_1, String nation_2, String nation_3, String BirthdayEX,String hireDayEX){
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -246,6 +254,156 @@ public class EmpController {//员工的Controller
         System.out.println("即将修改" + charEmp);
 
         es.updateCharEmp(charEmp);//修改员工角色对应表
+
+        return "redirect:/emp/toEmpData";
+    }
+
+    //员工工作经历查找
+    @RequestMapping(value = "/empWorkExperience/{empId}")
+    public void empWorkExperience(HttpServletResponse response,@PathVariable(value = "empId")int empId){
+        response.setCharacterEncoding("utf-8");
+
+        List list = es.empWorkExperience(empId);
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("code",0);
+        jo.put("count",list.size());
+        jo.put("data",list);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    //员工教育经历查找
+    @RequestMapping(value = "/empEducation/{empId}")
+    public void empEducation(HttpServletResponse response,@PathVariable(value = "empId")int empId){
+        response.setCharacterEncoding("utf-8");
+
+        List list = es.empEducation(empId);
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("code",0);
+        jo.put("count",list.size());
+        jo.put("data",list);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //员工家庭联系人查找
+    @RequestMapping(value = "/empFamily/{empId}")
+    public void empFamily(HttpServletResponse response,@PathVariable(value = "empId")int empId){
+        response.setCharacterEncoding("utf-8");
+
+        List list = es.empFamily(empId);
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("code",0);
+        jo.put("count",list.size());
+        jo.put("data",list);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //员工考核信息查找
+    @RequestMapping(value = "/empAudit/{empId}")
+    public void empAudit(HttpServletResponse response,@PathVariable(value = "empId")int empId){
+        response.setCharacterEncoding("utf-8");
+
+        List list = es.empAudit(empId);
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("code",0);
+        jo.put("count",list.size());
+        jo.put("data",list);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //员工证件信息查找
+    @RequestMapping(value = "/selEmpAnnex/{empId}")
+    public void selEmpAnnex(HttpServletResponse response,@PathVariable(value = "empId")int empId){
+        response.setCharacterEncoding("utf-8");
+
+        List list = es.empAnnex(empId);
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("code",0);
+        jo.put("count",list.size());
+        jo.put("data",list);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //新增员工工作经历
+    @RequestMapping(value = "/addEmpWorkExperience")
+    public String addEmpWorkExperience(JobVo job,String startDateEX,String endDateEX){
+        job.setStartDate(java.sql.Date.valueOf(startDateEX));
+        job.setEndDate(java.sql.Date.valueOf(endDateEX));
+
+        System.out.println("job:"+job);
+
+        es.addworkExperience(job);
+
+        return "redirect:/emp/toEmpData";
+    }
+
+    //删除员工工作经历
+    @RequestMapping(value = "/deleteWorkExprience/{jobId}")
+    @ResponseBody
+    public void deleteWorkExprience(@PathVariable(value = "jobId")int jobId){
+        es.deleteWorkExprience(jobId);
+    }
+
+    //修改员工工作经历
+    @RequestMapping(value = "/updateWorkExperience")
+    public String updateWorkExperience(JobVo job,String startDateEX,String endDateEX){
+        job.setStartDate(java.sql.Date.valueOf(startDateEX));
+        job.setEndDate(java.sql.Date.valueOf(endDateEX));
+
+        System.out.println("job:"+job);
+
+        es.updateWorkExperience(job);
 
         return "redirect:/emp/toEmpData";
     }

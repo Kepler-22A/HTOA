@@ -4,7 +4,7 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <import resource="spring-hibernate.xml"></import>
+    <import resource="spring-hibernate.xml"/>
     <!-- 配置流程引擎配置信息对象 p:transactionManager-ref="transactionManager"-->
     <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration"
           p:dataSource-ref="dataSource"

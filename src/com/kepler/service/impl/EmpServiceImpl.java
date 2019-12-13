@@ -4,6 +4,7 @@ import com.kepler.dao.BaseDao;
 import com.kepler.service.ClassService;
 import com.kepler.service.EmpService;
 import com.kepler.vo.CharEmpVo;
+import com.kepler.vo.JobVo;
 import com.kepler.vo.empVo;
 import org.springframework.stereotype.Service;
 
@@ -131,5 +132,66 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     @Override
     public void updateCharEmp(CharEmpVo charEmp) {
         update(charEmp);
+    }
+
+    @Override
+    public List empWorkExperience(int empId) {
+        return sqlQuery("select * from job where empId = " + empId);
+    }
+
+    @Override
+    public List empEducation(int empId) {
+        return sqlQuery("select * from education where empId = '" + empId + "'");
+    }
+
+    @Override
+    public List empFamily(int empId) {
+        return sqlQuery("select * from familyInfo where empId = '" + empId + "'");
+    }
+
+    @Override
+    public List empAudit(int empId) {
+        List list = new ArrayList();
+
+        List alList = sqlQuery("select * from AuditLog where empID = " + empId);
+
+        List amList = sqlQuery("select * from AuditModel");
+
+        for (Object o : alList){
+            Map map = (HashMap)o;
+
+            for (Object os : amList){
+                Map map1 = (HashMap)os;
+
+                if(Integer.parseInt(map1.get("auditModelID")+"") == Integer.parseInt(map.get("auditModelID")+"")){
+                    map.put("auditName",map1.get("auditName"));
+                }
+            }
+            list.add(map);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List empAnnex(int empId) {
+        return sqlQuery("select * from annex where seName = '1' and seId = '" + empId + "'");
+    }
+
+    @Override
+    public void addworkExperience(JobVo job) {
+        save(job);
+    }
+
+    @Override
+    public void deleteWorkExprience(int jobId) {
+        JobVo jobVo = new JobVo();
+        jobVo.setJobId(jobId);
+        delete(jobVo);
+    }
+
+    @Override
+    public void updateWorkExperience(JobVo job) {
+        update(job);
     }
 }
