@@ -3,6 +3,7 @@ package com.kepler.service.impl;
 import com.kepler.dao.BaseDao;
 import com.kepler.service.TestService;
 import com.kepler.vo.AuditModelVo;
+import com.kepler.vo.TemplateVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,16 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public int selectInt(String name) {
+        return executeIntSQL("select  empId from empVo where empName='"+name+"'");
+    }
+
+    @Override
+    public int selectInt2(String name) {
+        return executeIntSQL("select  templateId from template where templateTime='"+name+"'");
+    }
+
+    @Override
     public List selectTable() {//查询考核数据！！
         return   sqlQuery("select auditModelID,auditName,scores,auditTypeName,remark from AuditType a ,AuditModel m where a.depID = m.depID");
     }
@@ -27,14 +38,18 @@ public class TestServiceImpl extends BaseDao implements TestService {
         return sqlQuery("select m.auditName,e.empName, a.* from AuditLog a,empVo e,AuditModel m where  a.empID = e.empID and a.auditModelID= m.auditModelID");
     }
 
-
     @Override
-    public List selectTable3() {
-        return sqlQuery("");
+    public List selectTable3() {//查询考评模板
+        return sqlQuery("select e.empName ,t.* from template t,empVo e,dep d where e.empId = t.empId and d.depId = t.depId");
     }
 
     @Override
     public int addExmaine(AuditModelVo a) {
         return sqlUpdate("insert into AuditModel values('"+a.getAuditName()+"',"+a.getDepID()+",'"+a.getRemark()+"','"+a.getScores()+"')");
+    }
+
+    @Override
+    public int addTemplate(TemplateVo t) {
+        return sqlUpdate("insert into template values("+t.getDepId()+","+t.getEmpId()+",'"+t.getRemark()+"','"+t.getTemplateName()+"','"+t.getTemplateTime()+"','"+t.getTemplateType()+"')");
     }
 }
