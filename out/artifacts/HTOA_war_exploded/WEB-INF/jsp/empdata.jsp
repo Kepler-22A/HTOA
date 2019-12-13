@@ -250,7 +250,7 @@
                     <script type="text/html" id="secondTable1Tool">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" onclick="addWorkExperience(secondTableName,secondTableEmpId)">增加工作经历</button>
-                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId)">刷新表格</button>
+                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId,secondTableName)">刷新表格</button>
                         </div>
                     </script>
 
@@ -310,7 +310,7 @@
                     <script type="text/html" id="secondTable2Tool">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" onclick="">增加</button>
-                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId)">刷新表格</button>
+                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId,secondTableName)">刷新表格</button>
                         </div>
                     </script>
 
@@ -321,7 +321,7 @@
                     <script type="text/html" id="secondTable3Tool">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" onclick="">增加</button>
-                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId)">刷新表格</button>
+                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId,secondTableName)">刷新表格</button>
                         </div>
                     </script>
 
@@ -332,7 +332,7 @@
                     <script type="text/html" id="secondTable4Tool">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" onclick="">增加</button>
-                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId)">刷新表格</button>
+                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId,secondTableName)">刷新表格</button>
                         </div>
                     </script>
 
@@ -343,7 +343,7 @@
                     <script type="text/html" id="secondTable5Tool">
                         <div class="layui-btn-container">
                             <button class="layui-btn layui-btn-sm" onclick="">增加</button>
-                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId)">刷新表格</button>
+                            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId,secondTableName)">刷新表格</button>
                         </div>
                     </script>
                 </div>
@@ -468,7 +468,7 @@
                 table.render({
                     elem: '#secondTable1'
                     ,height: 350
-                    ,url: '/emp/empWorkExperience/' + empId//数据接口
+                    ,url: '/emp/empWorkExperience/' + secondTableEmpId//数据接口
                     ,toolbar: '#secondTable1Tool' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头
@@ -485,7 +485,7 @@
                 table.render({
                     elem: '#secondTable2'
                     ,height: 350
-                    ,url: '/emp/empEducation/' + empId //数据接口
+                    ,url: '/emp/empEducation/' + secondTableEmpId //数据接口
                     ,toolbar: '#secondTable2Tool' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头
@@ -500,7 +500,7 @@
                 table.render({
                     elem: '#secondTable3'
                     ,height: 350
-                    ,url: '/emp/empFamily/' + empId //数据接口
+                    ,url: '/emp/empFamily/' + secondTableEmpId //数据接口
                     ,toolbar: '#secondTable3Tool' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头
@@ -514,7 +514,7 @@
                 table.render({
                     elem: '#secondTable4'
                     ,height: 350
-                    ,url: '/emp/empAudit/' + empId //数据接口
+                    ,url: '/emp/empAudit/' + secondTableEmpId //数据接口
                     ,toolbar: '#secondTable4Tool' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头
@@ -530,7 +530,7 @@
                 table.render({
                     elem: '#secondTable5'
                     ,height: 350
-                    ,url: '/emp/selEmpAnnex/' + empId //数据接口
+                    ,url: '/emp/selEmpAnnex/' + secondTableEmpId //数据接口
                     ,toolbar: '#secondTable5Tool' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头
