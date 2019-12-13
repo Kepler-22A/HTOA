@@ -1,5 +1,6 @@
 package com.kepler.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.StudentService;
@@ -486,5 +487,52 @@ public class StundetContorller {
     @RequestMapping(value = "/studentClassFenPei")
     public String studentClassFenPei(){
         return "studentClassFenPei";
+    }
+    //班级树行管理
+    @RequestMapping(value = "/StudetnClasstree")
+    public void StudetnClasstree(HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        JSONArray objects = new JSONArray();//树
+        //子节点
+        Map map = new HashMap();
+        map.put("id",0);
+        map.put("text","班级列表");
+        map.put("iconCls","icon-ok");
+
+        //子节点下的节点
+        List<Map> account = sts.listClasstree();
+        JSONArray Aaa = new JSONArray();
+        for(Map m : account){//增强for循环
+            Map map1 = new HashMap();
+            map1.put("id",m.get("classid"));
+            map1.put("text",m.get("falled"));
+            List<Map> account1 = sts.selectClass(String.valueOf(m.get("falled")));
+            JSONArray Bbb = new JSONArray();
+            for(Map mm : account1){
+                Map map2 = new HashMap();
+                map2.put("id",mm.get("classid"));
+                map2.put("text",mm.get("className"));
+                Bbb.add(map2);
+            }
+            map1.put("children",Bbb);
+            Aaa.add(map1);
+            map.put("children",Aaa);
+        }
+        objects.add(map);
+        out.print(objects.toJSONString());
+    }
+    @RequestMapping(value = "/selectClassTree/{SJ}")
+    public void selectClassTree(@PathVariable(value = "SJ") String ClassName,HttpServletResponse response) throws IOException {
+        ClassName = new String(ClassName.getBytes("ISO-8859-1"),"UTF-8");
+        List list = sts.Customss(ClassName);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
     }
 }
