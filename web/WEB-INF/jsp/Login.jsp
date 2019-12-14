@@ -13,7 +13,9 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 <body>
-    <h2 align="center"> 登录办公后台系统</h2>
+    <h2 align="center" style="margin-bottom: 250px"> 登录办公后台系统</h2>
+
+
     <div align="center">
         <form class="layui-form" method="post" action="${pageContext.request.contextPath}/Controller/login" style="width:310px;margin: 0 auto">
             <div class="layui-form-item">
