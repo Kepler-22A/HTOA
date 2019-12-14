@@ -465,4 +465,10 @@ public class EmpController {//员工的Controller
     public void deleteFamilyInfo(@PathVariable(value = "familyId")int familyId){
         es.deleteFamilyInfo(familyId);
     }
+
+    //跳转周报管理页
+    @RequestMapping(value = "/toWeeklyCtrl")
+    public String toWeeklyCtrl(){
+        return "weekly";
+    }
 }
