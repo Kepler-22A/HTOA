@@ -36,4 +36,5 @@ public interface EmpService {
     void addFamilyInfo(FamilyInfoVo familyInfoVo);//新增员工家庭联系信息
     void updateFamilyInfo(FamilyInfoVo familyInfoVo);//修改员工家庭联系信息
     void deleteFamilyInfo(int familyId);//删除员工家庭联系信息
+    List selWeekly();//查找员工周报表信息
 }

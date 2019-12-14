@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -470,5 +471,36 @@ public class EmpController {//员工的Controller
     @RequestMapping(value = "/toWeeklyCtrl")
     public String toWeeklyCtrl(){
         return "weekly";
+    }
+
+    //周报管理页的周报数据查询
+    @RequestMapping(value = "/selWeeklyList")
+    public void selWeekly(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        List list = es.selWeekly();
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("code",0);
+        jo.put("count",list.size());
+        jo.put("data",list);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //周报详情页
+    @RequestMapping(value = "/toWeeklyDetails")
+    public ModelAndView toWeeklyDetails(ModelAndView mv){
+        mv.setViewName("weeklyDetails");
+
+        return mv;
     }
 }

@@ -15,7 +15,7 @@
 <body>
     <h2 align="center"> 登录办公后台系统</h2>
     <div align="center">
-        <form class="layui-form" method="post" action="${pageContext.request.contextPath}/Controller/login">
+        <form class="layui-form" method="post" action="${pageContext.request.contextPath}/Controller/login" style="width:310px;margin: 0 auto">
             <div class="layui-form-item">
                 <label class="layui-form-label">账号：</label>
                 <div class="layui-input-inline">
