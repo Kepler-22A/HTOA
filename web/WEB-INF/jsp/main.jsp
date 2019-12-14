@@ -18,9 +18,6 @@
         <div class="layui-logo">学校管理后台</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
             <li class="layui-nav-item">
                 <a href="javascript:;">其它系统</a>
                 <dl class="layui-nav-child">
@@ -115,29 +112,9 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="">财务管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">学费管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
                     <a href="">问题反馈</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">问题反馈</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="">招生就业</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">招生信息</a></dd>
-                        <dd><a href="javascript:;">合作伙伴</a></dd>
-                        <dd><a href="javascript:;">招生追踪</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="">继续教育</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">继续教育</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
