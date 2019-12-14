@@ -3,9 +3,7 @@ package com.kepler.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
-import com.kepler.vo.CharEmpVo;
-import com.kepler.vo.JobVo;
-import com.kepler.vo.empVo;
+import com.kepler.vo.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -406,5 +404,65 @@ public class EmpController {//员工的Controller
         es.updateWorkExperience(job);
 
         return "redirect:/emp/toEmpData";
+    }
+
+    //新增员工教育经历
+    @RequestMapping(value = "/addEducation")
+    public String addEducation(EducationVo education,String startDateEX,String endDateEX){
+        education.setStartDate(java.sql.Date.valueOf(startDateEX));
+        education.setEndDate(java.sql.Date.valueOf(endDateEX));
+
+        System.out.println("education:"+education);
+        es.addEducation(education);
+
+        return "redirect:/emp/toEmpData";
+    }
+
+    //修改员工教育经历
+    @RequestMapping(value = "/updateEducation")
+    public String updateEducation(EducationVo education,String startDateEX,String endDateEX){
+        education.setStartDate(java.sql.Date.valueOf(startDateEX));
+        education.setEndDate(java.sql.Date.valueOf(endDateEX));
+
+        System.out.println("education:"+education);
+
+        es.updateEducation(education);
+
+        return "redirect:/emp/toEmpData";
+    }
+
+    //删除员工教育经历
+    @RequestMapping(value = "/deleteEducation/{collegeid}")
+    @ResponseBody
+    public void deleteEducation(@PathVariable(value = "collegeid")int collegeid){
+        es.deleteEducation(collegeid);
+    }
+
+    //新增员工家庭联系信息
+    @RequestMapping(value = "/addFamilyInfo")
+    public String addFamilyInfo(FamilyInfoVo familyInfoVo){
+
+        System.out.println("FamilyInfoVo familyInfoVo:"+familyInfoVo);
+        es.addFamilyInfo(familyInfoVo);
+
+        return "redirect:/emp/toEmpData";
+    }
+
+    //修改员工教育经历
+    @RequestMapping(value = "/updateFamilyInfo")
+    public String updateFamilyInfo(FamilyInfoVo familyInfoVo){
+
+        System.out.println("FamilyInfoVo familyInfoVo:"+familyInfoVo);
+
+        es.updateFamilyInfo(familyInfoVo);
+
+        return "redirect:/emp/toEmpData";
+    }
+
+    //删除员工教育经历
+    @RequestMapping(value = "/deleteFamilyInfo/{familyId}")
+    @ResponseBody
+    public void deleteFamilyInfo(@PathVariable(value = "familyId")int familyId){
+        es.deleteFamilyInfo(familyId);
     }
 }

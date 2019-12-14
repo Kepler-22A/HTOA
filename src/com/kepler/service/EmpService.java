@@ -1,8 +1,6 @@
 package com.kepler.service;
 
-import com.kepler.vo.CharEmpVo;
-import com.kepler.vo.JobVo;
-import com.kepler.vo.empVo;
+import com.kepler.vo.*;
 
 import java.util.List;
 
@@ -32,4 +30,10 @@ public interface EmpService {
     void addworkExperience(JobVo job);//新增员工的工作经历
     void deleteWorkExprience(int jobId);//删除员工工作经历
     void updateWorkExperience(JobVo job);//修改员工工作经历
+    void addEducation(EducationVo education);//新增员工教育经历
+    void updateEducation(EducationVo education);//修改员工教育经历
+    void deleteEducation(int collegeid);//删除员工教育经历
+    void addFamilyInfo(FamilyInfoVo familyInfoVo);//新增员工家庭联系信息
+    void updateFamilyInfo(FamilyInfoVo familyInfoVo);//修改员工家庭联系信息
+    void deleteFamilyInfo(int familyId);//删除员工家庭联系信息
 }

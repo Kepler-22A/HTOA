@@ -239,7 +239,7 @@
                 <%-- 附表！！--%>
                 <div class="layui-tab-content">
 
-                    <%--     员工工作经历的附表    --%>
+                    <%--     员工工作经历的附表  *****************************************************************************************  --%>
                     <div class="layui-tab-item layui-show">
                         <div id="secondTable1" lay-filter="testTable"></div>
                         <script id="secondTable1RowCZ" type="text/html">
@@ -303,40 +303,169 @@
                         </div>
                     </form>
 
-                    <%--     员工教育背景的附表     --%>
+                    <%--     员工教育背景的附表  *********************************************************************************************   --%>
                     <div class="layui-tab-item ">
                         <div id="secondTable2" lay-filter="testTable"></div>
+                        <script id="secondTable2RowCZ" type="text/html">
+                            <a class="layui-btn layui-btn-xs" href="javascript:updateEducation('{{d.collegeid}}','{{d.empId}}','{{d.collegeName}}','{{d.degree}}','{{d.startDate}}','{{d.endDate}}','{{d.Remark}}')" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="deleteEducation('{{ d.collegeid }}')">删除</a>
+                        </script>
                     </div>
                     <script type="text/html" id="secondTable2Tool">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" onclick="">增加</button>
+                            <button class="layui-btn layui-btn-sm" onclick="addEducation(secondTableName,secondTableEmpId)">增加</button>
                             <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId,secondTableName)">刷新表格</button>
                         </div>
                     </script>
 
-                    <%--     员工家庭联系人的附表     --%>
+                    <%--   员工教育背景的form表单    --%>
+                    <form id="secondTable2Form" action="" method="post" style="display: none" class="layui-form">
+                        <input type="hidden" name="collegeid" id="educationCollegeId" value="0">
+                        <input type="hidden" name="empId" id="educationEmpId" value="0">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">学校名称</label>
+                            <div class="layui-input-inline">
+                                <input id="ST2CollegeName" type="text" name="collegeName" lay-verify="ST2CollegeName" autocomplete="off" placeholder="请输入学校名称" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">学历</label>
+                            <div class="layui-input-inline">
+                                <input id="ST2Degree" type="text" name="degree" lay-verify="ST2Degree" autocomplete="off" placeholder="请输入学历" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">入校时间</label>
+                            <div class="layui-input-inline">
+                                <input id="ST2StartDate" type="date" name="startDateEX" lay-verify="ST2StartDate" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">毕业时间</label>
+                            <div class="layui-input-inline">
+                                <input id="ST2EndDate" type="date" name="endDateEX" lay-verify="ST2EndDate" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">说明</label>
+                            <div class="layui-input-inline">
+                                <input id="ST2Remark" type="text" name="Remark" lay-verify="ST2Remark" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item" style="margin: 0 auto">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="layui-btn" lay-filter="educationForm">立即提交</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="layui-btn layui-btn-primary" onclick="closeEducation()">返回</button>
+                        </div>
+                    </form>
+
+                    <%--     员工家庭联系人的附表   *************************************************************************************************************  --%>
                     <div class="layui-tab-item ">
                         <div id="secondTable3" lay-filter="testTable"></div>
+                        <script id="secondTable3RowCZ" type="text/html">
+                            <a class="layui-btn layui-btn-xs" href="javascript:updateFamilyInfo('{{d.familyId}}','{{d.Phone}}','{{d.Remark}}','{{d.contactName}}','{{d.empId}}','{{d.relationship}}')" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="deleteFamilyInfo('{{ d.familyId }}')">删除</a>
+                        </script>
                     </div>
                     <script type="text/html" id="secondTable3Tool">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" onclick="">增加</button>
+                            <button class="layui-btn layui-btn-sm" onclick="addFamilyInfo(secondTableName,secondTableEmpId)">增加</button>
                             <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId,secondTableName)">刷新表格</button>
                         </div>
                     </script>
 
-                    <%--     员工考核信息的附表     --%>
+
+                    <%--   员工家庭联系方式的form表单    --%>
+                    <form id="secondTable3Form" action="" method="post" style="display: none" class="layui-form">
+                        <input id="familyInfoFamilyId" type="hidden" name="familyId" value="0">
+                        <input id="familyInfoEmpId" type="hidden" name="empId" value="0">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">联系人名称</label>
+                            <div class="layui-input-inline">
+                                <input id="ST3ContactName" type="text" name="contactName" lay-verify="ST3ContactName" autocomplete="off" placeholder="请输入联系人名称" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">与员工关系</label>
+                            <div class="layui-input-inline">
+                                <input id="ST3Relationship" type="text" name="relationship" lay-verify="ST3Relationship" autocomplete="off" placeholder="请输入与员工关系" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">联系电话</label>
+                            <div class="layui-input-inline">
+                                <input id="ST3Phone" type="text" name="Phone" lay-verify="ST3Phone" autocomplete="off" placeholder="请输入电话号码" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">说明</label>
+                            <div class="layui-input-inline">
+                                <input id="ST3Remark" type="text" name="Remark" lay-verify="ST3Remark" autocomplete="off" placeholder="说明" class="layui-input">
+                            </div>
+                        </div>
+
+                            <div class="layui-form-item" style="margin: 0 auto">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button class="layui-btn" lay-filter="familyInfoForm">立即提交</button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="layui-btn layui-btn-primary" onclick="closeFamilyInfo()">返回</button>
+                            </div>
+                        </form>
+
+                    <%--     员工考核信息的附表   *****************************************************************************************************************************  --%>
                     <div class="layui-tab-item ">
                         <div id="secondTable4" lay-filter="testTable"></div>
+                        <script id="secondTable4RowCZ" type="text/html">
+                            <a class="layui-btn layui-btn-xs" href="javascript:updateAudit('{{d.auditName}}','{{d.auditLogID}}','{{d.auditDate}}','{{d.auditModelID}}','{{d.auditPerson}}','{{d.empID}}','{{d.image}}','{{d.remark}}','{{d.scores}}')" lay-event="edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="deleteAudit('{{ d.auditLogID }}')">删除</a>
+                        </script>
                     </div>
                     <script type="text/html" id="secondTable4Tool">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" onclick="">增加</button>
+                            <button class="layui-btn layui-btn-sm" onclick="addAudit(secondTableName,secondTableEmpId)">增加</button>
                             <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reloadSecondTable(secondTableEmpId,secondTableName)">刷新表格</button>
                         </div>
                     </script>
 
-                    <%--     员工证件的附表     --%>
+                    <%--   员工考核信息的form表单    --%>
+                    <form id="secondTable4Form" action="" method="post" style="display: none" class="layui-form">
+                        <input id="auditLogId" type="hidden" name="auditLogID" value="0">
+                        <input id="auditModelId" type="hidden" name="auditModelID" value="0">
+                        <input id="auditPerson" type="hidden" name="auditPerson" value="">
+                        <input id="auditEmpId" type="hidden" name="empID" value="">
+                        <input id="auditImage" type="hidden" name="image" value="">
+                        <input id="auditDate" type="hidden" name="auditDate" value="">
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">考核指标</label>
+                            <div class="layui-input-inline">
+                                <input id="ST4AuditName" type="text" name="auditName" lay-verify="ST4AuditName" autocomplete="off" placeholder="" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">考核分数</label>
+                            <div class="layui-input-inline">
+                                <input id="ST4Scores" type="text" name="scores" lay-verify="ST4Scores" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">说明</label>
+                            <div class="layui-input-inline">
+                                <input id="ST4Remark" type="text" name="remark" lay-verify="ST4Remark" autocomplete="off" placeholder="说明" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item" style="margin: 0 auto">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="layui-btn" lay-filter="auditForm">立即提交</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="layui-btn layui-btn-primary" onclick="closeAudit()">返回</button>
+                        </div>
+                    </form>
+
+                    <%--     员工证件的附表  ***********************************************************************************************************************************   --%>
                     <div class="layui-tab-item ">
                         <div id="secondTable5" lay-filter="testTable"></div>
                     </div>
@@ -389,10 +518,10 @@
 
         reload();
 
-        //打开工作经历新增表
+        //新增工作经历*****************************************************************************************************
         function addWorkExperience(empName,empId) {
             $("#secondTable1Form").attr("action","${pageContext.request.contextPath}/emp/addEmpWorkExperience");
-            $("#workExprienceEmpId").attr("value",empId);
+            $("#workExprienceEmpId").val(empId);
             layer.open({
                 type: 1,
                 title:"新增" + empName + "的工作经历",
@@ -440,6 +569,258 @@
             });
         }
 
+        //删除工作经历
+        function deleteWorkExprience(jobId) {
+
+            console.log(jobId);
+
+            layer.confirm('是否要删除？', {
+                icon:3,
+                btn: ['确认','取消'] //按钮
+            }, function(){+
+                $.post('<%=request.getContextPath()%>/emp/deleteWorkExprience/' + jobId,{},
+                    function (data) {
+                        reloadSecondTable(secondTableEmpId,secondTableName);
+                    });
+                layer.msg('已删除', {
+                    icon: 1,
+                    time:2000
+                });
+
+            }, function(){
+                layer.msg('已取消', {
+                    icon:0,
+                    time: 2000 //20s后自动关闭
+                });
+            });
+        }
+
+
+        //新增教育经历***********************************************************************************************************
+        function addEducation(empName,empId) {
+            $("#secondTable2Form").attr("action","${pageContext.request.contextPath}/emp/addEducation");
+            $("#educationEmpId").val(empId);
+            layer.open({
+                type: 1,
+                title:"新增" + empName + "的教育经历",
+                area:['25%','50%'],
+                content: $("#secondTable2Form"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
+                yes:function(index,layero){
+                }
+            });
+        }
+
+        //关闭教育信息的弹窗
+        function closeEducation(){
+            layer.closeAll();
+            $("#educationCollegeId").val(0);
+            $("#educationEmpId").val(0);
+            $("#ST2CollegeName").val("");
+            $("#ST2Degree").val("");
+            $("#ST2StartDate").val("");
+            $("#ST2EndDate").val("");
+            $("#ST2Remark").val("");
+        }
+
+        //修改教育经历的弹窗打开
+        function updateEducation(collegeId,empId,collegeName,degree,startDate,endDate,remark) {
+            console.log(collegeId+" "+empId+" "+collegeName+" "+degree+" "+startDate+" "+endDate+" "+remark);
+            $("#secondTable2Form").attr("action","${pageContext.request.contextPath}/emp/updateEducation");
+            $("#educationCollegeId").val(collegeId);
+            $("#educationEmpId").val(empId);
+            $("#ST2CollegeName").val(collegeName);
+            $("#ST2Degree").val(degree);
+            $("#ST2StartDate").val(ChangeDateFormat(startDate));
+            $("#ST2EndDate").val(ChangeDateFormat(endDate));
+            $("#ST2Remark").val(remark);
+            layer.open({
+                type: 1,
+                title:"修改" + secondTableName + "的教育经历",
+                area:['25%','50%'],
+                content: $("#secondTable2Form"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
+                yes:function(index,layero){
+                }
+            });
+        }
+
+        //删除教育经历
+        function deleteEducation(collegeid) {
+
+            console.log(collegeid);
+
+            layer.confirm('是否要删除？', {
+                icon:3,
+                btn: ['确认','取消'] //按钮
+            }, function(){+
+                $.post('<%=request.getContextPath()%>/emp/deleteEducation/' + collegeid,{},
+                    function (data) {
+                        reloadSecondTable(secondTableEmpId,secondTableName);
+                    });
+                layer.msg('已删除', {
+                    icon: 1,
+                    time:2000
+                });
+
+            }, function(){
+                layer.msg('已取消', {
+                    icon:0,
+                    time: 2000 //20s后自动关闭
+                });
+            });
+        }
+
+
+        //新增家庭联系人****************************************************************************************************
+        function addFamilyInfo(empName,empId) {
+            $("#secondTable3Form").attr("action","${pageContext.request.contextPath}/emp/addFamilyInfo");
+            $("#familyInfoEmpId").val(empId);
+            layer.open({
+                type: 1,
+                title:"新增" + empName + "的家庭联系人",
+                area:['25%','50%'],
+                content: $("#secondTable3Form"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
+                yes:function(index,layero){
+                }
+            });
+        }
+
+        //关闭家庭联系人的弹窗
+        function closeFamilyInfo(){
+            layer.closeAll();
+            $("#familyInfoFamilyId").val(0);
+            $("#familyInfoEmpId").val(0);
+            $("#ST3ContactName").val("");
+            $("#ST3Phone").val("");
+            $("#ST3Relationship").val("");
+            $("#ST3Remark").val("");
+        }
+
+        //修改家庭联系人的弹窗打开
+        function updateFamilyInfo(familyId,Phone,Remark,contactName,empId,relationship) {
+            console.log(familyId+" "+Phone+" "+Remark+" "+contactName+" "+empId+" "+relationship);
+            $("#secondTable3Form").attr("action","${pageContext.request.contextPath}/emp/updateFamilyInfo");
+            $("#familyInfoFamilyId").val(familyId);
+            $("#familyInfoEmpId").val(empId);
+            $("#ST3ContactName").val(contactName);
+            $("#ST3Phone").val(Phone);
+            $("#ST3Relationship").val(relationship);
+            $("#ST3Remark").val(Remark);
+            layer.open({
+                type: 1,
+                title:"修改" + secondTableName + "的家庭联系人",
+                area:['25%','50%'],
+                content: $("#secondTable3Form"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
+                yes:function(index,layero){
+                }
+            });
+        }
+
+        //删除家庭联系人
+        function deleteFamilyInfo(familyId) {
+
+            console.log(familyId);
+
+            layer.confirm('是否要删除？', {
+                icon:3,
+                btn: ['确认','取消'] //按钮
+            }, function(){+
+                $.post('<%=request.getContextPath()%>/emp/deleteFamilyInfo/' + familyId,{},
+                    function (data) {
+                        reloadSecondTable(secondTableEmpId,secondTableName);
+                    });
+                layer.msg('已删除', {
+                    icon: 1,
+                    time:2000
+                });
+
+            }, function(){
+                layer.msg('已取消', {
+                    icon:0,
+                    time: 2000 //20s后自动关闭
+                });
+            });
+        }
+
+
+        //新增员工考核****************************************************************************************************
+        function addAudit(empName,empId) {
+            <%--$("#secondTable4Form").attr("action","${pageContext.request.contextPath}/emp/addAudit");--%>
+            <%--$("#auditEmpId").val(empId);--%>
+            <%--layer.open({--%>
+            <%--    type: 1,--%>
+            <%--    title:"新增" + empName + "的员工考核",--%>
+            <%--    area:['25%','50%'],--%>
+            <%--    content: $("#secondTable4Form"),--%>
+            <%--    closeBtn :0, //隐藏弹出层的关闭按钮--%>
+            <%--    yes:function(index,layero){--%>
+            <%--    }--%>
+            <%--});--%>
+        }
+
+        //关闭员工考核的弹窗
+        function closeAudit(){
+            // layer.closeAll();
+            // $("#familyInfoFamilyId").val(0);
+            // $("#familyInfoEmpId").val(0);
+            // $("#ST3ContactName").val("");
+            // $("#ST3Phone").val("");
+            // $("#ST3Relationship").val("");
+            // $("#ST3Remark").val("");
+        }
+
+        //修改员工考核的弹窗打开
+        function updateAudit(auditName,auditLogID,auditDate,auditModelID,auditPerson,empID,image,remark,scores) {
+            <%--console.log(familyId+" "+Phone+" "+Remark+" "+contactName+" "+empId+" "+relationship);--%>
+            <%--$("#secondTable3Form").attr("action","${pageContext.request.contextPath}/emp/updateFamilyInfo");--%>
+            <%--$("#familyInfoFamilyId").val(familyId);--%>
+            <%--$("#familyInfoEmpId").val(empId);--%>
+            <%--$("#ST3ContactName").val(contactName);--%>
+            <%--$("#ST3Phone").val(Phone);--%>
+            <%--$("#ST3Relationship").val(relationship);--%>
+            <%--$("#ST3Remark").val(Remark);--%>
+            <%--layer.open({--%>
+            <%--    type: 1,--%>
+            <%--    title:"修改" + secondTableName + "的家庭联系人",--%>
+            <%--    area:['25%','50%'],--%>
+            <%--    content: $("#secondTable3Form"),--%>
+            <%--    closeBtn :0, //隐藏弹出层的关闭按钮--%>
+            <%--    yes:function(index,layero){--%>
+            <%--    }--%>
+            <%--});--%>
+        }
+
+        //删除员工考核
+        function deleteAudit(auditLogID) {
+
+            <%--console.log(familyId);--%>
+
+            <%--layer.confirm('是否要删除？', {--%>
+            <%--    icon:3,--%>
+            <%--    btn: ['确认','取消'] //按钮--%>
+            <%--}, function(){+--%>
+            <%--    $.post('<%=request.getContextPath()%>/emp/deleteFamilyInfo/' + familyId,{},--%>
+            <%--        function (data) {--%>
+            <%--            reloadSecondTable(secondTableEmpId,secondTableName);--%>
+            <%--        });--%>
+            <%--    layer.msg('已删除', {--%>
+            <%--        icon: 1,--%>
+            <%--        time:2000--%>
+            <%--    });--%>
+
+            <%--}, function(){--%>
+            <%--    layer.msg('已取消', {--%>
+            <%--        icon:0,--%>
+            <%--        time: 2000 //20s后自动关闭--%>
+            <%--    });--%>
+            <%--});--%>
+        }
+
+
+
         function ChangeDateFormat(val) {
             if (val != null) {
                 var date = new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10));
@@ -464,7 +845,6 @@
             layui.use('table', function() {
                 var table = layui.table;
 
-                //第一个实例
                 table.render({
                     elem: '#secondTable1'
                     ,height: 350
@@ -494,6 +874,7 @@
                         ,{field: 'startDate', title: '入校时间', width:180,templet : '<span>{{layui.util.toDateString(d.startDate,"yyyy-MM-dd HH:mm:ss")}}</span>'}
                         ,{field: 'endDate', title: '毕业时间', width:180,templet : '<span>{{layui.util.toDateString(d.endDate,"yyyy-MM-dd HH:mm:ss")}}</span>'}
                         ,{field: 'Remark', title: '说明', width: 200}
+                        ,{field: '', title: '操作', width: 180,templet:'#secondTable2RowCZ'}
                     ]]
                 });
 
@@ -508,6 +889,7 @@
                         ,{field: 'relationship', title: '与员工关系', width:180}
                         ,{field: 'Phone', title: '联系电话', width:150}
                         ,{field: 'Remark', title: '说明', width: 220}
+                        ,{field: '', title: '操作', width: 180,templet:'#secondTable3RowCZ'}
                     ]]
                 });
 
@@ -524,6 +906,7 @@
                         ,{field: 'image', title: '图片', width:250}
                         ,{field: 'remark', title: '说明', width: 200}
                         ,{field: 'auditPerson', title: '录入人员', width: 120}
+                        ,{field: '', title: '操作', width: 180,templet:'#secondTable4RowCZ'}
                     ]]
                 });
 
@@ -700,6 +1083,27 @@
             });
 
             return false;
+        });
+
+        form.on('submit(educationForm)', function(){
+            $.post("${pageContext.request.contextPath}/emp/addEmpWorkExperience",{},function (data) {
+                layer.msg('添加成功');
+                reloadSecondTable(secondTableEmpId,secondTableName);
+            });
+        });
+
+        form.on('submit(familyInfoForm)', function(){
+            $.post("${pageContext.request.contextPath}/emp/addFamilyInfo",{},function (data) {
+                layer.msg('添加成功');
+                reloadSecondTable(secondTableEmpId,secondTableName);
+            });
+        });
+
+        form.on('submit(auditForm)', function(){
+            $.post("${pageContext.request.contextPath}/emp/addAudit",{},function (data) {
+                layer.msg('添加成功');
+                reloadSecondTable(secondTableEmpId,secondTableName);
+            });
         });
 
         return false;
@@ -906,31 +1310,6 @@
             addShiOption($("#nation_1").val());
         },"json");
     });
-
-    function deleteWorkExprience(jobId) {
-
-        console.log(jobId);
-
-        layer.confirm('是否要删除？', {
-            icon:3,
-            btn: ['确认','取消'] //按钮
-        }, function(){+
-            $.post('<%=request.getContextPath()%>/emp/deleteWorkExprience/' + jobId,{},
-                function (data) {
-                    reloadSecondTable(secondTableEmpId,secondTableName);
-                });
-            layer.msg('已删除', {
-                icon: 1,
-                time:2000
-            });
-
-        }, function(){
-            layer.msg('已取消', {
-                icon:0,
-                time: 2000 //20s后自动关闭
-            });
-        });
-    }
 </script>
 
 </body>

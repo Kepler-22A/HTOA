@@ -3,9 +3,7 @@ package com.kepler.service.impl;
 import com.kepler.dao.BaseDao;
 import com.kepler.service.ClassService;
 import com.kepler.service.EmpService;
-import com.kepler.vo.CharEmpVo;
-import com.kepler.vo.JobVo;
-import com.kepler.vo.empVo;
+import com.kepler.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -193,5 +191,41 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     @Override
     public void updateWorkExperience(JobVo job) {
         update(job);
+    }
+
+    @Override
+    public void addEducation(EducationVo education) {
+        save(education);
+    }
+
+    @Override
+    public void updateEducation(EducationVo education) {
+        update(education);
+    }
+
+    @Override
+    public void deleteEducation(int collegeid) {
+        EducationVo educationVo = new EducationVo();
+        educationVo.setCollegeid(collegeid);
+
+        delete(educationVo);
+    }
+
+    @Override
+    public void addFamilyInfo(FamilyInfoVo familyInfoVo) {
+        save(familyInfoVo);
+    }
+
+    @Override
+    public void updateFamilyInfo(FamilyInfoVo familyInfoVo) {
+        update(familyInfoVo);
+    }
+
+    @Override
+    public void deleteFamilyInfo(int familyId) {
+        FamilyInfoVo familyInfoVo = new FamilyInfoVo();
+        familyInfoVo.setFamilyId(familyId);
+
+        delete(familyInfoVo);
     }
 }
