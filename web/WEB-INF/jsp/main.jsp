@@ -119,7 +119,6 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="#">问题反馈</a>
-                    <a>问题反馈</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">问题反馈</a></dd>
                     </dl>
@@ -140,7 +139,6 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="#">文件管理</a>
-                    <a>文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">资料文档</a></dd>
                     </dl>
