@@ -124,20 +124,6 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="#">招生就业</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">招生信息</a></dd>
-                        <dd><a href="javascript:;">合作伙伴</a></dd>
-                        <dd><a href="javascript:;">招生追踪</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="#">继续教育</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">继续教育</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
                     <a href="#">文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">资料文档</a></dd>
