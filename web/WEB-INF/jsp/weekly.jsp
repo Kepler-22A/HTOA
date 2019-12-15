@@ -22,7 +22,7 @@
 
 <%--每行数据的操作部分--%>
     <script id="weeklyRowsCZ" type="text/html">
-        <a class="layui-btn layui-btn-xs" lay-event="edit" href="/toWeeklyDetails">详情</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit" href="${pageContext.request.contextPath}/emp/toWeeklyDetails/{{ d.worklogid }}">详情</a>
     </script>
 
 <%--表头工具栏--%>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -497,9 +498,26 @@ public class EmpController {//员工的Controller
     }
 
     //周报详情页
-    @RequestMapping(value = "/toWeeklyDetails")
-    public ModelAndView toWeeklyDetails(ModelAndView mv){
-        mv.setViewName("weeklyDetails");
+    @RequestMapping(value = "/toWeeklyDetails/{worklogid}")
+    public ModelAndView toWeeklyDetails(ModelAndView mv,@PathVariable(value = "worklogid") int worklogid, HttpServletRequest request){
+        mv.setViewName("weekDetails");
+
+        List list = es.selWeeklyAndDepName(worklogid);
+
+        for (Object o : list){
+            Map map = (HashMap)o;
+
+            request.setAttribute("empId",map.get("empId"));
+            request.setAttribute("weekCur",map.get("weekCur"));
+            request.setAttribute("weekNext",map.get("weekNext"));
+            request.setAttribute("Idea",map.get("Idea"));
+            request.setAttribute("empName",map.get("empName"));
+            request.setAttribute("worklogid",map.get("worklogid"));
+            request.setAttribute("Workday",map.get("Workday"));
+            request.setAttribute("depName",map.get("depName"));
+            request.setAttribute("studentQuestion",map.get("studentQuestion"));
+        }
+
 
         return mv;
     }

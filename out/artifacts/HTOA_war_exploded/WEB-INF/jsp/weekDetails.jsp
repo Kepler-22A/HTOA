@@ -17,47 +17,54 @@
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
 </head>
 <body>
-    <div style="width:600px;height: 1000px;margin: 0 auto;border: solid 1px #666">
+    <a class="layui-btn layui-btn-danger layui-btn-sm" href="javascript:history.back()">返回</a>
+    <div style="width:600px;height: 750px;margin: 0 auto">
         <fieldset class="layui-elem-field layui-field-title">
             <legend>宏图软件工作周报</legend>
         </fieldset>
 
-        <span>部门：</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span>姓名：</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span>时间：</span>
+        <span>部门：${depName}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>姓名：${empName}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span>时间：${Workday}</span>
 
-        //本周情况
-        <div id="thisWeekDiv" style="height: 500px">
-            <div id="thisWeekDivTitle" style="float: left">
-                <h3>本周总结</h3>
+<%--        //本周情况--%>
+        <div id="thisWeekDiv" style="height: 500px;border: solid 1px #666">
+            <div id="thisWeekDivTitle" style="height:500px;width:30px;float: left;border-right: solid 1px #666">
+                <h2>
+                    本
+                    周
+                    总
+                    结
+                </h2>
             </div>
-            <div id="thisWeekDivData" style="float: left">
-                <div id="thisWeekContainer">//本周情况***************************************
-                    <div id="thisWeekContainerTitle" style="float: left">
-
+            <div id="thisWeekDivData" style="float: left;width: 567px">
+                <div id="thisWeekContainer" style="width: 100%;height: 55%"><%--//本周情况***************************************--%>
+                    <div id="thisWeekContainerTitle" style="float: left;width: 30px;height: 100%">
+                        <h3>本周情况</h3>
                     </div>
-                    <div id="thisWeekContainerData" style="float: left">
-
-                    </div>
-                    <p style="clear: both"></p>
-                </div>
-                <div id="studentQuestionContainer">//问题学生*******************************
-                    <div id="studentQuestionContainerTitle" style="float: left">
-
-                    </div>
-                    <div id="studentQuestionContainerData" style="float: left">
-
+                    <div id="thisWeekContainerData" style="float: left;border-left: solid 1px #666;width: 536px;height: 100%">
+                        ${weekCur}
                     </div>
                     <p style="clear: both"></p>
                 </div>
-                <div id="IdeaContainer">//意见*********************************************
-                    <div id="IdeaContainerTitle" style="float: left">
-
+                <div id="studentQuestionContainer" style="width: 100%;height: 20%"><%--//问题学生*******************************--%>
+                    <div id="studentQuestionContainerTitle" style="float: left;border-top:solid 1px #666;border-bottom:solid 1px #666;width: 30px;height: 98px">
+                        <h3>问题学生</h3>
                     </div>
-                    <div id="IdeaContainerData" style="float: left">
-
+                    <div id="studentQuestionContainerData" style="float: left;border: solid 1px #666;border-right:none;width: 536px;height: 98px">
+                        ${studentQuestion}
+                    </div>
+                    <p style="clear: both"></p>
+                </div>
+               <div id="IdeaContainer" style="width: 100%;height: 25%"><%-- //意见*********************************************--%>
+                    <div id="IdeaContainerTitle" style="float: left;width: 30px;height: 100%">
+                        <h3>意见</h3>
+                    </div>
+                    <div id="IdeaContainerData" style="float: left;border-left: solid 1px #666;width: 536px;height: 100%">
+                        ${Idea}
                     </div>
                     <p style="clear: both"></p>
                 </div>
@@ -65,18 +72,23 @@
             <p style="clear: both"></p>
         </div>
 
-        //下周计划
-        <div id="nextWeekDiv" style="height: 400px">
-            <div id="nextWeekDivTitle" style="float: left">
-                <h3>下周计划</h3>
+<%--        //下周计划--%>
+        <div id="nextWeekDiv" style="height: 150px;border: solid 1px #666">
+            <div id="nextWeekDivTitle" style="height:150px;width:30px;float: left;border-right: solid 1px #666">
+                <h2>
+                    下
+                    周
+                    计
+                    划
+                </h2>
             </div>
-            <div id="nextWeekDivData" style="float: left">
-                <div id="nextWeekContainer">//下周情况**************************************
-                    <div id="nextWeekContainerTitle" style="float: left">
-
+            <div id="nextWeekDivData" style="float: left;width: 567px">
+                <div id="nextWeekContainer"  style="width: 100%;height: 100%"><%--//下周情况**************************************--%>
+                    <div id="nextWeekContainerTitle" style="float: left;border-right: solid 1px #666;width: 30px;height: 100%">
+                        <h3>下周计划</h3>
                     </div>
-                    <div id="nextWeekContainerData" style="float: left">
-
+                    <div id="nextWeekContainerData" style="float: left;width: 536px;height: 100%">
+                        ${weekNext}
                     </div>
                     <p style="clear: both"></p>
                 </div>

@@ -233,4 +233,9 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     public List selWeekly() {
         return sqlQuery("select *,(select empName from empVo e where w.empId = e.empId) as empName from weekly w");
     }
+
+    @Override
+    public List selWeeklyAndDepName(int worklogid) {
+        return sqlQuery("select *,(select empName from empVo e where w.empId = e.empId) as empName,(select (select depName from dep d where d.depid = e.depId) from empVo e where e.empId = w.EmpId) as depName from weekly w where worklogid = " + worklogid);
+    }
 }
