@@ -5,21 +5,30 @@ import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.SystemSetService;
 import com.kepler.vo.*;
+import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricVariableInstance;
+import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
+import org.activiti.engine.impl.pvm.process.ActivityImpl;
+import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -29,6 +38,16 @@ import java.util.Map;
 public class SystemSetController {
     @Resource
     private SystemSetService sys;
+    @Resource
+    private ProcessEngine processEngine;
+    @Resource
+    private TaskService taskService;
+    @Resource
+    private RuntimeService runtimeService;
+    @Resource
+    private HistoryService historyService;
+    @Resource
+    private RepositoryService repositoryService;
 
     //--------------------------------届别设置-------------------------------------------------------------------------------
         @RequestMapping("/test")
@@ -407,5 +426,15 @@ public class SystemSetController {
         sys.deleTermDatas(vo.getTermID());
         return "redirect:/system/term";
     }
+
+    //-----------------------------------------部门管理----------------------------------------------------
+    @RequestMapping("/deptTree")
+    public String deptTree(){
+            return "systemDeptTree";
+    }
+
+
+
+
 
 }
