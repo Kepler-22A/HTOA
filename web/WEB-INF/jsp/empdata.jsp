@@ -577,7 +577,7 @@
             layer.confirm('是否要删除？', {
                 icon:3,
                 btn: ['确认','取消'] //按钮
-            }, function(){+
+            }, function(){
                 $.post('<%=request.getContextPath()%>/emp/deleteWorkExprience/' + jobId,{},
                     function (data) {
                         reloadSecondTable(secondTableEmpId,secondTableName);
