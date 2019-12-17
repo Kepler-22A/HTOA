@@ -52,7 +52,8 @@
                         <dd><a data-url="/Controller/cheshi" data-id="11" data-title="选项1"  class="site-demo-active" data-type="tabAdd">测试</a></dd>
                         <dd><a data-url="/Controller/cheshi" data-id="22" data-title="选项2"  class="site-demo-active" data-type="tabAdd">测试2</a></dd>
                         <dd><a href="javascript:;">我的邮件</a></dd>
-                        <dd><a href="javascript:;">个人请假</a></dd>
+                        <dd><a data-url="/leave/toEmpApplyPage" data-id="128" data-title="员工请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工请假</a></dd>
+                        <dd><a href="javascript:;">学生请假</a></dd>
                         <dd><a href="javascript:;">我的周报</a></dd>
                         <dd><a href="javascript:;">考勤管理</a></dd>
                         <dd><a href="javascript:;">离职申请</a></dd>
