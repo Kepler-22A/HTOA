@@ -53,7 +53,7 @@
         }
 
         function add8() {
-            parent.active.tabAdd("${pageContext.request.contextPath}/system/systemdata", 3008, "届别设置");
+            parent.active.tabAdd("${pageContext.request.contextPath}/system/deptTree", 3008, "部门管理");
             parent.active.tabChange(3008)
         }
 
@@ -97,7 +97,7 @@
         </div>
     </div>
 </div>
-<div class="layui-fluid" style="padding: 25px 30px 33px ;">
+<div class="layui-fluid" style="padding: 25px 30px 35px ;">
     <div class="layui-row">
         <div class="layui-col-sm3" align="center">
             <div class="grid-demo grid-demo-bg1">
@@ -122,17 +122,12 @@
         </div>
         </div>
     </div>
-<div class="layui-fluid" style="padding: 25px 30px 33px ;">
+<div class="layui-fluid" style="padding: 25px 30px 0px ;">
     <div class="layui-row">
         <div class="layui-col-sm3" align="center">
             <div class="grid-demo grid-demo-bg1">
-                <a onclick="add9()" class="site-demo-active" style="cursor:pointer" data-type="systemdata"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
+                <a onclick="add9()" class="site-demo-active" style="cursor:pointer" data-type="systemFlow"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
             <div style="font-size: 20px;">流程设置</div>
-        </div>
-        <div class="layui-col-sm3" align="center">
-            <div class="grid-demo grid-demo-bg1">
-                <a onclick="add5()" class="site-demo-active" style="cursor:pointer" data-type="major"  ><i class="layui-icon  layui-icon-set-sm" style="font-size: 100px;color:#2D93CA;"></i></a></div>
-            <div style="font-size: 20px;">专业设置</div>
         </div>
     </div>
 

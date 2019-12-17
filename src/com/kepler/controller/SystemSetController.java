@@ -202,12 +202,12 @@ public class SystemSetController {
         sys.deleProjectDatas(vo.getProjectId());
         return "redirect:/system/project";
     }
-    //---------------------------------------------------------------------------------------------
+    //----------------------------------------- 院系设置----------------------------------------------------
     @RequestMapping("/dept")
     public String dept(){
         return "systemDept";
     }
-    //  //查询项目答辩数据
+    //  //查询数据
     @RequestMapping(value = "/deptdata")
     public void deptdata(HttpServletResponse response) throws IOException {
         response.setCharacterEncoding("utf-8");
@@ -220,13 +220,13 @@ public class SystemSetController {
         json.put("data",sum);
         pwt.print(json.toString());
     }
-    //添加项目答辩数据
+    //添加数据
     @RequestMapping(value = "/addDept")
     public String addDept(HttpServletRequest request, DeptVo vo){
         sys.AddDept(vo);
         return "redirect:/system/dept";
     }
-    //根据项目答辩id查询出数据
+    //根据id查询出数据
     @RequestMapping(value = "/selectDeptID")
     public void selectDeptID(int id,HttpServletResponse response) throws IOException {
         List list = sys.selectDeptById(id);
@@ -239,20 +239,20 @@ public class SystemSetController {
 //        System.out.println("json:"+json);
         pwt.print(json.toJSONString());
     }
-    //修改项目答辩数据
+    //修改数据
     @RequestMapping(value = "/UpdateDeptID/{deptID}")
     public String UpdateDeptID(@PathVariable(value = "deptID")int deptID, DeptVo vo){
         sys.updateDeptData(vo);
         return "redirect:/system/dept";
     }
-    //删除项目答辩数据
+    //删除数据
     @RequestMapping(value = "/delDept")
     public String delDept(DeptVo vo) {
         sys.deleDeptDatas(vo.getDeptID());
         return "redirect:/system/dept";
     }
 
-    //---------------------------------------------------------------------------------------------
+    //----------------------------------------专业-----------------------------------------------------
     @RequestMapping("/major")
     public String major(){
         return "systemMajor";
@@ -432,9 +432,54 @@ public class SystemSetController {
     public String deptTree(){
             return "systemDeptTree";
     }
+    //  //查询数据
+    @RequestMapping(value = "/treedata")
+    public void treedata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List list = sys.listTreeData();
+        json.put("list",list);
+//        System.out.println(json.toString());
+        pwt.print(json.toString());
+    }
 
+    //添加部门
+    @RequestMapping("/addDep")
+    public String addDep(HttpServletRequest request, DepVo vo ){
+            sys.AddTree(vo);
+        return "redirect:/system/deptTree";
+        }
 
+    //删除部门
+    @RequestMapping("/delTree")
+    public String delTree(DepVo vo){
+        sys.deleTreeDatas(vo.getDepid());
+        return "redirect:/system/deptTree";
+    }
 
+//-------------------------附属：设备维修获取班级或部门---------------------
+@RequestMapping(value = "/selClass")
+public void selClass(HttpServletResponse response){
+    response.setCharacterEncoding("utf-8");
 
+    List list = sys.selClass();
+
+    JSONArray ja = new JSONArray();
+
+    for (Object o : list){
+        Map map = (HashMap)o;
+
+        ja.add(map);
+    }
+
+    try {
+        PrintWriter pw = response.getWriter();
+
+        pw.println(ja.toString());
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
 
 }

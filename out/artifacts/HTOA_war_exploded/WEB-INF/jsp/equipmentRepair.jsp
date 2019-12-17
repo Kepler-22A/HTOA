@@ -27,7 +27,7 @@
 </script>
 <form  class="layui-form" id="sss" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/addequipment" >
     <div style="width: 56%;height: auto;margin-top: 1%">
-        <div style="width:110%;height:100%;float: left">
+        <div style="width:170%;height:93%;float: left;padding: 10px;">
             <div class="layui-form-item">
                 <label class="layui-form-label">设备名称</label>
                 <div class="layui-input-block">
@@ -43,8 +43,10 @@
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">班级或部门</label>
-                <div class="layui-input-block">
-                    <input id="Classes" type="text" name="Classes" required  lay-verify="required" placeholder="请输入部门" autocomplete="off" class="layui-input">
+                <div class="layui-input-inline">
+                    <select id="classSelect" name="ClassID" style="width: 150px">
+                        <option value="0">--未选择--</option>
+                    </select>
                 </div>
             </div>
             <div class="layui-form-item">
@@ -86,14 +88,27 @@
         layer.open({
             type: 1,
             title:"新增",
-            area:['600px','600px'],
+            area:['420px','420px'],
             content: $("#sss"),
             closeBtn :0, //隐藏弹出层的关闭按钮
             yes:function(index,layero){
             }
         });
 
+        $.post("/system/selClass",{},function (data) {
+            var form = layui.form;
+            var classSelect_any = "";
+            $.each(data,function (index,obj) {
+                classSelect_any += "<option value='" + obj.ClassID + "'>" + obj.className + "</option>";
+            });
+            $("#classSelect").html(classSelect_any);
+            form.render('select');
+        },"json");
     }
+
+
+
+
     //修改
     function  update(equipmentId) {
         $.post("${pageContext.request.contextPath}/student/selEquipmentById",{id : equipmentId},function (d) {
@@ -107,7 +122,7 @@
         layer.open({
             type: 1,
             title:"修改",
-            area:['600px','600px'],
+            area:['420px','420px'],
             content: $("#sss"),
             closeBtn :0, //隐藏弹出层的关闭按钮
             yes:function(index,layero){

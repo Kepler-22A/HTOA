@@ -94,4 +94,19 @@ public interface SystemSetService {
     public void updateTermData(TermVo vo);
     //删除学期数据
     public void deleTermDatas(int id);
+    //------------------------------------------部门管理--------------------------------------------------------------
+    //查询数据
+    public List<DepVo> listTreeData();
+    //添加数据
+    public void AddTree(DepVo vo);
+    //根据id查询出数据
+    public List<TermVo> selectTreeById(int id);
+    //修改数据
+    public void updateTreeData(DepVo vo);
+    //删除数据
+    public void deleTreeDatas(int id);
+
+    //-----------------附属：设备维修-----------------------
+    //查班级
+    public List selClass();
 }

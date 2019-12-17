@@ -218,4 +218,38 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
         delete(termVo);
     }
     //------------------------------------------------------------------------------------------------------------------
+    @Override
+    public List<DepVo> listTreeData() {
+        return sqlQuery("select depName from dep");
+    }
+
+    @Override
+    public void AddTree(DepVo vo) {
+        save(vo);
+    }
+
+
+    @Override
+    public List<TermVo> selectTreeById(int id) {
+        return sqlQuery("select * from dep where depid ="+id);
+    }
+
+    @Override
+    public void updateTreeData(DepVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public void deleTreeDatas(int id) {
+        DepVo depVo = new DepVo();
+        depVo.setDepid(id);
+        delete(depVo);
+    }
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public List selClass() {
+        return sqlQuery("select * from StudentClass");
+    }
+    //------------------------------------------------------------------------------------------------------------------
 }
