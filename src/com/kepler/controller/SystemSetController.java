@@ -443,6 +443,57 @@ public class SystemSetController {
 //        System.out.println(json.toString());
         pwt.print(json.toString());
     }
+    //部门树行管理
+    @RequestMapping(value = "/systemDeptree")
+    public void systemDeptree(HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        JSONArray objects = new JSONArray();//树
+        //子节点
+        Map map = new HashMap();
+        map.put("id",0);
+        map.put("text","宏图");
+        map.put("iconCls","icon-ok");
+
+        //子节点下的节点
+        List<Map> account = sys.listDeptree();
+        JSONArray Aaa = new JSONArray();
+        for(Map m : account){//增强for循环
+            Map map1 = new HashMap();
+            map1.put("id",m.get("depid"));
+            map1.put("text",m.get("depName"));
+            List<Map> account1 = sys.selectDep(String.valueOf(m.get("parentId")));
+            JSONArray Bbb = new JSONArray();
+            for(Map mm : account1){
+                Map map2 = new HashMap();
+                map2.put("id",mm.get("depid"));
+                map2.put("text",mm.get("depName"));
+                Bbb.add(map2);
+            }
+            map1.put("children",Bbb);
+            Aaa.add(map1);
+            map.put("children",Aaa);
+        }
+        objects.add(map);
+        System.out.println(objects.toJSONString());
+        out.print(objects.toJSONString());
+    }
+
+    //点击信息查询出班级信息
+    @RequestMapping(value = "/selectDepTree/{SJ}")
+    public void selectDepTree(@PathVariable(value = "SJ") String depName,HttpServletResponse response) throws IOException {
+        System.out.println("fgdcfgdfgdf");
+        depName = new String(depName.getBytes("ISO-8859-1"),"UTF-8");
+        List list = sys.Customss(depName);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
 
     //添加部门
     @RequestMapping("/addDep")

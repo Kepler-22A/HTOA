@@ -40,7 +40,7 @@
         //修改
         function  update(hourid) {
 
-            $.post("/student/selStudnetAddhourById",{id : hourid},function (d) {
+            $.post("${pageContext.request.contextPath}/student/selStudnetAddhourById",{id : hourid},function (d) {
                 $("#test").attr("action","${pageContext.request.contextPath}/student/updateHour/" + d.studentHour.hourid);
                 $("#hourid").val(d.studentHour.hourid);
                 $("#huoeIddsc").val(d.studentHour.huoeIddsc);
@@ -61,13 +61,26 @@
         }
         //删除
         function  delhour(hourid) {
-            if(confirm("确认删除？")){
+            layer.confirm('是否要删除？', {
+                icon:3,
+                btn: ['确认','取消'] //按钮
+            }, function(){
                 $.post("${pageContext.request.contextPath}/student/delhour",{hourid:hourid},
                     function (data) {
-                        $(".layui-laypage-btn")[0].click();
-                        // parent.location.reload();
+                        $(".layui-laypage-btn")[0].click();  //  局部刷新
+                        //parent.location.reload();  //整体刷新
                     });
-            }
+                layer.msg('已删除', {
+                    icon: 1,
+                    time:2000
+                });
+
+            }, function(){
+                layer.msg('已取消', {
+                    icon:0,
+                    time: 2000 //20s后自动关闭
+                    //btn: ['明白了', '知道了']
+                });
 
         }
 

@@ -99,6 +99,10 @@ public interface SystemSetService {
     public List<DepVo> listTreeData();
     //添加数据
     public void AddTree(DepVo vo);
+    public List listDeptree();
+    public List selectDep(String id);
+    //根据点击班级分配然后查询数据
+    public List Customss(String cuntom);
     //根据id查询出数据
     public List<TermVo> selectTreeById(int id);
     //修改数据

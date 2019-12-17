@@ -228,6 +228,22 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
         save(vo);
     }
 
+    @Override
+    public List listDeptree() {
+        return sqlQuery("select * from dep");
+    }
+
+    @Override
+    public List selectDep(String id) {
+        return sqlQuery("select depid,depName from dep where depid ="+id);
+    }
+
+    @Override
+    public List Customss(String cuntom) {
+        return sqlQuery("select * from  dep where depName=  '"+cuntom+"'");
+
+    }
+
 
     @Override
     public List<TermVo> selectTreeById(int id) {

@@ -9,22 +9,25 @@
 <html>
 <head>
     <title>部门管理</title>
+    <meta charset="utf-8">
+    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
-    <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
-    <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
-    <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
-    <script src="${pageContext.request.contextPath}/layui/lay/modules/layer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/jquery-1.7.2.min.js"></script><!---引用jquery库-->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/jquery.easyui.min.js"></script><!---引用easyui库-->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/locale/easyui-lang-zh_CN.js"></script><!---引用语言包-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/easyui/themes/default/easyui.css"></link><!---主题样式-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/easyui/themes/icon.css"></link><!---图标-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>宿舍管理</legend>
+    <legend>部门管理</legend>
 </fieldset>
-    <button onclick="add()" type="button" class="layui-btn layui-btn-normal" style="margin: 0px 20px">
-        <i class="layui-icon layui-icon-add-1"></i> 添加
-    </button>
+<%--    <button onclick="add()" type="button" class="layui-btn layui-btn-normal" style="margin: 0px 20px">--%>
+<%--        <i class="layui-icon layui-icon-add-1"></i> 添加--%>
+<%--    </button>--%>
 
 <%--<button type="button" class="layui-btn  layui-btn-normal" onclick="del('{{ d.depid }}')">--%>
 <%--    <i class="layui-icon layui-icon-delete"></i> 删除--%>
@@ -32,11 +35,52 @@
 
 <hr>
 
-<div id="container" style="padding: 0px 50px ;">
 
+
+<div style="width: 14%;height: 500px;float: left;padding: 20px">
+    <ul class="easyui-tree" id="aa" style="width: 230px">
+    </ul>
 </div>
+
+<div style="width: 86%;float: left;">
+    <table class="layui-hide" id="test"></table>
+
+</div >
+<%--<div id="container" style="padding: 0px 50px ;">--%>
+
+<%--</div>--%>
 <script>
-    function reloadList(){
+
+    $("#aa").tree({
+        url:'${pageContext.request.contextPath}/system/systemDeptree',//treesql
+        onClick:function (node) {//当前点击的节点
+            if(node.id!=-1){
+                // alert(node.id+""+node.text);//得到当前节点
+                var SJ = node.text;
+                sks("${pageContext.request.contextPath}/system/selectDepTree/"+SJ);//实现无缝天空一号观月计划无线对接数据 A
+            }
+        }
+    });
+
+    function sks(url){
+        layui.use('table', function(){
+            var table = layui.table;
+
+            table.render({
+                elem: '#test'
+                ,url:url
+                ,cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,cols: [[
+                    {field:'depid', title: 'ID', }
+                    ,{field:'depName', title: '部门名称'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                    ,{field:'parentId', title: '父部门名称'}
+                    ,{field:'chairman', title: '部门负责人'}
+                    ,{field:'remark', title: '备注'}
+                ]]
+            });
+        });
+    };
+ /*   function reloadList(){
         $.post("${pageContext.request.contextPath}/system/treedata",{},function (data) {
             var listNode = "";
             $.each(data.list,function (index,obj) {
@@ -47,7 +91,7 @@
             $("#container").html(listNode);
         },'json');
     }
-    reloadList();
+    reloadList();*/
 
     //添加
     function add() {
