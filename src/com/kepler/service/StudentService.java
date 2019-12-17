@@ -80,4 +80,22 @@ public interface StudentService {
     public List Customss(String cuntom);
     //查询出没有分班的学生
    public List selectNOClassStudentData();
+   //增加学生答辩成绩
+    public void addStudentReplyScore(StudentReplyScoreVo vo);
+    //根据学生id查询出答辩成绩
+    public List selectStudentReplyScore(int id);
+    //根据学生id修改答辩成绩
+    public void updateStudentReplyScore(StudentReplyScoreVo vo);
+    //根据学生删除答辩成绩
+    public void delectStudentReplyScore(StudentReplyScoreVo vo);
+    //查询出课程名称
+    public List selectcourseId();
+    //增加学生考试成绩
+   public void addStudent_score(Student_scoreVo vo);
+   //查询出学生考试成绩
+   public List selestStudent_score(int id);
+   //修改学生考试成绩
+    public void updateStudent_score(Student_scoreVo vo);
+    //删除学生考试成绩
+    public void deleteStudent_score(Student_scoreVo vo);
 }

@@ -43,11 +43,11 @@ public class TestController {//登录  考核管理！！
     public String login(empVo empVo,HttpSession  session){
         int i = service.selectLogin(empVo.getEmpName(),empVo.getPassword());
         int  empId = service.selectInt(empVo.getEmpName());
-        session.setAttribute("empId",empId);
         System.out.println("empId:"+empId);
 
         if(i==1){
             System.out.print("登录成功！！");
+            session.setAttribute("empId",empId);//把当前员工信息存起来
             return "main";
         }
         System.out.print("登录失败！！！");
