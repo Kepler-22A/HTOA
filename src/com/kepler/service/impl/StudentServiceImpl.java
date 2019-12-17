@@ -204,4 +204,51 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
         return sqlQuery("select distinct Studid,stuname,cardid,sex,phone,middleschool,clazz,introduretech,classTypeName from Student t left join StudentClass s on t.clazz = s.classid left join classType\n" +
                 "e on s.classid = e.calssTypeId");
     }
+
+    @Override
+    public void addStudentReplyScore(StudentReplyScoreVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List selectStudentReplyScore(int id) {
+        return sqlQuery("select replyId,stuname,className,projectName,score1,Score2,Score3,Score4,Score5,Score6,Score7,e.Remark,empName from StudentReplyScore e left join Student s on s.Studid = e.StudentId left join StudentClass l on s.clazz = l.classid \n" +
+                "left join Project p on e.projectId = p.projectId left join empVo o on o.empId = e.empId where Studid = "+id);
+    }
+
+    @Override
+    public void updateStudentReplyScore(StudentReplyScoreVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public void delectStudentReplyScore(StudentReplyScoreVo vo) {
+        delete(vo);
+    }
+
+    @Override
+    public List selectcourseId() {
+        return sqlQuery("select courseID,courseName from Course");
+    }
+
+    @Override
+    public void addStudent_score(Student_scoreVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List selestStudent_score(int id) {
+        return sqlQuery("select scoreId,stuname,e.score,Rescore,courseName,testType,termid,scoreTime,v.empName,v.empId from \n" +
+                "Student_score e left join Student s on  e.stuid = s.Studid left join Course o on e.courseId = o.courseID left join empVo v on e.Empid = v.empid where Studid ="+id);
+    }
+
+    @Override
+    public void updateStudent_score(Student_scoreVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public void deleteStudent_score(Student_scoreVo vo) {
+        delete(vo);
+    }
 }

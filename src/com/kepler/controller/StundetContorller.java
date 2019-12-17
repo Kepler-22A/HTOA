@@ -10,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -548,5 +550,126 @@ public class StundetContorller {
         jsonObject.put("msg","");
         jsonObject.put("data",list);
         ptw.print(jsonObject.toJSONString());
+    }
+    //跳转班级类别
+    @RequestMapping(value = "/SelectclassType")
+    public String SelectclassType(){
+        return "SelectclassType";
+    }
+    //跳转课程管理
+    @RequestMapping(value = "/course")
+    public String course(){
+        return "course";
+    }
+    //新增课程管理信息
+    @RequestMapping(value = "/Addcourse")
+    public String Addcourse(){
+        return "redirect:/student/course";
+    }
+    //附表新增学生答辩成绩
+    @RequestMapping(value = "/addStudentReplyScore")
+    public String addStudentReplyScore(StudentReplyScoreVo vo){
+        vo.setScore7(vo.getScore1()+vo.getScore2()+vo.getScore3()+vo.getScore4()+vo.getScore5()+vo.getScore6());
+        sts.addStudentReplyScore(vo);
+        return "redirect:/student/studentdata";
+    }
+    //根据学生id查询出学生答辩成绩
+    @RequestMapping(value = "/StudentReplyScore/{id}")
+    public void StudentReplyScore(@PathVariable(value = "id") int id,HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list =  sts.selectStudentReplyScore(id);
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    //修改学生答辩成绩
+    @RequestMapping(value = "/updateStudentReplyScore")
+    public String updateStudentReplyScore(StudentReplyScoreVo vo){
+        vo.setScore7(vo.getScore1()+vo.getScore2()+vo.getScore3()+vo.getScore4()+vo.getScore5()+vo.getScore6());
+        sts.updateStudentReplyScore(vo);
+        return "redirect:/student/studentdata";
+    }
+    //deleteStudentReplyScore
+    //删除学生答辩成绩
+    @RequestMapping(value = "/deleteStudentReplyScore/{jobId}")
+    @ResponseBody
+    public void delstudentClassID(@PathVariable(value = "jobId")int jobId,StudentReplyScoreVo vo){
+        vo.setReplyId(jobId);
+        sts.delectStudentReplyScore(vo);
+    }
+    //查询出课程名称
+    @RequestMapping(value = "/courseIdAjax")
+    public void courseIdAjax(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        //查询出老师的名字
+        List<empVo> list = sts.selectcourseId();
+        jsonObject.put("course",list);
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
+    }
+    //新增考试成绩
+    @RequestMapping(value = "/addStudent_score")
+    public String addStudent_score(String shijian2,String remarks, HttpSession session,Student_scoreVo vo){
+        int  empid = (int) session.getAttribute("empId");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(shijian2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date = java.sql.Date.valueOf(shijian2);
+        vo.setScoreTime(date);//转换时间
+        vo.setEmpid(empid);
+        vo.setRemark(remarks);
+        sts.addStudent_score(vo);
+        return "redirect:/student/studentdata";
+    }
+    //selectStudent_score
+    //根据学生id查询出学生考试成绩
+    @RequestMapping(value = "/selectStudent_score/{id}")
+    public void selectStudent_score(@PathVariable(value = "id") int id,HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list =  sts.selestStudent_score(id);
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    //修改学生考试成绩
+    @RequestMapping(value = "/updateStudentReplyScoresss")
+    public String updateStudentReplyScore(Student_scoreVo vo,String shijian2,String remarks,HttpSession session){
+        System.out.println("进来了");
+        int  empid = (int) session.getAttribute("empId");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(shijian2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date = java.sql.Date.valueOf(shijian2);
+        vo.setScoreTime(date);//转换时间
+        vo.setEmpid(empid);
+        vo.setRemark(remarks);
+        sts.updateStudent_score(vo);
+        return "redirect:/student/studentdata";
+    }
+    //删除学生考试成绩
+    @RequestMapping(value = "/deleteStudent_score/{jobId}")
+    @ResponseBody
+    public void deleteStudent_score(@PathVariable(value = "jobId")int jobId,Student_scoreVo vo){
+        vo.setScoreId(jobId);
+        sts.deleteStudent_score(vo);
     }
 }
