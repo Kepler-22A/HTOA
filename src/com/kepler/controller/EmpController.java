@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -522,8 +523,34 @@ public class EmpController {//员工的Controller
         return mv;
     }
 
+    /**
+     * 去员工周报也
+     * */
     @RequestMapping(value = "/toMyWeeklyPage")
     public String toMyWeeklyPage(){
         return "myWeekly";
+    }
+
+    //自己的周报详情页周报数据查询
+    @RequestMapping(value = "/selWeeklyListByEmpId")
+    public void selWeeklyListByEmpId(HttpServletResponse response, HttpSession session){
+        response.setCharacterEncoding("utf-8");
+
+        List list = es.selWeeklyByEmpId(Integer.parseInt(session.getAttribute("empId")+""));
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("code",0);
+        jo.put("count",list.size());
+        jo.put("data",list);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

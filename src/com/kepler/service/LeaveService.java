@@ -1,6 +1,7 @@
 package com.kepler.service;
 
 import com.kepler.vo.HolidayVo;
+import com.kepler.vo.empVo;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface LeaveService {
     String selEmpNameByEmpId(int empId);//根据empId取empName
     void updateHolidayVo(HolidayVo holidayVo);//修改holidayVo
     int selHTXZEmpId();//查询宏图校长的empId
+    empVo selEmpByEmpId(int empId);//根据empId查找empVo
 }

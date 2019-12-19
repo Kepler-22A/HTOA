@@ -38,4 +38,5 @@ public interface EmpService {
     void deleteFamilyInfo(int familyId);//删除员工家庭联系信息
     List selWeekly();//查找员工周报表信息
     List selWeeklyAndDepName(int worklogid);//查找员工周报表信息和部门名称
+    List selWeeklyByEmpId(int empId);//查找员工周报表信息根据员工的ID
 }

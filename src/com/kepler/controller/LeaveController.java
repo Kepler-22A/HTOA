@@ -594,7 +594,20 @@ public class LeaveController {
         HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("empId",session.getAttribute("empId")).singleResult();
         //获取流程实例id （查询历史批注）
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
+        List empNameList = new ArrayList();
+
+        for (Object o : commentList){
+            Comment c = (Comment)o;
+
+            Map map = new HashMap();
+            map.put("empName",ls.selEmpNameByEmpId(Integer.parseInt(c.getUserId())));
+            map.put("empId",Integer.parseInt(c.getUserId()));
+            empNameList.add(map);
+        }
+
         model.addAttribute("commentList",commentList);
+        model.addAttribute("empNameList",empNameList);
+
         return "comment";
     }
 }
