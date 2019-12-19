@@ -13,6 +13,8 @@
     <meta charset="utf-8">
     <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/echar/echarts.min.js" charset="utf-8" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/echar/jquery-3.3.1.min.js" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script type="text/javascript">
         //添加
@@ -64,16 +66,89 @@
         }
         //删除
         function  delhour(Studid) {
-            if(confirm("确认删除？")){
-                $.post("${pageContext.request.contextPath}/student/delstudent/"+Studid,
+            console.log(Studid);
+            layer.confirm('是否要删除？', {
+                icon:3,
+                btn: ['确认','取消'] //按钮
+            }, function(){+
+                $.post('${pageContext.request.contextPath}/student/delstudent/' + Studid,{},
                     function (data) {
-                        parent.location.reload();
+                        reload();
                     });
-            }
+                layer.msg('已删除', {
+                    icon: 1,
+                    time:2000,
+                });
+
+            }, function(){
+                layer.msg('已取消', {
+                    icon:0,
+                    time: 2000 //20s后自动关闭
+                });
+            });
 
         }
         function guanbi() {
             layer.closeAll();
+        }
+        function tubiao(a,b,c,d,e,f) {
+            layer.open({
+                type: 1,
+                title:"答辩成绩图表",
+                area:['60%','70%'],
+                content: $("#main"),
+                yes:function(index,layero){
+
+                }
+            });
+            var myEcharts = echarts.init(document.getElementById("main"));
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b}: {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data:['功能完善','技术难度','界面完美','回答方式','演示方式','语言表达']
+                },
+                series: [
+                    {
+                        name:'答辩成绩',
+                        type:'pie',
+                        radius: ['50%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            normal: {
+                                show: false,
+                                position: 'center'
+                            },
+                            emphasis: {
+                                show: true,
+                                textStyle: {
+                                    fontSize: '30',
+                                    fontWeight: 'bold'
+                                }
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data:[
+                            {value:a, name:'功能完善'},
+                            {value:b, name:'技术难度'},
+                            {value:c, name:'界面完美'},
+                            {value:e, name:'回答方式'},
+                            {value:f, name:'演示方式'},
+                            {value:g, name:'语言表达'}
+                        ]
+                    }
+                ]
+            };
+
+            myEcharts.setOption(option);
         }
     </script>
 </head>
@@ -83,6 +158,7 @@
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" onclick="add()">添加学生</button>
             <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
+
         </div>
     </script>
     <!--增加学生表-->
@@ -93,7 +169,6 @@
         <input type="hidden" value="0.0" name="score">
         <input type="hidden" value="1" name="studytype">
         <input type="hidden" value="1" name="vocationalflag">
-        <input type="hidden" value="0" name="clazz"/><!--默认给这个学生没有班-->
         <input type="hidden" value="100" name="huor"/>
         <input type="hidden" value="1" name="stat"/>
         <input type="hidden" value="否" name="dibao"/>
@@ -108,6 +183,7 @@
         <input type="hidden" value="是" name="computer"/>
         <input type="hidden" value="是" name="collar"/>
         <input type="hidden" value="是" name="zhuxiao"/>
+        <input type="hidden" value="0" name="prolevel">
         <input type="button" value="赋值" onclick="fuzhi()">
         <div style="width: 56%;height: auto;margin-top: 1%">
             <div style="width:50%;height:100%;float: left">
@@ -210,7 +286,6 @@
                         <input id="g" type="text" name="intrphone" required  lay-verify="required" placeholder="请输入老师电话" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">面试人</label>
                     <div class="layui-input-block">
@@ -239,7 +314,6 @@
                         <input id="l" type="text" name="vocationalsch" required  lay-verify="required" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-
                 <div class="layui-form-item">
                     <label class="layui-form-label">毕业学校</label>
                     <div class="layui-input-block">
@@ -259,13 +333,10 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">专业类别</label>
+                    <label class="layui-form-label">班级</label>
                     <div class="layui-input-block">
-                        <select name="prolevel" lay-verify="required">
+                        <select name="clazz" lay-verify="required" id="clazz">
                             <option value="">请选择</option>
-                            <option value="1">中技</option>
-                            <option value="2">高技</option>
-                            <option value="3">3+2</option>
                         </select>
                     </div>
                 </div>
@@ -304,6 +375,7 @@
                     <script id="secondTable1RowCZ" type="text/html">
                         <a class="layui-btn layui-btn-xs" href="javascript:updateWorkExperience(secondTableEmpId,'{{d.replyId}}','{{d.StudentId}}','{{d.stuname}}','{{d.score1}}','{{d.Score2}}','{{d.Score3}}','{{d.Score4}}','{{d.Score5}}','{{d.Score6}}','{{d.Score7}}','{{d.Remark}}')" lay-event="edit">修改</a>
                         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="deleteWorkExprience('{{ d.replyId }}')">删除</a>
+                        <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="del" onclick="tubiao('{{ d.score1 }}','{{d.Score2}}','{{d.Score3}}','{{d.Score4}}','{{d.Score5}}','{{d.Score6}}')">图表</a>
                     </script>
                 </div>
                 <script type="text/html" id="secondTable1Tool">
@@ -473,6 +545,8 @@
             </div>
         </div>
     </div>
+    <!--图像表-->
+    <div id="main" style="display: none;height:480px;width:950px"></div>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </body>
 <script>
@@ -487,28 +561,28 @@
                 ,url:'/student/data'
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-                    title: '提示'
+                    title: '献出我们的心脏（♥）'
                     ,layEvent: 'LAYTABLE_TIPS'
                     ,icon: 'layui-icon-tips'
                 }]
                 ,title: '用户数据表'
                 ,cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'studid', title:'ID', width:60, fixed: 'left', unresize: true, sort: true}
-                    ,{field:'stuname', title:'学生姓名', width:86}
-                    ,{field:'stuno', title:'学号', width:70, sort: true}
-                    ,{field:'sex', title:'性别', width:60, edit: 'text'}
-                    ,{field:'cardid', title:'身份证', width:100}
-                    ,{field:'phone', title:'电话',width:80}
-                    ,{field:'clazz', title:'班级', width:80}//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    ,{field:'huor', title:'宿舍房号', width:100}///!!!!!!!!!!!!!!!!!!!!!!!!
-                    ,{field:'stat', title:'学生状态',width:70}
-                    ,{field:'collar', title:'是否领用电脑', width:115}
-                    ,{field:'grants', title:'享受助学金', width:100}
-                    ,{field:'computer', title:'是否送电脑', width:100}
-                    ,{field:'parents', title:'家长姓名', width:100}
-                    ,{field:'qkMoney', title:'欠款金额', width:100}
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                    ,{field:'noticeId', title:'ID',  fixed: 'left', unresize: true, sort: true}
+                    ,{field:'stuname', title:'学生姓名'}
+                    ,{field:'stuno', title:'学号', sort: true}
+                    ,{field:'sex', title:'性别' }
+                    ,{field:'cardid', title:'身份证',edit: 'text'}
+                    ,{field:'phone', title:'电话',edit: 'text'}
+                    ,{field:'clazz', title:'班级'}//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    ,{field:'huor', title:'宿舍房号'}///!!!!!!!!!!!!!!!!!!!!!!!!
+                    ,{field:'stat', title:'学生状态'}
+                    ,{field:'collar', title:'是否领用电脑' }
+                    ,{field:'grants', title:'享受助学金' }
+                    ,{field:'computer', title:'是否送电脑'}
+                    ,{field:'parents', title:'家长姓名' }
+                    ,{field:'qkMoney', title:'欠款金额' }
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
                 ]]
                 ,page: true
             });
@@ -567,19 +641,19 @@
                 ,toolbar: '#secondTable1Tool' //开启头部工具栏，并为其绑定左侧模板
                 ,page: true //开启分页
                 ,cols: [[ //表头
-                    {field:'replyId', title: 'ID', sort: true}
+                    {field:'replyId', title: 'ID', sort: true,width:60}
                     ,{field:'stuname', title: '学生姓名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                    ,{field:'className', title: '班级', sort: true}
-                    ,{field:'projectName', title: '项目名称'}
-                    ,{field:'score1', title: '功能完善50', align: 'center'} //单元格内容水平居中
-                    ,{field:'Score2', title: '技术难度10',  align: 'right'} //单元格内容水平居中
-                    ,{field:'Score3', title: '界面完美10', align: 'right'}
-                    ,{field:'Score4', title: '回答方式10', sort: true, align: 'right'}
-                    ,{field:'Score5', title: '演示方式10', sort: true, align: 'right'}
-                    ,{field:'Score6', title: '语言表达10', sort: true, align: 'right'}
-                    ,{field:'Score7', title: '总分100',sort: true, align: 'right'}
-                    ,{field:'empName', title: '评分老师'}
-                    ,{field:'Remark', title: '备注'}
+                    ,{field:'className', title: '班级', width:106}
+                    ,{field:'projectName', title: '项目名称',width:106}
+                    ,{field:'score1', title: '功能完善50', align: 'center',width:106} //单元格内容水平居中
+                    ,{field:'Score2', title: '技术难度10',  align: 'center',width:106} //单元格内容水平居中
+                    ,{field:'Score3', title: '界面完美10', align: 'center',width:106}
+                    ,{field:'Score4', title: '回答方式10', width:106,align: 'center'}
+                    ,{field:'Score5', title: '演示方式10', width:106,align: 'center'}
+                    ,{field:'Score6', title: '语言表达10',width:106,align: 'center'}
+                    ,{field:'Score7', title: '总分100',sort: true, align: 'center',width:106}
+                    ,{field:'empName', title: '评分老师',align: 'center',width:106}
+                    ,{field:'Remark', title: '备注',width:150}
                     ,{field: '', title: '操作',templet:'#secondTable1RowCZ'}
                 ]]
             });
@@ -698,6 +772,20 @@
                 form.render('select');
             });
         },'json');
+        //查询出班级 clazz
+        $.post("${pageContext.request.contextPath}/student/studentClassAjax",{},function (data) {
+            var t = $("#clazz").html();
+            $.each(data,function (index,obj) {
+                $.each(obj,function (i,o) {
+                    t += "<option value='"+o.classid+"'>"+o.className+"</option>";
+                })
+            });
+            $("#clazz").html(t);
+            layui.use(['form'], function(){
+                var form = layui.form;
+                form.render('select');
+            });
+        },'json');
     });
     //关闭工作经历新增表
     function closeWorkExperience() {
@@ -711,6 +799,13 @@
         $("#score5").val("");
         $("#score6").val("");
         $("#Remark").val("");
+    }
+    function closeEducation() {
+        layer.closeAll();
+        $("#stuid").val(0);
+        $("#scoreId").val(0);
+        $("#Empid").val(0);
+        $("#remarks").val("");
     }
 
     //新增考试成绩***********************************************************************************************************
@@ -768,6 +863,25 @@
                 time: 2000 //20s后自动关闭
             });
         });
+    }
+    function fuzhi() {
+        document.getElementById("q").value="刘世阳";
+        document.getElementById("w").value="123456";
+        document.getElementById("e").value="18";
+        document.getElementById("r").value="99999999";
+        document.getElementById("t").value="江西赣州";
+        document.getElementById("y").value="汉族";
+        document.getElementById("u").value="江西";
+        document.getElementById("o").value="36073215112312";
+        document.getElementById("p").value="江西省赣州市";
+        document.getElementById("d").value="茂茂";
+        document.getElementById("f").value="123456789";
+        document.getElementById("g").value="186461651156";
+        document.getElementById("h").value="茂茂";
+        document.getElementById("j").value="傻逼刘世阳";
+        document.getElementById("l").value="赣州技术学院";
+        document.getElementById("x").value="赣州技术学院";
+        document.getElementById("v").value="廖文汉";
     }
 </script>
 </html>

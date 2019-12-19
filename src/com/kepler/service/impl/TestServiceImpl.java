@@ -89,4 +89,8 @@ public class TestServiceImpl extends BaseDao implements TestService {
     public List selectResult(int templateId) {
         return sqlQuery("select * from checkResult  where templateId = "+templateId+"");
     }
+    @Override
+    public int OKAccount(String account, String pwd) {
+        return executeIntSQL("select empId from empVo where empName = '"+account+"' and password = '"+pwd+"'");
+    }
 }

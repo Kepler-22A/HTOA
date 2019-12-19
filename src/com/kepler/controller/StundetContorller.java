@@ -331,10 +331,9 @@ public class StundetContorller {
     }
     //删除学生
     @RequestMapping(value = "/delstudent/{Studid}")
-    public String delstudent(@PathVariable(value = "Studid")int Studid,StudentVo vo){
+    public void delstudent(@PathVariable(value = "Studid")int Studid,StudentVo vo){
         vo.setStudid(Studid);
         sts.deleStudentDatas(vo);
-        return "redirect:/student/studentdata";
     }
     //林12-9写查询学生成绩页面
     @RequestMapping(value = "/studentScore")//跳转到学生成绩页面
@@ -649,7 +648,6 @@ public class StundetContorller {
     //修改学生考试成绩
     @RequestMapping(value = "/updateStudentReplyScoresss")
     public String updateStudentReplyScore(Student_scoreVo vo,String shijian2,String remarks,HttpSession session){
-        System.out.println("进来了");
         int  empid = (int) session.getAttribute("empId");
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
@@ -671,5 +669,18 @@ public class StundetContorller {
     public void deleteStudent_score(@PathVariable(value = "jobId")int jobId,Student_scoreVo vo){
         vo.setScoreId(jobId);
         sts.deleteStudent_score(vo);
+    }
+    //根据Ajax查询班级名称
+    @RequestMapping(value = "/studentClassAjax")
+    public void studentClassAjax(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+
+        List<StudentClassVo> list = sts.studentClassAjax();
+        jsonObject.put("name4",list);
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
     }
 }

@@ -53,16 +53,21 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/login")
     public String login(empVo empVo,HttpSession  session){
         int i = service.selectLogin(empVo.getEmpName(),empVo.getPassword());
-        int  empId = service.selectInt(empVo.getEmpName());
-        session.setAttribute("empId",empId);
-        System.out.println("empId:"+empId);
-
+        int  empId = service.selectInt(empVo.getEmpName()); //获的当前登陆的是谁
         if(i==1){
-            System.out.print("登录成功！！");
+            session.setAttribute("empId",empId);//把当前员工信息存起来
+            session.setAttribute("empName",empVo.getEmpName());
+            //判断登陆的是憨憨老师还是帅气学生
+            int OK =  service.OKAccount(empVo.getEmpName(),empVo.getPassword());
+            if(OK>0){//有值就是老师
+                session.setAttribute("array",2);//老师
+            }else {
+                session.setAttribute("array",3);//学生
+            }
             return "main";
+        }else {
+            return "redirect:/Controller/Login";
         }
-        System.out.print("登录失败！！！");
-        return "Login";
     }
     @RequestMapping("/cheshi")
     public String cheshi(){

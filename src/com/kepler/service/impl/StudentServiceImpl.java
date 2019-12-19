@@ -251,4 +251,9 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     public void deleteStudent_score(Student_scoreVo vo) {
         delete(vo);
     }
+
+    @Override
+    public List studentClassAjax() {
+        return sqlQuery("select classid,className from StudentClass");
+    }
 }

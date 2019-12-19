@@ -26,7 +26,8 @@ public interface TestService {
     public List selectProject(int templateId);
     public List selectSetp(int templateId);
     public  List selectResult(int templateId);
-
+    //判断登陆这个账号的人是憨憨老师还是帅气学生
+    public int OKAccount(String account,String pwd);
 
 
 }

@@ -31,7 +31,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    贤心
+                    ${empName}
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
@@ -49,8 +49,6 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">个人主页</a>
                     <dl class="layui-nav-child">
-                        <dd><a data-url="/Controller/cheshi" data-id="11" data-title="选项1"  class="site-demo-active" data-type="tabAdd">测试</a></dd>
-                        <dd><a data-url="/Controller/cheshi" data-id="22" data-title="选项2"  class="site-demo-active" data-type="tabAdd">测试2</a></dd>
                         <dd><a href="javascript:;">我的邮件</a></dd>
                         <dd><a data-url="/leave/toEmpApplyPage" data-id="128" data-title="员工请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工请假</a></dd>
                         <dd><a href="javascript:;">学生请假</a></dd>
@@ -62,7 +60,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">通知公告</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">公告发布</a></dd>
+                        <dd><a data-url="/message/notice" data-id="999" data-title="公告发布"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">公告发布</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

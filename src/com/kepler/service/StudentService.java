@@ -98,4 +98,6 @@ public interface StudentService {
     public void updateStudent_score(Student_scoreVo vo);
     //删除学生考试成绩
     public void deleteStudent_score(Student_scoreVo vo);
+    //查询出班级
+    public List studentClassAjax();
 }
