@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -298,7 +299,7 @@ public class SystemSetController {
     //删除专业数据
     @RequestMapping(value = "/delMajor")
     public String delMajor(MajorVo vo) {
-        System.out.println("id为："+vo.getMajorID());
+//        System.out.println("id为："+vo.getMajorID());
        sys.delMajorDatas(vo.getMajorID());
         return "redirect:/system/major";
     }
@@ -513,24 +514,89 @@ public class SystemSetController {
 @RequestMapping(value = "/selClass")
 public void selClass(HttpServletResponse response){
     response.setCharacterEncoding("utf-8");
-
     List list = sys.selClass();
-
     JSONArray ja = new JSONArray();
-
     for (Object o : list){
         Map map = (HashMap)o;
-
         ja.add(map);
     }
-
     try {
         PrintWriter pw = response.getWriter();
-
         pw.println(ja.toString());
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
 
+//-------------------------附属：问题反馈---------------------
+@RequestMapping("/feedback")
+public String feedback(){
+            return "systemFeedback";
+}
+    //  //查询数据
+    @RequestMapping(value = "/feedbackdata")
+    public void feedbackdata(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List<FeedbackVo> sum = sys.listFeedData();
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
+    //添加数据
+    @RequestMapping(value = "/addFeedback")
+    public String addFeedback(HttpServletRequest request ,FeedbackVo vo){
+            vo.setEmpname("张三");
+            vo.setDepId(1);
+            vo.setFeedbackTime(new Date());
+            vo.setEmpId(1);
+            vo.setUserId(1);
+          sys.AddFeed(vo);
+        return "redirect:/system/feedback";
+    }
+    //根据id查询出数据
+    @RequestMapping(value = "/selectFeedbackID")
+    public void selectFeedbackID(int id,HttpServletResponse response) throws IOException {
+        List list = sys.selectFeedById(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("Feed",o);//返回的数据格式一定要和前端的格式一样
+        }
+//        System.out.println("json:"+json);
+        pwt.print(json.toJSONString());
+    }
+    //修改数据
+    @RequestMapping(value = "/UpdateFeedbackID/{feedbackId}")
+    public String UpdateFeedbackID(@PathVariable(value = "feedbackId")int feedbackId, FeedbackVo vo){
+        sys.updateFeedData(vo);
+        return "redirect:/system/feedback";
+    }
+    //删除数据
+    @RequestMapping(value = "/delFeedback")
+    public String delFeedback(FeedbackVo vo) {
+//        System.out.println("id为："+vo.getFeedbackId());
+        sys.deleFeedDatas(vo.getFeedbackId());
+        return "redirect:/system/feedback";
+    }
+    //详情
+    @RequestMapping("/issueDetails")
+    public String issueDetails( int id,HttpServletResponse response,Model model)throws IOException {
+        System.out.println("id为:"+id);
+        List list = sys.selectFeedById(id);
+        model.addAttribute("FeedBack",list);
+        System.out.println(model);
+
+            return "feedbackMessage";
+    }
+
+    //--------------------------------------附属：问题反馈留言板---------------------------------------------------------
+    @RequestMapping("/message/{feedbackId}")
+    public String message(){
+            return "feedbackMessage";
+    }
 }

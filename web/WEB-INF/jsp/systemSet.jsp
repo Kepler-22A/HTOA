@@ -64,16 +64,10 @@
 
 
 
-
-
-
-
-
-
     </script>
 </head>
 <body>
-<div class="layui-fluid" style="padding: 25px 30px 33px ;">
+<div class="layui-fluid" style="padding: 25px 30px 25px ;">
     <div class="layui-row">
         <div class="layui-col-sm3" align="center">
             <div class="grid-demo grid-demo-bg1">
@@ -97,7 +91,7 @@
         </div>
     </div>
 </div>
-<div class="layui-fluid" style="padding: 25px 30px 35px ;">
+<div class="layui-fluid" style="padding: 25px 30px 25px ;">
     <div class="layui-row">
         <div class="layui-col-sm3" align="center">
             <div class="grid-demo grid-demo-bg1">

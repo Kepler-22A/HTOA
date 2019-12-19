@@ -113,4 +113,18 @@ public interface SystemSetService {
     //-----------------附属：设备维修-----------------------
     //查班级
     public List selClass();
+
+    //-----------------附属：问题反馈-----------------------
+    //查询数据
+    public List<FeedbackVo> listFeedData();
+    //添加数据
+    public void AddFeed(FeedbackVo vo);
+    //根据id查询出数据
+    public List<FeedbackVo> selectFeedById(int id);
+    //根据学生id查询所在班级
+
+    //修改数据
+    public void updateFeedData(FeedbackVo vo);
+    //删除数据
+    public void deleFeedDatas(int id);
 }

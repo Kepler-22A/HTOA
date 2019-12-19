@@ -267,5 +267,35 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
     public List selClass() {
         return sqlQuery("select * from StudentClass");
     }
+
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public List<FeedbackVo> listFeedData() {
+        return sqlQuery("select * from feedback");
+    }
+
+    @Override
+    public void AddFeed(FeedbackVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<FeedbackVo> selectFeedById(int id) {
+        return sqlQuery("select * from feedback where feedbackId ="+id);
+    }
+
+    @Override
+    public void updateFeedData(FeedbackVo vo) {
+            update(vo);
+    }
+
+    @Override
+    public void deleFeedDatas(int id) {
+        FeedbackVo feedbackVo = new FeedbackVo();
+        feedbackVo.setFeedbackId(id);
+        delete(feedbackVo);
+    }
     //------------------------------------------------------------------------------------------------------------------
 }

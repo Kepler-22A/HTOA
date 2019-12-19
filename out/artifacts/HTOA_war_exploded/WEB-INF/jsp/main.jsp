@@ -52,7 +52,7 @@
                         <dd><a href="javascript:;">我的邮件</a></dd>
                         <dd><a data-url="/leave/toEmpApplyPage" data-id="128" data-title="员工请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工请假</a></dd>
                         <dd><a href="javascript:;">学生请假</a></dd>
-                        <dd><a href="javascript:;">我的周报</a></dd>
+                        <dd><a data-url="/emp//toMyWeeklyPage" data-id="129" data-title="我的周报"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的周报</a></dd>
                         <dd><a href="javascript:;">考勤管理</a></dd>
                         <dd><a href="javascript:;">离职申请</a></dd>
                     </dl>
@@ -119,7 +119,7 @@
                 <li class="layui-nav-item">
                     <a href="#">问题反馈</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">问题反馈</a></dd>
+                        <dd><a data-url="/system/feedback" data-id="39" data-title="问题反馈" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">问题反馈</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">

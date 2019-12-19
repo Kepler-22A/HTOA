@@ -521,4 +521,9 @@ public class EmpController {//员工的Controller
 
         return mv;
     }
+
+    @RequestMapping(value = "/toMyWeeklyPage")
+    public String toMyWeeklyPage(){
+        return "myWeekly";
+    }
 }
