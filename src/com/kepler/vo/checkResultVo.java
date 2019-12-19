@@ -10,19 +10,11 @@ public class checkResultVo {//考评结果表！！
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int checkResultId ;
-    private int checkScoerId;//成绩Id
+    private int templateId;//模板Id
+    private int min ;//最低分
+    private int max;//最高分
     private String remark ;//评语
     private String grade;//等级
-
-    @Override
-    public String toString() {
-        return "checkResultVo{" +
-                "checkResultId=" + checkResultId +
-                ", checkScoerId=" + checkScoerId +
-                ", remark='" + remark + '\'' +
-                ", grade='" + grade + '\'' +
-                '}';
-    }
 
     public int getCheckResultId() {
         return checkResultId;
@@ -32,12 +24,28 @@ public class checkResultVo {//考评结果表！！
         this.checkResultId = checkResultId;
     }
 
-    public int getCheckScoerId() {
-        return checkScoerId;
+    public int getTemplateId() {
+        return templateId;
     }
 
-    public void setCheckScoerId(int checkScoerId) {
-        this.checkScoerId = checkScoerId;
+    public void setTemplateId(int templateId) {
+        this.templateId = templateId;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
     }
 
     public String getRemark() {
@@ -56,4 +64,15 @@ public class checkResultVo {//考评结果表！！
         this.grade = grade;
     }
 
+    @Override
+    public String toString() {
+        return "checkResultVo{" +
+                "checkResultId=" + checkResultId +
+                ", templateId=" + templateId +
+                ", min=" + min +
+                ", max=" + max +
+                ", remark='" + remark + '\'' +
+                ", grade='" + grade + '\'' +
+                '}';
+    }
 }

@@ -48,13 +48,13 @@
                     ,toolbar: '#weeklyToolbar' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头
-                        {field: 'worklogid', title: '周报ID', width:120, sort: true, fixed: 'left'}
-                        ,{field: 'empName', title: '员工姓名', width:120}
-                        ,{field: 'Workday', title: '周报编写时间', width:180,templet : '<span>{{layui.util.toDateString(d.Workday,"yyyy-MM-dd HH:mm:ss")}}</span>'}
-                        ,{field: 'weekCur', title: '本周汇报', width:280}
-                        ,{field: 'studentQuestion', title: '问题学生反馈', width: 280}
-                        ,{field: 'Idea', title: '意见', width: 280}
-                        ,{field: 'weekNext', title: '下周计划', width:280}
+                        {field: 'worklogid', title: '周报ID', width:100, sort: true, fixed: 'left'}
+                        ,{field: 'empName', title: '员工姓名', width:100}
+                        ,{field: 'Workday', title: '周报编写时间', width:160,templet : '<span>{{layui.util.toDateString(d.Workday,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+                        ,{field: 'weekCur', title: '本周汇报', width:250}
+                        ,{field: 'studentQuestion', title: '问题学生反馈', width: 250}
+                        ,{field: 'Idea', title: '意见', width: 250}
+                        ,{field: 'weekNext', title: '下周计划', width:250}
                         ,{field: '', title: '操作', width: 135 ,toolbar:'#weeklyRowsCZ'}
                     ]]
                 });
