@@ -1,21 +1,28 @@
 package com.kepler.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.TestService;
 import com.kepler.vo.*;
 import org.activiti.engine.*;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static oracle.net.aso.C00.*;
 
 @Controller
 @RequestMapping("/Controller")
@@ -39,15 +46,19 @@ public class TestController {//登录  考核管理！！
         return "Login";
     }
 
+    /**
+     * 登录！！
+     *
+     */
     @RequestMapping("/login")
     public String login(empVo empVo,HttpSession  session){
         int i = service.selectLogin(empVo.getEmpName(),empVo.getPassword());
         int  empId = service.selectInt(empVo.getEmpName());
+        session.setAttribute("empId",empId);
         System.out.println("empId:"+empId);
 
         if(i==1){
             System.out.print("登录成功！！");
-            session.setAttribute("empId",empId);//把当前员工信息存起来
             return "main";
         }
         System.out.print("登录失败！！！");
@@ -72,7 +83,7 @@ public class TestController {//登录  考核管理！！
     public String empExamiane(){
         return "empExamine";
     }
-    //新增指标
+    //新增指标页面
     @RequestMapping("/addExamine")
     public String addExamine(AuditModelVo auditModelVo,HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
@@ -85,7 +96,7 @@ public class TestController {//登录  考核管理！！
     }
     //查询数据
     @RequestMapping("/table")
-    public void table(HttpServletResponse response) throws IOException {
+    public void table(HttpServletResponse response){
         //System.out.println("进入table1!!!");
         response.setCharacterEncoding("utf-8");
 
@@ -97,7 +108,12 @@ public class TestController {//登录  考核管理！！
         json.put("count",list.size());
         json.put("data",list);
 
-        PrintWriter out = response.getWriter();
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         out.print(json.toString());
 
         //System.out.println(json.toJSONString());
@@ -154,27 +170,6 @@ public class TestController {//登录  考核管理！！
     public String toAddTemplate (){
         return "addTemplate";
     }
-    @RequestMapping("/AddTemplate")//新增修改！！
-    public String addTemplate(TemplateVo templateVo, checkProjectVo checkProjectVo, HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
-        System.out.println("进入toAddTemplate");
-        request.setCharacterEncoding("utf-8");
-        //获取当前用户
-         int str = (int) session.getAttribute("empId");
-         templateVo.setEmpId(str);
-         System.out.println("empId:"+str);
-        //时间
-        Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        templateVo.setTemplateTime(format.format(date));
-
-        int i = service.addTemplate(templateVo);
-        if(i>0){
-            //查出模板Id
-            int templateId = service.selectInt2(templateVo.getTemplateTime());
-            session.setAttribute("templateId",templateId);
-        }
-        return "addTemplate";
-    }
     @RequestMapping("/checkTask")//任务
     public String checkTask(){
         return "checkTask";
@@ -182,6 +177,125 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/myCheck")
     public String myCheck(){
         return "myCheck";
+    }
+
+    /**
+     * 考评项目操作！！！
+     */
+    @RequestMapping("/AddTemplate")//新增修改！！
+    public void addTemplate(TemplateVo templateVo, HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException{
+        System.out.println("进入新增模板");
+        request.setCharacterEncoding("utf-8");
+        //获取当前用户
+        int str = (int) session.getAttribute("empId");
+        templateVo.setEmpId(str);
+        System.out.println("empId:"+str);
+        //时间
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        templateVo.setTemplateTime(format.format(date));
+
+        int i = service.addTemplate(templateVo);
+        if(i>0){
+            //查出模板Id
+            System.out.println("新增成功！！");
+            int templateId = service.selectInt2(templateVo.getTemplateTime());
+            session.setAttribute("templateId",templateId);
+        }
+    }
+
+    @RequestMapping("/addTemplate2/{type}")  //项目新增~~~~~
+    public void addTemplate(checkProjectVo checkProjectVo,checkStepVo setpvo,checkResultVo resultVo ,HttpSession session,@PathVariable(value = "type")String type,String beginTimeEX,String endTimeEX){
+        System.out.println("进入项目保存！！");
+        System.out.println("type:"+type);
+
+        int templateId = (int) session.getAttribute("templateId");
+        System.out.println("templateId:"+templateId);
+
+        if("project".equals(type)){         //新增项目！！
+            checkProjectVo.setTemplateId(templateId);
+            int i= service.addCheckProject(checkProjectVo);
+            if(i>0){
+                System.out.println("项目新增成功！");
+            }
+        }
+        else if("setp".equals(type)){   //新增步骤！！
+            String setpType = setpvo.getCheckStepType();
+            System.out.printf(beginTimeEX + "  " + endTimeEX);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            Date d1 = null;
+            Date d2 = null;
+
+            try {
+                d1 = sdf.parse(beginTimeEX);
+                d2 = sdf.parse(endTimeEX);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            setpvo.setBeginTime(d1);
+            setpvo.setEndTime(d2);
+
+            if("自评".equals(setpType)){
+                setpvo.setStep(1);
+            }else {
+                setpvo.setStep(2);
+            }
+            int i = service.addCheckSetp(setpvo);
+            if (i>0) {
+                System.out.println("项目步骤成功！");
+            }
+        }
+        else if("result".equals(type)){      //新增考评标准！！
+            setpvo.setTemplateId(templateId);
+            int i= service.addCheckResult(resultVo);
+            if(i>0){
+                System.out.println("项目标准成功！");
+            }
+        }
+    }
+    //查看项目数据
+    @RequestMapping("/templateTable/{table}/{templateTime}")
+    public void templateTable(HttpServletResponse response,HttpSession session,@PathVariable(value = "table") String table,@PathVariable(value = "templateTime") long  time){
+        response.setCharacterEncoding("utf-8");
+        System.out.println("table:"+table);
+        List list  = new ArrayList();
+        //时间
+        System.out.println(time);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        date.setTime(time);
+        int  templateId = service.selectInt2(sdf.format(date));
+        //int templateId2 = (int) session.getAttribute("templateId");
+        System.out.println("templateId:"+templateId+":2:");
+
+        if("table1".equals(table)){
+            list = service.selectProject(templateId);
+        }
+        else if("table2".equals(table)){
+            list = service.selectSetp(templateId);
+        }
+        else if("table3".equals(table)){
+            list = service.selectResult(templateId);
+        }
+
+
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","");
+        json.put("count",list.size());
+        json.put("data",list);
+
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        out.print(json.toString());
     }
 
 }

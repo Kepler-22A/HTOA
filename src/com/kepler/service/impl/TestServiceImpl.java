@@ -2,10 +2,10 @@ package com.kepler.service.impl;
 
 import com.kepler.dao.BaseDao;
 import com.kepler.service.TestService;
-import com.kepler.vo.AuditModelVo;
-import com.kepler.vo.TemplateVo;
+import com.kepler.vo.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +27,11 @@ public class TestServiceImpl extends BaseDao implements TestService {
     public int selectInt2(String name) {
         return executeIntSQL("select  templateId from template where templateTime='"+name+"'");
     }
+
+//    @Override
+//    public int selectInt3(Date name) {
+//        return executeIntSQL("select  templateId from template where templateTime='"+name+"'");
+//    }
 
     @Override
     public List selectTable() {//查询考核数据！！
@@ -51,5 +56,37 @@ public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int addTemplate(TemplateVo t) {
         return sqlUpdate("insert into template values("+t.getDepId()+","+t.getEmpId()+",'"+t.getRemark()+"','"+t.getTemplateName()+"','"+t.getTemplateTime()+"','"+t.getTemplateType()+"')");
+    }
+
+    @Override
+    public int addCheckProject(checkProjectVo c) {
+        return sqlUpdate("insert  into checkProject values('"+c.getJudgment()+"',"+c.getMaxScoer()+",'"+c.getProjectName()+"','"+c.getRemark()+"',"+c.getTemplateId()+")");
+    }
+
+    @Override
+    public int addCheckSetp(checkStepVo s) {
+        save(s);
+        return 1;
+        //return sqlUpdate("insert into checkStep values('"+s.getBeginTime()+"','"+s.getCheckStepName()+"','"+s.getCheckStepType()+"','"+s.getEndTime()+"',"+s.getStep()+","+s.getTemplateId()+","+s.getWeight()+")");
+    }
+
+    @Override
+    public int addCheckResult(checkResultVo r) {
+        return sqlUpdate("insert into checkResult values('"+r.getGrade()+"',"+r.getMax()+","+r.getMin()+",'"+r.getRemark()+"',"+r.getTemplateId()+")");
+    }
+
+    @Override
+    public List selectProject(int templateId) {
+        return sqlQuery("select * from checkProject  where templateId = "+templateId+"");
+    }
+
+    @Override
+    public List selectSetp(int templateId) {
+        return sqlQuery("select * from checkStep  where templateId = "+templateId+"");
+    }
+
+    @Override
+    public List selectResult(int templateId) {
+        return sqlQuery("select * from checkResult  where templateId = "+templateId+"");
     }
 }
