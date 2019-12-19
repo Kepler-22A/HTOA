@@ -9,7 +9,7 @@ public class TemplateVo {//考核模板！！
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int templateId;
     private int empId ;//关联员工表
-    private int depId ;//被考核职位
+    private int depId ;//被考核部门
     private String templateName ;
     private String templateType ;//考核类型 月底 ，年度
     private String templateTime ;//创建时间
