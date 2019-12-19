@@ -27,6 +27,7 @@
     <%--表头工具栏--%>
     <script type="text/html" id="weeklyToolbar">
         <div class="layui-btn-container">
+            <a class="layui-btn layui-btn-xs" lay-event="edit" href="${pageContext.request.contextPath}/emp/toWeeklyDetails/{{ d.worklogid }}">添加周报</a>
             <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
         </div>
     </script>
@@ -41,7 +42,7 @@
                 table.render({
                     elem: '#weeklyTable'
                     ,height: 523
-                    ,url: '/emp/selWeeklyList' //数据接口
+                    ,url: '/emp/selWeeklyListByEmpId' //数据接口
                     ,toolbar: '#weeklyToolbar' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头

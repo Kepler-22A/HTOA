@@ -27,9 +27,14 @@
         <tr bgcolor="white">
             <td>${t.id }</td>
             <td>${t.time}</td>
-            <td>${t.userId }</td>
+            <td class="empId${t.userId }">${t.userId }</td>
             <td>${t.fullMessage }</td>
         </tr>
+    </c:forEach>
+    <c:forEach items="${empNameList}" var="emp">
+        <script>
+            $('.empId'+${emp.empId}).html('${emp.empName}');
+        </script>
     </c:forEach>
 </table>
 </body>
