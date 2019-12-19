@@ -11,13 +11,14 @@
     <title>考核指标页</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
 </head>
 <body>
-    <table class="layui-hide" id="test"></table>
+    <table class="layui-hide" id="test" lay-filter="testTable"></table>
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
         <legend>新增指标</legend>
     </fieldset>
-    <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/Controller/addExamine">
+    <form class="layui-form layui-form-pane" method="post" action="${pageContext.request.contextPath}/Controller/addExamine">
         <div class="layui-form-item">
             <label class="layui-form-label">考核内容</label>
             <div class="layui-input-block">
@@ -54,27 +55,50 @@
         </div>
     </form>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs"  onclick="del('{{ d.auditModelID }}')">删除</a>
     </script>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
-    layui.use('table', function(){
-        var table = layui.table;
-
-        table.render({
-            elem: '#test'
-            ,url:'/Controller/table'
-            ,cols: [[
-                {field:'auditModelID', width:100, title: '编号'}
-                ,{field:'auditName', width:350, title: '考核内容'}
-                ,{field:'scores', width:100, title: '考核分数', sort: true}
-                ,{field:'auditTypeName', width:150, title: '部门名称'}
-                ,{field:'remark', title: '说明', minWidth: 100}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
-            ]]
-            ,page: true
+    rederr()
+    function rederr(){
+        layui.use('table', function(){
+            var table = layui.table;
+            table.render({
+                elem: '#test'
+                ,url:'/Controller/table'
+                ,cols: [[
+                    {field:'auditModelID', width:100, title: '编号'}
+                    ,{field:'auditName', width:350, title: '考核内容'}
+                    ,{field:'scores', width:100, title: '考核分数', sort: true}
+                    ,{field:'auditTypeName', width:150, title: '部门名称'}
+                    ,{field:'remark', title: '说明', minWidth: 100}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
+                ]]
+                ,page: true
+            });
         });
-    });
+    }
+    function del(auditModelID) {
+        console.log(auditModelID);
+        layer.confirm('是否要删除？', {
+            icon:3,
+            btn: ['确认','取消'] //按钮
+        }, function(){
+            $.post('<%=request.getContextPath()%>/Controller/delete/'+auditModelID,{},
+            function (data) {
+                rederr();
+            });
+            layer.msg('已删除', {
+                icon: 1,
+                time:2000
+            });
+        }, function(){
+            layer.msg('已取消', {
+                icon:0,
+                time: 2000 //20s后自动关闭
+            });
+        });
+    };
 </script>
 </body>
 </html>

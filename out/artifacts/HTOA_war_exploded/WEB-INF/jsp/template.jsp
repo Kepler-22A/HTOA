@@ -87,6 +87,7 @@
                     ,{field:'remark', title: '备注', Width: 350}
                     ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
                 ]]
+                ,page: true
             }
         );
         //监听行单击事件

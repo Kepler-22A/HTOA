@@ -92,12 +92,26 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/addExamine")
     public String addExamine(AuditModelVo auditModelVo,HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
+        System.out.println(auditModelVo.getAuditName());
         int i = service.addExmaine(auditModelVo);
         if(i>0){
             System.out.println("新增指标成功！！");
         }
         System.out.println("新增指标失败！！");
         return "examine";
+    }
+    @RequestMapping("/delete/{auditModelID}")
+    public String delete(@PathVariable(value ="auditModelID" )int auditModelID ){
+        System.out.println("auditModelID:"+auditModelID);
+        int i = service.delete(auditModelID);
+        return "examine";
+    }
+    @RequestMapping("/delete2/{auditLogID}")
+    public String delete2(@PathVariable(value ="auditLogID" )int auditLogID ){
+        //时间
+
+        int i = service.delete2(auditLogID);
+        return "empExamine";
     }
     //查询数据
     @RequestMapping("/table")
@@ -180,7 +194,18 @@ public class TestController {//登录  考核管理！！
         return "checkTask";
     }
     @RequestMapping("/myCheck")
-    public String myCheck(){
+    public String myCheck(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        List list = service.selectMyCheckProject();
+
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","");
+        json.put("count",list.size());
+        json.put("data",list);
+
+        PrintWriter out = response.getWriter();
+        out.print(json.toString());
         return "myCheck";
     }
 

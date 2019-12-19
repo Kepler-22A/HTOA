@@ -18,14 +18,18 @@ public interface TestService {
     public List selectTable();//数据
     public List selectTable2();
     public List selectTable3();
-    public int addExmaine(AuditModelVo auditModelVo);
+    public int addExmaine(AuditModelVo auditModelVo);//增删考核
     public int addTemplate(TemplateVo templateVo);
-    public  int addCheckProject(checkProjectVo checkProjectVo);
+    public int delete(int id);
+    public int delete2(int id);
+    public  int addCheckProject(checkProjectVo checkProjectVo);//设置项目
     public int addCheckSetp(checkStepVo setpVo);
     public int addCheckResult(checkResultVo ResultVo);
-    public List selectProject(int templateId);
+    public List selectProject(int templateId);//查看项目
     public List selectSetp(int templateId);
     public  List selectResult(int templateId);
+    public List selectMyCheckProject();//我的考评
+
     //判断登陆这个账号的人是憨憨老师还是帅气学生
     public int OKAccount(String account,String pwd);
 
