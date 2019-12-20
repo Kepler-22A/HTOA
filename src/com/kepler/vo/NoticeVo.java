@@ -21,9 +21,8 @@ public class NoticeVo {
     private int empid;     //发布人
     private Date noticeTime;//发布时间
     private String classIds;//班级id列表，逗号分隔
-    private String empIds;  //部门id列表，逗号分隔
-    private String aaa ;//已读人数
-    private String ccc;//未读人数
+    private int aaa ;//已读人数
+    private int ccc;//未读人数
 
     @Override
     public String toString() {
@@ -35,25 +34,24 @@ public class NoticeVo {
                 ", empid=" + empid +
                 ", noticeTime=" + noticeTime +
                 ", classIds='" + classIds + '\'' +
-                ", empIds='" + empIds + '\'' +
-                ", aaa='" + aaa + '\'' +
-                ", ccc='" + ccc + '\'' +
+                ", aaa=" + aaa +
+                ", ccc=" + ccc +
                 '}';
     }
 
-    public String getAaa() {
+    public int getAaa() {
         return aaa;
     }
 
-    public void setAaa(String aaa) {
+    public void setAaa(int aaa) {
         this.aaa = aaa;
     }
 
-    public String getCcc() {
+    public int getCcc() {
         return ccc;
     }
 
-    public void setCcc(String ccc) {
+    public void setCcc(int ccc) {
         this.ccc = ccc;
     }
 
@@ -113,11 +111,4 @@ public class NoticeVo {
         this.classIds = classIds;
     }
 
-    public String getEmpIds() {
-        return empIds;
-    }
-
-    public void setEmpIds(String empIds) {
-        this.empIds = empIds;
-    }
 }

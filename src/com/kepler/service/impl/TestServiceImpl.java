@@ -19,6 +19,11 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public int selectStudentLogin(String name, String pwd) {
+        return executeIntSQL("select  count(*) from Student where stuname='"+name+"' and password='"+pwd+"'");
+    }
+
+    @Override
     public int selectInt(String name) {
         return executeIntSQL("select  empId from empVo where empName='"+name+"'");
     }
@@ -26,6 +31,11 @@ public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int selectInt2(String name) {
         return executeIntSQL("select  templateId from template where templateTime='"+name+"'");
+    }
+
+    @Override
+    public int selStudentId(String stuname) {
+        return executeIntSQL("select Studid from Student where stuname='"+stuname+"'");
     }
 
 //    @Override
@@ -113,12 +123,12 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
     @Override
     public String selectTime(int templateId) {
-        return null;
+        return executeStringSQL("select beginTime from checkStep where templateId ="+templateId+"");
     }
 
     @Override
     public int selectTotal(int templateId) {
-        return 0;
+        return executeIntSQL("select total from checkScoer where templateId = "+templateId+"");
     }
 
 

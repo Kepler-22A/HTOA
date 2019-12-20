@@ -11,20 +11,21 @@
     <title>新增公告</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
     <meta charset="utf-8">
-    <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <script type="text/javascript">
 
     </script>
 </head>
 <body>
-    <form class="layui-form" action="${pageContext.request.contextPath}/message/addNoticeOK" method="post">
+    <form class="layui-form">
         <div>
             <div class="layui-form-item" style="display: inline-block">
                 <label class="layui-form-label">标题</label>
                 <div class="layui-input-block" style="width: 200px">
-                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input" id="title">
                 </div>
             </div>
             <div class="layui-form-item" style="display: inline-block">
@@ -46,8 +47,8 @@
                 </div>
             </div>
             <div class="layui-form-item" style="display: inline-block;margin-left: 20px">
-                <i class="layui-icon" lay-submit  lay-filter="demo1" style="font-size: 20px;" title="发布一个公告吧！">&#xe61f;</i>
-                <i class="layui-icon" style="font-size: 20px;margin-left: 15px;" title="返回">&#xe65c;</i>
+                <i class="layui-icon" lay-submit style="font-size: 20px;" title="发布一个公告吧！">&#xe61f;</i>
+                <a href="${pageContext.request.contextPath}/message/notice"><i class="layui-icon" style="font-size: 20px;margin-left: 15px;" title="返回">&#xe65c;</i></a>
             </div>
             <textarea id="demo" style="display: none;"></textarea>
         </div>
@@ -62,13 +63,13 @@
             ,layer = layui.layer
             ,layedit = layui.layedit
             ,laydate = layui.laydate;
-
         form.on('select',function (data) {
             var sss = $("#noticeType").val();
             if(sss == 4){
               $("#class").show()//显示
             }else {
                 $("#class").hide()//隐藏
+                $("#clazz").val('')//清空
             }
         })
         //富文本编辑器
@@ -79,24 +80,39 @@
         var array = layedit.build('demo');
 
         //监听提交
-        form.on('submit(demo1)', function(data){
+        form.on('submit', function(data){
             var A = JSON.stringify(data.field);//选项框的数据
-            layedit.getContent(array);//获取文本框的数据
-            // data = A + layedit.getContent(array);
+            var aa = layedit.getContent(array);//获取文本框的数据
+            var DADA = document.getElementById("title")
+            var title = DADA.value //标题
+            var DADB = document.getElementById("noticeType")
+            var noticeType = DADB.value //类别
+            var DADC = document.getElementById("clazz")
+            var clazz = DADC.value //班级
+            var  bb = aa;
+            // for (i = 0; i < bb.length; i++) {
+            //     bb = bb.replace("/","&bbbsb;");
+            // }
+            var empid = <%=session.getAttribute("empId")%>
+            var url = '';
+            if(clazz != null && "" != clazz){
+                alert("有班级")
+                url = '${pageContext.request.contextPath}/message/addNoticeOK/'+title+'/'+noticeType+'/'+clazz+'/'+empid;
+            }else {
+                alert("没有班级")
+                url = '${pageContext.request.contextPath}/message/addNoticeOK2/'+title+'/'+noticeType+'/'+empid;
+            }
             $.ajax({
                 type:'post',
                 async:true,
-                url:'${pageContext.request.contextPath}/message/addNoticeOK',
+                url:url,
                 data:{
-                    title:"sjfksjfl",
-                    notType:A.noticeType,
-                    clazz:A.clazz,
-                    content:layedit.getContent(array),
+                    context:bb,
                 },
-                type:'text',
                 success:function (data) {
                     if(data!=null){
                         layer.msg('保存成功');
+                        window.location.href="${pageContext.request.contextPath}/message/notice"
                     }else {
                         layer.msg('保存失败');
                     }
@@ -121,5 +137,6 @@
             });
         },'json');
     });
+
 </script>
 </html>
