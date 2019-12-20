@@ -18,6 +18,7 @@ import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -106,9 +107,9 @@ public class TestController {//登录  考核管理！！
         }else if ("stu".equals(userType)){ //如果是学生登录
             i = service.selectStudentLogin(studentVo.getStuname(),studentVo.getPassword());
             if (i == 1){
-                session.setAttribute("array",3);//老师
+                session.setAttribute("array",3);//学生
             }else {
-                session.setAttribute("array",0);//老师
+                session.setAttribute("array",0);
             }
         }
 
@@ -232,7 +233,7 @@ public class TestController {//登录  考核管理！！
     }
     @RequestMapping("/selectMyCheck/{type}") //我的考评页面
     @ResponseBody
-    public void selectMyCheck(int templateId,int empId,HttpServletResponse response,HttpSession session,@PathVariable(value = "type")String type) throws IOException {
+    public void selectMyCheck(Integer templateId,Integer empId,HttpServletResponse response,HttpSession session,@PathVariable(value = "type")String type) throws IOException {
         System.out.println(type+",,"+templateId+",,"+empId);
         List list = new ArrayList();
         if("from".equals(type)){ //查询我的考评数据
@@ -309,8 +310,9 @@ public class TestController {//登录  考核管理！！
     public void addTemplate(checkProjectVo checkProjectVo,checkStepVo setpvo,checkResultVo resultVo ,HttpSession session,@PathVariable(value = "type")String type,String beginTimeEX,String endTimeEX){
         System.out.println("进入项目保存！！");
         System.out.println("type:"+type);
-
+        //获取templateId
         int templateId = (int) session.getAttribute("templateId");
+        session.setAttribute("templateId",templateId);
         System.out.println("templateId:"+templateId);
 
         if("project".equals(type)){         //新增项目！！
@@ -323,34 +325,44 @@ public class TestController {//登录  考核管理！！
         else if("setp".equals(type)){   //新增步骤！！
             String setpType = setpvo.getCheckStepType();
             System.out.printf(beginTimeEX + "  " + endTimeEX);
-
+            //转换时间
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
             Date d1 = null;
             Date d2 = null;
-
             try {
                 d1 = sdf.parse(beginTimeEX);
                 d2 = sdf.parse(endTimeEX);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             setpvo.setBeginTime(d1);
             setpvo.setEndTime(d2);
-
+            //判断步骤类型
             if("自评".equals(setpType)){
                 setpvo.setStep(1);
             }else {
                 setpvo.setStep(2);
             }
+            //获取templateId
+            int templateId2 = (int) session.getAttribute("templateId");
+            session.setAttribute("templateId",templateId);
+
+            setpvo.setTemplateId(templateId2);
+            float width = setpvo.getWeight();
+            DecimalFormat df = new DecimalFormat("##0.00");
+            String widthStr = df.format(width);
+            System.out.printf(widthStr);
+            setpvo.setWeight(Float.parseFloat(widthStr));
             int i = service.addCheckSetp(setpvo);
             if (i>0) {
                 System.out.println("项目步骤成功！");
             }
         }
         else if("result".equals(type)){      //新增考评标准！！
-            setpvo.setTemplateId(templateId);
+            int templateId3 = (int) session.getAttribute("templateId");
+            session.setAttribute("templateId",templateId);
+            setpvo.setTemplateId(templateId3);
+
             int i= service.addCheckResult(resultVo);
             if(i>0){
                 System.out.println("项目标准成功！");

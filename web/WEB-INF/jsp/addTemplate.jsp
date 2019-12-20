@@ -273,10 +273,10 @@
         <div class="layui-input-inline" style="height: 38px">
             <select name="weight" lay-filter="type">
                 <option value=""></option>
-                <option value="0.1">10%</option>
-                <option value="0.2">20%</option>
-                <option value="0.3" >30%</option>
-                <option value="0.5">50%</option>
+                <option value="0.100">10%</option>
+                <option value="0.200">20%</option>
+                <option value="0.300" >30%</option>
+                <option value="0.500">50%</option>
             </select>
         </div>
     </div>
