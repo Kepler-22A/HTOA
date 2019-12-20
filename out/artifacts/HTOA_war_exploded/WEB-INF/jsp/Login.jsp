@@ -38,21 +38,21 @@
             transition:background-color 0.2s linear;">
         <form id="ff" class="layui-form" method="post" action="${pageContext.request.contextPath}/Controller/login" style="width:310px;margin: 0 auto">
             <div class="layui-form-item">
-                <label class="layui-form-label">名字：</label>
+                <label class="layui-form-label" style="width: 60px">名字：</label>
                 <div class="layui-input-inline">
                     <input id="nameInput" type="text" name="empName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item" >
-                <label class="layui-form-label">密码：</label>
+                <label class="layui-form-label" style="width: 60px">密码：</label>
                 <div class="layui-input-inline">
                     <input type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <div class="layui-input-block">
+                <div class="layui-input-block" style="margin-left: 70px">
                     <button class="layui-btn" type="submit">登录</button>
-                    <button class="layui-btn" ><a id="loginTypeA" href="javascript:changeStudentLogin()">学生登录</a></button>
+                    <a class="layui-btn layui-btn-danger " id="loginTypeA" onclick="changeStudentLogin()" style="color: #ff0;">学生登录</a>
                 </div>
             </div>
         </form>
@@ -74,7 +74,7 @@
         $("#pageTitle").html("学生登录OA系统");
         $("#nameInput").attr("name","stuname");
         $("#loginTypeA").html("员工登录");
-        $("#loginTypeA").attr("href","javascript:changeEmpLogin()");
+        $("#loginTypeA").attr("onclick","changeEmpLogin()");
     }
 
     function changeEmpLogin() {
@@ -82,7 +82,7 @@
         $("#pageTitle").html("员工登录办公后台系统");
         $("#nameInput").attr("name","empName");
         $("#loginTypeA").html("学生登录");
-        $("#loginTypeA").attr("href","javascript:changeStudentLogin()");
+        $("#loginTypeA").attr("onclick","changeStudentLogin()");
     }
 </script>
 </html>
