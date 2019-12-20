@@ -59,7 +59,7 @@
                         <a href="javascript:;"><i class="layui-icon layui-icon-picture"></i></a>
                         <a href="javascript:;"><i class="layui-icon layui-icon-link"></i></a>
                     </div>
-                </div>
+                 </div>
             </form>
         </div>
         <div class="layui-col-md12 layadmin-homepage-list-imgtxt message-content">
