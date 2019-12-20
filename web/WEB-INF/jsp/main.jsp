@@ -9,7 +9,12 @@
 <html>
 <head>
     <title>layout 后台大布局 - Layui</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
+    <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
 
 </head>
 <body class="layui-layout-body">
@@ -17,16 +22,6 @@
     <div class="layui-header">
         <div class="layui-logo">学校管理后台</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
-        </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
@@ -46,7 +41,7 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
+                <li class="layui-nav-item layui-nav-itemed" id="leftLi_person">
                     <a class="" href="javascript:;">个人主页</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">我的邮件</a></dd>
@@ -57,13 +52,13 @@
                         <dd><a href="javascript:;">离职申请</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item"  id="leftLi_message">
                     <a href="javascript:;">通知公告</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/message/notice" data-id="999" data-title="公告发布"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">公告发布</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item"  id="leftLi_empCtrl">
                     <a href="javascript:;">员工管理</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/emp/toEmpData" data-id="125" data-title="员工资料"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工资料</a></dd>
@@ -71,7 +66,7 @@
                         <dd><a href="javascript:;">谈心记录</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item"  id="leftLi_classCtrl">
                     <a href="javascript:;">教务管理</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentdata" data-id="21" data-title="学生资料"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生资料</a></dd>
@@ -85,7 +80,7 @@
                         <dd><a href="javascript:;">值班管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item"  id="leftLi_logistics">
                     <a href="#">后勤管理</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="${pageContext.request.contextPath}/student/studenthuor" data-id="31" data-title="宿舍管理"  class="site-demo-active" style="cursor:pointer" data-type="studenthuor">宿舍管理</a></dd>
@@ -93,7 +88,7 @@
                         <dd><a data-url="${pageContext.request.contextPath}/student/equipmentRepair" data-id="33" data-title="维修管理"  class="site-demo-active" style="cursor:pointer" data-type="studentFloor">维修管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item"  id="leftLi_examine">
                     <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/Controller/examine" data-id="41" data-title="考核指标" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考核指标</a></dd>
@@ -110,38 +105,32 @@
                         </dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="#">财务管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">学费管理</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" id="leftLi_question">
                     <a href="#">问题反馈</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/system/feedback" data-id="39" data-title="问题反馈" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">问题反馈</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" id="leftLi_data">
                     <a href="#">文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">资料文档</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" id="leftLi_systemReport">
                     <a href="#">系统报表</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">系统报表</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" id="leftLi_safe">
                     <a href="#">安全管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">权限管理</a></dd>
                         <dd><a href="javascript:;">系统日志</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" id="leftLi_systemSet">
                     <a href="#">系统设置</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/system/test" data-id="37" data-title="系统设置" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">系统设置</a></dd>
@@ -163,6 +152,7 @@
 </div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+
     layui.use('element',function() {
         var $ = layui.jquery;
         var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
@@ -232,6 +222,21 @@
         })
 
     });
+
+    var array = ${array};
+    console.log("array:"+array);
+
+    if (array == 3){//如果是学生登录
+        $(".layui-nav-item").css("display","none");
+        $("#leftLi_person").css("display","block");
+        $("#leftLi_person dl dd:nth-child(2)").css("display","none");
+        $("#leftLi_person dl dd:nth-child(4)").css("display","none");
+        $("#leftLi_person dl dd:nth-child(5)").css("display","none");
+        $("#leftLi_person dl dd:nth-child(6)").css("display","none");
+        $("#leftLi_message").css("display","block");
+        $("#leftLi_question").css("display","block");
+    }else if (array == 2){
+    }
 </script>
 </body>
 </html>
