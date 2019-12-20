@@ -585,18 +585,40 @@ public String feedback(){
     }
     //详情
     @RequestMapping("/issueDetails")
-    public String issueDetails( int id,HttpServletResponse response,Model model)throws IOException {
-        System.out.println("id为:"+id);
-        List list = sys.selectFeedById(id);
+    public String issueDetails( int feedbackId,HttpServletResponse response,Model model)throws IOException {
+//        System.out.println("id为:"+feedbackId);
+        List list = sys.selectFeedById(feedbackId);
+        //根据问题id查找对应的评论
+        List MessageList =   sys.selMessageById(feedbackId);
+        System.out.println(MessageList.size());
         model.addAttribute("FeedBack",list);
-        System.out.println(model);
+        model.addAttribute("Message",MessageList);
+//        System.out.println(model);
 
             return "feedbackMessage";
     }
 
     //--------------------------------------附属：问题反馈留言板---------------------------------------------------------
-    @RequestMapping("/message/{feedbackId}")
+    @RequestMapping("/message")
     public String message(){
             return "feedbackMessage";
     }
+
+    //添加
+    @RequestMapping("/addMessage")
+    public String addMessage(FeedbackMsgVo vo,Model model,int feedbackId){
+        System.out.println(vo);
+            vo.setFeedbackId(feedbackId);
+            vo.setMsgType(1);
+            vo.setSingDate(new Date());
+            vo.setUserId("1");
+            vo.setUserName("张三");
+            sys.AddMessage(vo);
+//        System.out.println("id为:"+feedbackId);
+        List list = sys.selectFeedById(feedbackId);
+        model.addAttribute("FeedBack",list);
+        return "feedbackMessage";
+    }
+
+
 }

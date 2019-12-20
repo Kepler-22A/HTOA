@@ -121,10 +121,13 @@ public interface SystemSetService {
     public void AddFeed(FeedbackVo vo);
     //根据id查询出数据
     public List<FeedbackVo> selectFeedById(int id);
-    //根据学生id查询所在班级
-
     //修改数据
     public void updateFeedData(FeedbackVo vo);
     //删除数据
     public void deleFeedDatas(int id);
+
+    //添加留言
+    public void AddMessage(FeedbackMsgVo vo);
+    //根据问题id查找对应的评论
+    public List<FeedbackMsgVo> selMessageById(int feedbackId);
 }

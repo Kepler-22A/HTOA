@@ -297,5 +297,15 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
         feedbackVo.setFeedbackId(id);
         delete(feedbackVo);
     }
+
+    @Override
+    public void AddMessage(FeedbackMsgVo vo) {
+        save(vo);
+    }
+    @Override
+    public List<FeedbackMsgVo> selMessageById(int feedbackId){
+
+        return sqlQuery("select * from FeedbackMsg where feedbackId="+feedbackId);
+    }
     //------------------------------------------------------------------------------------------------------------------
 }

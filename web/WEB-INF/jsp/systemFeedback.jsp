@@ -34,33 +34,6 @@
                 }
             });
         }
-        //修改
-        function  update(feedbackId) {
-            $.post("${pageContext.request.contextPath}/system/selectFeedbackID",{id : feedbackId},function (d) {
-                $("#addfloor").attr("action","${pageContext.request.contextPath}/system/UpdateFeedbackID/" + d.Feedback.feedbackId);
-                $("#projectId").val(d.ProjectVo.projectId);
-                $("#projectName").val(d.ProjectVo.projectName);
-                $("#remark").val(d.ProjectVo.remark);
-            },"json");
-            layer.open({
-                type: 1,
-                title:"修改",
-                area:['400px','300px'],
-                content: $("#addfloor"),
-                closeBtn :1,
-                cancel:function(index,layero){
-                    layer.close(index);
-                    $("#addfloor").hide(); //jquery方式关闭
-                    return false;
-                }
-            });
-        }
-
-     /*   function xq(feedbackId) {
-            $.post("${pageContext.request.contextPath}/system/message"),{id:feedbackId},function (data) {
-
-            }
-        }*/
         //删除
         function  del(feedbackId) {
             layer.confirm('是否要删除？', {
@@ -178,7 +151,7 @@
         });
     </script>
     <script type="text/html" id="barDemo">
-        <a  href="${pageContext.request.contextPath}/system/issueDetails?id={{ d.feedbackId }}" class="layui-btn layui-btn-xs" >详情</a>
+        <a  href="${pageContext.request.contextPath}/system/issueDetails?feedbackId={{ d.feedbackId }}" class="layui-btn layui-btn-xs" >详情</a>
 <%--        <a class="layui-btn layui-btn-xs" onclick="update('{{ d.feedbackId }}')">修改</a>--%>
         <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="del('{{ d.feedbackId}}')">删除</a>
     </script>
