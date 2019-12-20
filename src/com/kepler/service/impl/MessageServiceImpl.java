@@ -28,5 +28,15 @@ public class MessageServiceImpl extends BaseDao implements MessageService {
         save(vo);
     }
 
+    @Override
+    public List selectContext(int id) {
+        return sqlQuery("select content from notice where noticeId ="+id);
+    }
+
+    @Override
+    public void delectContext(NoticeVo vo) {
+        delete(vo);
+    }
+
 
 }

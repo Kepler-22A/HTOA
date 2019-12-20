@@ -96,10 +96,8 @@
             var empid = <%=session.getAttribute("empId")%>
             var url = '';
             if(clazz != null && "" != clazz){
-                alert("有班级")
                 url = '${pageContext.request.contextPath}/message/addNoticeOK/'+title+'/'+noticeType+'/'+clazz+'/'+empid;
             }else {
-                alert("没有班级")
                 url = '${pageContext.request.contextPath}/message/addNoticeOK2/'+title+'/'+noticeType+'/'+empid;
             }
             $.ajax({

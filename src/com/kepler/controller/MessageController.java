@@ -30,7 +30,6 @@ public class MessageController {
     //跳转到公告页面
     @RequestMapping(value = "/notice")
     public String notice(){
-
         return "notice";
     }
     //查询出公告信息
@@ -66,7 +65,6 @@ public class MessageController {
         vo.setNoticeTime(new Date());
         vo.setClassIds(clazz);
         //查询出有多少个学生
-        System.out.println(ms.selectStudentCount());
         vo.setCcc((ms.selectStudentCount()));
         vo.setAaa(0);
         ms.addNotice(vo);
@@ -91,7 +89,6 @@ public class MessageController {
         vo.setEmpid(empid);
         vo.setNoticeTime(new Date());
         //查询出有多少个学生
-        System.out.println(ms.selectStudentCount());
         vo.setCcc((ms.selectStudentCount()));
         vo.setAaa(0);
         ms.addNotice(vo);
@@ -105,8 +102,27 @@ public class MessageController {
         pw.close();
     }
     //查看公告
-    @RequestMapping(value = "/selectNOOOOOOOOOOOOOOO")
-    public String selectNotice(){
+    @RequestMapping(value = "/selectNoticeOK/{id}")
+    public String selectNotice(@PathVariable(value = "id") int id,HttpServletRequest request){
+        request.setAttribute("id",id);
         return "selectNotice";
+    }
+    //查询出公告信息
+    @RequestMapping(value = "/selectcontent/{id}")
+    public void selectContent(HttpServletResponse response,@PathVariable(value = "id") int id) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list = ms.selectContext(id);
+        jsonObject.put("context",list);
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
+    }
+    //删除公告信息
+    @RequestMapping(value = "/delectNoticeOK/{id}")
+    public void delectNoticeOK(@PathVariable(value = "id")int id,NoticeVo vo){
+        vo.setNoticeId(id);
+        ms.delectContext(vo);
     }
 }
