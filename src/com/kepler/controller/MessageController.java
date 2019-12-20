@@ -3,6 +3,7 @@ package com.kepler.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.MessageService;
+import com.kepler.vo.NoticeVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.soap.Text;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +30,7 @@ public class MessageController {
     //跳转到公告页面
     @RequestMapping(value = "/notice")
     public String notice(){
+
         return "notice";
     }
     //查询出公告信息
@@ -47,15 +51,25 @@ public class MessageController {
     public String addNotice(){
         return "addNotice";
     }
-    @RequestMapping(value = "/addNoticeOK/{title}/{noticeType}/{clazz}")
-    public void addNoticeOK(HttpServletResponse response, HttpServletRequest request, @PathVariable(value = "title") String title,
-     @PathVariable(value = "noticeType") String noticeType, @PathVariable(value = "clazz") String clazz) throws IOException {
-        System.out.println("金色的JFK伺机待发");
+    //这是给班级发送的
+    @RequestMapping(value = "/addNoticeOK/{title}/{noticeType}/{clazz}/{empid}")
+    public void addNoticeOK(HttpServletResponse response, HttpServletRequest request,@PathVariable(value = "title") String title,
+                            @PathVariable(value = "noticeType") int noticeType, @PathVariable(value = "clazz") String clazz,
+                            @PathVariable(value = "empid") int empid) throws IOException {
         title = new String(title.getBytes("ISO-8859-1"),"UTF-8");//强行转换格式器！！！！！！！！！！！！牛逼
-        System.out.println(title);
-        System.out.println(noticeType);
-        System.out.println(clazz);
-        System.out.println(request.getParameter("context"));
+        String context = request.getParameter("context");//文本框的数据
+        NoticeVo vo = new NoticeVo();
+        vo.setTitle(title);
+        vo.setContent(context);
+        vo.setNoticeType(noticeType);
+        vo.setEmpid(empid);
+        vo.setNoticeTime(new Date());
+        vo.setClassIds(clazz);
+        //查询出有多少个学生
+        System.out.println(ms.selectStudentCount());
+        vo.setCcc((ms.selectStudentCount()));
+        vo.setAaa(0);
+        ms.addNotice(vo);
         //响应编码集
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("utf-8");
@@ -64,14 +78,24 @@ public class MessageController {
         pw.flush();
         pw.close();
     }
-    @RequestMapping(value = "/addNoticeOK2/{title}/{noticeType}")
+    //这是给学生和老师发送的
+    @RequestMapping(value = "/addNoticeOK2/{title}/{noticeType}/{empid}")
     public void addNoticeOK2(HttpServletResponse response, HttpServletRequest request, @PathVariable(value = "title") String title,
-                             @PathVariable(value = "noticeType") String noticeType) throws IOException {
-        System.out.println("时间和封建时代");
-        title = new String(title.getBytes("ISO-8859-1"),"UTF-8");//强行转换格式器！！！！！！！！！！！！牛逼
-        System.out.println(title);
-        System.out.println(noticeType);
-        System.out.println(request.getParameter("context"));
+                             @PathVariable(value = "noticeType") int noticeType,@PathVariable(value = "empid") int empid) throws IOException {
+        title = new String(title.getBytes("ISO-8859-1"),"UTF-8");
+        String context = request.getParameter("context");//文本框的数据
+        NoticeVo vo = new NoticeVo();
+        vo.setTitle(title);
+        vo.setContent(context);
+        vo.setNoticeType(noticeType);
+        vo.setEmpid(empid);
+        vo.setNoticeTime(new Date());
+        //查询出有多少个学生
+        System.out.println(ms.selectStudentCount());
+        vo.setCcc((ms.selectStudentCount()));
+        vo.setAaa(0);
+        ms.addNotice(vo);
+
         //响应编码集
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("utf-8");
@@ -79,5 +103,10 @@ public class MessageController {
         pw.print("OK");
         pw.flush();
         pw.close();
+    }
+    //查看公告
+    @RequestMapping(value = "/selectNotice")
+    public String selectNotice(){
+        return "selectNotice";
     }
 }
