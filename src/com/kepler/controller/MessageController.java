@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.MessageService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -45,16 +47,33 @@ public class MessageController {
     public String addNotice(){
         return "addNotice";
     }
-    @RequestMapping(value = "/addNoticeOK")
-    public void addNoticeOK(HttpServletResponse response, HttpServletRequest request, String title, String notType, String clazz,String content) throws IOException {
+    @RequestMapping(value = "/addNoticeOK/{title}/{noticeType}/{clazz}")
+    public void addNoticeOK(HttpServletResponse response, HttpServletRequest request, @PathVariable(value = "title") String title,
+     @PathVariable(value = "noticeType") String noticeType, @PathVariable(value = "clazz") String clazz) throws IOException {
         System.out.println("金色的JFK伺机待发");
-
-        System.out.println(request.getParameter("title"));
-        System.out.println(notType);
+        title = new String(title.getBytes("ISO-8859-1"),"UTF-8");//强行转换格式器！！！！！！！！！！！！牛逼
+        System.out.println(title);
+        System.out.println(noticeType);
         System.out.println(clazz);
-        System.out.println(content);
+        System.out.println(request.getParameter("context"));
         //响应编码集
-        response.setContentType("text/json;charset=utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print("OK");
+        pw.flush();
+        pw.close();
+    }
+    @RequestMapping(value = "/addNoticeOK2/{title}/{noticeType}")
+    public void addNoticeOK2(HttpServletResponse response, HttpServletRequest request, @PathVariable(value = "title") String title,
+                             @PathVariable(value = "noticeType") String noticeType) throws IOException {
+        System.out.println("时间和封建时代");
+        title = new String(title.getBytes("ISO-8859-1"),"UTF-8");//强行转换格式器！！！！！！！！！！！！牛逼
+        System.out.println(title);
+        System.out.println(noticeType);
+        System.out.println(request.getParameter("context"));
+        //响应编码集
+        response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("utf-8");
         PrintWriter pw = response.getWriter();
         pw.print("OK");
