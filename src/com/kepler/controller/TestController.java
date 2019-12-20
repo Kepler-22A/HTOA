@@ -52,6 +52,7 @@ public class TestController {//登录  考核管理！！
      */
     @RequestMapping("/login")
     public String login(empVo empVo,HttpSession  session){
+        System.out.println("员工登录");
         int i = service.selectLogin(empVo.getEmpName(),empVo.getPassword());
         int  empId = service.selectInt(empVo.getEmpName()); //获的当前登陆的是谁
         if(i==1){
@@ -70,6 +71,7 @@ public class TestController {//登录  考核管理！！
      */
     @RequestMapping("/studentLogin")
     public String studentLogin(StudentVo studentVo,HttpSession  session){
+        System.out.println("学生登录");
         int i = service.selectStudentLogin(studentVo.getStuname(),studentVo.getPassword());
         int  StdentId = service.selStudentId(studentVo.getStuname()); //获的当前登陆的是谁
         if(i==1){

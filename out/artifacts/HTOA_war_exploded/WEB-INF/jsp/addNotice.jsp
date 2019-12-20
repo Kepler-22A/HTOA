@@ -120,47 +120,6 @@
                 }
             });
             return false;
-
-
-            // if(clazz != null){
-            //         $.ajax({
-            //             type:'post',
-            //             async:true,
-            //             url:'/message/addNoticeOK/'+title+'/'+noticeType+'/'+clazz,
-            //             data:{
-            //                 context:bb,
-            //             },
-            //             success:function (data) {
-            //                 if(data!=null){
-            //                     layer.msg('保存成功');
-            //
-            //                 }else {
-            //                     layer.msg('保存失败');
-            //
-            //                 }
-            //             }
-            //         });
-            //
-            // }else {
-            //     $.ajax({
-            //         type:'post',
-            //         async:true,
-            //         url:'/message/addNoticeOK2/'+title+'/'+noticeType,
-            //         data:{
-            //             context:bb,
-            //         },
-            //         type:'text',
-            //         success:function (data) {
-            //             if(data!=null){
-            //                 layer.msg('保存fdsfsd');
-            //
-            //             }else {
-            //                 layer.msg('保存失败');
-            //
-            //             }
-            //         }
-            //     });
-            // }
         });
     });
     //异步查询出班级
