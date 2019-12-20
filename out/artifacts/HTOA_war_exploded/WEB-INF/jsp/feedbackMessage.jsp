@@ -12,7 +12,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <title>留言板</title>
+    <title>问题反馈</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -36,11 +36,12 @@
 <div class="layui-fluid layadmin-message-fluid">
     <div class="layui-row">
         <div class="layui-col-md12">
-            <div class="layui-col-md12 layadmin-homepage-list-imgtxt message-content" style="font-size: 20px">
+            <div class="layui-col-md12 layadmin-homepage-list-imgtxt message-content" style="font-size: 20px;margin-top: 10px">
                 反馈的问题：
                 <c:forEach items="${FeedBack}" var="fed">
                    ${fed.remark}
                 </c:forEach>
+                <a href="${pageContext.request.contextPath}/system/feedback" style="float: right;" class="layui-btn layui-btn-normal layui-btn-sm "><i class="layui-icon layui-icon-return" ></i>返回</a>
             </div>
             <form class="layui-form" method="post" action="${pageContext.request.contextPath}/system/addMessage">
                 <input id="feedbackIdInput" type="hidden" name="feedbackId" value="">
@@ -49,17 +50,12 @@
                         <textarea name="feedbackMsgName" placeholder="请输入对此问题的建以或看法" class="layui-textarea"></textarea>
                     </div>
                 </div>
-
                 <div class="layui-form-item" style="overflow: hidden;">
                     <div class="layui-input-block layui-input-right">
                         <button class="layui-btn" lay-submit="" lay-filter="formDemo">发表</button>
                     </div>
-                    <div class="layadmin-messag-icon">
-                        <a href="javascript:;"><i class="layui-icon layui-icon-face-smile-b"></i></a>
-                        <a href="javascript:;"><i class="layui-icon layui-icon-picture"></i></a>
-                        <a href="javascript:;"><i class="layui-icon layui-icon-link"></i></a>
-                    </div>
-                </div>
+
+                 </div>
             </form>
         </div>
         <div class="layui-col-md12 layadmin-homepage-list-imgtxt message-content">

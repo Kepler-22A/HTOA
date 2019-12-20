@@ -59,7 +59,6 @@
             });
         }
     </script>
-
     <script type="text/javascript">
         /* 时间戳转化开始 */
         Date.prototype.format = function (fmt) { //author: meizz  
@@ -108,6 +107,13 @@
     <script  type="text/html" id="feedbackTime">
         {{ dateFormat(d.feedbackTime) }}
     </script>
+    <script type="text/html"  id="leibie">
+        {{# if(d.feedBackType == 0){ }}
+        员工
+        {{# }else if(d.feedBackType == 1){ }}
+        学生
+        {{# } }}
+    </script>
 </head>
 <body>
 <script type="text/html" id="toolbarDemo">
@@ -118,38 +124,7 @@
 <div class="layui-form">
     <table class="layui-table" align="center" id="Table" lay-filter="Table" ></table>
     </tbody>
-    <script>
-        layui.use('table', function(){
-            var table = layui.table;
-            table.render({
-                elem: '#Table'
-                ,url:'/system/feedbackdata'
-                ,toolbar: '#toolbarDemo'
-                ,height:400
-                ,cols: [[
-                    {field:'feedbackId', width:100, title: '编号', sort: true}
-                    ,{field:'feedBackType', width:150, title: '职务'}
-                    ,{field:'empname', width:150, title: '姓名'}
-                    ,{field:'depId', width:200, title: '反馈班级'}
-                    ,{field:'feedbackTime', width:250, title: '反馈时间',templet:"#feedbackTime"}
-                    ,{field:'remark', width:240, title: '建议'}
-                    ,{field:'status', width:150, title: '是否处理'}
-                    ,{fixed: 'right',width:150, title: '操作', toolbar:'#barDemo' }
-                ]]
-                ,page: true
-            });
-            //头工具栏事件
-            table.on('toolbar(Table)', function(obj){
-                var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
-                switch(obj.event){
-                    case 'getCheckData':
-                        var data = checkStatus.data;  //获取选中行数据
-                        layer.alert(JSON.stringify(data));
-                        break;
-                };
-            });
-        });
-    </script>
+
     <script type="text/html" id="barDemo">
         <a  href="${pageContext.request.contextPath}/system/issueDetails?feedbackId={{ d.feedbackId }}" class="layui-btn layui-btn-xs" >详情</a>
 <%--        <a class="layui-btn layui-btn-xs" onclick="update('{{ d.feedbackId }}')">修改</a>--%>
@@ -157,17 +132,91 @@
     </script>
 
 </div>
-<form  class="layui-form" id="addfloor" style="display: none" method="post" action="${pageContext.request.contextPath}/system/addFeedback">
+<form  class="layui-form" id="addfloor" style="display: none" method="post" action="${pageContext.request.contextPath}/system/addFeedback" enctype="multipart/form-data">
     <div class="layui-form-item" style="margin-top: 20px;">
         <label class="layui-form-label" style="width: 100px;">反馈问题:</label>
         <div class="layui-input-inline">
 <%--            <input id="remark" type="textarea" name="remark" required  lay-verify="required" autocomplete="off" class="layui-input">--%>
             <textarea id="remark" name="remark" type="text/plain" style="width:99%;height:100px"></textarea>
         </div>
+
+        <div class="layui-form-item">
+            <div class="layui-upload">
+                <label class="layui-form-label" style="width: 100px;margin-top: 10px">图片：</label>
+                <button type="button" class="layui-btn layui-btn-normal" id="imageFile" style="margin-top: 10px">
+                    <i class="layui-icon">&#xe67c;</i>提交图片
+                </button>
+                <img class="layui-upload-img" id="demo1" style="width: 120px;height: 80px;">
+                <p id="demoText"></p>
+            </div>
+        </div>
     </div>
     <div align="center">
         <input type="submit" value="提交" style="height: 30px;width: 50px;">
     </div>
 </form>
+<script>
+    layui.use(['table','upload'], function(){
+        var table = layui.table;
+        table.render({
+            elem: '#Table'
+            ,url:'/system/feedbackdata'
+            ,toolbar: '#toolbarDemo'
+            ,height:400
+            ,cols: [[
+                {field:'feedbackId', width:100, title: '编号', sort: true}
+                ,{field:'feedBackType', width:150, title: '职务',templet:"#leibie"}
+                ,{field:'empname', width:150, title: '姓名'}
+                ,{field:'depId', width:200, title: '反馈班级'}
+                ,{field:'feedbackTime', width:250, title: '反馈时间',templet:"#feedbackTime"}
+                ,{field:'remark', width:240, title: '建议'}
+                ,{field:'status', width:150, title: '是否处理'}
+                ,{fixed: 'right',width:150, title: '操作', toolbar:'#barDemo' }
+            ]]
+            ,page: true
+        });
+        //头工具栏事件
+        table.on('toolbar(Table)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;  //获取选中行数据
+                    layer.alert(JSON.stringify(data));
+                    break;
+            };
+        });
+
+        //
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //普通图片上传
+        var uploadInst = upload.render({
+            elem: '#imageFile'
+            ,url: '/upload/'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>

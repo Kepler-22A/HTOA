@@ -2,6 +2,7 @@ package com.kepler.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.kepler.dao.FileUpload;
 import com.kepler.service.EmpService;
 import com.kepler.service.SystemSetService;
 import com.kepler.vo.*;
@@ -548,12 +549,11 @@ public String feedback(){
     }
     //添加数据
     @RequestMapping(value = "/addFeedback")
-    public String addFeedback(HttpServletRequest request ,FeedbackVo vo){
+    public String addFeedback(HttpSession session,HttpServletRequest request ,FeedbackVo vo){
             vo.setEmpname("张三");
             vo.setDepId(1);
             vo.setFeedbackTime(new Date());
             vo.setEmpId(1);
-            vo.setUserId(1);
           sys.AddFeed(vo);
         return "redirect:/system/feedback";
     }
@@ -606,8 +606,7 @@ public String feedback(){
 
     //添加
     @RequestMapping("/addMessage")
-    public String addMessage(FeedbackMsgVo vo,Model model,int feedbackId){
-        System.out.println(vo);
+    public String addMessage(HttpSession session,FeedbackMsgVo vo,Model model,int feedbackId){
             vo.setFeedbackId(feedbackId);
             vo.setMsgType(1);
             vo.setSingDate(new Date());
@@ -617,8 +616,9 @@ public String feedback(){
 //        System.out.println("id为:"+feedbackId);
         List list = sys.selectFeedById(feedbackId);
         model.addAttribute("FeedBack",list);
+        List MessageList =   sys.selMessageById(feedbackId);
+        model.addAttribute("Message",MessageList);
         return "feedbackMessage";
     }
-
 
 }

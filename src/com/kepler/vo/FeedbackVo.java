@@ -20,10 +20,13 @@ public class FeedbackVo {
     private String empname;         //获取session中学生班级及姓名或员工姓名
     private Date feedbackTime;      //反馈时间，获取系统时间
     private String remark;             //建议
+    private String image;              //图片
+
     private int status;             //状态：1 未处理 2 已处理
     private int depId;              //部门
     private String opinion;         //审批意见
     private int userId;             //审批人
+
 
     @Override
     public String toString() {
@@ -34,6 +37,7 @@ public class FeedbackVo {
                 ", empname='" + empname + '\'' +
                 ", feedbackTime=" + feedbackTime +
                 ", remark='" + remark + '\'' +
+                ", image='" + image + '\'' +
                 ", status=" + status +
                 ", depId=" + depId +
                 ", opinion='" + opinion + '\'' +
@@ -41,6 +45,15 @@ public class FeedbackVo {
                 '}';
     }
 
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
     public int getFeedbackId() {
         return feedbackId;
     }
