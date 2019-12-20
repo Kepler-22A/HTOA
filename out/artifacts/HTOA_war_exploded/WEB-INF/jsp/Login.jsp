@@ -39,7 +39,7 @@
 
     <div id="fdiv" align="center" style="width: 310px;height: 144px;margin: 0 auto;border-radius: 6px;padding: 5px;
             transition:background-color 0.2s linear;">
-        <form id="ff" class="layui-form" method="post" action="${pageContext.request.contextPath}/Controller/login" style="width:310px;margin: 0 auto">
+        <form id="ff" class="layui-form" method="post" action="${pageContext.request.contextPath}/Controller/checkUser/" style="width:310px;margin: 0 auto">
             <div class="layui-form-item">
                 <label class="layui-form-label" style="width: 60px">名字：</label>
                 <div class="layui-input-inline">
@@ -49,7 +49,7 @@
             <div class="layui-form-item" >
                 <label class="layui-form-label" style="width: 60px">密码：</label>
                 <div class="layui-input-inline">
-                    <input type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
+                    <input id="passwordInput" type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -68,28 +68,46 @@
         var form = layui.form;
         //监听提交
         form.on('submit(demoBtn)', function(data){
-            <%--$.post("${pageContext.request.contextPath}/Controller/checkUser/");--%>
-            layer.msg(loginType);
-            return true;
+            $.ajax({
+                url:"${pageContext.request.contextPath}/Controller/checkUser/" + loginType
+                ,type:'POST'
+                ,data:$('#ff').serialize()
+                ,async : false
+                ,success: function (result) {
+                    if ("\"1\"" == result){
+                        return true;
+                    }else {
+                        layer.msg("账户名或密码不正确！");
+                        setTimeout(function (){
+                        }, 3000);
+
+                    }
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
         });
     });
 
+    $("#ff").attr("action","${pageContext.request.contextPath}/Controller/login");
+
     function changeStudentLogin() {
         $("#ff").attr("action","${pageContext.request.contextPath}/Controller/studentLogin");
+        loginType = 'stu';
         $("#pageTitle").html("学生登录OA系统");
         $("#nameInput").attr("name","stuname");
         $("#loginTypeA").html("员工登录");
         $("#loginTypeA").attr("onclick","changeEmpLogin()");
-        loginType = 'stu';
     }
 
     function changeEmpLogin() {
         $("#ff").attr("action","${pageContext.request.contextPath}/Controller/login");
+        loginType = 'emp';
         $("#pageTitle").html("员工登录办公后台系统");
         $("#nameInput").attr("name","empName");
         $("#loginTypeA").html("学生登录");
         $("#loginTypeA").attr("onclick","changeStudentLogin()");
-        loginType = 'emp';
     }
 </script>
 </html>

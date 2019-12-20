@@ -37,7 +37,6 @@
             var form = layui.form;
 
             form.on('submit(demoBtn)',function (data) {
-                alert("sfag");
                 $.ajax({
                     url:'/Controller/selectMyCheck/from'
                     ,type:'POST'
