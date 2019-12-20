@@ -42,8 +42,17 @@ public class TestController {//登录  考核管理！！
     private TestService service;
 
     @RequestMapping("/Test")
-    public String toBase(){
+    public String toBase(HttpSession session){
+        if (session.getAttribute("array") == null || Integer.parseInt(session.getAttribute("array")+"") != 0){
+            session.setAttribute("array",99);
+        }
         return "Login";
+    }
+
+    @RequestMapping("/changeArrayOnSession")
+    @ResponseBody
+    public void changeArrayOnSession(HttpSession session){
+        session.setAttribute("array",99);
     }
 
     /**
@@ -53,7 +62,7 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/login")
     public String login(empVo empVo,HttpSession  session){
         if (Integer.parseInt(session.getAttribute("array")+"") == 0){
-            return "Login";
+            return "redirect:/Controller/Test";
         }
         System.out.println("员工登录");
         int empId = service.selectInt(empVo.getEmpName()); //获的当前登陆的是谁
@@ -61,7 +70,7 @@ public class TestController {//登录  考核管理！！
         session.setAttribute("empName",empVo.getEmpName());
 
 
-            return "main";
+        return "main";
     }
 
     /**
@@ -70,7 +79,7 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/studentLogin")
     public String studentLogin(StudentVo studentVo,HttpSession  session){
         if (Integer.parseInt(session.getAttribute("array")+"") == 0){
-            return "Login";
+            return "redirect:/Controller/Test";
         }
         System.out.println("学生登录");
         int  StdentId = service.selStudentId(studentVo.getStuname()); //获的当前登陆的是谁

@@ -105,7 +105,7 @@ public class MessageController {
         pw.close();
     }
     //查看公告
-    @RequestMapping(value = "/selectNotice")
+    @RequestMapping(value = "/selectNOOOOOOOOOOOOOOO")
     public String selectNotice(){
         return "selectNotice";
     }

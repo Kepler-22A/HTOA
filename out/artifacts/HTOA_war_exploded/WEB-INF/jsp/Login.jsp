@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-    <h2 id="pageTitle" align="center" style="margin-bottom: 220px;color: #52bfff;margin-top: 50px"> 员工登录办公后台系统</h2>
+    <h2 id="pageTitle" align="center" style="margin-bottom: 220px;color: #b13bff;margin-top: 50px"> 员工登录办公后台系统</h2>
 
 
     <div id="fdiv" align="center" style="width: 310px;height: 144px;margin: 0 auto;border-radius: 6px;padding: 5px;
@@ -62,6 +62,25 @@
     </div>
 </body>
 <script>
+    var array = ${array};
+
+    console.log(array);
+
+    if(array == 0){
+        layui.use('form', function() {
+            layer.msg("账户名或密码不正确！");
+        });
+        setTimeout(function () {
+            $.ajax({
+                url:"${pageContext.request.contextPath}/Controller/changeArrayOnSession"
+                ,type: 'post'
+                ,success : function () {
+
+                }
+            });
+        },500)
+    }
+
     loginType = 'emp';
 
     layui.use('form', function(){
@@ -77,9 +96,6 @@
                     if ("\"1\"" == result){
                         return true;
                     }else {
-                        layer.msg("账户名或密码不正确！");
-                        setTimeout(function (){
-                        }, 3000);
 
                     }
                 },
