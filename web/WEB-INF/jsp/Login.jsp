@@ -9,8 +9,11 @@
 <html>
 <head>
     <title>学校管理登陆页面</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
-    <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
+    <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
     <style>
         body{
@@ -51,7 +54,7 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-input-block" style="margin-left: 70px">
-                    <button class="layui-btn" type="submit">登录</button>
+                    <button class="layui-btn" lay-submit lay-filter="demoBtn">登录</button>
                     <a class="layui-btn layui-btn-danger " id="loginTypeA" onclick="changeStudentLogin()" style="color: #ff0;">学生登录</a>
                 </div>
             </div>
@@ -59,13 +62,17 @@
     </div>
 </body>
 <script>
+    loginType = 'emp';
+
     layui.use('form', function(){
         var form = layui.form;
-
         //监听提交
-        form.on('submit(formDemo)', function(data){
-            layer.msg(JSON.stringify(data.field));
-            return false;
+        form.on('submit(demoBtn)', function(data){
+            $.post("${pageContext.request.contextPath}/Controller/checkUser/" + loginType,{},function (data) {
+                
+            });
+            layer.msg(loginType);
+            return true;
         });
     });
 
@@ -75,6 +82,7 @@
         $("#nameInput").attr("name","stuname");
         $("#loginTypeA").html("员工登录");
         $("#loginTypeA").attr("onclick","changeEmpLogin()");
+        loginType = 'stu';
     }
 
     function changeEmpLogin() {
@@ -83,6 +91,7 @@
         $("#nameInput").attr("name","empName");
         $("#loginTypeA").html("学生登录");
         $("#loginTypeA").attr("onclick","changeStudentLogin()");
+        loginType = 'emp';
     }
 </script>
 </html>
