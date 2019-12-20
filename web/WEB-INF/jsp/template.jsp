@@ -11,6 +11,7 @@
     <title>考评模板</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css">
+    <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
 </head>
 <body>
 <div class="demoTable">
@@ -43,13 +44,13 @@
                 <div class="layui-tab-item ">
                     <div id="testTable2" lay-filter="testTable"></div>
                     <script type="text/html" id="table_tool2">
-                        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+                        <a class="layui-btn layui-btn-xs layui-btn-danger" >删除</a>
                     </script>
                 </div>
                 <div class="layui-tab-item ">
                     <div id="testTable3" lay-filter="testTable"></div>
                     <script type="text/html" id="table_tool3">
-                        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
+                        <a class="layui-btn layui-btn-xs layui-btn-danger" >删除</a>
                     </script>
                 </div>
             </div>
@@ -57,13 +58,13 @@
     </div>
 </fieldset>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="update">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="del('{{d.templateId}}')">删除</a>
 </script>
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     //tab
+    rederr();
     layui.use('element',function() {
         var $ = layui.jquery
             ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
@@ -72,30 +73,55 @@
             $("iframe").css("height",h+"px");
         }
     });
-    //加载表格数据
-    layui.use('table', function(){
-        var table = layui.table;
-        table.render(
-            {
-                elem: '#test'
-                ,url:'/Controller/table3'
-                ,cols: [[
-                    {field:'templateName', width:200, title: '考核名称'}
-                    ,{field:'templateType', width:200, title: '考核类型'}
-                    ,{field:'empName', width:150, title: '创建人'}
-                    ,{field:'templateTime', width:250, title: '创建日期',templet : '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
-                    ,{field:'remark', title: '备注', Width: 350}
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200}
-                ]]
-            }
-        );
-        //监听行单击事件
-        table.on('row(testTable)', function(obj){
-            console.log(obj.tr) //得到当前行元素对象
-            console.log(obj.data) //得到当前行数据
-            reloadTable(obj.data.templateTime);
+    function del(templateId) {
+        console.log(templateId);
+        layer.confirm('是否要删除？', {
+            icon:3,
+            btn: ['确认','取消'] //按钮
+        }, function(){
+            $.post('<%=request.getContextPath()%>/Controller/delete3/'+templateId,{},
+                function (data) {
+                    rederr();
+                });
+            layer.msg('已删除', {
+                icon: 1,
+                time:2000
+            });
+        }, function(){
+            layer.msg('已取消', {
+                icon:0,
+                time: 2000 //20s后自动关闭
+            });
         });
-    });
+    };
+    //加载表格数据
+    function rederr() {
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render(
+                {
+                    elem: '#test'
+                    , url: '/Controller/table3'
+                    , cols: [[
+                        {field: 'templateId', width: 100, title: '模板Id'}
+                        , {field: 'templateName', width: 150, title: '考核名称'}
+                        , {field: 'templateType', width: 150, title: '考核类型'}
+                        , {field: 'empName', width: 150, title: '创建人'}
+                        , {field: 'templateTime', width: 200, title: '创建日期', templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+                        , {field: 'remark', title: '备注', Width: 350}
+                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
+                    ]]
+                    , page: true
+                }
+            );
+            //监听行单击事件
+            table.on('row(testTable)', function (obj) {
+                console.log(obj.tr) //得到当前行元素对象
+                console.log(obj.data) //得到当前行数据
+                reloadTable(obj.data.templateTime);
+            });
+        });
+    }
     function reloadTable(templateTime) {
         layui.use('table', function() {
             var table = layui.table;
@@ -104,6 +130,7 @@
                     height: 400,
                     url: '/Controller/templateTable/table1/'+templateTime,
                     cols: [[
+                        {field: 'projectId', edit: true, title: '项目编号'},
                         {field: 'projectName', edit: true, title: '项目名称'},
                         {field: 'maxScoer', edit: true, title: '最高分'},
                         {field: 'judgment', edit: true, title: '评分细则'},

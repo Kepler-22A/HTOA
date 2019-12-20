@@ -59,6 +59,22 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public int delete(int id) {
+        return sqlUpdate("delete from AuditModel where auditModelID="+id+"");
+    }
+
+    @Override
+    public int delete2(int id) {
+        return sqlUpdate("delete from AuditLog where auditLogID='"+id+"'");
+    }
+
+    @Override
+    public int delete3(int id) {
+        return sqlUpdate("delete from template where templateId='"+id+"'");
+    }
+
+
+    @Override
     public int addCheckProject(checkProjectVo c) {
         return sqlUpdate("insert  into checkProject values('"+c.getJudgment()+"',"+c.getMaxScoer()+",'"+c.getProjectName()+"','"+c.getRemark()+"',"+c.getTemplateId()+")");
     }
@@ -89,6 +105,23 @@ public class TestServiceImpl extends BaseDao implements TestService {
     public List selectResult(int templateId) {
         return sqlQuery("select * from checkResult  where templateId = "+templateId+"");
     }
+
+    @Override
+    public List selectMyCheckProject(int templateId, int empId) {
+        return sqlQuery("select p.projectName, e.empName from checkProject p,empVo e  where p.templateId = "+templateId+" and e.empId = "+empId+"");
+    }
+
+    @Override
+    public String selectTime(int templateId) {
+        return null;
+    }
+
+    @Override
+    public int selectTotal(int templateId) {
+        return 0;
+    }
+
+
     @Override
     public int OKAccount(String account, String pwd) {
         return executeIntSQL("select empId from empVo where empName = '"+account+"' and password = '"+pwd+"'");

@@ -92,12 +92,29 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/addExamine")
     public String addExamine(AuditModelVo auditModelVo,HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
+        System.out.println(auditModelVo.getAuditName());
         int i = service.addExmaine(auditModelVo);
         if(i>0){
             System.out.println("新增指标成功！！");
         }
         System.out.println("新增指标失败！！");
         return "examine";
+    }
+    @RequestMapping("/delete/{auditModelID}")
+    public String delete(@PathVariable(value ="auditModelID" )int auditModelID ){
+        System.out.println("auditModelID:"+auditModelID);
+        int i = service.delete(auditModelID);
+        return "examine";
+    }
+    @RequestMapping("/delete2/{auditLogID}")
+    public String delete2(@PathVariable(value ="auditLogID" )int auditLogID ){
+        int i = service.delete2(auditLogID);
+        return "empExamine";
+    }
+    @RequestMapping("/delete3/{templateId}")
+    public String delete3(@PathVariable(value ="templateId" )int templateId ){
+        int i = service.delete3(templateId);
+        return "empExamine";
     }
     //查询数据
     @RequestMapping("/table")
@@ -162,7 +179,13 @@ public class TestController {//登录  考核管理！！
         System.out.println(json.toJSONString());
 
     }
+    @RequestMapping("selectMyCheck")
+    public void selectMyCheck(int templateId,int empId){
+        List list = service.selectMyCheckProject(templateId,empId);
+        String beginTime = service.selectTime(templateId);
+        int total = service.selectTotal(templateId);
 
+    }
 
     /**
      * 教师考评！！
@@ -178,10 +201,6 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/checkTask")//任务
     public String checkTask(){
         return "checkTask";
-    }
-    @RequestMapping("/myCheck")
-    public String myCheck(){
-        return "myCheck";
     }
 
     /**
