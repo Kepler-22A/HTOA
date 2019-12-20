@@ -68,9 +68,10 @@ public class TestServiceImpl extends BaseDao implements TestService {
         return sqlUpdate("delete from AuditLog where auditLogID='"+id+"'");
     }
 
-
-
-
+    @Override
+    public int delete3(int id) {
+        return sqlUpdate("delete from template where templateId='"+id+"'");
+    }
 
 
     @Override
@@ -106,9 +107,20 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
-    public List selectMyCheckProject() {
-        return sqlQuery("select projectName from ");
+    public List selectMyCheckProject(int templateId, int empId) {
+        return sqlQuery("select p.projectName, e.empName from checkProject p,empVo e  where p.templateId = "+templateId+" and e.empId = "+empId+"");
     }
+
+    @Override
+    public String selectTime(int templateId) {
+        return null;
+    }
+
+    @Override
+    public int selectTotal(int templateId) {
+        return 0;
+    }
+
 
     @Override
     public int OKAccount(String account, String pwd) {

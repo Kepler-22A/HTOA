@@ -108,9 +108,12 @@ public class TestController {//登录  考核管理！！
     }
     @RequestMapping("/delete2/{auditLogID}")
     public String delete2(@PathVariable(value ="auditLogID" )int auditLogID ){
-        //时间
-
         int i = service.delete2(auditLogID);
+        return "empExamine";
+    }
+    @RequestMapping("/delete3/{templateId}")
+    public String delete3(@PathVariable(value ="templateId" )int templateId ){
+        int i = service.delete3(templateId);
         return "empExamine";
     }
     //查询数据
@@ -176,7 +179,13 @@ public class TestController {//登录  考核管理！！
         System.out.println(json.toJSONString());
 
     }
+    @RequestMapping("selectMyCheck")
+    public void selectMyCheck(int templateId,int empId){
+        List list = service.selectMyCheckProject(templateId,empId);
+        String beginTime = service.selectTime(templateId);
+        int total = service.selectTotal(templateId);
 
+    }
 
     /**
      * 教师考评！！
@@ -192,21 +201,6 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/checkTask")//任务
     public String checkTask(){
         return "checkTask";
-    }
-    @RequestMapping("/myCheck")
-    public String myCheck(HttpServletResponse response) throws IOException {
-        response.setCharacterEncoding("utf-8");
-        List list = service.selectMyCheckProject();
-
-        JSONObject json = new JSONObject();
-        json.put("code",0);
-        json.put("msg","");
-        json.put("count",list.size());
-        json.put("data",list);
-
-        PrintWriter out = response.getWriter();
-        out.print(json.toString());
-        return "myCheck";
     }
 
     /**
