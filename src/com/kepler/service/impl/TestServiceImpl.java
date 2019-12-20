@@ -123,12 +123,12 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
     @Override
     public String selectTime(int templateId) {
-        return null;
+        return executeStringSQL("select beginTime from checkStep where templateId ="+templateId+"");
     }
 
     @Override
     public int selectTotal(int templateId) {
-        return 0;
+        return executeIntSQL("select total from checkScoer where templateId = "+templateId+"");
     }
 
 

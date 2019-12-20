@@ -28,42 +28,59 @@
         <div class="layui-input-inline">
             <input type="text" name="empId" autocomplete="off" placeholder="请输入查询的编号" class="layui-input">
         </div>
-        <button class="layui-btn" onclick="selectCheck()">查询</button>
+        <button class="layui-btn" lay-submit lay-filter="demoBtn">查询</button>
     </form>
     <table class="layui-hide" id="test" lay-filter="testTable"></table>
     <script>
-    layui.use('table', function() {
-        var table = layui.table;
-        table.render({
-            elem: '#test'
-            , url:'/Controller/selectMyCheck'
-            , cols: [[
-                {field: 'checkScoerId', width: 100, title: '编号', sort: true}
-                , {field: 'projectName', width: 350, title: '考评内容'}
-                , {field: 'empName', width: 150, title: '考核人',}
-                , {field: 'beginTime', width: 200, title: '考评时间',templet : '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
-                , {field: 'total', title: '总得分', minWidth: 100}
-                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
-            ]]
-            , page: true
+
+        layui.use('form',function () {
+            var form = layui.form;
+
+            form.on('submit(demoBtn)',function (data) {
+                alert("sfag");
+                $.ajax({
+                    url:'/Controller/selectMyCheck/from'
+                    ,type:'POST'
+                    ,data:$('#myCheckForm').serialize(),
+                    success: function (result) {
+                        layer.msg(result);
+                        chaXun();
+                    },
+                    error : function() {
+                        alert("异常！");
+                    }
+                });
+
+                return false;
+            })
         });
-    });
-    function selectCheck() {
-        $.ajax({
-            url:'/Controller/selectMyCheck'
-            ,dataType:'json'
-            ,type:'POST'
-            ,data:$('#template').serialize(),
-            success: function (result) {
-                if (result.resultCode = 200) {
-                    layer.msg("成功添加");
-                };
-            },
-            error : function() {
-                alert("异常！");
-            }
-        });
-    }
+
+
+        function chaXun() {
+            layer.msg("wgawerg");
+
+            layui.use('table', function () {
+                var table = layui.table;
+                table.render({
+                    elem: '#test'
+                    , url: '/Controller/selectMyCheck/table'
+                    , cols: [[
+                        {field: 'checkScoerId', width: 100, title: '编号', sort: true}
+                        , {field: 'projectName', width: 350, title: '考评内容'}
+                        , {field: 'empName', width: 150, title: '考核人',}
+                        , {
+                            field: 'beginTime',
+                            width: 200,
+                            title: '考评时间',
+                            templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'
+                        }
+                        , {field: 'total', title: '总得分', minWidth: 100}
+                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                    ]]
+                    , page: true
+                });
+            });
+        }
     </script>
 </body>
 </html>

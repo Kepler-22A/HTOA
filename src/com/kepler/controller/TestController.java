@@ -125,6 +125,7 @@ public class TestController {//登录  考核管理！！
         int i = service.delete2(auditLogID);
         return "empExamine";
     }
+
     @RequestMapping("/delete3/{templateId}")
     public String delete3(@PathVariable(value ="templateId" )int templateId ){
         int i = service.delete3(templateId);
@@ -197,30 +198,38 @@ public class TestController {//登录  考核管理！！
     public  String myCheck(){
         return "myCheck";
     }
-    @RequestMapping("selectMyCheck")
-    public void selectMyCheck(int templateId,int empId,HttpServletResponse response) throws IOException {
-        List list = service.selectMyCheckProject(templateId,empId);
-        String beginTime = service.selectTime(templateId);
-        int total = service.selectTotal(templateId);
+    @RequestMapping("/selectMyCheck/{type}") //我的考评页面
+    @ResponseBody
+    public void selectMyCheck(int templateId,int empId,HttpServletResponse response,HttpSession session,@PathVariable(value = "type")String type) throws IOException {
+        System.out.println(type+",,"+templateId+",,"+empId);
+        List list = new ArrayList();
+        if("from".equals(type)){ //查询我的考评数据
+            list = service.selectMyCheckProject(templateId,empId);
+            String beginTime = service.selectTime(templateId);
+            int total = service.selectTotal(templateId);
 
-        Map map = new HashMap();
-        map.put("templateId",templateId);
-        map.put("beginTime",beginTime);
-        map.put("total",total);
+            Map map = new HashMap();
+            map.put("templateId",templateId);
+            map.put("beginTime",beginTime);
+            map.put("total",total);
 
-        list.add(map);
+            list.add(map);
+            session.setAttribute("list",list);
+            System.out.println("list:"+list);
+        }
+        if("table".equals(type)){ //获取我的考评数据
+            List list1 = (List) session.getAttribute("list");
+            JSONObject json = new JSONObject();
+            json.put("code",0);
+            json.put("msg","");
+            json.put("count",list.size());
+            json.put("data",list1);
 
-        JSONObject json = new JSONObject();
-        json.put("code",0);
-        json.put("msg","");
-        json.put("count",list.size());
-        json.put("data",list);
+            PrintWriter out = response.getWriter();
+            out.print(json.toString());
 
-        PrintWriter out = response.getWriter();
-        out.print(json.toString());
-
-        System.out.println(json.toJSONString());
-
+            System.out.println(json.toJSONString());
+        }
     }
 
     /**

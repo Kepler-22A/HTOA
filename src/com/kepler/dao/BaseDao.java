@@ -108,4 +108,22 @@ public class BaseDao {
         session.close();
         return i;
     }
+    /**
+     * 查String
+     */
+    public String executeStringSQL(String sql) {
+        Session session =  getSession();
+        Query sqlquery =session.createSQLQuery(sql);
+
+        String result = sqlquery.list()+"";
+        System.out.print(result);
+
+        result = result.substring(1,result.length()-1);
+        //String str = result;
+
+        session.flush();
+        session.close();
+        return result;
+    }
+
 }
