@@ -553,4 +553,38 @@ public class EmpController {//员工的Controller
             e.printStackTrace();
         }
     }
+
+    /**
+     * 新增周报
+     * */
+    @RequestMapping(value = "/addWeekly")
+    public String addWeekly(HttpSession session,WeeklyVo weeklyVo){
+        weeklyVo.setWorkday(new Date());
+        weeklyVo.setEmpId(session.getAttribute("empId")+"");
+
+        es.addWeekly(weeklyVo);
+
+        return "myWeekly";
+    }
+
+    /**
+     * 删除周报
+     * */
+    @RequestMapping(value = "/delWeekly/{worklogid}")
+    public String delWeekly(@PathVariable(value = "worklogid") int worklogid){
+        es.delWeekly(worklogid);
+
+        return "myWeekly";
+    }
+
+    /**
+     * 修改周报
+     * */
+    @RequestMapping(value = "/updataWeekly")
+    public String updateWeekly(WeeklyVo weeklyVo){
+        es.updateWeekly(weeklyVo);
+
+        return "myWeekly";
+    }
+
 }

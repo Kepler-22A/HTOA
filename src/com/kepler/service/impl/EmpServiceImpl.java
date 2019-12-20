@@ -243,4 +243,32 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     public List selWeeklyByEmpId(int empId) {
         return sqlQuery("select *,(select empName from empVo e where w.empId = e.empId) as empName from weekly w where w.empId = '" + empId + "'");
     }
+
+    @Override
+    public void addWeekly(WeeklyVo weeklyVo) {
+        save(weeklyVo);
+    }
+
+    @Override
+    public void delWeekly(int weeklyLogId) {
+        WeeklyVo weeklyVo = new WeeklyVo();
+        weeklyVo.setWorklogid(weeklyLogId);
+
+        delete(weeklyVo);
+    }
+
+    @Override
+    public void updateWeekly(WeeklyVo weeklyVo) {
+        System.out.println(weeklyVo);
+        WeeklyVo hisWeeklyVo = selWeeklyVoByWeeklylogid(weeklyVo.getWorklogid());
+        System.out.println(hisWeeklyVo);
+        weeklyVo.setWorkday(hisWeeklyVo.getWorkday());
+        weeklyVo.setEmpId(hisWeeklyVo.getEmpId());
+        update(weeklyVo);
+    }
+
+    @Override
+    public WeeklyVo selWeeklyVoByWeeklylogid(int weeklylogid) {
+        return (WeeklyVo)getObject(WeeklyVo.class,weeklylogid);
+    }
 }

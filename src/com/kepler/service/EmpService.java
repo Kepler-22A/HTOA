@@ -39,4 +39,8 @@ public interface EmpService {
     List selWeekly();//查找员工周报表信息
     List selWeeklyAndDepName(int worklogid);//查找员工周报表信息和部门名称
     List selWeeklyByEmpId(int empId);//查找员工周报表信息根据员工的ID
+    void addWeekly(WeeklyVo weeklyVo);//新增周报
+    void delWeekly(int weeklyLogId);//删除周报
+    void updateWeekly(WeeklyVo weeklyVo);//修改周报
+    WeeklyVo selWeeklyVoByWeeklylogid(int weeklylogid);//根据周报id查周报Vo
 }

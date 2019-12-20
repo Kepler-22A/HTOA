@@ -20,13 +20,13 @@
         var table = layui.table;
         table.render({
             elem: '#test'
-            , url: '/Controller/table'
+            , url: '/Controller/myCheck'
             , cols: [[
-                {field: 'auditModelID', width: 100, title: '编号'}
-                , {field: 'auditName', width: 350, title: '考评内容'}
-                , {field: 'scores', width: 100, title: '考核人', sort: true}
-                , {field: 'auditTypeName', width: 150, title: '考评时间'}
-                , {field: 'remark', title: '得分', minWidth: 100}
+                {field: 'checkScoerId', width: 100, title: '编号'}
+                , {field: 'projectName', width: 350, title: '考评内容'}
+                , {field: 'empName', width: 100, title: '考核人', sort: true}
+                , {field: 'beginTime', width: 150, title: '考评时间',templet : '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+                , {field: 'total', title: '总得分', minWidth: 100}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
             ]]
             , page: true
