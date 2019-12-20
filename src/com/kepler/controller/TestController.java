@@ -47,7 +47,7 @@ public class TestController {//登录  考核管理！！
     }
 
     /**
-     * 登录！！
+     * 员工登录！！
      *
      */
     @RequestMapping("/login")
@@ -57,18 +57,32 @@ public class TestController {//登录  考核管理！！
         if(i==1){
             session.setAttribute("empId",empId);//把当前员工信息存起来
             session.setAttribute("empName",empVo.getEmpName());
-            //判断登陆的是憨憨老师还是帅气学生
-            int OK =  service.OKAccount(empVo.getEmpName(),empVo.getPassword());
-            if(OK>0){//有值就是老师
-                session.setAttribute("array",2);//老师
-            }else {
-                session.setAttribute("array",3);//学生
-            }
+
+            session.setAttribute("array",2);//老师
             return "main";
         }else {
             return "redirect:/Controller/Login";
         }
     }
+
+    /**
+     * 学生登录！！
+     */
+    @RequestMapping("/studentLogin")
+    public String studentLogin(StudentVo studentVo,HttpSession  session){
+        int i = service.selectStudentLogin(studentVo.getStuname(),studentVo.getPassword());
+        int  StdentId = service.selStudentId(studentVo.getStuname()); //获的当前登陆的是谁
+        if(i==1){
+            session.setAttribute("studentId",StdentId);//把当前学生信息存起来
+            session.setAttribute("stuName",studentVo.getStudid());
+
+            session.setAttribute("array",3);//学生
+            return "main";
+        }else {
+            return "redirect:/Controller/Login";
+        }
+    }
+
     @RequestMapping("/cheshi")
     public String cheshi(){
         return "cheshi";
@@ -179,11 +193,33 @@ public class TestController {//登录  考核管理！！
         System.out.println(json.toJSONString());
 
     }
+    @RequestMapping("/myCheck")
+    public  String myCheck(){
+        return "myCheck";
+    }
     @RequestMapping("selectMyCheck")
-    public void selectMyCheck(int templateId,int empId){
+    public void selectMyCheck(int templateId,int empId,HttpServletResponse response) throws IOException {
         List list = service.selectMyCheckProject(templateId,empId);
         String beginTime = service.selectTime(templateId);
         int total = service.selectTotal(templateId);
+
+        Map map = new HashMap();
+        map.put("templateId",templateId);
+        map.put("beginTime",beginTime);
+        map.put("total",total);
+
+        list.add(map);
+
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","");
+        json.put("count",list.size());
+        json.put("data",list);
+
+        PrintWriter out = response.getWriter();
+        out.print(json.toString());
+
+        System.out.println(json.toJSONString());
 
     }
 

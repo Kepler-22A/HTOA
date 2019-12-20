@@ -12,8 +12,10 @@ import java.util.List;
 
 public interface TestService {
     public int selectLogin(String name, String pwd);//登录
+    public  int selectStudentLogin(String name,String pwd);
     public int selectInt(String name);
     public int selectInt2(String name);
+    int selStudentId(String stuname);
     //    public int selectInt3(Date name);
     public List selectTable();//数据
     public List selectTable2();
