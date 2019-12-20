@@ -17,14 +17,14 @@ public class FileUpload{
         String picName= UUID.randomUUID().toString();               
         String originalFilename = file.getOriginalFilename();       
         String extName=originalFilename.substring(originalFilename.lastIndexOf("."));        
-        String path = request.getSession().getServletContext().getRealPath("\\");        
-        File dirFile=new File(path+dirName);        
+        //String path = request.getSession().getServletContext().getRealPath("\\");
+        File dirFile=new File(dirName);
         if (!dirFile.exists()){
             dirFile.mkdir();
         }       
         String newFileName=picName+extName;
-        File targetFile=new File(path+dirName,newFileName);
-        System.out.println("路径"+path+dirName);
+        File targetFile=new File(dirName,newFileName);
+        System.out.println("路径"+dirName);
         try {           
             file.transferTo(targetFile);
         } catch (IOException e) {

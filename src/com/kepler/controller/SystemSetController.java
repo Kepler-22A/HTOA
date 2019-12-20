@@ -14,6 +14,7 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -549,12 +550,16 @@ public String feedback(){
     }
     //添加数据
     @RequestMapping(value = "/addFeedback")
-    public String addFeedback(HttpSession session,HttpServletRequest request ,FeedbackVo vo){
+    public String addFeedback(HttpSession session,HttpServletRequest request ,FeedbackVo vo,MultipartFile file){
+
+        String fileName=FileUpload.upload(file,"F:\\T3\\HTOA\\web\\WEB-INF\\static\\image\\",request);
             vo.setEmpname("张三");
             vo.setDepId(1);
             vo.setFeedbackTime(new Date());
             vo.setEmpId(1);
+            vo.setImage("image\\"+fileName);
           sys.AddFeed(vo);
+
         return "redirect:/system/feedback";
     }
     //根据id查询出数据
@@ -606,13 +611,16 @@ public String feedback(){
 
     //添加
     @RequestMapping("/addMessage")
-    public String addMessage(HttpSession session,FeedbackMsgVo vo,Model model,int feedbackId){
+    public String addMessage( HttpSession session, FeedbackMsgVo vo, Model model, int feedbackId ){
             vo.setFeedbackId(feedbackId);
             vo.setMsgType(1);
             vo.setSingDate(new Date());
             vo.setUserId("1");
             vo.setUserName("张三");
             sys.AddMessage(vo);
+
+
+
 //        System.out.println("id为:"+feedbackId);
         List list = sys.selectFeedById(feedbackId);
         model.addAttribute("FeedBack",list);

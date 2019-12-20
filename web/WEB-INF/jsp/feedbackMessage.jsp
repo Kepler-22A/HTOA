@@ -43,6 +43,11 @@
                 </c:forEach>
                 <a href="${pageContext.request.contextPath}/system/feedback" style="float: right;" class="layui-btn layui-btn-normal layui-btn-sm "><i class="layui-icon layui-icon-return" ></i>返回</a>
             </div>
+            <div style="text-align:center;">
+                <c:forEach items="${FeedBack}" var="fed">
+                    <img id="images" src="${pageContext.request.contextPath}/${fed.image}" style="height: 400px;width: 1200px;" >
+                </c:forEach>
+            </div>
             <form class="layui-form" method="post" action="${pageContext.request.contextPath}/system/addMessage">
                 <input id="feedbackIdInput" type="hidden" name="feedbackId" value="">
                 <div class="layui-form-item layui-form-text">
@@ -59,6 +64,8 @@
             </form>
         </div>
         <div class="layui-col-md12 layadmin-homepage-list-imgtxt message-content">
+            <p style="padding:10px 0px;font-size: 20px">评论留言</p>
+            <hr>
             <c:forEach items="${Message}" var="meg">
                 <div class="media-body">
                     <div class="pad-btm">
@@ -83,6 +90,13 @@
     feedbackId = ${fed.feedbackId};
     $("#feedbackIdInput").val(feedbackId);
     </c:forEach>
+</script>
+<script>
+    //点击图片改变样式
+    $('#images').click(function () {
+       /* $('#images').css('width','800px');
+        $('#images').css('height','400px');*/
+    });
 </script>
 
 <style id="LAY_layadmin_theme">

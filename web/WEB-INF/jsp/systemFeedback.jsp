@@ -193,7 +193,8 @@
         //普通图片上传
         var uploadInst = upload.render({
             elem: '#imageFile'
-            ,url: '/upload/'
+            ,url: '/upload/' ,
+            auto:false
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
