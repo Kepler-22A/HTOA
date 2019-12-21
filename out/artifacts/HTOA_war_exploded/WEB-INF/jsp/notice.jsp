@@ -14,6 +14,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
+    <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
 </head>
 <body>
     <table class="layui-hide" id="test"></table>
@@ -24,12 +26,14 @@
         </div>
     </script>
     <script type="text/html" id="barDemo">
-        <a href="${pageContext.request.contextPath}/message/selectNotice" class="layui-btn layui-btn-xs">查看</a>
+        <a href="${pageContext.request.contextPath}/message/selectNoticeOK/{{ d.noticeId }}" class="layui-btn layui-btn-xs">查看</a>
         <a class="layui-btn layui-btn-warm layui-btn-xs">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs"onclick="deleteEmp('{{ d.noticeId }}')">删除</a>
     </script>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+    reload()
+    function reload(){
     layui.use('table', function(){
         var table = layui.table;
 
@@ -51,6 +55,35 @@
             ]]
         });
     });
+    }
+    //删除家庭联系人
+    function deleteEmp(familyId) {
+
+        console.log(familyId);
+
+        layer.confirm('是否要删除？', {
+            icon:3,
+            btn: ['确认','取消'] //按钮
+        }, function(){
+            $.post('<%=request.getContextPath()%>/message/delectNoticeOK/' + familyId,{},
+                    function (data) {
+                    reload();
+                });
+            layer.msg('已删除', {
+                icon: 1,
+                time:2000
+            });
+
+        }, function(){
+            layer.msg('已取消', {
+                icon:0,
+                time: 2000 //20s后自动关闭
+            });
+        });
+    }
+
+
+    //href="${pageContext.request.contextPath}/message/delectNoticeOK/{{d.noticeId}}"
 </script>
 </body>
 </html>

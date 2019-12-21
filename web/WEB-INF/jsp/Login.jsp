@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-    <h2 id="pageTitle" align="center" style="margin-bottom: 220px;color: #b13bff;margin-top: 50px"> 员工登录办公后台系统</h2>
+    <h2 id="pageTitle" align="center" style="margin-bottom: 220px;color: #ddff53;margin-top: 50px"> 员工登录办公后台系统</h2>
 
 
     <div id="fdiv" align="center" style="width: 310px;height: 144px;margin: 0 auto;border-radius: 6px;padding: 5px;
@@ -110,6 +110,7 @@
 
     function changeStudentLogin() {
         $("#ff").attr("action","${pageContext.request.contextPath}/Controller/studentLogin");
+        $("#pageTitle").css("color","#53bfff");
         loginType = 'stu';
         $("#pageTitle").html("学生登录OA系统");
         $("#nameInput").attr("name","stuname");
@@ -119,6 +120,7 @@
 
     function changeEmpLogin() {
         $("#ff").attr("action","${pageContext.request.contextPath}/Controller/login");
+        $("#pageTitle").css("color","#ddff53");
         loginType = 'emp';
         $("#pageTitle").html("员工登录办公后台系统");
         $("#nameInput").attr("name","empName");
