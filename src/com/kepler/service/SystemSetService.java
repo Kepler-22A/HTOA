@@ -121,6 +121,10 @@ public interface SystemSetService {
     public void AddFeed(FeedbackVo vo);
     //根据id查询出数据
     public List<FeedbackVo> selectFeedById(int id);
+    //根据用户登入的id来查询用户信息
+    public List<StudentVo> selectStudentById(int id);
+    //根据员工登入的id来查询用户信息
+    public List<empVo> selectEmpById(int id);
     //修改数据
     public void updateFeedData(FeedbackVo vo);
     //删除数据

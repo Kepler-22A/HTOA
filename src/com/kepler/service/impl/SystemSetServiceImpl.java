@@ -287,6 +287,15 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
     }
 
     @Override
+    public List<StudentVo> selectStudentById(int id) {
+        return hqlQuery("from StudentVo where Studid="+id);
+    }
+
+    @Override
+    public List<empVo> selectEmpById(int id) {
+        return hqlQuery("from empVo where empId="+id);
+    }
+    @Override
     public void updateFeedData(FeedbackVo vo) {
             update(vo);
     }

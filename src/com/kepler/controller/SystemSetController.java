@@ -548,17 +548,27 @@ public String feedback(){
         json.put("data",sum);
         pwt.print(json.toString());
     }
-    //添加数据
+    //添加数据（只有学生才能提交问题)
     @RequestMapping(value = "/addFeedback")
     public String addFeedback(HttpSession session,HttpServletRequest request ,FeedbackVo vo,MultipartFile file){
 
+
+            //学生id
+         int id = (int)session.getAttribute("studentId");
+
+        List<StudentVo> empVoList = new ArrayList<>();
+        empVoList = sys.selectStudentById(id);
+        System.out.println("empList:"+empVoList);
+        for (int i=0;i<empVoList.size();i++){
+            StudentVo  studentVo =empVoList.get(i);
+            vo.setEmpname(studentVo.getStuname());
+//            System.out.println("Name:"+empvo.getEmpName());
+            vo.setDepId(studentVo.getClazz());
+        }
+        vo.setFeedbackTime(new Date());
         String fileName=FileUpload.upload(file,"F:\\T3\\HTOA\\web\\WEB-INF\\static\\image\\",request);
-            vo.setEmpname("张三");
-            vo.setDepId(1);
-            vo.setFeedbackTime(new Date());
-            vo.setEmpId(1);
-            vo.setImage("image\\"+fileName);
-          sys.AddFeed(vo);
+        vo.setImage("image\\"+fileName);
+        sys.AddFeed(vo);
 
         return "redirect:/system/feedback";
     }
@@ -612,11 +622,19 @@ public String feedback(){
     //添加
     @RequestMapping("/addMessage")
     public String addMessage( HttpSession session, FeedbackMsgVo vo, Model model, int feedbackId ){
+            int empId = (int)session.getAttribute("empId");
+        List<empVo> empVoList = new ArrayList<>();
+        empVoList = sys.selectEmpById(empId);
+        System.out.println("empList:"+empVoList);
+        for (int i=0;i<empVoList.size();i++){
+            empVo  emp =empVoList.get(i);
+            vo.setUserName(emp.getEmpName());
+            String eid = String.valueOf(emp.getEmpId());
+            vo.setUserId(eid);
+            vo.setMsgType(2); //回复人
+        }
             vo.setFeedbackId(feedbackId);
-            vo.setMsgType(1);
             vo.setSingDate(new Date());
-            vo.setUserId("1");
-            vo.setUserName("张三");
             sys.AddMessage(vo);
 
 

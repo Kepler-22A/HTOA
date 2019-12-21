@@ -114,6 +114,22 @@
         学生
         {{# } }}
     </script>
+    <script type="text/html"  id="class">
+        {{# if(d.depId == 1){ }}
+        18秋开发1班
+        {{# }else if(d.depId == 2){ }}
+        18秋开发2班
+        {{# }else if(d.depId == 3){ }}
+        18秋开发3班
+        {{# } }}
+    </script>
+    <script type="text/html"  id="chuli">
+        {{# if(d.status == 0){ }}
+        未处理
+        {{# }else if(d.depId == 1){ }}
+        已处理
+        {{# } }}
+    </script>
 </head>
 <body>
 <script type="text/html" id="toolbarDemo">
@@ -167,10 +183,10 @@
                 {field:'feedbackId', width:100, title: '编号', sort: true}
                 ,{field:'feedBackType', width:150, title: '职务',templet:"#leibie"}
                 ,{field:'empname', width:150, title: '姓名'}
-                ,{field:'depId', width:200, title: '反馈班级'}
+                ,{field:'depId', width:200, title: '反馈班级',templet:"#class"}
                 ,{field:'feedbackTime', width:250, title: '反馈时间',templet:"#feedbackTime"}
                 ,{field:'remark', width:240, title: '建议'}
-                ,{field:'status', width:150, title: '是否处理'}
+                ,{field:'status', width:150, title: '是否处理',templet:"#chuli"}
                 ,{fixed: 'right',width:150, title: '操作', toolbar:'#barDemo' }
             ]]
             ,page: true

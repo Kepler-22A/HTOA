@@ -29,6 +29,7 @@
     <script type="text/javascript">
 
     </script>
+
 </head>
 <body layadmin-themealias="default">
 
@@ -67,7 +68,7 @@
             <p style="padding:10px 0px;font-size: 20px">评论留言</p>
             <hr>
             <c:forEach items="${Message}" var="meg">
-                <div class="media-body">
+                <div class="media-body" style="border: 1px solid gainsboro;padding: 15px 5px;margin-bottom: 10px;">
                     <div class="pad-btm">
                         <p class="fontColor"><a href="javascript:;">${meg.userName}</a></p>
                         <p class="min-font">
