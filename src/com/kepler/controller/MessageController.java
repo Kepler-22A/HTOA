@@ -195,4 +195,11 @@ public class MessageController {
         pw.flush();
         pw.close();
     }
+
+
+    /*********************************邮件********************************************************************************/
+    @RequestMapping(value = "/toEmailPage")
+    public String toEmailPage(){
+        return "email";
+    }
 }

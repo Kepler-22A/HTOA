@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>layout 后台大布局 - Layui</title>
+    <title>HTOA系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -44,7 +44,7 @@
                 <li class="layui-nav-item layui-nav-itemed" id="leftLi_person">
                     <a class="" href="javascript:;">个人主页</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">我的邮件</a></dd>
+                        <dd><a data-url="/message/toEmailPage" data-id="131" data-title="我的邮件"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的邮件</a></dd>
                         <dd><a data-url="/leave/toEmpApplyPage" data-id="128" data-title="员工请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工请假</a></dd>
                         <dd><a data-url="/leave/toStuApplyPage" data-id="130" data-title="学生请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生请假</a></dd>
                         <dd><a data-url="/emp//toMyWeeklyPage" data-id="129" data-title="我的周报"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的周报</a></dd>
