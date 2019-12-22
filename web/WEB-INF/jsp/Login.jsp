@@ -25,11 +25,11 @@
         }
 
         #fdiv{
-            background-color: rgba(42,113,125,0.67);
+            background-color: rgba(45, 59, 74, 0.67);
         }
 
         #fdiv:hover{
-            background-color:  rgba(42,113,125,0.88);
+            background-color:  rgba(45, 59, 74, 0.88);
         }
     </style>
 </head>

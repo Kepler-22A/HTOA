@@ -101,7 +101,7 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">开始时间</label>
+            <label class="layui-form-label">结束时间</label>
             <div class="layui-input-inline">
                 <input id="endTimeEX" type="datetime-local" name="endTimeEX" lay-verify="endTimeEX" autocomplete="off" class="layui-input">
             </div>
@@ -147,7 +147,7 @@
         </div>
         <div class="layui-form-item" style="margin: 0 auto">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button class="layui-btn" lay-filter="applyForm">立即提交</button>
+            <button class="layui-btn" lay-submit lay-filter="applyForm">立即提交</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" class="layui-btn layui-btn-primary" onclick="closeForm()">返回</button>
         </div>
@@ -161,7 +161,9 @@
             $.post("${pageContext.request.contextPath}/leave/selProcessType",{},function (data) {
                 var processNode = "";
                 $.each(data,function (index,o) {
-                    processNode += "<option value='"+o.key+"'>"+o.name+"</option>";
+                    if(o.name == '员工请假流程') {
+                        processNode += "<option value='" + o.key + "'>" + o.name + "</option>";
+                    }
                 });
                 $('#applyType').append(processNode);
                 layui.form.render('select');
@@ -188,10 +190,23 @@
                 form = layui.form;
 
             form.on('submit(applyForm)', function(){
-                $.post("${pageContext.request.contextPath}/leave/addEmpApply/${empId}",{},function (data) {
-                    console.log('添加成功！');
-                    reload();
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/leave/addEmpApply"
+                    ,type: "post"
+                    ,data:$("#empApplyForm").serialize()
+                    ,async:false
+                    ,success:function () {
+                        
+                    }
+                    ,error:function () {
+                        
+                    }
                 });
+                closeForm();
+                layer.msg("添加成功");
+                reload();
+
+                return false;
             });
         });
     </script>

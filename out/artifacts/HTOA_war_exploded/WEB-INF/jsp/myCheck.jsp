@@ -64,7 +64,7 @@
                     elem: '#test'
                     , url: '/Controller/selectMyCheck/table'
                     , cols: [[
-                        {field: 'checkScoerId', width: 100, title: '编号', sort: true}
+                        {field: 'templateId', width: 100, title: '编号', sort: true}
                         , {field: 'projectName', width: 350, title: '考评内容'}
                         , {field: 'empName', width: 150, title: '考核人',}
                         , {
