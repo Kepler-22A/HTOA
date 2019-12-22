@@ -16,8 +16,10 @@ import javax.servlet.http.HttpSession;
 import javax.xml.soap.Text;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -121,8 +123,76 @@ public class MessageController {
     }
     //删除公告信息
     @RequestMapping(value = "/delectNoticeOK/{id}")
+    @ResponseBody
     public void delectNoticeOK(@PathVariable(value = "id")int id,NoticeVo vo){
         vo.setNoticeId(id);
         ms.delectContext(vo);
+    }
+    //修改公告
+    @RequestMapping(value = "/updateNoticeOK/{id}")
+    public String updateNoticeOK(HttpServletRequest request,@PathVariable(value = "id")int id) throws UnsupportedEncodingException {
+        request.setAttribute("id",id);
+        List title = ms.noticeTitle(id);
+        Map map = (Map) title.get(0);
+        request.setAttribute("title",map.get("title"));
+        List list = ms.selectContext(id);
+        Map context = (Map) list.get(0);
+        request.setAttribute("context",context.get("content"));
+        return "updateNotice";
+    }
+    //这是修改班级发送的
+    @RequestMapping(value = "/updateNoticeOK/{title}/{noticeType}/{clazz}/{empid}/{id}")
+    public void updateNoticeOK(HttpServletResponse response, HttpServletRequest request,@PathVariable(value = "title") String title,
+                            @PathVariable(value = "noticeType") int noticeType, @PathVariable(value = "clazz") String clazz,
+                            @PathVariable(value = "empid") int empid,
+                               @PathVariable(value = "id") int id) throws IOException {
+        title = new String(title.getBytes("ISO-8859-1"),"UTF-8");//强行转换格式器！！！！！！！！！！！！牛逼
+        String context = request.getParameter("context");//文本框的数据
+        NoticeVo vo = new NoticeVo();
+        vo.setNoticeId(id);
+        vo.setTitle(title);
+        vo.setContent(context);
+        vo.setNoticeType(noticeType);
+        vo.setEmpid(empid);
+        vo.setNoticeTime(new Date());
+        vo.setClassIds(clazz);
+        //查询出有多少个学生
+        vo.setCcc((ms.selectStudentCount()));
+        vo.setAaa(0);
+        ms.updateNotice(vo);
+        //响应编码集
+        response.setContentType("text/html;charset=utf-8");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print("OK");
+        pw.flush();
+        pw.close();
+    }
+    //这是给学生和老师发送的
+    @RequestMapping(value = "/updateNoticeOK2/{title}/{noticeType}/{empid}/{id}")
+    public void updateNoticeOK2(HttpServletResponse response, HttpServletRequest request, @PathVariable(value = "title") String title,
+                             @PathVariable(value = "noticeType") int noticeType,@PathVariable(value = "empid") int empid,
+                                @PathVariable(value = "id") int id) throws IOException {
+        title = new String(title.getBytes("ISO-8859-1"),"UTF-8");
+        String context = request.getParameter("context");//文本框的数据
+        NoticeVo vo = new NoticeVo();
+        vo.setNoticeId(id);
+        vo.setTitle(title);
+        vo.setContent(context);
+        vo.setNoticeType(noticeType);
+        vo.setEmpid(empid);
+        vo.setNoticeTime(new Date());
+        //查询出有多少个学生
+        vo.setCcc((ms.selectStudentCount()));
+        vo.setAaa(0);
+        ms.updateNotice(vo);
+
+        //响应编码集
+        response.setContentType("text/html;charset=utf-8");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pw = response.getWriter();
+        pw.print("OK");
+        pw.flush();
+        pw.close();
     }
 }

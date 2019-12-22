@@ -15,11 +15,11 @@
 </head>
 <body>
 <div class="demoTable">
-    考评名称：
-    <div class="layui-inline">
-        <input class="layui-input" name="id" id="demoReload" autocomplete="off">
-    </div>
-    <button class="layui-btn" data-type="reload">搜索</button>
+<%--    考评名称：--%>
+<%--    <div class="layui-inline">--%>
+<%--        <input class="layui-input" name="id" id="demoReload" autocomplete="off">--%>
+<%--    </div>--%>
+    <button class="layui-btn" onclick="rederr()">刷新</button>
     <button class="layui-btn"  onclick="addTab()" style="cursor:pointer">添加</button>
 </div>
 <table class="layui-hide" id="test" lay-filter="testTable"></table>
@@ -35,23 +35,14 @@
             </ul>
             <%--                //内容！！--%>
             <div class="layui-tab-content">
-                <div class="layui-tab-item ">
+                <div class="layui-tab-item layui-show">
                     <div id="testTable" lay-filter="testTable"></div>
-                    <script type="text/html" id="table_tool">
-                        <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>
-                    </script>
                 </div>
                 <div class="layui-tab-item ">
                     <div id="testTable2" lay-filter="testTable"></div>
-                    <script type="text/html" id="table_tool2">
-                        <a class="layui-btn layui-btn-xs layui-btn-danger" >删除</a>
-                    </script>
                 </div>
                 <div class="layui-tab-item ">
                     <div id="testTable3" lay-filter="testTable"></div>
-                    <script type="text/html" id="table_tool3">
-                        <a class="layui-btn layui-btn-xs layui-btn-danger" >删除</a>
-                    </script>
                 </div>
             </div>
         </div>

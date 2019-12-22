@@ -64,7 +64,6 @@
 <script>
     var array = ${array};
 
-    console.log(array);
 
     if(array == 0){
         layui.use('form', function() {

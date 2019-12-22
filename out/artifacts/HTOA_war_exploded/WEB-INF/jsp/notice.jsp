@@ -16,6 +16,33 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/layui/css/layui.css"  media="all">
     <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script>
+        //删除
+        function deleteEmp(familyId) {
+
+            console.log(familyId);
+
+            layer.confirm('是否要删除？', {
+                icon:3,
+                btn: ['确认','取消'] //按钮
+            }, function(){
+                $.post('<%=request.getContextPath()%>/message/delectNoticeOK/' + familyId,{},
+                    function (data) {
+                        reload();
+                    });
+                layer.msg('已删除', {
+                    icon: 1,
+                    time:2000
+                });
+
+            }, function(){
+                layer.msg('已取消', {
+                    icon:0,
+                    time: 2000 //20s后自动关闭
+                });
+            });
+        }
+    </script>
 </head>
 <body>
     <table class="layui-hide" id="test"></table>
@@ -27,7 +54,7 @@
     </script>
     <script type="text/html" id="barDemo">
         <a href="${pageContext.request.contextPath}/message/selectNoticeOK/{{ d.noticeId }}" class="layui-btn layui-btn-xs">查看</a>
-        <a class="layui-btn layui-btn-warm layui-btn-xs">编辑</a>
+        <a href="${pageContext.request.contextPath}/message/updateNoticeOK/{{d.noticeId}}" class="layui-btn layui-btn-warm layui-btn-xs">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs"onclick="deleteEmp('{{ d.noticeId }}')">删除</a>
     </script>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
@@ -48,7 +75,8 @@
                 ,{field:'noticeType', title: '类型'}
                 ,{field:'content', title: '通知内容'}
                 ,{field:'empName', title: '发布人', align: 'center'} //单元格内容水平居中
-                ,{field:'noticeTime', title: '发布时间',  align: 'right'} //单元格内容水平居中
+                // ,{field:'noticeTime', title: '发布时间',  align: 'right'} //单元格内容水平居中
+                ,{field: 'noticeTime', title: '发布时间', width:200,templet : '<span>{{layui.util.toDateString(d.noticeTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
                 ,{field:'aaa', title: '已读人数',width:100,sort: true}
                 ,{field:'ccc', title: '未读人数',width:100,sort: true}
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
@@ -56,31 +84,7 @@
         });
     });
     }
-    //删除家庭联系人
-    function deleteEmp(familyId) {
 
-        console.log(familyId);
-
-        layer.confirm('是否要删除？', {
-            icon:3,
-            btn: ['确认','取消'] //按钮
-        }, function(){
-            $.post('<%=request.getContextPath()%>/message/delectNoticeOK/' + familyId,{},
-                    function (data) {
-                    reload();
-                });
-            layer.msg('已删除', {
-                icon: 1,
-                time:2000
-            });
-
-        }, function(){
-            layer.msg('已取消', {
-                icon:0,
-                time: 2000 //20s后自动关闭
-            });
-        });
-    }
 
 
     //href="${pageContext.request.contextPath}/message/delectNoticeOK/{{d.noticeId}}"
