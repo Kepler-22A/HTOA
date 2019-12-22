@@ -100,4 +100,8 @@ public interface StudentService {
     public void deleteStudent_score(Student_scoreVo vo);
     //查询出班级
     public List studentClassAjax();
+    //根据学生成绩查询出考试的id
+    public List selectStudent_score(int id);
+    //根据学生成绩查询出考试的id然后在删除考试成绩
+    public void deleteStudent_score_id(Student_scoreVo vo);
 }

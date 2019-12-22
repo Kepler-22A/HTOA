@@ -333,6 +333,12 @@ public class StundetContorller {
     @RequestMapping(value = "/delstudent/{Studid}")
     public void delstudent(@PathVariable(value = "Studid")int Studid,StudentVo vo){
         vo.setStudid(Studid);
+        //再删除考试成绩和答辩成绩
+       List list =  sts.selectStudent_score(Studid);
+       Map map = (Map) list.get(0);
+       Student_scoreVo ss = new Student_scoreVo();
+       ss.setScoreId((Integer) map.get("scoreId"));
+        sts.deleteStudent_score_id(ss);
         sts.deleStudentDatas(vo);
     }
     //林12-9写查询学生成绩页面

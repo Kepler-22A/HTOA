@@ -129,8 +129,8 @@ public class MessageController {
         ms.delectContext(vo);
     }
     //修改公告
-    @RequestMapping(value = "/updateNoticeOK/{id}")
-    public String updateNoticeOK(HttpServletRequest request,@PathVariable(value = "id")int id) throws UnsupportedEncodingException {
+    @RequestMapping(value = "/toUpdateNoticeOK/{id}")
+    public String toUpdateNoticeOK(HttpServletRequest request,@PathVariable(value = "id")int id) throws UnsupportedEncodingException {
         request.setAttribute("id",id);
         List title = ms.noticeTitle(id);
         Map map = (Map) title.get(0);

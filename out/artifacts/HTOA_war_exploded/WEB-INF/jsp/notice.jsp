@@ -45,44 +45,44 @@
     </script>
 </head>
 <body>
-    <table class="layui-hide" id="test"></table>
-    <script type="text/html" id="toolbarDemo">
-        <div class="layui-btn-container">
-            <a href="${pageContext.request.contextPath}/message/addNotice"><button class="layui-btn layui-btn-sm">发布公告</button></a>
-            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新公告</button>
-        </div>
-    </script>
-    <script type="text/html" id="barDemo">
-        <a href="${pageContext.request.contextPath}/message/selectNoticeOK/{{ d.noticeId }}" class="layui-btn layui-btn-xs">查看</a>
-        <a href="${pageContext.request.contextPath}/message/updateNoticeOK/{{d.noticeId}}" class="layui-btn layui-btn-warm layui-btn-xs">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-xs"onclick="deleteEmp('{{ d.noticeId }}')">删除</a>
-    </script>
-    <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+<table class="layui-hide" id="test"></table>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a href="${pageContext.request.contextPath}/message/addNotice"><button class="layui-btn layui-btn-sm">发布公告</button></a>
+        <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新公告</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a href="${pageContext.request.contextPath}/message/selectNoticeOK/{{ d.noticeId }}" class="layui-btn layui-btn-xs">查看</a>
+    <a href="${pageContext.request.contextPath}/message/toUpdateNoticeOK/{{d.noticeId}}" class="layui-btn layui-btn-warm layui-btn-xs">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs"onclick="deleteEmp('{{ d.noticeId }}')">删除</a>
+</script>
+<script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     reload()
     function reload(){
-    layui.use('table', function(){
-        var table = layui.table;
+        layui.use('table', function(){
+            var table = layui.table;
 
-        table.render({
-            elem: '#test'
-            ,url:'${pageContext.request.contextPath}/message/selectNotice'
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,cols: [[
-                {field:'noticeId', title: 'ID', sort: true}
-                ,{field:'title', title: '标题'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                ,{field:'noticeType', title: '类型'}
-                ,{field:'content', title: '通知内容'}
-                ,{field:'empName', title: '发布人', align: 'center'} //单元格内容水平居中
-                // ,{field:'noticeTime', title: '发布时间',  align: 'right'} //单元格内容水平居中
-                ,{field: 'noticeTime', title: '发布时间', width:200,templet : '<span>{{layui.util.toDateString(d.noticeTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
-                ,{field:'aaa', title: '已读人数',width:100,sort: true}
-                ,{field:'ccc', title: '未读人数',width:100,sort: true}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
-            ]]
+            table.render({
+                elem: '#test'
+                ,url:'${pageContext.request.contextPath}/message/selectNotice'
+                ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,cols: [[
+                    {field:'noticeId', title: 'ID', sort: true}
+                    ,{field:'title', title: '标题'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                    ,{field:'noticeType', title: '类型'}
+                    ,{field:'content', title: '通知内容'}
+                    ,{field:'empName', title: '发布人', align: 'center'} //单元格内容水平居中
+                    // ,{field:'noticeTime', title: '发布时间',  align: 'right'} //单元格内容水平居中
+                    ,{field: 'noticeTime', title: '发布时间', width:200,templet : '<span>{{layui.util.toDateString(d.noticeTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+                    ,{field:'aaa', title: '已读人数',width:100,sort: true}
+                    ,{field:'ccc', title: '未读人数',width:100,sort: true}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                ]]
+            });
         });
-    });
     }
 
 
