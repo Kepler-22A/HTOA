@@ -70,6 +70,8 @@ public class TestController {//登录  考核管理！！
         session.setAttribute("empId",empId);//把当前员工信息存起来
         session.setAttribute("empName",empVo.getEmpName());
 
+        session.removeAttribute("studentId");
+        session.removeAttribute("stuName");
 
         return "main";
     }
@@ -84,11 +86,13 @@ public class TestController {//登录  考核管理！！
         }
         System.out.println("学生登录");
         int  StdentId = service.selStudentId(studentVo.getStuname()); //获的当前登陆的是谁
-            session.setAttribute("studentId",StdentId);//把当前学生信息存起来
-            session.setAttribute("stuName",studentVo.getStudid());
+        session.setAttribute("studentId",StdentId);//把当前学生信息存起来
+        session.setAttribute("stuName",studentVo.getStudid());
 
+        session.removeAttribute("empId");
+        session.removeAttribute("empName");
 
-            return "main";
+        return "main";
     }
 
     @RequestMapping(value = "/checkUser/{userType}")
