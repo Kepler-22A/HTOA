@@ -548,6 +548,15 @@
     <!--图像表-->
     <div id="main" style="display: none;height:480px;width:950px"></div>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+    <script type="textml" id="roleTpl">
+    {{# if (d.stat=== 1) { }}
+        在校
+    {{# } else if(d.stat=== 2) { }}
+        不在校
+    {{# } else { }}
+        我也不晓得
+    {{# } }}
+</script>
 </body>
 <script>
     reload();
@@ -568,15 +577,15 @@
                 ,title: '用户数据表'
                 ,cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'studid', title:'ID',  fixed: 'left', unresize: true, sort: true}
+                    ,{field:'studid', title:'ID',  fixed: 'left', unresize: true, sort: true,width:50}
                     ,{field:'stuname', title:'学生姓名'}
                     ,{field:'stuno', title:'学号', sort: true}
                     ,{field:'sex', title:'性别' }
                     ,{field:'cardid', title:'身份证',edit: 'text'}
                     ,{field:'phone', title:'电话',edit: 'text'}
-                    ,{field:'clazz', title:'班级'}//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    ,{field:'className', title:'班级',width:120}//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     ,{field:'huor', title:'宿舍房号'}///!!!!!!!!!!!!!!!!!!!!!!!!
-                    ,{field:'stat', title:'学生状态'}
+                    ,{field:'stat', title:'学生状态',templet: '#roleTpl'}
                     ,{field:'collar', title:'是否领用电脑' }
                     ,{field:'grants', title:'享受助学金' }
                     ,{field:'computer', title:'是否送电脑'}
@@ -643,7 +652,7 @@
                 ,cols: [[ //表头
                     {field:'replyId', title: 'ID', sort: true,width:60}
                     ,{field:'stuname', title: '学生姓名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                    ,{field:'className', title: '班级', width:106}
+                    ,{field:'className', title: '班级', width:120}
                     ,{field:'projectName', title: '项目名称',width:106}
                     ,{field:'score1', title: '功能完善50', align: 'center',width:106} //单元格内容水平居中
                     ,{field:'Score2', title: '技术难度10',  align: 'center',width:106} //单元格内容水平居中

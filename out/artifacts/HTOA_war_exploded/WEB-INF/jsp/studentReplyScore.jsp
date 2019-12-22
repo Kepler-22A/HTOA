@@ -30,7 +30,7 @@
                 {field:'replyId', title: 'ID', sort: true}
                 ,{field:'stuname', title: '学生姓名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
                 ,{field:'className', title: '班级', sort: true}
-                ,{field:'projectId', title: '项目名称'}
+                ,{field:'projectName', title: '项目名称'}
                 ,{field:'score1', title: '功能完善50', align: 'center'} //单元格内容水平居中
                 ,{field:'score2', title: '技术难度10',  align: 'right'} //单元格内容水平居中
                 ,{field:'score3', title: '界面完美10', align: 'right'}

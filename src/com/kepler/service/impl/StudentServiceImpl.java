@@ -99,7 +99,8 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
 
     @Override
     public List<StudentVo> liststudentdata() {
-        return hqlQuery("from StudentVo");
+        return sqlQuery("select studid,stuname,stuno,sex,cardid,phone,className,huor,stat,collar,grants,computer,parents,qkMoney\n" +
+                "from Student s left join StudentClass c on s.clazz = c.classid");
     }
 
     @Override
@@ -124,13 +125,15 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
 
     @Override
     public List<Student_scoreVo> listStudentScore() {
-        return sqlQuery("select scoreId,t.stuname,s.score,Rescore,courseName,courseTypeName,termName,scoreTime,o.empName,s.remark from Student_score s,Student t,Course c,CourseType u,Term e,empVo o where\n" +
-                " s.stuid = t.Studid and s.courseId =c.courseID and c.courseTypeID=u.courseTypeID and s.termid=e.termID and s.Empid=o.empId");
+        return sqlQuery("select scoreId,t.stuname,s.score,Rescore,courseName,courseTypeName,termName,scoreTime,o.empName,s.remark from Student_score s left join \n" +
+                "Student t on s.stuid = t.Studid left join Course c on s.courseId =c.courseID left join CourseType u on c.courseTypeID=u.courseTypeID left join Term e on s.termid=e.termID left join empVo o on s.Empid=o.empId");
     }
 
     @Override
     public List<StudentReplyScoreVo> listStudentReplyScore() {
-        return sqlQuery("select replyId,u.stuname,className,projectId,score1,score2,score3,score4,score5,score6,score7,s.Remark from studentReplyScore s,Student u,StudentClass l where s.empId=u.Studid and u.clazz =l.classid");
+        return sqlQuery("\n" +
+                "select replyId,score1,score2,score3,score4,score5,score6,score7,s.Remark,u.stuname,className,projectName from studentReplyScore s\n" +
+                "left join Student u on s.StudentId=u.Studid left join StudentClass l on u.clazz =l.classid left join Project j on s.projectId = j.projectId");
     }
 
     @Override

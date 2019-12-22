@@ -51,7 +51,7 @@ public interface StudentService {
     //查询学生成绩
     public List<Student_scoreVo> listStudentScore();
     //查询出学生答辩成绩
-    public List<StudentReplyScoreVo>listStudentReplyScore();
+    public List listStudentReplyScore();
     //查询出老师的名字
     public List listTeacherName();
     //查询出班主任的名字
