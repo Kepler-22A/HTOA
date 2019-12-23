@@ -10,6 +10,7 @@ public class TemplateVo {//考核模板！！
     private int templateId;
     private int empId ;//关联员工表
     private int depId ;//被考核部门
+    private int openCheck;//开启考评  1.未开启 ，2.开启
     private String templateName ;
     private String templateType ;//考核类型 月底 ，年度
     private String templateTime ;//创建时间
@@ -21,9 +22,10 @@ public class TemplateVo {//考核模板！！
                 "templateId=" + templateId +
                 ", empId=" + empId +
                 ", depId=" + depId +
+                ", openCheck=" + openCheck +
                 ", templateName='" + templateName + '\'' +
                 ", templateType='" + templateType + '\'' +
-                ", templateTime=" + templateTime +
+                ", templateTime='" + templateTime + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }
@@ -46,6 +48,14 @@ public class TemplateVo {//考核模板！！
 
     public String getTemplateTime() {
         return templateTime;
+    }
+
+    public int getOpenCheck() {
+        return openCheck;
+    }
+
+    public void setOpenCheck(int openCheck) {
+        this.openCheck = openCheck;
     }
 
     public void setTemplateTime(String templateTime) {

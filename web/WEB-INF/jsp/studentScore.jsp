@@ -34,7 +34,7 @@
                 ,{field:'courseName', title: '课程名称'}
                 ,{field:'courseTypeName', title: '考试类别', align: 'center'} //单元格内容水平居中
                 ,{field:'termName', title: '在读学期',  align: 'right'} //单元格内容水平居中
-                ,{field:'scoreTime', title: '考试时间', align: 'right'}
+                ,{field: 'scoreTime', title: '考试时间', width:200,templet : '<span>{{layui.util.toDateString(d.scoreTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
                 ,{field:'empName', title: '录入人员', sort: true, align: 'right'}
             ]]
         });

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -23,9 +24,13 @@
 <%--    员工表表头工具    --%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" onclick="add()">请假</button>
-        <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
-        <a class="layui-btn layui-btn-sm" href="${pageContext.request.contextPath }/leave/toMyTaskPage">我的任务</a>
+        <c:if test="${studentId != null}">
+            <button class="layui-btn layui-btn-sm" onclick="add()">请假</button>
+            <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
+        </c:if>
+        <c:if test="${empId != null}">
+            <a class="layui-btn layui-btn-sm" href="${pageContext.request.contextPath }/leave/toMyTaskStudentPage">我的任务</a>
+        </c:if>
     </div>
 </script>
 
@@ -73,7 +78,7 @@
         });
     };
 
-    reload();
+        reload();
 
     function getHolidayString(data) {
 

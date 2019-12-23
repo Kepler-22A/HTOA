@@ -13,5 +13,6 @@
   <body>
   $END$
   <a href="/Controller/Test">aaa</a>
+  <jsp:forward page="/Controller/Test"/>
   </body>
 </html>

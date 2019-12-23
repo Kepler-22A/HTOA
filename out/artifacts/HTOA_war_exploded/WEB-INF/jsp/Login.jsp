@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>学校管理登陆页面</title>
+    <title>HTOA登陆页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -64,7 +64,6 @@
 <script>
     var array = ${array};
 
-    console.log(array);
 
     if(array == 0){
         layui.use('form', function() {

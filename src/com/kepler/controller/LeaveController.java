@@ -465,7 +465,9 @@ public class LeaveController {
             map.put("assignee",task.getAssignee());
             map.put("createTime",task.getCreateTime());
 
-            la.add(map);
+            if ("部门主管审批".equals(map.get("name")+"") || "校长审批".equals(map.get("name")+"")){
+                la.add(map);
+            }
         }
 
         JSONObject jo = new JSONObject();
@@ -811,6 +813,61 @@ public class LeaveController {
     }
 
     /**
+     * 去我的任务页面
+     */
+    @RequestMapping("/toMyTaskStudentPage")
+    public String toMyTaskStudentPage(){
+        return "myTaskStudent";
+    }
+
+    /**
+     * select我的流程任务（emp）
+     * */
+    @RequestMapping(value = "/selMyTaskStudent")
+    public void selMyTaskStudent(HttpSession session,HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        System.out.println(session.getAttribute("empId"));
+
+        String actorId = session.getAttribute("empId").toString();
+        //根据用户名称去查询任务列表(act_ru_task)
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(actorId).list();
+
+        List la = new ArrayList();
+
+        for (Object o : taskList){
+            Task task = (Task)o;
+            Map map = new HashMap();
+
+            map.put("id",task.getId());
+            map.put("processInstanceId",task.getProcessInstanceId());
+            map.put("processDefinitionId",task.getProcessDefinitionId());
+            map.put("name",task.getName());
+            map.put("assignee",task.getAssignee());
+            map.put("createTime",task.getCreateTime());
+
+            if ("班主任审批".equals(map.get("name")+"") || "校长审批".equals(map.get("name")+"")){
+                la.add(map);
+            }
+        }
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("msg","");
+        jo.put("code",0);
+        jo.put("count",taskList.size());
+        jo.put("data",la);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 审批
      */
     @RequestMapping("/completeStudent")
@@ -861,7 +918,7 @@ public class LeaveController {
             ls.updateHolidayStudentVo(holidayStudent);
         }
 
-        return "redirect:/leave/toMyTaskPage";
+        return "redirect:/leave/toMyTaskStudentPage";
 
     }
 }

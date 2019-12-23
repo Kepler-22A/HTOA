@@ -10,7 +10,6 @@ public class checkScoerVo {//考评各项成绩表！！
     private int checkScoerId ;
     private int empId ;//
     private int templateId;//模板Id
-    private int myComment ;//自评分
     private int studentComment ; //学生评分
     private int leadComment ;//领导评分
     private int total ;//总得分
@@ -21,7 +20,6 @@ public class checkScoerVo {//考评各项成绩表！！
                 "checkScoerId=" + checkScoerId +
                 ", empId=" + empId +
                 ", templateId=" + templateId +
-                ", myComment=" + myComment +
                 ", studentComment=" + studentComment +
                 ", leadComment=" + leadComment +
                 ", total=" + total +
@@ -44,21 +42,6 @@ public class checkScoerVo {//考评各项成绩表！！
         this.empId = empId;
     }
 
-    public int getMyComment() {
-        return myComment;
-    }
-
-    public int getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(int templateId) {
-        this.templateId = templateId;
-    }
-
-    public void setMyComment(int myComment) {
-        this.myComment = myComment;
-    }
 
     public int getStudentComment() {
         return studentComment;

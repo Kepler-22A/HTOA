@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>layout 后台大布局 - Layui</title>
+    <title>HTOA系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -44,7 +44,7 @@
                 <li class="layui-nav-item layui-nav-itemed" id="leftLi_person">
                     <a class="" href="javascript:;">个人主页</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">我的邮件</a></dd>
+                        <dd><a data-url="/message/toEmailPage" data-id="131" data-title="我的邮件"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的邮件</a></dd>
                         <dd><a data-url="/leave/toEmpApplyPage" data-id="128" data-title="员工请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工请假</a></dd>
                         <dd><a data-url="/leave/toStuApplyPage" data-id="130" data-title="学生请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生请假</a></dd>
                         <dd><a data-url="/emp//toMyWeeklyPage" data-id="129" data-title="我的周报"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的周报</a></dd>
@@ -92,14 +92,14 @@
                     <a href="javascript:;">考核管理</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/Controller/examine" data-id="41" data-title="考核指标" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考核指标</a></dd>
-                        <dd><a data-url="/Controller/empExamine" data-id="42" data-title="员工考核" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">员工考核</a></dd>
+                        <dd id="leftLi_examine_empKaohe"><a data-url="/Controller/empExamine" data-id="42" data-title="员工考核" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">员工考核</a></dd>
                         <dd>
-                            <li class="layui-nav-item">
+                            <li id="leftLi_examine_kaoping" class="layui-nav-item">
                                 <a href="javascript:;">教师考评</a>
                                 <dl class="layui-nav-child">
                                     <dd><a data-url="/Controller/template" data-id="43" data-title="考评模板" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评模板</a></dd>
-                                    <dd><a data-url="/Controller/checkTask" data-id="44" data-title="考评任务" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评任务</a></dd>
-                                    <dd><a data-url="/Controller/myCheck" data-id="45" data-title="我的考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">我的考评</a></dd>
+                                    <dd id="leftLi_examine_kaoping_mission"><a data-url="/Controller/checkTask" data-id="44" data-title="考评任务" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评任务</a></dd>
+                                    <dd id="leftLi_examine_kaoping_myKaoping"><a data-url="/Controller/myCheck" data-id="45" data-title="我的考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">我的考评</a></dd>
                                 </dl>
                             </li>
                         </dd>
@@ -229,12 +229,26 @@
     if (array == 3){//如果是学生登录
         $(".layui-nav-item").css("display","none");
         $("#leftLi_person").css("display","block");
+        $("#leftLi_person dl dd:nth-child(1)").css("display","none");
         $("#leftLi_person dl dd:nth-child(2)").css("display","none");
         $("#leftLi_person dl dd:nth-child(4)").css("display","none");
         $("#leftLi_person dl dd:nth-child(5)").css("display","none");
         $("#leftLi_person dl dd:nth-child(6)").css("display","none");
         $("#leftLi_message").css("display","block");
         $("#leftLi_question").css("display","block");
+        $("#leftLi_examine").css("display","block");
+
+
+        $("#leftLi_examine dl dd:nth-child(1)").css("display","none");
+
+        $("#leftLi_examine_kaoping").css("display","block");
+
+        $("#leftLi_examine_kaoping_mission").css("display","block");
+
+        $("#leftLi_examine_empKaohe").css("display","none");
+
+        $("#leftLi_examine_kaoping_myKaoping").css("display","none");
+
     }else if (array == 2){
     }
 </script>
