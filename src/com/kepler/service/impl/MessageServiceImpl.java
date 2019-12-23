@@ -48,5 +48,25 @@ public class MessageServiceImpl extends BaseDao implements MessageService {
         update(vo);
     }
 
+    @Override
+    public List selGetEmailList(int receId) {
+        return sqlQuery("select *,(select e.empName from empVo e where e.empId = em.empId) as empName from Email em where em.receId = '" + receId + "'");
+    }
+
+    @Override
+    public List selForEmailList(int empId) {
+        return sqlQuery("select *,(select e.empName from empVo e where e.empId = em.receId) as receName from Email em where em.empId = '" + empId + "'");
+    }
+
+    @Override
+    public void deleteGetEmail(int emailId, int receId) {
+        sqlUpdate("delete Email where emailId = " + emailId + " and receId = '" + receId + "'");
+    }
+
+    @Override
+    public void deleteForEmail(int emailId, int empId) {
+        sqlUpdate("delete Email where emailId = " + emailId + " and empId = '" + empId + "'");
+    }
+
 
 }

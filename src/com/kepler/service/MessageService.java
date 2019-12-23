@@ -15,4 +15,10 @@ public interface MessageService {
     public void delectContext(NoticeVo vo);//删除公告信息
     public List noticeTitle(int id);//查询出标题
     public void updateNotice(NoticeVo vo);//修改公告信息
+
+    /**************邮件**************/
+    List selGetEmailList(int receId);//查收到的邮件
+    List selForEmailList(int empId);//查发送的邮件
+    void deleteGetEmail(int emailId,int receId);//删除收到的邮件
+    void deleteForEmail(int emailId,int empId);//删除发送的邮件
 }

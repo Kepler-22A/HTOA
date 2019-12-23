@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -201,5 +202,71 @@ public class MessageController {
     @RequestMapping(value = "/toEmailPage")
     public String toEmailPage(){
         return "email";
+    }
+
+    @RequestMapping(value = "/getEmailData")
+    public void getEmailData(HttpServletResponse response,HttpSession session){
+        response.setCharacterEncoding("utf-8");
+
+        JSONObject jo = new JSONObject();
+
+        List emailList = ms.selGetEmailList(Integer.parseInt(session.getAttribute("empId")+""));
+
+        jo.put("code",0);
+        jo.put("msg",0);
+        jo.put("count",emailList.size());
+        jo.put("data",emailList);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+
+        }
+    }
+
+    @RequestMapping(value = "/forEmailData")
+    public void forEmailData(HttpServletResponse response,HttpSession session){
+        response.setCharacterEncoding("utf-8");
+
+        JSONObject jo = new JSONObject();
+
+        List emailList = ms.selForEmailList(Integer.parseInt(session.getAttribute("empId")+""));
+
+        jo.put("code",0);
+        jo.put("msg",0);
+        jo.put("count",emailList.size());
+        jo.put("data",emailList);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+
+        }
+    }
+
+    @RequestMapping(value = "/getEmailDelete/{emailId}/{receId}")
+    @ResponseBody
+    public void getEmailDelete(@PathVariable(value = "emailId")int emailId,@PathVariable(value = "receId")int receId){
+        ms.deleteGetEmail(emailId,receId);
+    }
+
+    @RequestMapping(value = "/forEmailDelete/{emailId}/{empId}")
+    @ResponseBody
+    public void forEmailDelete(@PathVariable(value = "emailId")int emailId,@PathVariable(value = "empId")int empId){
+        ms.deleteForEmail(emailId,empId);
+    }
+
+    @RequestMapping(value = "/toAddEmailPage")
+    public String toAddEmailPage(){
+        return "addEmail";
+    }
+
+    @RequestMapping(value = "/addEmail/{empId}")
+    public void addEmail(@PathVariable(value = "empId") int empId, String topic, String receId, String content){
+        System.out.println(empId + "  " + topic + "  " + receId + "  " + content);
     }
 }
