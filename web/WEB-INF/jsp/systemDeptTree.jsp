@@ -14,6 +14,10 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <script src="${pageContext.request.contextPath}/layui/lay/modules/layer.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/layui/layui.js" charset="utf-8"></script>
+    <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/jquery-1.7.2.min.js"></script><!---引用jquery库-->
     <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/jquery.easyui.min.js"></script><!---引用easyui库-->
     <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/locale/easyui-lang-zh_CN.js"></script><!---引用语言包-->
@@ -37,7 +41,7 @@
 
 
 
-<div style="width: 14%;height: 500px;float: left;padding: 20px">
+<div style="width: 14%;height: 300px;float: left;padding: 20px">
     <ul class="easyui-tree" id="aa" style="width: 230px">
     </ul>
 </div>
@@ -49,39 +53,108 @@
 <%--<div id="container" style="padding: 0px 50px ;">--%>
 
 <%--</div>--%>
+
+<form  class="layui-form" id="addfloor" style="display: none" method="post" action="${pageContext.request.contextPath}/system/addDep">
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <label class="layui-form-label" style="width: 100px;">部门名称:</label>
+        <div class="layui-input-inline">
+            <input id="depName" type="text" name="depName" required  lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <label class="layui-form-label" style="width: 100px;">部门负责人:</label>
+        <div class="layui-input-inline">
+            <input id="chairman" type="text" name="chairman" required  lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <label class="layui-form-label" style="width: 100px;">说明:</label>
+        <div class="layui-input-inline">
+            <input id="remark" type="text" name="remark" required  lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div align="center">
+        <input type="submit" value="提交" style="height: 30px;width: 50px;">
+    </div>
+</form>
+
+<p style="clear: both;"></p>
+<%--    附表部分    --%>
+<div >
+    <div class="layui-tab">
+        <%--                附表标题！！--%>
+        <ul class="layui-tab-title ">
+            <li class="layui-this">部门管理</li>
+        </ul>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" style="margin: 20px 100px;" onclick="add()">
+                <i class="layui-icon layui-icon-add-1"></i> 添加
+            </button>
+            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="del(SJ)">
+                <i class="layui-icon layui-icon-delete"></i> 删除
+            </button>
+        <%-- 附表！！--%>
+        <div class="layui-tab-content">
+            <form  class="layui-form layui-show"  id="fubiao">
+                <input type="hidden" name="depid" id="depid" value="{{d.depid}}">
+                <div class="layui-form-item" style="margin-top: 20px;">
+                    <label class="layui-form-label" style="width: 100px;">部门名称:</label>
+                    <div class="layui-input-inline">
+                        <input id="dName"  type="text" name="dName" required  lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label" style="width: 100px;">上级部门名称:</label>
+                    <div class="layui-input-inline">
+                        <input   id="parebtId"type="text" name="dName" required  lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top: 20px;">
+                    <label class="layui-form-label" style="width: 100px;">部门负责人:</label>
+                    <div class="layui-input-inline">
+                        <input id="fzr" type="text" name="chairman" required  lay-verify="required" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label" style="width: 100px;">部门类别：</label>
+                    <div class="layui-input-inline">
+                        <select id="depSelect" name="depID" style="width: 150px">
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
 <script>
 
     $("#aa").tree({
         url:'${pageContext.request.contextPath}/system/systemDeptree',//treesql
         onClick:function (node) {//当前点击的节点
+
             if(node.id!=-1){
+                document.SJ = node.id;
                 // alert(node.id+""+node.text);//得到当前节点
-                var SJ = node.text;
-                sks("${pageContext.request.contextPath}/system/selectDepTree/"+SJ);//实现无缝天空一号观月计划无线对接数据 A
+                $.post("${pageContext.request.contextPath}/system/selectDepTree/"+ document.SJ,function (d) {
+                    $("#depid").val(document.SJ);
+
+                    $("#dName").val(d.Dep.depName);
+                    $("#fzr").val(d.Dep.chairman);
+                },'json');
+                // alert("dangfaxiam")
             }
         }
     });
 
-    function sks(url){
-        layui.use('table', function(){
-            var table = layui.table;
-
-            table.render({
-                elem: '#test'
-                ,url:url
-                ,cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-                ,cols: [[
-                    {field:'depid', title: 'ID', }
-                    ,{field:'depName', title: '部门名称'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                    ,{field:'parentId', title: '父部门名称'}
-                    ,{field:'chairman', title: '部门负责人'}
-                    ,{field:'remark', title: '备注'}
-                ]]
+        $.post("/system/selDep",{},function (data) {
+            var form = layui.form;
+            var depSelect_any = "";
+            $.each(data,function (index,obj) {
+                depSelect_any += "<option value='" + obj.depID + "'>" + obj.depName + "</option>";
             });
-        });
-    };
- /*   function reloadList(){
-        $.post("${pageContext.request.contextPath}/system/treedata",{},function (data) {
+            $("#depSelect").html(depSelect_any);
+            form.render('select');
+        },"json");
+
+
+    /*   function reloadList(){
+           $.post("${pageContext.request.contextPath}/system/treedata",{},function (data) {
             var listNode = "";
             $.each(data.list,function (index,obj) {
                 console.log(obj);
@@ -116,10 +189,10 @@
             icon:3,
             btn: ['确认','取消'] //按钮
         }, function(){
-            $.post("${pageContext.request.contextPath}/system/delDept",{depid:depid},
+            $.post("${pageContext.request.contextPath}/system/delTree",{depid:depid},
                 function (data) {
-                    $(".layui-laypage-btn")[0].click();
-                    // layer.closeAll();
+                    // $(".layui-laypage-btn")[0].click();
+                    $(window.top.document).find("#aa").tree('reload');  //刷新树
                 });
             layer.msg('已删除', {
                 icon: 1,
@@ -134,29 +207,5 @@
             });
         });
     }
-</script>
-
-<form  class="layui-form" id="addfloor" style="display: none" method="post" action="${pageContext.request.contextPath}/system/addDep">
-    <div class="layui-form-item" style="margin-top: 20px;">
-        <label class="layui-form-label" style="width: 100px;">部门名称:</label>
-        <div class="layui-input-inline">
-            <input id="depName" type="text" name="depName" required  lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item" style="margin-top: 20px;">
-        <label class="layui-form-label" style="width: 100px;">说明:</label>
-        <div class="layui-input-inline">
-            <input id="remark" type="text" name="remark" required  lay-verify="required" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div align="center">
-        <input type="submit" value="提交" style="height: 30px;width: 50px;">
-    </div>
-</form>
-
-</body>
-<script type="text/html" id="dus">
-
-
 </script>
 </html>

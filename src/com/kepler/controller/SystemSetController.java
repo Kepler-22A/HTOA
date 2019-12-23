@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -478,16 +479,16 @@ public class SystemSetController {
             map.put("children",Aaa);
         }
         objects.add(map);
-        System.out.println(objects.toJSONString());
+//        System.out.println(objects.toJSONString());
         out.print(objects.toJSONString());
     }
 
     //点击信息查询出班级信息
     @RequestMapping(value = "/selectDepTree/{SJ}")
-    public void selectDepTree(@PathVariable(value = "SJ") String depName,HttpServletResponse response) throws IOException {
-        System.out.println("fgdcfgdfgdf");
-        depName = new String(depName.getBytes("ISO-8859-1"),"UTF-8");
-        List list = sys.Customss(depName);
+    public void selectDepTree(@PathVariable(value = "SJ") int id,HttpServletResponse response) throws IOException {
+        System.out.println("ID:"+id);
+//        depName = new String(depName.getBytes("ISO-8859-1"),"UTF-8");
+       /* List list = sys.Customss(depName);
         response.setCharacterEncoding("utf-8");
         PrintWriter ptw = response.getWriter();
         JSONObject jsonObject = new JSONObject();
@@ -495,7 +496,16 @@ public class SystemSetController {
         jsonObject.put("count",list.size());
         jsonObject.put("msg","");
         jsonObject.put("data",list);
-        ptw.print(jsonObject.toJSONString());
+        ptw.print(jsonObject.toJSONString());*/
+        List list = sys.Customss(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("Dep",o);//返回的数据格式一定要和前端的格式一样
+        }
+       System.out.println("json:"+json);
+        pwt.print(json.toJSONString());
     }
 
     //添加部门
@@ -507,9 +517,27 @@ public class SystemSetController {
 
     //删除部门
     @RequestMapping("/delTree")
-    public String delTree(DepVo vo){
+    @ResponseBody
+    public void delTree(DepVo vo){
         sys.deleTreeDatas(vo.getDepid());
-        return "redirect:/system/deptTree";
+
+    }
+
+    @RequestMapping(value = "/selDep")
+    public void selDep(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+        List list = sys.selDep();
+        JSONArray ja = new JSONArray();
+        for (Object o : list){
+            Map map = (HashMap)o;
+            ja.add(map);
+        }
+        try {
+            PrintWriter pw = response.getWriter();
+            pw.println(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 //-------------------------附属：设备维修获取班级或部门---------------------
@@ -558,7 +586,7 @@ public String feedback(){
 
         List<StudentVo> empVoList = new ArrayList<>();
         empVoList = sys.selectStudentById(id);
-        System.out.println("empList:"+empVoList);
+//        System.out.println("empList:"+empVoList);
         for (int i=0;i<empVoList.size();i++){
             StudentVo  studentVo =empVoList.get(i);
             vo.setEmpname(studentVo.getStuname());

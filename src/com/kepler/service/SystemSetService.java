@@ -102,9 +102,11 @@ public interface SystemSetService {
     public List listDeptree();
     public List selectDep(String id);
     //根据点击班级分配然后查询数据
-    public List Customss(String cuntom);
+    public List Customss(int  id);
     //根据id查询出数据
     public List<TermVo> selectTreeById(int id);
+    //查部门
+    public List<DepVo> selDep();
     //修改数据
     public void updateTreeData(DepVo vo);
     //删除数据

@@ -239,8 +239,8 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
     }
 
     @Override
-    public List Customss(String cuntom) {
-        return sqlQuery("select * from  dep where depName=  '"+cuntom+"'");
+    public List Customss(int id) {
+        return sqlQuery("select * from dep where depid="+id);
 
     }
 
@@ -260,6 +260,11 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
         DepVo depVo = new DepVo();
         depVo.setDepid(id);
         delete(depVo);
+    }
+
+    @Override
+    public List<DepVo> selDep() {
+        return sqlQuery("select * from dep");
     }
     //------------------------------------------------------------------------------------------------------------------
 

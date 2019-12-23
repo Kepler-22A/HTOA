@@ -162,7 +162,7 @@
                 <button type="button" class="layui-btn layui-btn-normal" id="imageFile" style="margin-top: 10px">
                     <i class="layui-icon">&#xe67c;</i>提交图片
                 </button>
-                <img class="layui-upload-img" id="demo1" style="width: 120px;height: 80px;">
+                <img class="layui-upload-img" id="demo1" >
                 <p id="demoText"></p>
             </div>
         </div>
