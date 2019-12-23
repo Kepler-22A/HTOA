@@ -55,7 +55,12 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
     @Override
     public List selectTable3() {//查询考评模板
-        return sqlQuery("select e.empName ,t.* from template t,empVo e,dep d where e.empId = t.empId and d.depId = t.depId");
+        return sqlQuery("select e.empName ,d.depName,t.* from template t,empVo e,dep d where e.empId = t.empId and d.depId = t.depId");
+    }
+
+    @Override
+    public List selectTable4() {
+        return sqlQuery("select * from template where openCheck = 2");
     }
 
     @Override
@@ -116,19 +121,24 @@ public class TestServiceImpl extends BaseDao implements TestService {
         return sqlQuery("select * from checkResult  where templateId = "+templateId+"");
     }
 
-    @Override
+    @Override //学生评价查询
     public List selectMyCheckProject(int templateId, int empId) {
-        return sqlQuery("select p.projectName, e.empName from checkProject p,empVo e  where p.templateId = "+templateId+" and e.empId = "+empId+"");
+        return sqlQuery("select DISTINCT t.templateId,t.projectName,e.empName,c.beginTime,s.checkScore from checkProject t left join studentCheckScore s on t.projectId = s.projectId LEFT JOIN empVo e on s.empId = e.empId LEFT JOIN checkStep c on t.templateId = c.templateId where t.templateId = "+templateId+"and e.empId ="+empId+"and c.step = 1" );
     }
 
     @Override
-    public String selectTime(int templateId) {
-        return executeStringSQL("select beginTime from checkStep where templateId ="+templateId+"");
+    public List selectStepType(int id) {
+        return sqlQuery("select checkStepType from checkStep where templateId ="+id+"");
     }
 
     @Override
-    public int selectTotal(int templateId) {
-        return executeIntSQL("select total from checkScoer where templateId = "+templateId+"");
+    public int update(int templateId) {
+        return sqlUpdate("update template set openCheck=2 where templateId="+templateId+" ");
+    }
+
+    @Override
+    public int selectLead(int empId) {
+        return executeIntSQL("select empId from empVo where empName = ( select chairman from dep where depId = (select o.depId from empVo e left join dep o on e.depId = o.depId where e.empId = "+empId+" ))");
     }
 
 

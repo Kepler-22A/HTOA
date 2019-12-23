@@ -16,10 +16,10 @@ public interface TestService {
     public int selectInt(String name);
     public int selectInt2(String name);
     int selStudentId(String stuname);
-    //    public int selectInt3(Date name);
     public List selectTable();//数据
     public List selectTable2();
     public List selectTable3();
+    public List selectTable4();
     public int addExmaine(AuditModelVo auditModelVo);//增删考核
     public int addTemplate(TemplateVo templateVo);
     public int delete(int id);
@@ -32,8 +32,9 @@ public interface TestService {
     public List selectSetp(int templateId);
     public  List selectResult(int templateId);
     public List selectMyCheckProject(int templateId,int empId);//我的考评
-    public String selectTime(int templateId);
-    public int selectTotal(int templateId);
+    public int selectLead(int empId);
+    public int update(int templateId);
+    List selectStepType(int templateId );
 
     //判断登陆这个账号的人是憨憨老师还是帅气学生
     public int OKAccount(String account,String pwd);

@@ -16,7 +16,7 @@ public class checkStepVo {
     private int checkStepId ;
     private int templateId;//关联模板
     private String checkStepName ;//步骤名称
-    private int step ;//步骤  1自评 ,2 学生评，领导评
+    private int step ;//步骤  1学生评，领导评
     private String checkStepType ;//步骤类型
     private float  weight ;//权重
     private Date beginTime ;//开始时间

@@ -95,6 +95,19 @@ public class TestController {//登录  考核管理！！
         return "main";
     }
 
+    @RequestMapping(value = "/loginOut")
+    public String loginOut(HttpSession session){
+        if (session.getAttribute("empId") != null){
+            session.removeAttribute("empId");
+            session.removeAttribute("empName");
+        }else if (session.getAttribute("studentId") != null){
+            session.removeAttribute("studentId");
+            session.removeAttribute("stuName");
+        }
+
+        return "redirect:/";
+    }
+
     @RequestMapping(value = "/checkUser/{userType}")
     @ResponseBody
     public String checkUser(@PathVariable(value = "userType")String userType,empVo empVo,StudentVo studentVo,HttpSession session){
@@ -139,6 +152,8 @@ public class TestController {//登录  考核管理！！
     public String empExamiane(){
         return "empExamine";
     }
+
+
     //新增指标页面
     @RequestMapping("/addExamine")
     public String addExamine(AuditModelVo auditModelVo,HttpServletResponse response){
@@ -162,12 +177,13 @@ public class TestController {//登录  考核管理！！
         int i = service.delete2(auditLogID);
         return "empExamine";
     }
-
     @RequestMapping("/delete3/{templateId}")
     public String delete3(@PathVariable(value ="templateId" )int templateId ){
         int i = service.delete3(templateId);
         return "empExamine";
     }
+
+
     //查询数据
     @RequestMapping("/table")
     public void table(HttpServletResponse response){
@@ -215,7 +231,6 @@ public class TestController {//登录  考核管理！！
     }
     @RequestMapping("/table3")
     public void table3(HttpServletResponse response) throws IOException {
-        System.out.println("进入table1!!!");
         response.setCharacterEncoding("utf-8");
         List list = service.selectTable3();
 
@@ -235,26 +250,37 @@ public class TestController {//登录  考核管理！！
     public  String myCheck(){
         return "myCheck";
     }
-    @RequestMapping("/selectMyCheck/{type}") //我的考评页面
+
+
+    //我的考评获取数据~~~~~~~~~~~~~~~~~~~~~~~~~
+    @RequestMapping("/selectMyCheck/{type}")
     @ResponseBody
     public void selectMyCheck(Integer templateId,Integer empId,HttpServletResponse response,HttpSession session,@PathVariable(value = "type")String type) throws IOException {
+
         System.out.println(type+",,"+templateId+",,"+empId);
         List list = new ArrayList();
         if("from".equals(type)){ //查询我的考评数据
+            //查出步骤类型
+            List  stepType = service.selectStepType(templateId);
+            System.out.println("checkStepType:"+stepType);
+//            if("checkStepType=学生评".equals(stepType.get(0)) && "checkStepType=领导评".equals(stepType.get(1))){
+//
+//            }
+//            else if("学生评".equals(stepType.get(0))){
+//
+//            }else if("领导评".equals(stepType.get(0))){
+//
+//            }
+            //查出数据
             list = service.selectMyCheckProject(templateId,empId);
-            String beginTime = service.selectTime(templateId);
-            int total = service.selectTotal(templateId);
+            //String beginTime = service.selectTime(templateId);
+            //int total = service.selectTotal(templateId);
 
-            Map map = new HashMap();
-            map.put("templateId",templateId);
-            map.put("beginTime",beginTime);
-            map.put("total",total);
-
-            list.add(map);
             session.setAttribute("list",list);
             System.out.println("list:"+list);
         }
         if("table".equals(type)){ //获取我的考评数据
+            response.setCharacterEncoding("utf-8");
             List list1 = (List) session.getAttribute("list");
             JSONObject json = new JSONObject();
             json.put("code",0);
@@ -280,7 +306,7 @@ public class TestController {//登录  考核管理！！
     public String toAddTemplate (){
         return "addTemplate";
     }
-    @RequestMapping("/checkTask")//任务
+    @RequestMapping("/checkTask")//任务页
     public String checkTask(){
         return "checkTask";
     }
@@ -330,7 +356,7 @@ public class TestController {//登录  考核管理！！
             String setpType = setpvo.getCheckStepType();
             System.out.printf(beginTimeEX + "  " + endTimeEX);
             //转换时间
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
             Date d1 = null;
             Date d2 = null;
             try {
@@ -342,9 +368,9 @@ public class TestController {//登录  考核管理！！
             setpvo.setBeginTime(d1);
             setpvo.setEndTime(d2);
             //判断步骤类型
-            if("自评".equals(setpType)){
+            if("学生评".equals(setpType)){
                 setpvo.setStep(1);
-            }else {
+            }else if("领导评".equals(setpType)) {
                 setpvo.setStep(2);
             }
             //获取templateId
@@ -353,8 +379,7 @@ public class TestController {//登录  考核管理！！
 
             setpvo.setTemplateId(templateId2);
             float width = setpvo.getWeight();
-            DecimalFormat df = new DecimalFormat("##0.00");
-            String widthStr = df.format(width);
+            String widthStr = new Formatter().format("%.2f", width).toString();
             System.out.printf(widthStr);
             setpvo.setWeight(Float.parseFloat(widthStr));
             int i = service.addCheckSetp(setpvo);
@@ -374,21 +399,11 @@ public class TestController {//登录  考核管理！！
         }
     }
     //查看项目数据
-    @RequestMapping("/templateTable/{table}/{templateTime}")
-    public void templateTable(HttpServletResponse response,HttpSession session,@PathVariable(value = "table") String table,@PathVariable(value = "templateTime") long  time){
+    @RequestMapping("/templateTable/{table}/{templateId}")
+    public void templateTable(HttpServletResponse response,@PathVariable(value = "table") String table,@PathVariable(value = "templateId") Integer  templateId){
         response.setCharacterEncoding("utf-8");
         System.out.println("table:"+table);
         List list  = new ArrayList();
-        //时间
-        System.out.println(time);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        date.setTime(time);
-        int  templateId = service.selectInt2(sdf.format(date));
-        //int templateId2 = (int) session.getAttribute("templateId");
-        System.out.println("templateId:"+templateId+":2:");
-
         if("table1".equals(table)){
             list = service.selectProject(templateId);
         }
@@ -415,4 +430,51 @@ public class TestController {//登录  考核管理！！
         out.print(json.toString());
     }
 
+
+    /**
+     * 开启考评！！！！
+     */
+
+    @RequestMapping("/openCheck/{templateId}/{depName}")
+    public void openCheck(HttpSession session,@PathVariable(value = "templateId")Integer templateId,@PathVariable(value = "depName")String depName){
+        System.out.println("进入开启考评！！"+templateId+",,"+depName);
+        session.setAttribute("depName",depName);
+        int i = service.update(templateId);
+        if(i>0){
+            System.out.println("开启考评成功！！");
+            if("教研部".equals(depName)){  //是否为教研部  是则开启学生评分
+
+            }
+        }
+    }
+    @RequestMapping("/table4") //获取开启考评的模板数据！！
+    public void table4(HttpServletResponse response ,HttpSession session) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        List list = new ArrayList();
+        //只有开启的教研部考评才会显示
+        if(session.getAttribute("studentId") != null){
+            String depName = (String) session.getAttribute("depName");
+            if("教研部".equals(depName)){
+                list = service.selectTable4();
+            }
+        }
+        //只有开启有领导考评的指定的部门领导才会显示
+        else if(session.getAttribute("empId") !=null){
+            int empId= (int) session.getAttribute("empId");
+            int leadEmpId = service.selectLead(empId);
+            if(empId ==leadEmpId){
+                list = service.selectTable4();
+            }
+        }
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","");
+        json.put("count",list.size());
+        json.put("data",list);
+
+        PrintWriter out = response.getWriter();
+        out.print(json.toString());
+
+        System.out.println(json.toJSONString());
+    }
 }
