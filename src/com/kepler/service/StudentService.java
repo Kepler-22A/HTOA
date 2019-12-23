@@ -104,4 +104,26 @@ public interface StudentService {
     public List selectStudent_score(int id);
     //根据学生成绩查询出考试的id然后在删除考试成绩
     public void deleteStudent_score_id(Student_scoreVo vo);
+    //查询出课程类别信息
+    public List<CourseTypeVo> selectClassType2();
+    //增加课程类别
+    public void AddClassType(CourseTypeVo vo);
+    //根据id查询出课程类别信息
+    public List<CourseTypeVo> selectClassType3(int id);
+    //修改课程类别信息
+    public void updateClassType5(CourseTypeVo vo);
+    //删除课程类别信息
+    public void deleteClassType4(CourseTypeVo vo);
+    //查询出课程管理
+    public List<CourseVo> selectCoures();
+    //查询出课程类别
+    public List ClassType();
+    //增加课程管理
+    public void AddCoures(CourseVo vo);
+    //根据id查询出课程类别信息
+    public List<CourseVo> selectCourer5(int id);
+    //修改课程类别管理
+    public void updateCourseVo(CourseVo vo);
+    //删除课程类别信息
+    public void deleteCourseVo(CourseVo vo);
 }

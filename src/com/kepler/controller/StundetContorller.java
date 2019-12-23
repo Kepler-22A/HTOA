@@ -556,7 +556,7 @@ public class StundetContorller {
         jsonObject.put("data",list);
         ptw.print(jsonObject.toJSONString());
     }
-    //跳转班级类别
+    //跳转课程类别
     @RequestMapping(value = "/SelectclassType")
     public String SelectclassType(){
         return "SelectclassType";
@@ -688,5 +688,105 @@ public class StundetContorller {
         pwt.print(jsonObject.toJSONString());
         pwt.flush();
         pwt.close();
+    }
+    //查询出课程类别信息
+    @RequestMapping(value = "/selectClassType2")
+    public void selectClassType2(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list =  sts.selectClassType2();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    //新增课程类别信息
+    @RequestMapping(value = "/AddClassType")
+    public String AddClassType(CourseTypeVo vo){
+        sts.AddClassType(vo);
+        return "redirect:/student/SelectclassType";
+    }
+    //根据id查询出课程类别信息
+    @RequestMapping(value = "/selectClassType5/{id}")
+    public void selectClassType3(@PathVariable(value = "id") int id,HttpServletResponse response) throws IOException {
+        List list = sts.selectClassType3(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("StudentVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+        pwt.print(json.toJSONString());
+    }
+    //根据id修改程类别信息
+    @RequestMapping(value = "/updateClassType5/{classid}")
+    public String updateClassType5(@PathVariable(value = "classid")int classid,CourseTypeVo vo){
+        sts.updateClassType5(vo);
+        return "redirect:/student/SelectclassType";
+    }
+    //根据id删除程类别信息
+    @RequestMapping(value = "/deleteClassType5/{classid}")
+    @ResponseBody
+    public void deleteClassType5(@PathVariable(value = "classid")int classid,CourseTypeVo vo){
+        vo.setCourseTypeID(classid);
+        sts.deleteClassType4(vo);
+    }
+    //查询出课程管理信息
+    @RequestMapping(value = "/selectCourseLing")
+    public void selectCourseLing(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list =  sts.selectCoures();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    //根据Ajax查询课程管理
+    @RequestMapping(value = "/studentCourseAjax")
+    public void studentClassTypeAjax(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List<CourseTypeVo> list = sts.ClassType();
+        jsonObject.put("name4",list);
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
+    }
+    //新增课程类别管理
+    @RequestMapping(value = "/AddCourser")
+    public String AddCourser(CourseVo vo){
+        sts.AddCoures(vo);
+        return "redirect:/student/course";
+    }
+    //根据id查询出课程管理信息
+    @RequestMapping(value = "/selectCourer5/{id}")
+    public void selectCourer5(@PathVariable(value = "id") int id,HttpServletResponse response) throws IOException {
+        List list = sts.selectCourer5(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("StudentVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+        pwt.print(json.toJSONString());
+    }
+    //根据id修改程类别管理
+    @RequestMapping(value = "/updateCourser/{classid}")
+    public String updateCourser(@PathVariable(value = "classid")int classid,CourseVo vo){
+        sts.updateCourseVo(vo);
+        return "redirect:/student/course";
+    }
+    //根据id删除程类别信息
+    @RequestMapping(value = "/deleteupdateCourser/{classid}")
+    @ResponseBody
+    public void deleteupdateCourser(@PathVariable(value = "classid")int classid,CourseVo vo){
+        vo.setCourseID(classid);
+        sts.deleteCourseVo(vo);
     }
 }

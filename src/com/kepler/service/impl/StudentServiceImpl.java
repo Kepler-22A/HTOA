@@ -270,5 +270,60 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
         delete(vo);
     }
 
+    @Override
+    public List<CourseTypeVo> selectClassType2() {
+        return sqlQuery("select * from CourseType");
+    }
+
+    @Override
+    public void AddClassType(CourseTypeVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<CourseTypeVo> selectClassType3(int id) {
+        return sqlQuery("select * from CourseType where courseTypeID ="+id);
+    }
+
+    @Override
+    public void updateClassType5(CourseTypeVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public void deleteClassType4(CourseTypeVo vo) {
+        delete(vo);
+    }
+
+    @Override
+    public List<CourseVo> selectCoures() {
+        return sqlQuery("select c.courseID,c.courseName,c.isObligatory,c.remark,e.courseTypeName from Course c left join CourseType e on c.courseTypeID = e.courseTypeID");
+    }
+
+    @Override
+    public List ClassType() {
+        return sqlQuery("select courseTypeID,courseTypeName from CourseType");
+    }
+
+    @Override
+    public void AddCoures(CourseVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List<CourseVo> selectCourer5(int id) {
+        return sqlQuery("select * from Course where courseID ="+id);
+    }
+
+    @Override
+    public void updateCourseVo(CourseVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public void deleteCourseVo(CourseVo vo) {
+        delete(vo);
+    }
+
 
 }

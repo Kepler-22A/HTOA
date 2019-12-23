@@ -90,6 +90,24 @@
         }
         function guanbi() {
             layer.closeAll();
+            $("#Studid").val(0);
+            $("#q").val("");
+            $("#w").val("");
+            $("#e").val("");
+            $("#r").val("");
+            $("#t").val("");
+            $("#y").val("");
+            $("#u").val("");
+            $("#o").val("");
+            $("#p").val("");
+            $("#d").val("");
+            $("#f").val("");
+            $("#g").val("");
+            $("#h").val("");
+            $("#j").val("");
+            $("#l").val("");
+            $("#x").val("");
+            $("#v").val("");
         }
         function tubiao(a,b,c,d,e,f) {
             layer.open({
