@@ -62,6 +62,15 @@
         <a class="layui-btn layui-btn-danger layui-btn-xs"onclick="deleteEmp('{{ d.noticeId }}')">删除</a>
     </c:if>
 </script>
+<script type="textml" id="roleTpl">
+    {{# if (d.noticeType=== 3) { }}
+        全体学生
+    {{# } else if(d.noticeType=== 2) { }}
+        全体员工
+    {{# } else { }}
+        班级发送
+    {{# } }}
+</script>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
     reload()
@@ -77,7 +86,7 @@
                 ,cols: [[
                     {field:'noticeId', title: 'ID', sort: true}
                     ,{field:'title', title: '标题'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                    ,{field:'noticeType', title: '类型'}
+                    ,{field:'noticeType', title: '类型',templet: '#roleTpl'}
                     ,{field:'content', title: '通知内容'}
                     ,{field:'empName', title: '发布人', align: 'center'} //单元格内容水平居中
                     // ,{field:'noticeTime', title: '发布时间',  align: 'right'} //单元格内容水平居中
