@@ -21,7 +21,7 @@
 <%--    员工表表头工具    --%>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <a class="layui-btn layui-btn-sm" href="${pageContext.request.contextPath}/leave/toEmpApplyPage">返回</a>
+        <a class="layui-btn layui-btn-sm" href="${pageContext.request.contextPath}/leave/toStuApplyPage">返回</a>
         <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
     </div>
 </script>
