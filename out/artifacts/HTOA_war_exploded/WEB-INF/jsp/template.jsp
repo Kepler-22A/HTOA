@@ -15,10 +15,10 @@
 </head>
 <body>
 <div class="demoTable">
-<%--    考评名称：--%>
-<%--    <div class="layui-inline">--%>
-<%--        <input class="layui-input" name="id" id="demoReload" autocomplete="off">--%>
-<%--    </div>--%>
+    <%--    考评名称：--%>
+    <%--    <div class="layui-inline">--%>
+    <%--        <input class="layui-input" name="id" id="demoReload" autocomplete="off">--%>
+    <%--    </div>--%>
     <button class="layui-btn" onclick="rederr()">刷新</button>
     <button class="layui-btn"  onclick="addTab()" style="cursor:pointer">添加</button>
 </div>
@@ -50,6 +50,7 @@
 </fieldset>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="del('{{d.templateId}}')">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="openCheck('{{d.templateId}}','{{d.depId}}')">开启考评</a>
 </script>
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
@@ -94,11 +95,12 @@
                     elem: '#test'
                     , url: '/Controller/table3'
                     , cols: [[
-                        {field: 'templateId', width: 100, title: '模板Id'}
-                        , {field: 'templateName', width: 150, title: '考核名称'}
-                        , {field: 'templateType', width: 150, title: '考核类型'}
-                        , {field: 'empName', width: 150, title: '创建人'}
-                        , {field: 'templateTime', width: 200, title: '创建日期', templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+                        {field: 'templateId', width: 60, title: '模板Id'}
+                        , {field: 'templateName', width: 100, title: '考核名称'}
+                        , {field: 'depName', width: 100, title: '考核部门'}
+                        , {field: 'templateType', width: 100, title: '考核类型'}
+                        , {field: 'empName', width: 100, title: '创建人'}
+                        , {field: 'templateTime', width: 180, title: '创建日期', templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
                         , {field: 'remark', title: '备注', Width: 350}
                         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
                     ]]
@@ -109,17 +111,18 @@
             table.on('row(testTable)', function (obj) {
                 console.log(obj.tr) //得到当前行元素对象
                 console.log(obj.data) //得到当前行数据
-                reloadTable(obj.data.templateTime);
+                reloadTable(obj.data.templateId);
             });
         });
     }
-    function reloadTable(templateTime) {
+    function reloadTable(templateId) {
         layui.use('table', function() {
             var table = layui.table;
             table.render(
                 {   elem: '#testTable',
                     height: 400,
-                    url: '/Controller/templateTable/table1/'+templateTime,
+                    url: '/Controller/templateTable/table1/'+templateId,
+                    type:'POST',
                     cols: [[
                         {field: 'projectId', edit: true, title: '项目编号'},
                         {field: 'projectName', edit: true, title: '项目名称'},
@@ -134,7 +137,8 @@
                 {
                     elem: '#testTable2',
                     height: 400,
-                    url:'/Controller/templateTable/table2/'+templateTime,
+                    url:'/Controller/templateTable/table2/'+templateId,
+                    type:'POST',
                     cols: [[
                         {field: 'checkStepName', edit: true, title: '名称'},
                         {field: 'step', edit: true, title: '步骤'},
@@ -150,7 +154,8 @@
                 {
                     elem: '#testTable3',
                     height: 400,
-                    url:'/Controller/templateTable/table3/'+templateTime,
+                    url:'/Controller/templateTable/table3/'+templateId,
+                    type:'POST',
                     cols: [[
                         {field: 'grade', edit: true, title: '等级名称'},
                         {field: 'min', edit: true, title: '最低分'},
@@ -167,7 +172,25 @@
         parent.active.tabAdd("/Controller/addTemplate", 46, "新增考评");
         parent.active.tabChange(46)
     }
-
+    //开启考评
+    function openCheck(templateId,depId) {
+        console.log(templateId,depId);
+        layer.confirm('是否开启考评？', {
+            icon:3,
+            btn: ['确认','取消'] //按钮
+        }, function(){
+            $.post('<%=request.getContextPath()%>/Controller/openCheck/'+templateId+"/"+depId,{},);
+            layer.msg('已开启', {
+                icon: 1,
+                time:2000
+            });
+        }, function(){
+            layer.msg('已取消', {
+                icon:0,
+                time: 2000 //20s后自动关闭
+            });
+        });
+    }
 </script>
 </body>
 </html>
