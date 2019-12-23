@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 28401
@@ -48,14 +49,18 @@
 <table class="layui-hide" id="test"></table>
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <a href="${pageContext.request.contextPath}/message/addNotice"><button class="layui-btn layui-btn-sm">发布公告</button></a>
+        <c:if test="${stuName == null}">
+            <a href="${pageContext.request.contextPath}/message/addNotice"><button class="layui-btn layui-btn-sm">发布公告</button></a>
+        </c:if>
         <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新公告</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
     <a href="${pageContext.request.contextPath}/message/selectNoticeOK/{{ d.noticeId }}" class="layui-btn layui-btn-xs">查看</a>
     <a href="${pageContext.request.contextPath}/message/toUpdateNoticeOK/{{d.noticeId}}" class="layui-btn layui-btn-warm layui-btn-xs">编辑</a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs"onclick="deleteEmp('{{ d.noticeId }}')">删除</a>
+    <c:if test="${stuName == null}">
+        <a class="layui-btn layui-btn-danger layui-btn-xs"onclick="deleteEmp('{{ d.noticeId }}')">删除</a>
+    </c:if>
 </script>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
