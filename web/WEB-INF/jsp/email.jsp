@@ -40,7 +40,7 @@
 
             <%--    每行收到的邮件表的操作按钮    --%>
             <script type="text/html" id="getEmailBarDemo">
-                <a class="layui-btn layui-btn-xs" href="javascript:update('{{ d.empId }}')" lay-event="edit">浏览</a>
+                <a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/message/lookEmail/{{d.emailId}}" lay-event="edit">浏览</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="javascript:deleteGetEmail('{{d.emailId}}',${empId})">删除</a>
             </script>
         </div>
@@ -59,7 +59,7 @@
 
             <%--    每行发送的邮件表的操作按钮    --%>
             <script type="text/html" id="forEmailBarDemo">
-                <a class="layui-btn layui-btn-xs" href="javascript:update('{{ d.empId }}')" lay-event="edit">浏览</a>
+                <a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/message/lookEmail/{{d.emailId}}" lay-event="edit">浏览</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" href="javascript:deleteForEmail('{{d.emailId}}',${empId})">删除</a>
             </script>
         </div>
@@ -126,7 +126,6 @@
     }
 
     function isReadToString(data){
-        console.log(data);
         if(data == 1){
             return "已读"
         }else if (data == 2) {

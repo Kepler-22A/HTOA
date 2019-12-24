@@ -1,10 +1,13 @@
 package com.kepler.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.MessageService;
+import com.kepler.vo.EmailVo;
 import com.kepler.vo.NoticeVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,9 +21,7 @@ import javax.xml.soap.Text;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -266,7 +267,61 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/addEmail/{empId}")
+    @ResponseBody
     public void addEmail(@PathVariable(value = "empId") int empId, String topic, String receId, String content){
-        System.out.println(empId + "  " + topic + "  " + receId + "  " + content);
+        EmailVo emailVo = new EmailVo();
+        emailVo.setEmpId(empId + "");
+        emailVo.setContent(content);
+        emailVo.setTopic(topic);
+        emailVo.setIsRead(2);
+        emailVo.setSendtime(new Date());
+
+        List idList = new ArrayList();
+
+        String receIdA = "";
+        for(int i = 0;i < receId.length();i++){
+            if (receId.charAt(i) == ','){
+                idList.add(receIdA);
+                receIdA = "";
+            } else if (i == receId.length() - 1){
+                char a = receId.charAt(i);
+                receIdA = receIdA + a;
+                idList.add(receIdA);
+            }
+            else {
+                char a = receId.charAt(i);
+                receIdA = receIdA + a;
+            }
+        }
+
+        for (Object o : idList){
+            String receIdData = o + "";
+            emailVo.setReceId(receIdData);
+            ms.addEmail(emailVo);
+        }
+    }
+
+    @RequestMapping(value = "/getEmpJSON")
+    @ResponseBody
+    public JSONArray getEmpJSON(HttpServletResponse response,HttpSession session){
+        response.setCharacterEncoding("utf-8");
+
+        JSONArray ja = ms.getEmpJSON(Integer.parseInt(session.getAttribute("empId")+""));
+
+//        System.out.println(ja.toString());
+
+        return ja;
+    }
+
+    @RequestMapping(value = "/lookEmail/{emailId}")
+    public String lookEmail(Model model,@PathVariable(value = "emailId")int emailId){
+        model.addAttribute("emailVo",ms.selEmailVoByEmailId(emailId));
+        return "lookEmail";
+    }
+
+    @RequestMapping(value = "/changeEmailStatus/{emailId}")
+    @ResponseBody
+    public void changeEmailStatus(@PathVariable(value = "emailId")int emailId){
+        ms.changeEmailStatus(emailId);
     }
 }

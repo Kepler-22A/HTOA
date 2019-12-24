@@ -17,7 +17,7 @@
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
 </head>
 <body>
-<a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/message/toEmailPage">返回</a>
+<a id="backBtn" class="layui-btn layui-btn-xs" href="javascript:history.back()">返回</a>
 <div style="border-bottom: 1px solid #ccc;margin: 10px 0"></div>
 <form id="createEmailForm" lay-filter="createEmailForm" class="layui-form">
     <div class="layui-form-item">
@@ -31,10 +31,10 @@
             <input id="receId" class="layui-input" name="receId" type="text" lay-verify="receId" autocomplete="off" readonly="readonly">
         </div>
         <div class="layui-input-inline">
-            <button class="layui-btn layui-btn-danger" onclick="addReceName()">选择发送人</button>
+            <a class="layui-btn layui-btn-danger" onclick="addReceName()">选择发送人</a>
         </div>
         <div class="layui-input-inline" style="width: 80px">
-            <button class="layui-icon layui-btn" lay-submit lay-filter="emailForm">发送邮件</button>
+            <a class="layui-icon layui-btn" lay-submit lay-filter="emailForm">发送邮件</a>
         </div>
     </div>
 
@@ -46,14 +46,54 @@
 <%--    </div>--%>
 
 
-    <textarea id="demo" style="display: none;"></textarea>
+    <textarea id="demo" style="display: none;" lay-verify="context"></textarea>
 
 </form>
+
+<div id="receIdDiv" style="display: none">
+    <div id="test1"></div>
+    <p style="margin-bottom: 5px"></p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a class="layui-btn layui-btn-xs" href="javascript:getReceId()">确定</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" href="javascript:closeReceIdDiv()">返回</a>
+</div>
+
 </body>
 <script>
     function addReceName() {
-
+        layer.open({
+            type: 1,
+            title:"选择接收人",
+            area:['33%','63%'],
+            content: $("#receIdDiv"),
+            closeBtn :0, //隐藏弹出层的关闭按钮
+            yes:function(index,layero){
+            }
+        });
     }
+
+    function closeReceIdDiv() {
+        layer.closeAll();
+    }
+
+    function getReceId(){
+        var receNameStr = "";
+        receIdStr = "";
+        for (var i = 0;i < array.length;i++){
+            if (i == array.length - 1){
+                receIdStr += arrayId[i] + "";
+                receNameStr += array[i] + "";
+            } else {
+                receIdStr += arrayId[i] + ",";
+                receNameStr += array[i] + ",";
+            }
+        }
+
+        $("#receId").val(receNameStr);
+
+        closeReceIdDiv();
+    }
+
     layui.use(['form', 'layedit', 'laydate'], function(){
         var form = layui.form
             ,layer = layui.layer
@@ -69,38 +109,100 @@
 
         //监听提交
         form.on('submit(emailForm)', function(data){
-            var A = JSON.stringify(data.field);//选项框的数据
-            var content = layedit.getContent(array);//获取文本框的数据
-            var receId = $("#receId").val();
-            var topic = $("#topic").val();
-            var url = '${pageContext.request.contextPath}/message/addEmail/' + ${empId};
+            if (layedit.getContent(array) == "" || layedit.getContent(array) == null){
+                layer.msg("请输入内容");
+            }else if($("#receId").val() == undefined ||$("#receId").val() == null || $("#receId").val() == ""){
+                layer.msg("请输入接收人");
+            }else if ($("#topic").val() == "" || $("#topic").val() == null){
+                layer.msg("请输入标题");
+            }else {
+                var content = layedit.getContent(array);//获取文本框的数据
+                var receId = arrayId;
+                var topic = $("#topic").val();
+                var empId = ${empId};
+                var url = '${pageContext.request.contextPath}/message/addEmail/' + ${empId};
 
-            // var oFiles = document.getElementById("PDFile").files[0];
+                $.ajax({
+                    type:'post',
+                    async:true,
+                    url:url,
+                    data:{
+                        content:content,
+                        receId:receIdStr,
+                        topic:topic,
+                        empId:empId
+                    }
+                    ,
+                    success:function (data) {
+                        if(data!=null){
+                            layer.msg('发送成功！');
+                            setTimeout(function () {
+                                window.location.href="${pageContext.request.contextPath}/message/toEmailPage";
+                            },2000);
+                        }else {
+                            layer.msg('发送失败！');
+                            setTimeout(function () {
+                                window.location.href="${pageContext.request.contextPath}/message/toEmailPage";
+                            },2000);
+                        }
+                    }
+                });
+                return false;
+            }
+        });
+    });
 
-            // var params = new FormData();
+    var empData;
 
-            <%--params.append("pdFile",oFiles);--%>
-            <%--params.append("empId",${empId});--%>
-            <%--params.append("topic",$("#topic").val());--%>
-            <%--params.append("receId",$("#receId").val());--%>
-            <%--params.append("content",aa);--%>
+    $.ajax({
+        url: '${pageContext.request.contextPath}/message/getEmpJSON'
+        ,type: 'post'
+        ,async: false
+        ,dataType:'json'
+        ,success:function (data) {
+            empData = data;
+        }
+        ,error:function (data) {
+        }
+    });
 
-            $.ajax({
-                type:'post',
-                async:true,
-                url:url,
-                data:$("#createEmailForm").serialize()
-                ,
-                success:function (data) {
-                    if(data!=null){
-                        layer.msg('保存成功');
-                    }else {
-                        layer.msg('保存失败');
+    layui.use('transfer', function(){
+        var transfer = layui.transfer;
+
+        array = new Array();
+        arrayId = new Array();
+
+        //渲染
+        transfer.render({
+            elem: '#test1'  //绑定元素
+            ,data: empData
+            ,id: 'demo1' //定义索引
+            ,showSearch: true
+            ,onchange: function(data, index){
+                // console.log(data); //得到当前被穿梭的数据
+                // console.log(index); //如果数据来自左边，index 为 0，否则为 1
+
+                if (index == 0 && index != null){
+                    for (var i = 0;i < data.length;i++){
+                        array.push(data[i].title);
+                        arrayId.push(data[i].value);
+                    }
+                }else if (index == 1 && index != null){
+                    for(var i = 0;i < array.length;i++){
+                        var temp = array[i];
+                        for (var j = 0;j < data.length;j++){
+                            if (temp == data[j].title){
+                                array.splice(i,1);
+                                arrayId.splice(i,1);
+                                i--;
+                            }
+                        }
                     }
                 }
-            });
-            return false;
+            }
         });
+
+        $(".layui-transfer-data").css("height","269px");
     });
 </script>
 </html>

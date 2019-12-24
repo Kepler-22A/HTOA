@@ -1,5 +1,7 @@
 package com.kepler.service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.kepler.vo.EmailVo;
 import com.kepler.vo.NoticeVo;
 
 import java.util.List;
@@ -21,4 +23,8 @@ public interface MessageService {
     List selForEmailList(int empId);//查发送的邮件
     void deleteGetEmail(int emailId,int receId);//删除收到的邮件
     void deleteForEmail(int emailId,int empId);//删除发送的邮件
+    void addEmail(EmailVo emailVo);//新增email
+    JSONArray getEmpJSON(int empId);//获取emp的JSONArray
+    EmailVo selEmailVoByEmailId(int emailId);//根据emailId查emailVo
+    void changeEmailStatus(int emailId);//改变邮件的读取状态
 }
