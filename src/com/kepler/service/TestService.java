@@ -35,6 +35,8 @@ public interface TestService {
     public int selectLead(int empId);
     public int update(int templateId);
     List selectStepType(int templateId );
+    String selectTeacher(int stuId);//查出班主任
+    int selectDepId();
 
     //判断登陆这个账号的人是憨憨老师还是帅气学生
     public int OKAccount(String account,String pwd);
