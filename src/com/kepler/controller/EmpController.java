@@ -586,5 +586,84 @@ public class EmpController {//员工的Controller
 
         return "myWeekly";
     }
-
+    /**
+     * 谈心记录
+     * */
+    @RequestMapping(value = "/chatRecord")
+    public String chatRecord(){
+        return "chatRecord";
+    }
+    /**
+     * 查询谈心记录
+     * */
+    @RequestMapping(value = "/selectCharRecord")
+    public void selectCharRecord(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list = es.charRecord();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    /**
+     * 新增记录
+     * */
+    @RequestMapping(value = "/AddCharRecord")
+    public String AddCharRecord(String shijian,HttpSession session,String name,ChatRecordVo vo){
+        int empid = (int) session.getAttribute("empId");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(shijian);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date = java.sql.Date.valueOf(shijian);
+        List list = es.selectStudentID(name);
+        Map map = (Map) list.get(0);
+        vo.setSayFace((Integer) map.get("Studid"));
+        vo.setChatDate(date);
+        vo.setTeacher(empid);
+        es.AddcharRecord(vo);
+        return "redirect:/emp/chatRecord";
+    }
+    /**
+     * 根据id查询出谈心记录
+     * */
+    @RequestMapping(value = "/selectCharRecordID/{id}")
+    public void selectCharRecordID(@PathVariable(value = "id") int id,HttpServletResponse response) throws IOException {
+        List list = es.selectCharRecord(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("StudentVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+        pwt.print(json.toJSONString());
+    }
+    /**
+     * 修改谈心记录
+     * */
+    @RequestMapping(value = "/UpdateChatRecord")
+    public String UpdateStudentID(ChatRecordVo vo,HttpSession session,String name){
+        int empid = (int) session.getAttribute("empId");
+        List list = es.selectStudentID(name);
+        Map map = (Map) list.get(0);
+        vo.setSayFace((Integer) map.get("Studid"));
+        vo.setTeacher(empid);
+        es.updateCharRecord(vo);
+        return "redirect:/emp/chatRecord";
+    }
+    /*
+    * 删除谈心记录
+    * */
+    @RequestMapping(value = "/delectCharRecord/{id}")
+    @ResponseBody
+    public void delectCharRecord(@PathVariable(value = "id") int id, ChatRecordVo vo){
+        vo.setChatID(id);
+        es.delectCharRecord(vo);
+    }
 }

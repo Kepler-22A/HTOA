@@ -43,4 +43,10 @@ public interface EmpService {
     void delWeekly(int weeklyLogId);//删除周报
     void updateWeekly(WeeklyVo weeklyVo);//修改周报
     WeeklyVo selWeeklyVoByWeeklylogid(int weeklylogid);//根据周报id查周报Vo
+    List charRecord();//查询谈心记录
+    void AddcharRecord(ChatRecordVo vo);//新增谈心记录
+    List selectStudentID(String name);//查询学生id
+    List selectCharRecord(int id);//根据id查询出谈心记录
+    void updateCharRecord(ChatRecordVo vo);//修改谈心记录
+    void delectCharRecord(ChatRecordVo vo);//删除谈心记录
 }

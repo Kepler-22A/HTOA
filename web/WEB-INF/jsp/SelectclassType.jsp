@@ -68,6 +68,11 @@
                 });
             });
         }
+        function guanbi() {
+            layer.closeAll();
+            $("#courseTypeName").val("")
+            $("#remark").val("")
+        }
 
     </script>
 </head>
@@ -109,7 +114,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="layui-btn" lay-filter="workExprienceForm">立即提交</button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button type="button" class="layui-btn layui-btn-primary" onclick="closeWorkExperience()">返回</button>
+            <button type="button" class="layui-btn layui-btn-primary" onclick="guanbi()">返回</button>
         </div>
     </form>
 </div>

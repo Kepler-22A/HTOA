@@ -271,4 +271,35 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     public WeeklyVo selWeeklyVoByWeeklylogid(int weeklylogid) {
         return (WeeklyVo)getObject(WeeklyVo.class,weeklylogid);
     }
+
+    @Override
+    public List charRecord() {
+        return sqlQuery("select ChatID,c.addr,c.chatDate,c.sayContent,e.empName,t.stuname from chatRecord c left join empVo e on c.teacher = e.EmpId left join \n" +
+                "Student t on c.sayFace = t.Studid");
+    }
+
+    @Override
+    public void AddcharRecord(ChatRecordVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List selectStudentID(String name) {
+        return sqlQuery("select Studid from Student where stuname ="+"'"+name+"'");
+    }
+
+    @Override
+    public List selectCharRecord(int id) {
+        return sqlQuery("select ChatID,c.addr,c.chatDate,c.sayContent,e.empName,t.stuname from chatRecord c left join empVo e on c.teacher = e.EmpId left join Student t on c.sayFace = t.Studid where ChatID ="+id);
+    }
+
+    @Override
+    public void updateCharRecord(ChatRecordVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public void delectCharRecord(ChatRecordVo vo) {
+        delete(vo);
+    }
 }

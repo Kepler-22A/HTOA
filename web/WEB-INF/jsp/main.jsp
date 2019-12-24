@@ -63,7 +63,7 @@
                     <dl class="layui-nav-child">
                         <dd><a data-url="/emp/toEmpData" data-id="125" data-title="员工资料"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工资料</a></dd>
                         <dd><a data-url="/emp/toWeeklyCtrl" data-id="126" data-title="周报管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">周报管理</a></dd>
-                        <dd><a href="javascript:;">谈心记录</a></dd>
+                        <dd><a data-url="/emp/chatRecord" data-id="127" data-title="谈心记录"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">谈心记录</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"  id="leftLi_classCtrl">
