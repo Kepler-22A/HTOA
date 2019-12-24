@@ -16,7 +16,7 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 <body>
-<from>
+<from id="markFrom" method="post">
     <table class="layui-table">
         <thead>
         <tr>
@@ -32,17 +32,36 @@
 
         <c:forEach items="${sessionScope.project}" var="p">
         <tr>
-            <td>${p.projectId}</td>
+            <td><input type="hidden"  name="projectId" value="${p.projectId}">${p.projectId}</td>
             <td>${sessionScope.teacher}</td>
             <td>${p.projectName}</td>
             <td>${p.judgment}</td>
             <td>${p.maxScoer}</td>
-            <td><input class="layui-input" type="text" name="checkScore${p.projectId}"></td>
+            <td><input class="layui-input" type="text" name="checkScore"></td>
         </tr>
         </c:forEach>
     </table>
-    <button type="button" class="layui-btn layui-btn-normal" >提交</button>
+    <button type="button" class="layui-btn layui-btn-normal" onclick="addMark()" >提交</button>
     <button type="button" class="layui-btn layui-btn-normal" >返回</button>
 </from>
+<script>
+    function addMark() {
+        $.ajax({
+            url:'/Controller/addMark'
+            ,dataType:'json'
+            ,type:'POST'
+            ,data:$('#markFrom').serialize(),
+            success: function (result) {
+                console.log(result);//打印服务端返回的数据(调试用)
+                if (result.resultCode == 200) {
+                    layer.msg("成功添加");
+                };
+            },
+            error : function() {
+                alert("异常！");
+            }
+        });
+    }
+</script>
 </body>
 </html>

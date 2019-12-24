@@ -476,7 +476,7 @@ public class TestController {//登录  考核管理！！
         System.out.println(json.toJSONString());
     }
 
-    @RequestMapping("/checkMark/{templateId}") //考评打分
+    @RequestMapping("/checkMark/{templateId}") //考评打分页
     public String checkMark(@PathVariable(value = "templateId")Integer templateId ,HttpSession session){  //考评打分
         List list = service.selectProject(templateId);
         //获取classId
@@ -486,6 +486,23 @@ public class TestController {//登录  考核管理！！
 
         System.out.println("考评数据:"+list);
         session.setAttribute("project",list);
+        session.setAttribute("markTemplateId",templateId);
         return "checkMark";
     }
+
+    @RequestMapping("addMark")
+    public String addMark(studentCheckScoreVo scoreVo,HttpSession session){
+        int  stuId = (int) session.getAttribute("studentId");
+
+        int teacherId = service.selectTeacherId(stuId);//查出班主任Id
+        int stuclassId  = service.selectStuClassId(stuId);
+        int markTemplateId = (int) session.getAttribute("markTemplateId");
+        System.out.println("mark:"+teacherId+";;"+stuclassId+";;"+markTemplateId+";;"+scoreVo.getProjectId()+";;"+scoreVo.getCheckScore());
+
+        return "checkTask";
+    }
+
+
+
 }
+

@@ -7,11 +7,11 @@ package com.kepler.vo;
 
 public class studentCheckScoreVo {
     private int studentCheckScoreId;
-    private int templateId;
-    private int empId;
-    private int classId;
-    private int projectId;
-    private int checkScore;
+    private int templateId; //模板Id
+    private int empId;   //关联班主任
+    private int classId;  //班级Id
+    private int projectId; // 考评项目Id
+    private int checkScore;  //得分
 
     public studentCheckScoreVo() {
     }
