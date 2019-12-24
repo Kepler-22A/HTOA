@@ -114,7 +114,8 @@
                 <li class="layui-nav-item" id="leftLi_data">
                     <a href="#">文件管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">资料文档</a></dd>
+                        <dd><a data-url="/data/datadoc" data-id="3009" data-title="资料文档" class="site-demo-active" data-type="datadoc" style="cursor:pointer">资料文档</a></dd>
+
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="leftLi_systemReport">
