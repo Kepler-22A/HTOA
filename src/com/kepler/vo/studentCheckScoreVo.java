@@ -1,11 +1,14 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
+
 
 package com.kepler.vo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "studentCheckScore")
 public class studentCheckScoreVo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int studentCheckScoreId;
     private int templateId; //模板Id
     private int empId;   //关联班主任
@@ -13,15 +16,20 @@ public class studentCheckScoreVo {
     private int projectId; // 考评项目Id
     private int checkScore;  //得分
 
-    public studentCheckScoreVo() {
-    }
-
+    @Override
     public String toString() {
-        return "studentCheckScore{studentCheckScoreId=" + this.studentCheckScoreId + ", templateId=" + this.templateId + ", empId=" + this.empId + ", classId=" + this.classId + ", projectId=" + this.projectId + ", checkScore=" + this.checkScore + '}';
+        return "studentCheckScoreVo{" +
+                "studentCheckScoreId=" + studentCheckScoreId +
+                ", templateId=" + templateId +
+                ", empId=" + empId +
+                ", classId=" + classId +
+                ", projectId=" + projectId +
+                ", checkScore=" + checkScore +
+                '}';
     }
 
     public int getStudentCheckScoreId() {
-        return this.studentCheckScoreId;
+        return studentCheckScoreId;
     }
 
     public void setStudentCheckScoreId(int studentCheckScoreId) {
@@ -29,7 +37,7 @@ public class studentCheckScoreVo {
     }
 
     public int getTemplateId() {
-        return this.templateId;
+        return templateId;
     }
 
     public void setTemplateId(int templateId) {
@@ -37,7 +45,7 @@ public class studentCheckScoreVo {
     }
 
     public int getEmpId() {
-        return this.empId;
+        return empId;
     }
 
     public void setEmpId(int empId) {
@@ -45,7 +53,7 @@ public class studentCheckScoreVo {
     }
 
     public int getClassId() {
-        return this.classId;
+        return classId;
     }
 
     public void setClassId(int classId) {
@@ -53,7 +61,7 @@ public class studentCheckScoreVo {
     }
 
     public int getProjectId() {
-        return this.projectId;
+        return projectId;
     }
 
     public void setProjectId(int projectId) {
@@ -61,7 +69,7 @@ public class studentCheckScoreVo {
     }
 
     public int getCheckScore() {
-        return this.checkScore;
+        return checkScore;
     }
 
     public void setCheckScore(int checkScore) {

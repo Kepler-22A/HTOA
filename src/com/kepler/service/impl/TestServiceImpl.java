@@ -65,12 +65,14 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
     @Override
     public int addExmaine(AuditModelVo a) {
-        return sqlUpdate("insert into AuditModel values('"+a.getAuditName()+"',"+a.getDepID()+",'"+a.getRemark()+"','"+a.getScores()+"')");
+        save(a);
+        return 1;
     }
 
     @Override
     public int addTemplate(TemplateVo t) {
-        return sqlUpdate("insert into template values("+t.getDepId()+","+t.getEmpId()+",'"+t.getRemark()+"','"+t.getTemplateName()+"','"+t.getTemplateTime()+"','"+t.getTemplateType()+"')");
+        save(t);
+        return 1;
     }
 
     @Override
@@ -103,7 +105,8 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
     @Override
     public int addCheckResult(checkResultVo r) {
-        return sqlUpdate("insert into checkResult values('"+r.getGrade()+"',"+r.getMax()+","+r.getMin()+",'"+r.getRemark()+"',"+r.getTemplateId()+")");
+        save(r);
+        return 1;
     }
 
     @Override
@@ -133,12 +136,12 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
     @Override
     public String selectTeacher(int stuId) {
-        return executeStringSQL("select empName from empVo where empId =(select c.empId from classTeacher c LEFT JOIN Student s on s.clazz = c.classId where c.classId = (select clazz from Student where Studid = "+stuId+"))");
+        return executeStringSQL("select empName from empVo where empId =(select c.empId from classTeacher c where c.classId = (select clazz from Student where Studid = "+stuId+"))");
     }
 
     @Override
     public int selectTeacherId(int stuId) {
-        return executeIntSQL("select c.empId from classTeacher c LEFT JOIN Student s on s.clazz = c.classId where c.classId = (select clazz from Student where Studid = "+stuId+")");
+        return executeIntSQL("select c.empId from classTeacher c where  c.classId = (select clazz from Student where Studid = "+stuId+")");
     }
 
     @Override
@@ -149,6 +152,12 @@ public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int selectDepId() {
         return executeIntSQL("select depId from template where openCheck = 2");
+    }
+
+    @Override
+    public int addMark(studentCheckScoreVo scoreVo) {
+        save(scoreVo);
+        return 1;
     }
 
     @Override
