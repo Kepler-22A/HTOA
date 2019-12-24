@@ -331,6 +331,7 @@ public class StundetContorller {
     }
     //删除学生
     @RequestMapping(value = "/delstudent/{Studid}")
+    @ResponseBody
     public void delstudent(@PathVariable(value = "Studid")int Studid,StudentVo vo){
         vo.setStudid(Studid);
         //再删除考试成绩和答辩成绩
@@ -485,6 +486,7 @@ public class StundetContorller {
     }
     //删除学生
     @RequestMapping(value = "/delstudentClassID/{classid}")
+    @ResponseBody
     public String delstudentClassID(@PathVariable(value = "classid")int Studid,StudentClassVo vo){
         vo.setClassid(Studid);
         sts.deleStudentClassTeacherDatas(vo);

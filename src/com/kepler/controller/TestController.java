@@ -435,26 +435,24 @@ public class TestController {//登录  考核管理！！
      * 开启考评！！！！
      */
 
-    @RequestMapping("/openCheck/{templateId}/{depName}")
+    @RequestMapping("/openCheck/{templateId}/{depName}") //开启考评
     public void openCheck(HttpSession session,@PathVariable(value = "templateId")Integer templateId,@PathVariable(value = "depName")String depName){
         System.out.println("进入开启考评！！"+templateId+",,"+depName);
         session.setAttribute("depName",depName);
         int i = service.update(templateId);
         if(i>0){
             System.out.println("开启考评成功！！");
-            if("教研部".equals(depName)){  //是否为教研部  是则开启学生评分
-
-            }
         }
     }
+
     @RequestMapping("/table4") //获取开启考评的模板数据！！
     public void table4(HttpServletResponse response ,HttpSession session) throws IOException {
         response.setCharacterEncoding("utf-8");
         List list = new ArrayList();
         //只有开启的教研部考评才会显示
         if(session.getAttribute("studentId") != null){
-            String depName = (String) session.getAttribute("depName");
-            if("教研部".equals(depName)){
+            int depId = service.selectDepId();
+            if(depId==2){
                 list = service.selectTable4();
             }
         }
@@ -477,4 +475,34 @@ public class TestController {//登录  考核管理！！
 
         System.out.println(json.toJSONString());
     }
+
+    @RequestMapping("/checkMark/{templateId}") //考评打分页
+    public String checkMark(@PathVariable(value = "templateId")Integer templateId ,HttpSession session){  //考评打分
+        List list = service.selectProject(templateId);
+        //获取classId
+        int  stuId = (int) session.getAttribute("studentId");
+        String teacher = service.selectTeacher(stuId);//查出班主任
+        session.setAttribute("teacher",teacher);
+
+        System.out.println("考评数据:"+list);
+        session.setAttribute("project",list);
+        session.setAttribute("markTemplateId",templateId);
+        return "checkMark";
+    }
+
+    @RequestMapping("addMark")
+    public String addMark(studentCheckScoreVo scoreVo,HttpSession session){
+        int  stuId = (int) session.getAttribute("studentId");
+
+        int teacherId = service.selectTeacherId(stuId);//查出班主任Id
+        int stuclassId  = service.selectStuClassId(stuId);
+        int markTemplateId = (int) session.getAttribute("markTemplateId");
+        System.out.println("mark:"+teacherId+";;"+stuclassId+";;"+markTemplateId+";;"+scoreVo.getProjectId()+";;"+scoreVo.getCheckScore());
+
+        return "checkTask";
+    }
+
+
+
 }
+

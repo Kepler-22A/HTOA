@@ -70,6 +70,10 @@
         }
         function guanbi() {
             layer.closeAll();
+            $("#courseName").val("")
+            $("#remark").val("")
+            $("#courseName").val("")
+            $("#hidden").val("")
         }
 
     </script>

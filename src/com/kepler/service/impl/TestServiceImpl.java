@@ -132,6 +132,26 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public String selectTeacher(int stuId) {
+        return executeStringSQL("select empName from empVo where empId =(select c.empId from classTeacher c LEFT JOIN Student s on s.clazz = c.classId where c.classId = (select clazz from Student where Studid = "+stuId+"))");
+    }
+
+    @Override
+    public int selectTeacherId(int stuId) {
+        return executeIntSQL("select c.empId from classTeacher c LEFT JOIN Student s on s.clazz = c.classId where c.classId = (select clazz from Student where Studid = "+stuId+")");
+    }
+
+    @Override
+    public int selectStuClassId(int stuId) {
+        return executeIntSQL("select clazz from Student where Studid = "+stuId+"");
+    }
+
+    @Override
+    public int selectDepId() {
+        return executeIntSQL("select depId from template where openCheck = 2");
+    }
+
+    @Override
     public int update(int templateId) {
         return sqlUpdate("update template set openCheck=2 where templateId="+templateId+" ");
     }
