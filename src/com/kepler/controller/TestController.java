@@ -327,6 +327,8 @@ public class TestController {//登录  考核管理！！
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         templateVo.setTemplateTime(format.format(date));
 
+        templateVo.setOpenCheck(1);
+
         int i = service.addTemplate(templateVo);
         if(i>0){
             //查出模板Id
@@ -446,13 +448,17 @@ public class TestController {//登录  考核管理！！
     }
 
     @RequestMapping("/table4") //获取开启考评的模板数据！！
-    public void table4(HttpServletResponse response ,HttpSession session) throws IOException {
+    public void table4(HttpServletResponse response ,HttpSession session) throws Exception {
         response.setCharacterEncoding("utf-8");
         List list = new ArrayList();
         //只有开启的教研部考评才会显示
         if(session.getAttribute("studentId") != null){
             int depId = service.selectDepId();
-            if(depId==2){
+           int key = 0 ;
+            if (session.getAttribute("key") != null){
+                 key = (int) session.getAttribute("key");
+            }
+            if(depId==2 &&key!=2){
                 list = service.selectTable4();
             }
         }
@@ -491,15 +497,31 @@ public class TestController {//登录  考核管理！！
     }
 
     @RequestMapping("addMark")
-    public String addMark(studentCheckScoreVo scoreVo,HttpSession session){
+    public String addMark(studentCheckScoreVo scoreVo,HttpSession session,
+        @RequestParam(value = "projectId", required = false) int[] projectId,
+        @RequestParam(value = "checkScore", required = false) int[] checkScore){
         int  stuId = (int) session.getAttribute("studentId");
 
         int teacherId = service.selectTeacherId(stuId);//查出班主任Id
         int stuclassId  = service.selectStuClassId(stuId);
         int markTemplateId = (int) session.getAttribute("markTemplateId");
-        System.out.println("mark:"+teacherId+";;"+stuclassId+";;"+markTemplateId+";;"+scoreVo.getProjectId()+";;"+scoreVo.getCheckScore());
 
-        return "checkTask";
+        for(int i = 0,len = projectId.length ; i<len ; i++){
+            System.out.println("进入第"+i+"次");
+            scoreVo.setClassId(stuclassId);
+            scoreVo.setEmpId(teacherId);
+            scoreVo.setTemplateId(markTemplateId);
+            scoreVo.setProjectId(projectId[i]);
+            scoreVo.setCheckScore(checkScore[i]);
+            int t= service.addMark(scoreVo);
+            if(i==len-1){
+                int key = 2 ;
+                session.setAttribute("key",key);
+                System.out.println("成功打分！！");
+                return "checkTask";
+            }
+        }
+        return "checkMark";
     }
 
 

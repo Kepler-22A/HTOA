@@ -1,10 +1,6 @@
 package com.kepler.service;
 
-import com.kepler.vo.AuditModelVo;
-import com.kepler.vo.TemplateVo;
-import com.kepler.vo.checkProjectVo;
-import com.kepler.vo.checkStepVo;
-import com.kepler.vo.checkResultVo;
+import com.kepler.vo.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -42,6 +38,7 @@ public interface TestService {
     int selectTeacherId(int stuId);//查出班主任Id
     int selectStuClassId(int stuId);//查出班级Id
     int selectDepId();
+    int addMark(studentCheckScoreVo scoreVo);
 
     //判断登陆这个账号的人是憨憨老师还是帅气学生
     public int OKAccount(String account,String pwd);

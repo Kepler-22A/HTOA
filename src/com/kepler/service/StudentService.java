@@ -126,4 +126,16 @@ public interface StudentService {
     public void updateCourseVo(CourseVo vo);
     //删除课程类别信息
     public void deleteCourseVo(CourseVo vo);
+    //查询试讲培训
+    public List<TrialVo> selectTrial();
+    //查询课程名称
+    public List<CourseVo> selectCouresName();
+    //新增试讲培训
+    public void addTrial(TrialVo vo);
+    //根据id查询出试讲培训
+    public List selectTrialID(int id);
+    //修改试讲培训
+    public void updateTrialID(TrialVo vo);
+    //删除试讲培训
+    public void delectTrialID(TrialVo vo);
 }

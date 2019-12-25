@@ -16,7 +16,7 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 <body>
-<from id="markFrom" method="post">
+<form id="markFrom" method="post" action="/Controller/addMark"  >
     <table class="layui-table">
         <thead>
         <tr>
@@ -41,19 +41,18 @@
         </tr>
         </c:forEach>
     </table>
-    <button type="button" class="layui-btn layui-btn-normal" onclick="addMark()" >提交</button>
+    <button type="submit" class="layui-btn layui-btn-normal" >提交</button>
     <button type="button" class="layui-btn layui-btn-normal" >返回</button>
-</from>
+</form>
 <script>
     function addMark() {
         $.ajax({
             url:'/Controller/addMark'
             ,dataType:'json'
             ,type:'POST'
-            ,data:$('#markFrom').serialize(),
+             ,data:$('#markFrom').serialize(),
             success: function (result) {
-                console.log(result);//打印服务端返回的数据(调试用)
-                if (result.resultCode == 200) {
+                if (result.success) {
                     layer.msg("成功添加");
                 };
             },

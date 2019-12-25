@@ -76,7 +76,7 @@
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentClassFenPei" data-id="25" data-title="班级分配"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">班级分配</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/SelectclassType" data-id="26" data-title="课程类别"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">课程类别</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/course" data-id="27" data-title="课程管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">课程管理</a></dd>
-                        <dd><a href="javascript:;">试讲培训</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/Trial" data-id="28" data-title="试讲培训"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">试讲培训</a></dd>
                         <dd><a href="javascript:;">值班管理</a></dd>
                     </dl>
                 </li>
