@@ -136,4 +136,7 @@ public interface SystemSetService {
     public void AddMessage(FeedbackMsgVo vo);
     //根据问题id查找对应的评论
     public List<FeedbackMsgVo> selMessageById(int feedbackId);
+
+    ////-----------------附属：宿舍管理.查询宿舍学生-----------------------
+    public List selHourStudent(String huorName);
 }

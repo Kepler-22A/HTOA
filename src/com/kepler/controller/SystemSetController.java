@@ -675,4 +675,18 @@ public String feedback(){
         return "feedbackMessage";
     }
 
+
+    //--------------------------------------附属：学生宿舍.查看宿舍学生---------------------------------------------------------
+    @RequestMapping("/selHuorStudent")
+    public void selHuorStudent(String huorName,HttpServletResponse response)throws IOException{
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List sum = sys.selHourStudent(huorName);
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
 }

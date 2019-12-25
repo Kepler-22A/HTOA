@@ -20,94 +20,18 @@
     <script src="${pageContext.request.contextPath}/layui/lay/modules/layer.js" charset="utf-8"></script>
     <script>
     </script>
-    <script type="text/javascript">
-        //添加
-        function add() {
-            $("#test").attr("action","${pageContext.request.contextPath}/student/addhour");
-            document.getElementById("test").reset();
-            $("#hourid").val(0);
-            layer.open({
-                type: 1,
-                title:"新增",
-                area:['400px','360px'],
-                content: $("#test"),
-                closeBtn :0, //隐藏弹出层的关闭按钮
-                yes:function(index,layero){
-                }
-            });
-
-        }
-        //修改
-        function  update(hourid) {
-
-            $.post("${pageContext.request.contextPath}/student/selStudnetAddhourById",{id : hourid},function (d) {
-                $("#test").attr("action","${pageContext.request.contextPath}/student/updateHour/" + d.studentHour.hourid);
-                $("#hourid").val(d.studentHour.hourid);
-                $("#huoeIddsc").val(d.studentHour.huoeIddsc);
-                $("#floorId").val(d.studentHour.floorId);
-                $("#huorName").val(d.studentHour.huorName);
-                $("#numberBeds").val(d.studentHour.numberBeds);
-                $("#addr").val(d.studentHour.addr);
-            },"json");
-            layer.open({
-                type: 1,
-                title:"修改",
-                area:['400px','360px'],
-                content: $("#test"),
-                closeBtn :0, //隐藏弹出层的关闭按钮
-                yes:function(index,layero){
-                }
-            });
-        }
-        //删除
-        function  delhour(hourid) {
-            layer.confirm('是否要删除？', {
-                icon:3,
-                btn: ['确认','取消'] //按钮
-            }, function(){
-                $.post("${pageContext.request.contextPath}/student/delhour",{hourid:hourid},
-                    function (data) {
-                        $(".layui-laypage-btn")[0].click();  //  局部刷新
-                        //parent.location.reload();  //整体刷新
-                    });
-                layer.msg('已删除', {
-                    icon: 1,
-                    time:2000
-                });
-
-            }, function(){
-                layer.msg('已取消', {
-                    icon:0,
-                    time: 2000 //20s后自动关闭
-                    //btn: ['明白了', '知道了']
-                });
-
-        }
-
-        //关闭
-        function guanbi() {
-
-
-           // parent.location.reload();
-            url:'${pageContext.request.contextPath}/student/studenthuor'
-            $("#addfloor").hide(); //jquery方式关闭
-            layer.close(layer.index);
-            // // 获得frame索引
-            // var index = parent.layer.getFrameIndex(window.name);
-            // //关闭当前frame
-            // parent.layer.close(index);
-            // window.parent.location.reload();
-            // parent.location.reload();
-        }
-    </script>
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>宿舍管理</legend>
 </fieldset>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="add()" type="button" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i> 添加</button>
+<button onclick="add()" type="button" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i>添加</button>
 <div class="layui-form">
     <table id="studentHourTable" class="layui-table" align="center">
+    </table>
+</div >
+<div  class="layui-form" style="display: none">
+    <table id="Huorstudent" class="layui-table" align="center">
     </table>
 </div>
 <script>
@@ -147,6 +71,114 @@
         });
     });
 </script>
+<script type="text/javascript">
+    //添加
+    function add() {
+        $("#test").attr("action","${pageContext.request.contextPath}/student/addhour");
+        document.getElementById("test").reset();
+        $("#hourid").val(0);
+        layer.open({
+            type: 1,
+            title:"新增",
+            area:['400px','360px'],
+            content: $("#test"),
+            closeBtn :0, //隐藏弹出层的关闭按钮
+            yes:function(index,layero){
+            }
+        });
+
+    }
+    //修改
+    function  update(hourid) {
+
+        $.post("${pageContext.request.contextPath}/student/selStudnetAddhourById",{id : hourid},function (d) {
+            $("#test").attr("action","${pageContext.request.contextPath}/student/updateHour/" + d.studentHour.hourid);
+            $("#hourid").val(d.studentHour.hourid);
+            $("#huoeIddsc").val(d.studentHour.huoeIddsc);
+            $("#floorId").val(d.studentHour.floorId);
+            $("#huorName").val(d.studentHour.huorName);
+            $("#numberBeds").val(d.studentHour.numberBeds);
+            $("#addr").val(d.studentHour.addr);
+        },"json");
+        layer.open({
+            type: 1,
+            title:"修改",
+            area:['400px','360px'],
+            content: $("#test"),
+            closeBtn :0, //隐藏弹出层的关闭按钮
+            yes:function(index,layero){
+            }
+        });
+    }
+    //删除
+    function  delhour(hourid) {
+        layer.confirm('是否要删除？', {
+            icon:3,
+            btn: ['确认','取消'] //按钮
+        }, function(){
+            $.post("${pageContext.request.contextPath}/student/delhour",{hourid:hourid},
+                function (data) {
+                    $(".layui-laypage-btn")[0].click();  //  局部刷新
+                    //parent.location.reload();  //整体刷新
+                });
+            layer.msg('已删除', {
+                icon: 1,
+                time:2000
+            });
+
+        }, function(){
+            layer.msg('已取消', {
+                icon:0,
+                time: 2000 //20s后自动关闭
+                //btn: ['明白了', '知道了']
+            });
+
+        });
+
+        //查询宿舍学员
+        function selhuorStudent(huorName) {
+            layer.open({
+                title:'查看宿舍学员',
+                type:1,
+                content:$('#Huorstudent'),
+                area: ['600px', '550px'],
+                resize:false,
+            });
+            layui.use('table',function () {
+                var table =layui.table;
+                table.render({
+                    elem: "Huorstudent",
+                    height: 350,
+                    url: '${pageContext.request.contextPath}/system/selHuorStudent'+huorName,
+                    cols: [[
+                        {field: 'huorName', width: 250, title: '宿舍房号'}
+                        , {field: 'clazz', width: 250, title: '所在班级'}
+                        , {field: 'stuname', width: 240, title: '学生名字'}
+                        , {field: 'intrphone', width: 150, title: '电话'}
+                    ]]
+                    , page: true
+                });
+            })
+        }
+
+
+        //关闭
+        function guanbi() {
+
+
+            // parent.location.reload();
+            url:'${pageContext.request.contextPath}/student/studenthuor'
+            $("#addfloor").hide(); //jquery方式关闭
+            layer.close(layer.index);
+            // // 获得frame索引
+            // var index = parent.layer.getFrameIndex(window.name);
+            // //关闭当前frame
+            // parent.layer.close(index);
+            // window.parent.location.reload();
+            // parent.location.reload();
+        }
+    };
+</script>
 <script type="text/html" id="dus">
 
     <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="delhour('{{ d.hourid }}')">
@@ -155,7 +187,7 @@
     &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{ d.hourid }}')">
         <i class="layui-icon layui-icon-edit"></i>编辑
     </button>
-    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal">
+    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="selHuorStudent('{{d.huorName}}')">
         <i class="layui-icon layui-icon-search"></i>查看宿舍学员
     </button>
 </script>
