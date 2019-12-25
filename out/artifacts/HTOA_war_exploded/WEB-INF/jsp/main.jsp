@@ -76,7 +76,7 @@
                         <dd><a data-url="${pageContext.request.contextPath}/student/studentClassFenPei" data-id="25" data-title="班级分配"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">班级分配</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/SelectclassType" data-id="26" data-title="课程类别"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">课程类别</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/course" data-id="27" data-title="课程管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">课程管理</a></dd>
-                        <dd><a href="javascript:;">试讲培训</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/student/Trial" data-id="28" data-title="试讲培训"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">试讲培训</a></dd>
                         <dd><a href="javascript:;">值班管理</a></dd>
                     </dl>
                 </li>
@@ -115,7 +115,6 @@
                     <a href="#">文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/data/datadoc" data-id="3009" data-title="资料文档" class="site-demo-active" data-type="datadoc" style="cursor:pointer">资料文档</a></dd>
-
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="leftLi_systemReport">
@@ -146,9 +145,14 @@
                 <li class="layui-this">首页</li>
             </ul>
             <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">欢迎进入宏图办公！！</div>
+                <div class="layui-tab-item layui-show">
+                    <div style="width: 100%;height: 100%">
+                        <iframe style="width: 100%;height: 100%;border: none" src="${pageContext.request.contextPath}/emp/toMyPage"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
+        <div style="width: 18px;height: 18px;background-color: #fff;position: absolute;top: 20px;left: 56px;"></div>
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>

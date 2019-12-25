@@ -18,6 +18,7 @@
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
 </head>
 <body>
+<a class="layui-btn layui-btn-danger layui-btn-xs" href="javascript:history.back()">返回</a>
 <form action="${pageContext.request.contextPath}/leave/complete" theme="simple" method="post">
     <input type="hidden" name="holidayId" value="${holidayVo.holidayID}"/>
     <input type="hidden" name="taskId" value="${taskId}"/>

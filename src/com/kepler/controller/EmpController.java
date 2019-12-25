@@ -666,4 +666,12 @@ public class EmpController {//员工的Controller
         vo.setChatID(id);
         es.delectCharRecord(vo);
     }
+
+    /**
+     * 去我的页面
+     * ***/
+    @RequestMapping(value = "/toMyPage")
+    public String toMyPage(){
+        return "myPage";
+    }
 }

@@ -115,7 +115,6 @@
                     <a href="#">文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/data/datadoc" data-id="3009" data-title="资料文档" class="site-demo-active" data-type="datadoc" style="cursor:pointer">资料文档</a></dd>
-
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="leftLi_systemReport">
@@ -146,9 +145,14 @@
                 <li class="layui-this">首页</li>
             </ul>
             <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">欢迎进入宏图办公！！</div>
+                <div class="layui-tab-item layui-show">
+                    <div style="width: 100%;height: 100%">
+                        <iframe style="width: 100%;height: 100%;border: none" src="${pageContext.request.contextPath}/emp/toMyPage"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
+        <div style="width: 18px;height: 18px;background-color: #fff;position: absolute;top: 20px;left: 56px;"></div>
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
