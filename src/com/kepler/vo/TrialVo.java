@@ -12,7 +12,7 @@ public class TrialVo { //试讲与培训计划表
 	private Date date; //日期
 	private String time; //时间(星期一---星期日)
 	private int courseID; //关联课程/章节id
-	private int type; //授课类型(试讲/培训)
+	private int type; //授课类型(试讲/培训)      试讲1 培训2
 	private int empID; //员工id关联员工表(授课老师)
 	private String remark; //备注(针对课程重要内容)
 

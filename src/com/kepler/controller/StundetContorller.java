@@ -6,6 +6,7 @@ import com.kepler.service.EmpService;
 import com.kepler.service.StudentService;
 import com.kepler.vo.*;
 import org.activiti.engine.*;
+import org.apache.log4j.helpers.DateTimeDateFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -790,5 +791,84 @@ public class StundetContorller {
     public void deleteupdateCourser(@PathVariable(value = "classid")int classid,CourseVo vo){
         vo.setCourseID(classid);
         sts.deleteCourseVo(vo);
+    }
+    //跳转试讲培训
+    @RequestMapping(value = "/Trial")
+    public String Trial(){
+        return "Trial";
+    }
+    //查询试讲培训
+    @RequestMapping(value = "/selectTrial")
+    public void selectTrial(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list =  sts.selectTrial();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
+    //根据Ajax查询课程管理
+    @RequestMapping(value = "/CouresAjax")
+    public void CouresAjax(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt =  response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List<CourseVo> list = sts.selectCouresName();
+        jsonObject.put("name4",list);
+        pwt.print(jsonObject.toJSONString());
+        pwt.flush();
+        pwt.close();
+    }
+    //新增试讲培训
+    @RequestMapping(value = "/AddTrial")
+    public String AddTrial(TrialVo vo,String shijian2){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(shijian2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date = java.sql.Date.valueOf(shijian2);
+        vo.setDate(date);
+        sts.addTrial(vo);
+        return "redirect:/student/Trial";
+    }
+    //根据id查询出试讲培训
+    @RequestMapping(value = "/selectAddTrialID/{id}")
+    public void selectAddTrialID (@PathVariable(value = "id") int id,HttpServletResponse response) throws IOException {
+        List list = sts.selectTrialID(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("StudentVo",o);//返回的数据格式一定要和前端的格式一样
+        }
+        pwt.print(json.toJSONString());
+    }
+    //修改试讲培训
+    @RequestMapping(value = "/updateTrialID")
+    public String updateTrialID(TrialVo vo,String shijian2){
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = format.parse(shijian2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        date = java.sql.Date.valueOf(shijian2);
+        vo.setDate(date);
+        sts.updateTrialID(vo);
+        return "redirect:/student/Trial";
+    }
+    //根据id删除试讲培训
+    @RequestMapping(value = "/deleteTrialID/{classid}")
+    @ResponseBody
+    public void deleteTrialID(@PathVariable(value = "classid")int classid,TrialVo vo){
+        vo.setTrialID(classid);
+        sts.delectTrialID(vo);
     }
 }
