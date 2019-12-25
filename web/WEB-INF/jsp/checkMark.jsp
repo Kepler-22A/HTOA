@@ -29,7 +29,6 @@
         </tr>
         </thead>
         <tbody>
-
         <c:forEach items="${sessionScope.project}" var="p">
         <tr>
             <td><input type="hidden"  name="projectId" value="${p.projectId}">${p.projectId}</td>
@@ -50,7 +49,7 @@
             url:'/Controller/addMark'
             ,dataType:'json'
             ,type:'POST'
-             ,data:$('#markFrom').serialize(),
+            ,data:$('#markFrom').serialize(),
             success: function (result) {
                 if (result.success) {
                     layer.msg("成功添加");
