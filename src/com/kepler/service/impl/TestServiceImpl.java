@@ -65,7 +65,7 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
     @Override
     public List selectTable5() {
-        return sqlQuery("select c.templateId,e.empName,t.templateName from template t LEFT JOIN checkPeople c on t.templateId  = c.templateId LEFT JOIN empVo e on e.empId = c.empId where c.leadState = '待考评'");
+        return sqlQuery("select DISTINCT c.templateId,e.empName,t.templateName from template t LEFT JOIN checkPeople c on t.templateId  = c.templateId LEFT JOIN empVo e on e.empId = c.empId where c.leadState = '待考评'");
     }
 
     @Override
