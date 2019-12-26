@@ -149,7 +149,7 @@
     &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{ d.hourid }}')">
         <i class="layui-icon layui-icon-edit"></i>编辑
     </button>
-    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="selhuorStudent('{{d.huorName}}')">
+    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="selHuorStudent('{{d.huorName}}')">
         <i class="layui-icon layui-icon-search"></i>查看宿舍学员
     </button>
 </script>
@@ -231,12 +231,12 @@
         // parent.location.reload();
     }
     //查询宿舍学员
-    function selhuorStudent(huorName) {
+    function selHuorStudent(huorName) {
         layer.open({
             title:'查看宿舍学员',
             type:1,
             content:$('#hourstudent'),
-            area: ['600px', '550px'],
+            area: ['600px', '450px'],
             resize:false,
         });
         layui.use('table',function () {
@@ -244,12 +244,13 @@
             table.render({
                 elem: "#Huorstudent",
                 height: 350,
-                url: '${pageContext.request.contextPath}/system/selHuorStudent/'+huorName,
+                url: '${pageContext.request.contextPath}/system/selHuorStudent',
+                where: {name:huorName},
                 cols: [[
                     {field: 'huorName', width: 150, title: '宿舍房号'}
                     , {field: 'clazz', width: 150, title: '所在班级'}
                     , {field: 'stuname', width: 120, title: '学生名字'}
-                    , {field: 'intrphone', width: 180, title: '电话'}
+                    , {field: 'intrphone', width: 175, title: '电话'}
                 ]]
                 , page: true
             });

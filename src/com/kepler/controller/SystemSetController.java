@@ -677,14 +677,18 @@ public String feedback(){
 
 
     //--------------------------------------附属：学生宿舍.查看宿舍学生---------------------------------------------------------
-    @RequestMapping("/selHuorStudent/{name}")
+    /*@RequestMapping("/selHuorStudent/{name}")
     public void selHuorStudenta(HttpServletResponse response,@PathVariable(value = "name") String name)throws IOException{
-        name = new String(name.getBytes("ISO-8859-1"),"UTF-8");
+        name = new String(name.getBytes("ISO-8859-1"),"UTF-8");*/
+        @RequestMapping("/selHuorStudent")
+        public void selHuorStudenta(HttpServletResponse response, String name)throws IOException{
+            name = new String(name.getBytes("ISO-8859-1"),"UTF-8");
 //        System.out.println("selHuorStudent进来了！！！！！");
         response.setCharacterEncoding("utf-8");
         PrintWriter pwt = response.getWriter();
         JSONObject json = new JSONObject();
         List sum = sys.selHourStudent(name);
+            System.out.println(sum.size());
         json.put("code",0);
         json.put("count",sum.size());
         json.put("msg","");
