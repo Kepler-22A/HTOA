@@ -16,6 +16,7 @@ public interface TestService {
     public List selectTable2();
     public List selectTable3();
     public List selectTable4();
+    public List selectTable5();
     public int addExmaine(AuditModelVo auditModelVo);//增删考核
     public int addTemplate(TemplateVo templateVo);
     public int delete(int id);
@@ -30,6 +31,7 @@ public interface TestService {
     public List selectMyCheckProject(int templateId,int empId);//我的考评
     public int selectLead(int empId);
     public int update(int templateId);
+    int update2(int empId);
     List selectStepType(int templateId );
     /**
      * 考评打分
@@ -37,8 +39,15 @@ public interface TestService {
     String selectTeacher(int stuId);//查出班主任
     int selectTeacherId(int stuId);//查出班主任Id
     int selectStuClassId(int stuId);//查出班级Id
+    int  selectTeacherID(String empName);
     int selectDepId();
+    int selectDepId2(String empName);
+    int selectDepID(int template);
     int addMark(studentCheckScoreVo scoreVo);
+    int addLeadMark(leadCheckScoreVo leadCheckScoreVo);
+
+    List selectCheckPeople(int template);//查出考评人员
+    int addCheckPeople(checkPeopleVo peopleVo);
 
     //判断登陆这个账号的人是憨憨老师还是帅气学生
     public int OKAccount(String account,String pwd);

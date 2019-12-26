@@ -24,7 +24,7 @@
 
 </form>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="add()" >去打分</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="addTab('{{d.templateId}}')" >去打分</a>
 </script>
 <script>
     rederr();
@@ -36,6 +36,7 @@
                     elem: '#test'
                     , url: '/Controller/table4'
                     , cols: [[
+                        , {field: 'templateId', width: 150, title: '考核编号'}
                         , {field: 'templateName', width: 150, title: '考核名称'}
                         , {field: 'templateType', width: 150, title: '考核类型'}
                         , {
@@ -50,17 +51,22 @@
             );
         });
     }
-    function add() {
-        layer.open({
-            type: 1,
-            title:"教师考评打分",
-            area:['70%','70%'],
-            content: $("#projectFrom"),
-            closeBtn :0, //隐藏弹出层的关闭按钮
-            yes:function(index,layero){
-            }
-        });
+    //新增tab页
+    function addTab(templateId) {
+        parent.active.tabAdd("/Controller/checkMark/"+templateId, 47, "考评打分");
+        parent.active.tabChange(47)
     }
+    // function add() {
+    //     layer.open({
+    //         type: 1,
+    //         title:"教师考评打分",
+    //         area:['70%','70%'],
+    //         content: $("#projectFrom"),
+    //         closeBtn :0, //隐藏弹出层的关闭按钮
+    //         yes:function(index,layero){
+    //         }
+    //     });
+    // }
 </script>
 </body>
 

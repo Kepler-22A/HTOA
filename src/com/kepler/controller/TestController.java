@@ -246,6 +246,23 @@ public class TestController {//登录  考核管理！！
         System.out.println(json.toJSONString());
 
     }
+    @RequestMapping("/table5")
+    public void table5(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        List list = service.selectTable5();
+
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","");
+        json.put("count",list.size());
+        json.put("data",list);
+
+        PrintWriter out = response.getWriter();
+        out.print(json.toString());
+
+        System.out.println(json.toJSONString());
+
+    }
     @RequestMapping("/myCheck")
     public  String myCheck(){
         return "myCheck";
@@ -354,7 +371,7 @@ public class TestController {//登录  考核管理！！
                 System.out.println("项目新增成功！");
             }
         }
-        else if("setp".equals(type)){   //新增步骤！！
+        else if("setp".equals(type)){
             String setpType = setpvo.getCheckStepType();
             System.out.printf(beginTimeEX + "  " + endTimeEX);
             //转换时间
@@ -438,12 +455,25 @@ public class TestController {//登录  考核管理！！
      */
 
     @RequestMapping("/openCheck/{templateId}/{depName}") //开启考评
-    public void openCheck(HttpSession session,@PathVariable(value = "templateId")Integer templateId,@PathVariable(value = "depName")String depName){
+    public void openCheck(HttpSession session,@PathVariable(value = "templateId")Integer templateId
+            ,@PathVariable(value = "depName")String depName,checkPeopleVo peopleVo){
         System.out.println("进入开启考评！！"+templateId+",,"+depName);
         session.setAttribute("depName",depName);
+        List checkPeople = service.selectCheckPeople(templateId);
+
+        //int depId = service.selectDepID(templateId);
         int i = service.update(templateId);
         if(i>0){
-            System.out.println("开启考评成功！！");
+            for(int t = 0,len =checkPeople.size();t<len ;t++){
+                peopleVo.setTemplateId(templateId);
+                String empId = (checkPeople.get(t) + "").substring(7,(checkPeople.get(t) + "").length() - 1);
+                peopleVo.setEmpId(Integer.parseInt(empId));
+                peopleVo.setLeadState("待考评");
+                service.addCheckPeople(peopleVo);
+                if (t == checkPeople.size()-1) {
+                    System.out.println("开启考评成功！！");
+                }
+            }
         }
     }
 
@@ -466,6 +496,7 @@ public class TestController {//登录  考核管理！！
         else if(session.getAttribute("empId") !=null){
             int empId= (int) session.getAttribute("empId");
             int leadEmpId = service.selectLead(empId);
+
             if(empId ==leadEmpId){
                 list = service.selectTable4();
             }
@@ -485,40 +516,84 @@ public class TestController {//登录  考核管理！！
     @RequestMapping("/checkMark/{templateId}") //考评打分页
     public String checkMark(@PathVariable(value = "templateId")Integer templateId ,HttpSession session){  //考评打分
         List list = service.selectProject(templateId);
-        //获取classId
-        int  stuId = (int) session.getAttribute("studentId");
-        String teacher = service.selectTeacher(stuId);//查出班主任
-        session.setAttribute("teacher",teacher);
-
+        //学生
+        if(session.getAttribute("studentId") !=null) {
+            //获取classId
+            int stuId = (int) session.getAttribute("studentId");
+            String teacher = service.selectTeacher(stuId);//查出班主任
+            session.setAttribute("teacher",teacher);
+        }
+        //领导
+        else if(session.getAttribute("empId") !=null){
+            int empId = (int) session.getAttribute("empId");
+            session.setAttribute("empId",empId);
+            return "checkPeople";
+        }
         System.out.println("考评数据:"+list);
-        session.setAttribute("project",list);
         session.setAttribute("markTemplateId",templateId);
+        session.setAttribute("project",list);
         return "checkMark";
     }
 
-    @RequestMapping("addMark")
-    public String addMark(studentCheckScoreVo scoreVo,HttpSession session,
+    @RequestMapping("leadCheckMark/{templateId}/{empName}")  //领导打分页
+    public String  leadCheckMark(@PathVariable(value = "templateId")Integer templateId,@PathVariable(value = "empName")String empName  ,HttpSession session) throws UnsupportedEncodingException {
+        empName = new String(empName.getBytes("ISO-8859-1"),"UTF-8");
+        List list = service.selectProject(templateId);
+        System.out.println(empName);
+        session.setAttribute("teacher",empName);
+        session.setAttribute("markTemplateId",templateId);
+        session.setAttribute("project",list);
+        return "checkMark";
+    }
+    @RequestMapping("addMark")  //打分！！！！！
+    public String addMark(studentCheckScoreVo scoreVo,leadCheckScoreVo leadCheckScoreVo,HttpSession session,
         @RequestParam(value = "projectId", required = false) int[] projectId,
         @RequestParam(value = "checkScore", required = false) int[] checkScore){
-        int  stuId = (int) session.getAttribute("studentId");
 
-        int teacherId = service.selectTeacherId(stuId);//查出班主任Id
-        int stuclassId  = service.selectStuClassId(stuId);
-        int markTemplateId = (int) session.getAttribute("markTemplateId");
+        //学生打分
+        if(session.getAttribute("studentId") !=null){
+            int  stuId = (int) session.getAttribute("studentId");
 
-        for(int i = 0,len = projectId.length ; i<len ; i++){
-            System.out.println("进入第"+i+"次");
-            scoreVo.setClassId(stuclassId);
-            scoreVo.setEmpId(teacherId);
-            scoreVo.setTemplateId(markTemplateId);
-            scoreVo.setProjectId(projectId[i]);
-            scoreVo.setCheckScore(checkScore[i]);
-            int t= service.addMark(scoreVo);
-            if(i==len-1){
-                int key = 2 ;
-                session.setAttribute("key",key);
-                System.out.println("成功打分！！");
-                return "checkTask";
+            int teacherId = service.selectTeacherId(stuId);//查出班主任Id
+            int stuclassId  = service.selectStuClassId(stuId);
+            int markTemplateId = (int) session.getAttribute("markTemplateId");
+
+            for(int i = 0,len = projectId.length ; i<len ; i++){
+                System.out.println("进入第"+i+"次");
+                scoreVo.setClassId(stuclassId);
+                scoreVo.setEmpId(teacherId);
+                scoreVo.setTemplateId(markTemplateId);
+                scoreVo.setProjectId(projectId[i]);
+                scoreVo.setCheckScore(checkScore[i]);
+                int t= service.addMark(scoreVo);
+                if(i==len-1){
+                    int key = 2 ;
+                    session.setAttribute("key",key);
+                    System.out.println("成功打分！！");
+                    return "checkTask";
+                }
+            }
+        }
+        //领导打分
+        else if(session.getAttribute("empId")!=null){
+            int empId = service.selectTeacherID((String) session.getAttribute("teacher"));
+            int markTemplateId = (int) session.getAttribute("markTemplateId");
+            int depId = service.selectDepId2((String) session.getAttribute("teacher"));
+            for(int i = 0,len = projectId.length ; i<len ; i++){
+                System.out.println("进入第"+i+"次");
+                leadCheckScoreVo.setDepId(depId);
+                leadCheckScoreVo.setEmpId(empId);
+                leadCheckScoreVo.setTemplate(markTemplateId);
+                leadCheckScoreVo.setProjectId(projectId[i]);
+                leadCheckScoreVo.setCheckScore(checkScore[i]);
+                int t= service.addLeadMark(leadCheckScoreVo);
+                if(i==len-1){
+                    int y = service.update2(empId);
+                    if(y>0) {
+                        System.out.println("成功打分！！");
+                        return "checkPeople";
+                    }
+                }
             }
         }
         return "checkMark";

@@ -48,7 +48,7 @@
                         <dd><a data-url="/leave/toEmpApplyPage" data-id="128" data-title="员工请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工请假</a></dd>
                         <dd><a data-url="/leave/toStuApplyPage" data-id="130" data-title="学生请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生请假</a></dd>
                         <dd><a data-url="/emp//toMyWeeklyPage" data-id="129" data-title="我的周报"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的周报</a></dd>
-                        <dd><a href="javascript:;">考勤管理</a></dd>
+                        <dd><a data-url="/emp/Checking" data-id="132" data-title="考勤管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">考勤管理</a></dd>
                         <dd><a href="javascript:;">离职申请</a></dd>
                     </dl>
                 </li>
@@ -115,7 +115,6 @@
                     <a href="#">文件管理</a>
                     <dl class="layui-nav-child">
                         <dd><a data-url="/data/datadoc" data-id="3009" data-title="资料文档" class="site-demo-active" data-type="datadoc" style="cursor:pointer">资料文档</a></dd>
-
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="leftLi_systemReport">
@@ -146,9 +145,14 @@
                 <li class="layui-this">首页</li>
             </ul>
             <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">欢迎进入宏图办公！！</div>
+                <div class="layui-tab-item layui-show">
+                    <div style="width: 100%;height: 100%">
+                        <iframe style="width: 100%;height: 100%;border: none" src="${pageContext.request.contextPath}/emp/toMyPage"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
+        <div style="width: 18px;height: 18px;background-color: #fff;position: absolute;top: 20px;left: 56px;"></div>
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>

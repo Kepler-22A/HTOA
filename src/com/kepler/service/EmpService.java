@@ -49,4 +49,5 @@ public interface EmpService {
     List selectCharRecord(int id);//根据id查询出谈心记录
     void updateCharRecord(ChatRecordVo vo);//修改谈心记录
     void delectCharRecord(ChatRecordVo vo);//删除谈心记录
+    List selectChecking();//查询出考勤管理
 }

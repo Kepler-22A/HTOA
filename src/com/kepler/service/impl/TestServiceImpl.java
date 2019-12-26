@@ -64,6 +64,11 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public List selectTable5() {
+        return sqlQuery("select DISTINCT c.templateId,e.empName,t.templateName from template t LEFT JOIN checkPeople c on t.templateId  = c.templateId LEFT JOIN empVo e on e.empId = c.empId where c.leadState = '待考评'");
+    }
+
+    @Override
     public int addExmaine(AuditModelVo a) {
         save(a);
         return 1;
@@ -150,8 +155,23 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public int selectTeacherID(String empName) {
+        return executeIntSQL("select empId from empVo where  empName = '"+empName+"'");
+    }
+
+    @Override
     public int selectDepId() {
         return executeIntSQL("select depId from template where openCheck = 2");
+    }
+
+    @Override
+    public int selectDepId2(String empName) {
+        return executeIntSQL("select depId from empVo where  empName = '"+empName+"'");
+    }
+
+    @Override
+    public int selectDepID(int templateId) {
+        return executeIntSQL("select depId from template where templateId = "+templateId+"");
     }
 
     @Override
@@ -161,8 +181,30 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public int addLeadMark(leadCheckScoreVo leadCheckScoreVo) {
+        save(leadCheckScoreVo);
+        return 1;
+    }
+
+    @Override
+    public List selectCheckPeople(int template) {
+        return sqlQuery("select empId from empVo where depId = (select depId from template where templateId = "+template+")");
+    }
+
+    @Override
+    public int addCheckPeople(checkPeopleVo peopleVo) {
+        save(peopleVo);
+        return 1;
+    }
+
+    @Override
     public int update(int templateId) {
         return sqlUpdate("update template set openCheck=2 where templateId="+templateId+" ");
+    }
+
+    @Override
+    public int update2(int empId) {
+        return sqlUpdate("update  checkPeople set leadState = '已考评' where empId = "+empId+"");
     }
 
     @Override

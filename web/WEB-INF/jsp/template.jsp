@@ -95,8 +95,8 @@
                     elem: '#test'
                     , url: '/Controller/table3'
                     , cols: [[
-                        {field: 'templateId', width: 60, title: '模板Id'}
-                        , {field: 'templateName', width: 100, title: '考核名称'}
+                        {field: 'templateId', width: 100, title: '模板Id'}
+                        , {field: 'templateName', width: 150, title: '考核名称'}
                         , {field: 'depName', width: 100, title: '考核部门'}
                         , {field: 'templateType', width: 100, title: '考核类型'}
                         , {field: 'empName', width: 100, title: '创建人'}

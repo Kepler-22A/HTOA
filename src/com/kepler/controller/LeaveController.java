@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -487,6 +488,43 @@ public class LeaveController {
     }
 
     /**
+     * 查看共有多少个emp请假任务等你审
+     * */
+    @RequestMapping(value = "/selMyTaskNumber")
+    @ResponseBody
+    public void selMyTaskNumber(HttpSession session,HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        System.out.println(session.getAttribute("empId"));
+
+        String actorId = session.getAttribute("empId").toString();
+        //根据用户名称去查询任务列表(act_ru_task)
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(actorId).list();
+
+        int count = 0;
+
+        for (Object o : taskList){
+            Task task = (Task)o;
+
+            if ("部门主管审批".equals(task.getName()) || "校长审批".equals(task.getName())){
+                count += 1;
+            }
+        }
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("count",count);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 查看emp请假详情
      * */
     @RequestMapping("/taskDetail/{taskId}/{instId}")
@@ -867,6 +905,45 @@ public class LeaveController {
         }
     }
 
+
+    /**
+     * 查看共有多少个emp请假任务等你审
+     * */
+    @RequestMapping(value = "/selMyTaskStudentNumber")
+    @ResponseBody
+    public void selMyTaskStudentNumber(HttpSession session,HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        System.out.println(session.getAttribute("empId"));
+
+        String actorId = session.getAttribute("empId").toString();
+        //根据用户名称去查询任务列表(act_ru_task)
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(actorId).list();
+
+        int count = 0;
+
+        for (Object o : taskList){
+            Task task = (Task)o;
+
+            if ("班主任审批".equals(task.getName()) || "校长审批".equals(task.getName())){
+                count += 1;
+            }
+        }
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("count",count);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /**
      * 审批
      */
@@ -921,4 +998,12 @@ public class LeaveController {
         return "redirect:/leave/toMyTaskStudentPage";
 
     }
+
+    /*********************************************离职申请***************************************/
+
+    @RequestMapping(value = "/toDimissionPage")
+    public String toDimissionPage(){
+        return "dimission";
+    }
+
 }
