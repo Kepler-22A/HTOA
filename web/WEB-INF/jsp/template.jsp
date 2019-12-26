@@ -51,6 +51,7 @@
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="del('{{d.templateId}}')">删除</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="openCheck('{{d.templateId}}','{{d.depId}}')">开启考评</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="closeCheck('{{d.templateId}}','{{d.depId}}')">关闭考评</a>
 </script>
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
@@ -102,7 +103,7 @@
                         , {field: 'empName', width: 100, title: '创建人'}
                         , {field: 'templateTime', width: 180, title: '创建日期', templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
                         , {field: 'remark', title: '备注', Width: 350}
-                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
+                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 300}
                     ]]
                     , page: true
                 }
@@ -191,6 +192,26 @@
             });
         });
     }
+    ///关闭考评
+    function closeCheck(templateId,depId) {
+        console.log(templateId,depId);
+        layer.confirm('是否关闭考评？', {
+            icon:3,
+            btn: ['确认','取消'] //按钮
+        }, function(){
+            $.post('<%=request.getContextPath()%>/Controller/closeCheck/'+templateId+"/"+depId,{},);
+            layer.msg('已关闭', {
+                icon: 1,
+                time:2000
+            });
+        }, function(){
+            layer.msg('已取消', {
+                icon:0,
+                time: 2000 //20s后自动关闭
+            });
+        });
+    }
+
 </script>
 </body>
 </html>

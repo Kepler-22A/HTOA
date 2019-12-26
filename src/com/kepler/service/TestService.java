@@ -28,15 +28,30 @@ public interface TestService {
     public List selectProject(int templateId);//查看项目
     public List selectSetp(int templateId);
     public  List selectResult(int templateId);
-    public List selectMyCheckProject(int templateId,int empId);//我的考评
+
+    /**
+     * 我的考评
+     *
+     */
+    public  List selectOverCheck();//查询已结束的考评
+    public List selectMyCheck(int templateId,int empId);
+    public List selectMyCheckProject(int template,int empId); //根据模板Id和empId 查询总得分
     public int selectLead(int empId);
     public int update(int templateId);
     int update2(int empId);
+    int updateClose(int template);
     List selectStepType(int templateId );
+    int deletePeople(int templateId);
+    int selectScore(int empId);
+    int selectScore2(int empId);
+    float selectWeight(int templateId);
+    float selectWeight2(int templateId);
+    int addCheckScore(checkScoerVo scoreVo );
     /**
      * 考评打分
      */
     String selectTeacher(int stuId);//查出班主任
+    String selectTeacher2(int stuId); //查出任课老师
     int selectTeacherId(int stuId);//查出班主任Id
     int selectStuClassId(int stuId);//查出班级Id
     int  selectTeacherID(String empName);

@@ -10,9 +10,9 @@ public class checkScoerVo {//考评各项成绩表！！
     private int checkScoerId ;
     private int empId ;//
     private int templateId;//模板Id
-    private int studentComment ; //学生评分
-    private int leadComment ;//领导评分
-    private int total ;//总得分
+    private float studentComment ; //学生评分
+    private float leadComment ;//领导评分
+    private float total ;//总得分
 
     @Override
     public String toString() {
@@ -42,28 +42,35 @@ public class checkScoerVo {//考评各项成绩表！！
         this.empId = empId;
     }
 
+    public int getTemplateId() {
+        return templateId;
+    }
 
-    public int getStudentComment() {
+    public void setTemplateId(int templateId) {
+        this.templateId = templateId;
+    }
+
+    public float getStudentComment() {
         return studentComment;
     }
 
-    public void setStudentComment(int studentComment) {
+    public void setStudentComment(float studentComment) {
         this.studentComment = studentComment;
     }
 
-    public int getLeadComment() {
+    public float getLeadComment() {
         return leadComment;
     }
 
-    public void setLeadComment(int leadComment) {
+    public void setLeadComment(float leadComment) {
         this.leadComment = leadComment;
     }
 
-    public int getTotal() {
+    public float getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 }
