@@ -25,12 +25,12 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>宿舍管理</legend>
 </fieldset>
-<button onclick="add()" type="button" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i>添加</button>
+<button onclick="add()" type="button" class="layui-btn layui-btn-normal" style="margin-left:30px"><i class="layui-icon layui-icon-add-1"></i>添加</button>
 <div class="layui-form">
     <table id="studentHourTable" class="layui-table" align="center">
     </table>
 </div >
-<div  class="layui-form" style="display: none">
+<div  id="hourstudent" class="layui-form" style="display: none">
     <table id="Huorstudent" class="layui-table" align="center">
     </table>
 </div>
@@ -132,51 +132,13 @@
                 time: 2000 //20s后自动关闭
                 //btn: ['明白了', '知道了']
             });
-
         });
 
-        //查询宿舍学员
-        function selhuorStudent(huorName) {
-            layer.open({
-                title:'查看宿舍学员',
-                type:1,
-                content:$('#Huorstudent'),
-                area: ['600px', '550px'],
-                resize:false,
-            });
-            layui.use('table',function () {
-                var table =layui.table;
-                table.render({
-                    elem: "Huorstudent",
-                    height: 350,
-                    url: '${pageContext.request.contextPath}/system/selHuorStudent'+huorName,
-                    cols: [[
-                        {field: 'huorName', width: 250, title: '宿舍房号'}
-                        , {field: 'clazz', width: 250, title: '所在班级'}
-                        , {field: 'stuname', width: 240, title: '学生名字'}
-                        , {field: 'intrphone', width: 150, title: '电话'}
-                    ]]
-                    , page: true
-                });
-            })
-        }
 
 
-        //关闭
-        function guanbi() {
 
 
-            // parent.location.reload();
-            url:'${pageContext.request.contextPath}/student/studenthuor'
-            $("#addfloor").hide(); //jquery方式关闭
-            layer.close(layer.index);
-            // // 获得frame索引
-            // var index = parent.layer.getFrameIndex(window.name);
-            // //关闭当前frame
-            // parent.layer.close(index);
-            // window.parent.location.reload();
-            // parent.location.reload();
-        }
+
     };
 </script>
 <script type="text/html" id="dus">
@@ -187,7 +149,7 @@
     &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{ d.hourid }}')">
         <i class="layui-icon layui-icon-edit"></i>编辑
     </button>
-    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="selHuorStudent('{{d.huorName}}')">
+    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="selhuorStudent('{{d.huorName}}')">
         <i class="layui-icon layui-icon-search"></i>查看宿舍学员
     </button>
 </script>
@@ -255,4 +217,44 @@
 </form>
 
 </body>
+<script type="text/javascript">
+    //关闭
+    function guanbi() {
+        // parent.location.reload();
+        $("#addfloor").hide(); //jquery方式关闭
+        layer.close(layer.index);
+        // // 获得frame索引
+        // var index = parent.layer.getFrameIndex(window.name);
+        // //关闭当前frame
+        // parent.layer.close(index);
+        // window.parent.location.reload();
+        // parent.location.reload();
+    }
+    //查询宿舍学员
+    function selhuorStudent(huorName) {
+        layer.open({
+            title:'查看宿舍学员',
+            type:1,
+            content:$('#hourstudent'),
+            area: ['600px', '550px'],
+            resize:false,
+        });
+        layui.use('table',function () {
+            var table =layui.table;
+            table.render({
+                elem: "#Huorstudent",
+                height: 350,
+                url: '${pageContext.request.contextPath}/system/selHuorStudent/'+huorName,
+                cols: [[
+                    {field: 'huorName', width: 150, title: '宿舍房号'}
+                    , {field: 'clazz', width: 150, title: '所在班级'}
+                    , {field: 'stuname', width: 120, title: '学生名字'}
+                    , {field: 'intrphone', width: 180, title: '电话'}
+                ]]
+                , page: true
+            });
+
+        })
+    }
+</script>
 </html>

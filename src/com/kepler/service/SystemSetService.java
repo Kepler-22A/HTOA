@@ -138,5 +138,5 @@ public interface SystemSetService {
     public List<FeedbackMsgVo> selMessageById(int feedbackId);
 
     ////-----------------附属：宿舍管理.查询宿舍学生-----------------------
-    public List selHourStudent(String huorName);
+    List selHourStudent(String huorName);
 }
