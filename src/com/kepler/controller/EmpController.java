@@ -674,4 +674,27 @@ public class EmpController {//员工的Controller
     public String toMyPage(){
         return "myPage";
     }
+
+    /*
+     * 考勤管理
+     * */
+    @RequestMapping(value = "/Checking")
+    public String Checking(){
+        return "Checking";
+    }
+    /*
+     * 查询考勤管理
+     * */
+    @RequestMapping(value = "/selectChecking")
+    public void selectChecking(HttpServletResponse response) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list = es.selectChecking();
+        jsonObject.put("code",0);
+        jsonObject.put("count",list.size());
+        jsonObject.put("msg","");
+        jsonObject.put("data",list);
+        ptw.print(jsonObject.toJSONString());
+    }
 }
