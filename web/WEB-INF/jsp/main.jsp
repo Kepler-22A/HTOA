@@ -48,7 +48,7 @@
                         <dd><a data-url="/leave/toEmpApplyPage" data-id="128" data-title="员工请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">员工请假</a></dd>
                         <dd><a data-url="/leave/toStuApplyPage" data-id="130" data-title="学生请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生请假</a></dd>
                         <dd><a data-url="/emp//toMyWeeklyPage" data-id="129" data-title="我的周报"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的周报</a></dd>
-                        <dd><a href="javascript:;">考勤管理</a></dd>
+                        <dd><a data-url="/emp/Checking" data-id="132" data-title="考勤管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">考勤管理</a></dd>
                         <dd><a href="javascript:;">离职申请</a></dd>
                     </dl>
                 </li>
