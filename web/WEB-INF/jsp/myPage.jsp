@@ -18,7 +18,7 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;border: none">
-    <legend>上班捞！不要眯梦捞！</legend>
+    <legend>上班捞！不要眯梦捞！<a class="layui-btn layui-btn-xs" onclick="reloadPage()">刷新数据</a></legend>
 </fieldset>
 
 <div style="width:450px;height: 350px;padding: 5px;background-color: rgb(65,111,177)">
@@ -38,31 +38,31 @@
                         </p>
                     </a>
                     <br>
-                    <a href="javasript:" style="text-decoration: none">
+                    <a href="javascript:" style="text-decoration: none">
                         <p id="dimissionCrossP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             未打卡待审批（<span id="dimissionCrossNumber">0</span>）
                         </p>
                     </a>
                     <br>
-                    <a href="javasript:" style="text-decoration: none">
+                    <a href="javascript:addTab('公告')" style="text-decoration: none">
                         <p id="noticeWaitP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             未读公告（<span id="noticeWaitNumber">0</span>）
                         </p>
                     </a>
                     <br>
-                    <a href="javasript:" style="text-decoration: none">
+                    <a href="javascript:addTab('邮件')" style="text-decoration: none">
                         <p id="emailWaitP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             未读邮件（<span id="emailWaitNumber">0</span>）
                         </p>
                     </a>
                     <br>
-                    <a href="javasript:" style="text-decoration: none">
+                    <a href="javascript:" style="text-decoration: none">
                         <p id="thisWooklyP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             本周工作周报（<span id="thisWooklyNumber">未完成</span>）&nbsp;&nbsp;<span style="font-size: 12px;color: red">周日17:00前提交</span>
                         </p>
                     </a>
                     <br>
-                    <a href="javasript:" style="text-decoration: none">
+                    <a href="javascript:" style="text-decoration: none">
                         <p id="moothCharRecordP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             月谈心记录（<span id="moothCharRecordNumber">0</span>）&nbsp;&nbsp;<span style="font-size: 12px;color: red">每月需完成5个</span>
                         </p>
@@ -74,7 +74,8 @@
 </div>
 </body>
 <script>
-<%--    获取员工请假待审核数--%>
+function reloadPage() {
+    <%--    获取员工请假待审核数--%>
     $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskNumber",dataType:'json'
         ,success:function (data) {
             $("#empLeavaCrossNumber").html(data.count);
@@ -90,6 +91,29 @@
             layer.msg("获取学生请假待审核数失败")
         }});
 
+//    获取未读公告数
+    $.ajax({url:"${pageContext.request.contextPath}/message/selNoticeReceiverNumber",dataType:'json'
+        ,success:function (data) {
+            $("#noticeWaitNumber").html(data.count);
+        },error:function () {
+            layer.msg("获取未读公告数失败")
+        }});
+
+    //    获取未读邮件数
+    $.ajax({url:"${pageContext.request.contextPath}/message/selEmailIsReadNotNumber",dataType:'json'
+        ,success:function (data) {
+            $("#emailWaitNumber").html(data.count);
+        },error:function () {
+            layer.msg("获取未读邮件数数失败")
+        }});
+
+
+}
+
+reloadPage();
+
+
+
 // 打开新tab的方法
     function addTab(type) {
         var url = "${pageContext.request.contextPath}/";
@@ -104,6 +128,14 @@
             url = "${pageContext.request.contextPath}/leave/toMyTaskStudentPage";
             id = 191;
             title = "学生请假审批"
+        }else if(type == '公告'){
+            url = "${pageContext.request.contextPath}/message/notice";
+            id = 192;
+            title = "公告"
+        }else if(type == '邮件'){
+            url = "${pageContext.request.contextPath}/message/toEmailPage";
+            id = 193;
+            title = "我的邮件"
         }
 
         parent.active.tabAdd(url,id,title);
