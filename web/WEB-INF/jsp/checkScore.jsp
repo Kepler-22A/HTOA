@@ -16,7 +16,7 @@
 </head>
 <body>
 <hr>
-    <table class="layui-hide" id="test" lay-filter="testTable"></table>
+<table class="layui-hide" id="test" lay-filter="testTable"></table>
 <script>
     layui.use('table', function () {
         var table = layui.table;
@@ -24,6 +24,7 @@
             {
                 elem: '#test'
                 , url: '/Controller/checkScore'
+                ,type:"post"
                 , cols: [[
                     , {field: 'templateName', width: 200, title: '考评名称'}
                     , {field: 'empName', width: 150, title: '考评人'}

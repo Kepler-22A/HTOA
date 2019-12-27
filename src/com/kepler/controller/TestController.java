@@ -275,9 +275,9 @@ public class TestController {//登录  考核管理！！
 
     @RequestMapping("/selectMyCheck") //考评结束显示数据！！
     public void selectMyCheck(HttpServletResponse response,HttpSession session) throws IOException {
-
+        response.setCharacterEncoding("utf-8");
         List list = new ArrayList();
-        if(session.getAttribute("studentId") != null){
+        if(session.getAttribute("empId") != null){
             list = service.selectOverCheck();
         }
         JSONObject json = new JSONObject();
@@ -298,12 +298,13 @@ public class TestController {//登录  考核管理！！
         return "checkScore";
     }
     @RequestMapping("checkScore")  //我的考评！！
-    public String checkScore(HttpServletResponse response,HttpSession session) throws IOException {
+    public void checkScore(HttpServletResponse response,HttpSession session) throws IOException {
+        response.setCharacterEncoding("utf-8");
         List list = new ArrayList();
         if(session.getAttribute("empId")!=null) {
+            System.out.println("进入！！");
             int empId = (int) session.getAttribute("empId");
             int templateId = (int) session.getAttribute("templateId");
-            //方法还没写
             list = service.selectMyCheck(templateId,empId); //查询我的考评数据
         }
         JSONObject json = new JSONObject();
@@ -316,7 +317,7 @@ public class TestController {//登录  考核管理！！
         out.print(json.toString());
 
         System.out.println(json.toJSONString());
-        return "checkScore";
+        //return "checkScore";
     }
 
     /**
@@ -536,11 +537,11 @@ public class TestController {//登录  考核管理！！
         }
         //只有开启有领导考评的指定的部门领导才会显示
         else if(session.getAttribute("empId") !=null){
-            System.out.println("领导！");
             int empId= (int) session.getAttribute("empId");
             int leadEmpId = service.selectLead(empId);
 
             if(empId ==leadEmpId){
+                System.out.println("领导！");
                 list = service.selectTable4();
             }
         }
