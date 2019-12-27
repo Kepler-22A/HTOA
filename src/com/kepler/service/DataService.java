@@ -1,6 +1,7 @@
 package com.kepler.service;
 
 import com.kepler.vo.DataDocVo;
+import com.kepler.vo.EnrollmentVo;
 
 import java.util.List;
 
@@ -18,4 +19,9 @@ public interface DataService {
     public DataDocVo findFile(Integer docId);
     //
     public void deleteFile(DataDocVo dataDocVO);
+    //查询数据
+    public List selEnrollData();
+
+    //添加
+    public void addEnrllor(EnrollmentVo vo);
 }

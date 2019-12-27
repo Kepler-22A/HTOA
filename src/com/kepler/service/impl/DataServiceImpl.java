@@ -3,6 +3,7 @@ package com.kepler.service.impl;
 import com.kepler.dao.BaseDao;
 import com.kepler.service.DataService;
 import com.kepler.vo.DataDocVo;
+import com.kepler.vo.EnrollmentVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +36,15 @@ public class DataServiceImpl extends BaseDao implements DataService {
     @Override
     public void deleteFile(DataDocVo dataDocVO) {
         delete(dataDocVO);
+    }
+
+    @Override
+    public List selEnrollData() {
+        return sqlQuery("select * from emrollment");
+    }
+
+    @Override
+    public void addEnrllor(EnrollmentVo vo) {
+        save(vo);
     }
 }

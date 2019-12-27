@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.kepler.dao.FileUpload;
 import com.kepler.service.DataService;
 import com.kepler.vo.DataDocVo;
+import com.kepler.vo.EnrollmentVo;
 import com.kepler.vo.empVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -115,6 +116,33 @@ public class DataController {
     public String delFile(DataDocVo docVo){
         DataDocVo db = ds.findFile(docVo.getDocId());
         ds.deleteFile(docVo);
+        return "success";
+    }
+
+
+//----------------------招生信息--------------------------------
+    @RequestMapping("/enrollment")
+    public String enrollment(){
+        return "enrollment";
+    }
+    @RequestMapping("/enrollmentdata")
+    public void enrollmentdata(HttpServletResponse response)throws IOException {
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        List sum = ds.selEnrollData();
+        json.put("code",0);
+        json.put("count",sum.size());
+        json.put("msg","");
+        json.put("data",sum);
+        pwt.print(json.toString());
+    }
+
+    //添加
+    @RequestMapping("/addenroll")
+
+    public String addenroll(EnrollmentVo vo){
+        ds.addEnrllor(vo);
         return "success";
     }
 }
