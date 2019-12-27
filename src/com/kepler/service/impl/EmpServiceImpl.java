@@ -302,6 +302,7 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     public void delectCharRecord(ChatRecordVo vo) {
         delete(vo);
     }
+
     @Override
     public List selectChecking() {
         return sqlQuery("select *,(select empName from empVo e where w.empId = e.empId) as empName from weekly w");

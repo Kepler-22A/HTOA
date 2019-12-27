@@ -45,7 +45,7 @@ public class DataController {
     @ResponseBody
     public String addFile(DataDocVo docVo, MultipartFile file, HttpServletRequest request){
         Map map = new HashMap();
-        String realPath =  request.getRealPath("");
+        String realPath =  request.getSession().getServletContext().getRealPath("");
         String dirPath = "F:\\T3\\HTOA\\web\\WEB-INF\\static\\file\\";
         //上传文件
         String fileName = FileUpload.upload(file,dirPath,request);
