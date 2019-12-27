@@ -11,7 +11,7 @@ public class StudentClassVo {
     private String classno;//班级编号 1
     private String className;//班级昵称1
     private int count;//班级人数1
-    private String teacher;//授课老师员工表外键1
+    private int teacher;//授课老师员工表外键1
     private String classTeacher;//班主任员工表外键1
     private int classType;//班级类别,关联班级类别表1
     private String remark;//备注1
@@ -69,11 +69,11 @@ public class StudentClassVo {
         this.count = count;
     }
 
-    public String getTeacher() {
+    public int getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(String teacher) {
+    public void setTeacher(int teacher) {
         this.teacher = teacher;
     }
 

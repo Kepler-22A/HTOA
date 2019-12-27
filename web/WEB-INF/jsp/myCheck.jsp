@@ -15,71 +15,42 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 <body>
-    <fieldset class="layui-elem-field layui-field-title">
-        <legend>选择查询的考评</legend>
-    </fieldset>
-    <form class="layui-form-item" method="post" id="myCheckForm">
-        <label class="layui-form-label">考评模板号</label>
-        <div class="layui-input-inline">
-            <input type="text" name="templateId" autocomplete="off" placeholder="请输入查询的编号" class="layui-input">
-        </div>
-
-        <label class="layui-form-label">员工号</label>
-        <div class="layui-input-inline">
-            <input type="text" name="empId" autocomplete="off" placeholder="请输入查询的编号" class="layui-input">
-        </div>
-        <button class="layui-btn" lay-submit lay-filter="demoBtn">查询</button>
-    </form>
-    <table class="layui-hide" id="test" lay-filter="testTable"></table>
-    <script>
-
-        layui.use('form',function () {
-            var form = layui.form;
-
-            form.on('submit(demoBtn)',function (data) {
-                $.ajax({
-                    url:'/Controller/selectMyCheck/from'
-                    ,type:'POST'
-                    ,data:$('#myCheckForm').serialize(),
-                    success: function (result) {
-                        layer.msg(result);
-                        chaXun();
-                    },
-                    error : function() {
-                        alert("异常！");
-                    }
-                });
-
-                return false;
-            })
-        });
-
-
-        function chaXun() {
-            layer.msg("wgawerg");
-
-            layui.use('table', function () {
-                var table = layui.table;
-                table.render({
+<fieldset class="layui-elem-field layui-field-title">
+    <legend>已结束的考评</legend>
+</fieldset>
+<button class="layui-btn" onclick="rederr()">刷新</button>
+<table class="layui-hide" id="test" lay-filter="testTable"></table>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="addTab('{{d.templateId}}')" >查看</a>
+</script>
+<script>
+    rederr();
+    function rederr() {
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render(
+                {
                     elem: '#test'
-                    , url: '/Controller/selectMyCheck/table'
+                    , url: '/Controller/selectMyCheck'
                     , cols: [[
-                        {field: 'templateId', width: 100, title: '编号', sort: true}
-                        , {field: 'projectName', width: 350, title: '考评内容'}
-                        , {field: 'empName', width: 150, title: '考核人',}
-                        , {
-                            field: 'beginTime',
-                            width: 200,
-                            title: '考评时间',
-                            templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'
-                        }
-                        , {field: 'total', title: '总得分', minWidth: 100}
-                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                        , {field: 'templateId', width: 150, title: '考核编号'}
+                        , {field: 'templateName', width: 150, title: '考核名称'}
+                        , {field: 'templateType', width: 150, title: '考核类型'}
+                        , {field: 'templateTime', width: 200, title: '创建日期', templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+                        , {field: 'remark', title: '备注', Width: 350}
+                        , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
                     ]]
                     , page: true
-                });
-            });
-        }
-    </script>
+                }
+            );
+        });
+    }
+    //新增tab页
+    function addTab(templateId) {
+        parent.active.tabAdd("/Controller/toCheckScore/"+templateId, 49, "查看考评");
+        parent.active.tabChange(49)
+    }
+    // function
+</script>
 </body>
 </html>

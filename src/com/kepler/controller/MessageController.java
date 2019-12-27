@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.service.MessageService;
 import com.kepler.vo.EmailVo;
+import com.kepler.vo.NoticeReceiverVo;
 import com.kepler.vo.NoticeVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,11 +39,20 @@ public class MessageController {
     }
     //查询出公告信息
     @RequestMapping(value = "/selectNotice")
-    public void selectNotice(HttpServletResponse response) throws IOException {
+    public void selectNotice(HttpServletResponse response,HttpSession session) throws IOException {
         response.setCharacterEncoding("utf-8");
         PrintWriter ptw = response.getWriter();
         JSONObject jsonObject = new JSONObject();
-        List list = ms.selectNotice();
+        int userType = 0;
+        int receiver = 0;
+        if (session.getAttribute("empId") != null){
+            userType = 1;
+            receiver = Integer.parseInt(session.getAttribute("empId")+"");
+        }else{
+            userType = 2;
+            receiver = Integer.parseInt(session.getAttribute("studentId")+"");
+        }
+        List list = ms.selectNotice(userType,receiver);
         jsonObject.put("code",0);
         jsonObject.put("count",list.size());
         jsonObject.put("msg","");
@@ -68,10 +78,25 @@ public class MessageController {
         vo.setEmpid(empid);
         vo.setNoticeTime(new Date());
         vo.setClassIds(clazz);
-        //查询出有多少个学生
-        vo.setCcc((ms.selectStudentCount()));
+        //查询出某个班有多少个学生
+        List studentList = ms.selectStudentCountByClassId(Integer.parseInt(clazz));
+        vo.setCcc(studentList.size());
         vo.setAaa(0);
         ms.addNotice(vo);
+
+        NoticeReceiverVo noticeReceiver = new NoticeReceiverVo();
+        noticeReceiver.setIsRead(2);
+        noticeReceiver.setNoticeId(vo.getNoticeId());
+        noticeReceiver.setUserType(2); //2为学生接收
+
+        for (Object o : studentList){
+            Map map = (HashMap)o;
+
+            noticeReceiver.setReceiver(Integer.parseInt(map.get("Studid")+""));
+
+            ms.addNoticeReceiver(noticeReceiver);
+        }
+
         //响应编码集
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("utf-8");
@@ -89,13 +114,51 @@ public class MessageController {
         NoticeVo vo = new NoticeVo();
         vo.setTitle(title);
         vo.setContent(context);
-        vo.setNoticeType(noticeType);
-        vo.setEmpid(empid);
-        vo.setNoticeTime(new Date());
-        //查询出有多少个学生
-        vo.setCcc((ms.selectStudentCount()));
-        vo.setAaa(0);
-        ms.addNotice(vo);
+        if (noticeType == 3){ // 添加对全体学生的公告
+            vo.setNoticeType(noticeType);
+            vo.setEmpid(empid);
+            vo.setNoticeTime(new Date());
+            //查询出有多少个学生
+            List studentList = ms.selectStudentCount(); // 学生列表
+            vo.setCcc(studentList.size());
+            vo.setAaa(0);
+            ms.addNotice(vo);
+
+            NoticeReceiverVo noticeReceiver = new NoticeReceiverVo();
+            noticeReceiver.setIsRead(2);
+            noticeReceiver.setNoticeId(vo.getNoticeId());
+            noticeReceiver.setUserType(2); //2为学生接收
+
+            for (Object o : studentList){
+                Map map = (HashMap)o;
+
+                noticeReceiver.setReceiver(Integer.parseInt(map.get("Studid")+""));
+
+                ms.addNoticeReceiver(noticeReceiver);
+            }
+        }else if (noticeType == 2){ // 全体员工的公告
+            vo.setNoticeType(noticeType);
+            vo.setEmpid(empid);
+            vo.setNoticeTime(new Date());
+            //查询出有多少个员工
+            List empList = ms.selEmpCount(); //员工列表
+            vo.setCcc(empList.size());
+            vo.setAaa(0);
+            ms.addNotice(vo);
+
+            NoticeReceiverVo noticeReceiver = new NoticeReceiverVo();
+            noticeReceiver.setIsRead(2);
+            noticeReceiver.setNoticeId(vo.getNoticeId());
+            noticeReceiver.setUserType(1); //1为员工接收
+
+            for (Object o : empList){
+                Map map = (HashMap)o;
+
+                noticeReceiver.setReceiver(Integer.parseInt(map.get("empId")+""));
+
+                ms.addNoticeReceiver(noticeReceiver);
+            }
+        }
 
         //响应编码集
         response.setContentType("text/html;charset=utf-8");
@@ -159,9 +222,28 @@ public class MessageController {
         vo.setNoticeTime(new Date());
         vo.setClassIds(clazz);
         //查询出有多少个学生
-        vo.setCcc((ms.selectStudentCount()));
+
+        List studentList = ms.selectStudentCountByClassId(Integer.parseInt(clazz));
+
+        vo.setCcc(studentList.size());
         vo.setAaa(0);
         ms.updateNotice(vo);
+
+        ms.delNoticeReceiver(vo.getNoticeId());
+
+        NoticeReceiverVo noticeReceiver = new NoticeReceiverVo();
+        noticeReceiver.setIsRead(2);
+        noticeReceiver.setNoticeId(vo.getNoticeId());
+        noticeReceiver.setUserType(2); //2为学生接收
+
+        for (Object o : studentList){
+            Map map = (HashMap)o;
+
+            noticeReceiver.setReceiver(Integer.parseInt(map.get("Studid")+""));
+
+            ms.addNoticeReceiver(noticeReceiver);
+        }
+
         //响应编码集
         response.setContentType("text/html;charset=utf-8");
         response.setCharacterEncoding("utf-8");
@@ -181,13 +263,63 @@ public class MessageController {
         vo.setNoticeId(id);
         vo.setTitle(title);
         vo.setContent(context);
-        vo.setNoticeType(noticeType);
-        vo.setEmpid(empid);
-        vo.setNoticeTime(new Date());
-        //查询出有多少个学生
-        vo.setCcc((ms.selectStudentCount()));
-        vo.setAaa(0);
-        ms.updateNotice(vo);
+
+        if (noticeType == 3){ // 添加对全体学生的公告
+            vo.setNoticeType(noticeType);
+            vo.setEmpid(empid);
+            vo.setNoticeTime(new Date());
+            //查询出有多少个学生
+            List studentList = ms.selectStudentCount(); // 学生列表
+            vo.setCcc(studentList.size());
+            vo.setAaa(0);
+            ms.updateNotice(vo);
+
+            ms.delNoticeReceiver(vo.getNoticeId());
+
+            NoticeReceiverVo noticeReceiver = new NoticeReceiverVo();
+            noticeReceiver.setIsRead(2);
+            noticeReceiver.setNoticeId(vo.getNoticeId());
+            noticeReceiver.setUserType(2); //2为学生接收
+
+            for (Object o : studentList){
+                Map map = (HashMap)o;
+
+                noticeReceiver.setReceiver(Integer.parseInt(map.get("Studid")+""));
+
+                ms.addNoticeReceiver(noticeReceiver);
+            }
+        }else if (noticeType == 2){ // 全体员工的公告
+            vo.setNoticeType(noticeType);
+            vo.setEmpid(empid);
+            vo.setNoticeTime(new Date());
+            //查询出有多少个员工
+            List empList = ms.selEmpCount(); //员工列表
+            vo.setCcc(empList.size());
+            vo.setAaa(0);
+            ms.updateNotice(vo);
+
+            ms.delNoticeReceiver(vo.getNoticeId());
+
+            NoticeReceiverVo noticeReceiver = new NoticeReceiverVo();
+            noticeReceiver.setIsRead(2);
+            noticeReceiver.setNoticeId(vo.getNoticeId());
+            noticeReceiver.setUserType(1); //1为员工接收
+
+            for (Object o : empList){
+                Map map = (HashMap)o;
+
+                noticeReceiver.setReceiver(Integer.parseInt(map.get("empId")+""));
+
+                ms.addNoticeReceiver(noticeReceiver);
+            }
+        }
+//        vo.setNoticeType(noticeType);
+//        vo.setEmpid(empid);
+//        vo.setNoticeTime(new Date());
+//        //查询出有多少个学生
+//        vo.setCcc((ms.selectStudentCount()).size());
+//        vo.setAaa(0);
+//        ms.updateNotice(vo);
 
         //响应编码集
         response.setContentType("text/html;charset=utf-8");
@@ -196,6 +328,53 @@ public class MessageController {
         pw.print("OK");
         pw.flush();
         pw.close();
+    }
+
+    @RequestMapping(value = "/changeNoticeReceiverIsRead/{noticeId}")
+    @ResponseBody
+    public void changeNoticeReceiverIsRead(@PathVariable(value = "noticeId")int noticeId,HttpSession session){
+        NoticeReceiverVo noticeReceiverVo = null;
+        if (session.getAttribute("empId") != null){ //员工
+            noticeReceiverVo = ms.selNoticeReceiverByNoticeIdAndUserTypeAndReceiver(noticeId,1,Integer.parseInt(session.getAttribute("empId")+""));
+        }else if (session.getAttribute("studentId") != null){
+            noticeReceiverVo = ms.selNoticeReceiverByNoticeIdAndUserTypeAndReceiver(noticeId,2,Integer.parseInt(session.getAttribute("studentId")+""));
+        }
+
+        if (noticeReceiverVo.getIsRead() == 2){
+            noticeReceiverVo.setIsRead(1);
+            ms.updateNoticeReceiverVo(noticeReceiverVo);
+
+            NoticeVo noticeVo = ms.selNoticeByNoticeId(noticeId);
+            int ccc = noticeVo.getCcc();
+            ccc = ccc - 1;
+            noticeVo.setCcc(ccc);
+            int aaa =noticeVo.getAaa();
+            aaa = aaa + 1;
+            noticeVo.setAaa(aaa);
+            ms.updateNotice(noticeVo);
+        }
+    }
+
+    @RequestMapping(value = "/selNoticeReceiverNumber")
+    @ResponseBody
+    public void selNoticeReceiverNumber(HttpServletResponse response,HttpSession session){
+        int count = 0;
+        if (session.getAttribute("studentId") != null){
+            count = ms.selNoticeReceiverNumber(2,Integer.parseInt(session.getAttribute("studentId")+""));
+        }else if (session.getAttribute("empId") != null){
+            count = ms.selNoticeReceiverNumber(1,Integer.parseInt(session.getAttribute("empId")+""));
+        }
+
+        JSONObject jo = new JSONObject();
+        jo.put("count",count);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -324,4 +503,24 @@ public class MessageController {
     public void changeEmailStatus(@PathVariable(value = "emailId")int emailId){
         ms.changeEmailStatus(emailId);
     }
+
+    @RequestMapping(value = "/selEmailIsReadNotNumber")
+    @ResponseBody
+    public void selEmailIsReadNotNumber(HttpSession session,HttpServletResponse response){
+        int count = ms.selEmailIsReadNotNumber(Integer.parseInt(session.getAttribute("empId")+""));
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("count",count);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

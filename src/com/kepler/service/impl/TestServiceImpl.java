@@ -129,6 +129,16 @@ public class TestServiceImpl extends BaseDao implements TestService {
         return sqlQuery("select * from checkResult  where templateId = "+templateId+"");
     }
 
+    @Override
+    public List selectOverCheck() {
+        return sqlQuery("select * from template  where openCheck = 3");
+    }
+
+    @Override
+    public List selectMyCheck(int templateId, int empId) {
+        return sqlQuery("select t.templateName,e.empName ,s.studentComment,s.leadComment,s.total from checkScoer s LEFT JOIN template t on s.templateId = t.templateId LEFT JOIN empVo e on s.empId = e.empId where s.templateId = "+templateId+" and s.empId = "+empId+"");
+    }
+
     @Override //学生评价查询
     public List selectMyCheckProject(int templateId, int empId) {
         return sqlQuery("select DISTINCT t.templateId,t.projectName,e.empName,c.beginTime,s.checkScore from checkProject t left join studentCheckScore s on t.projectId = s.projectId LEFT JOIN empVo e on s.empId = e.empId LEFT JOIN checkStep c on t.templateId = c.templateId where t.templateId = "+templateId+"and e.empId ="+empId+"and c.step = 1" );
@@ -140,8 +150,44 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public int deletePeople(int templateId) {
+        return sqlUpdate("delete from checkPeople where templateId = "+templateId+"");
+    }
+
+    @Override
+    public int selectScore(int empId) {
+        return executeIntSQL("select sum(checkScore) from leadCheckScore where empId = "+empId+"");
+    }
+
+    @Override
+    public int selectScore2(int empId) {
+        return executeIntSQL("select sum(checkScore) from studentCheckScore where empId ="+empId+"");
+    }
+
+    @Override
+    public float selectWeight(int templateId) {
+        return executeFloatSQL("select weight from checkStep where checkStepType ='学生评' and templateId = 1");
+    }
+
+    @Override
+    public float selectWeight2(int templateId) {
+        return executeFloatSQL("select weight from checkStep where checkStepType ='领导评' and templateId = 1");
+    }
+
+    @Override
+    public int addCheckScore(checkScoerVo scoreVo) {
+        save(scoreVo);
+        return 1;
+    }
+
+    @Override
     public String selectTeacher(int stuId) {
         return executeStringSQL("select empName from empVo where empId =(select c.empId from classTeacher c where c.classId = (select clazz from Student where Studid = "+stuId+"))");
+    }
+
+    @Override
+    public String selectTeacher2(int stuId) {
+        return executeStringSQL("select empName from empVo where empId =( select teacher from StudentClass where classid = (select clazz  from Student  where Studid = "+stuId+"))");
     }
 
     @Override
@@ -205,6 +251,11 @@ public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int update2(int empId) {
         return sqlUpdate("update  checkPeople set leadState = '已考评' where empId = "+empId+"");
+    }
+
+    @Override
+    public int updateClose(int template) {
+        return sqlUpdate("update template set openCheck=3 where templateId="+template+"");
     }
 
     @Override

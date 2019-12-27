@@ -45,6 +45,12 @@
                 form.render('select');
             });
         },'json');
+
+        $.ajax({url:'http://localhost:8888/message/changeNoticeReceiverIsRead/${id}',success:function (data) {
+                console.log("已读完成");
+            },error:function (data) {
+                console.log("已读失败");
+            }})
     });
 </script>
 </html>

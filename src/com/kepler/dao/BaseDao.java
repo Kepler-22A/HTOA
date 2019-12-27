@@ -125,5 +125,22 @@ public class BaseDao {
         session.close();
         return result;
     }
+    /**
+     * 查 float
+     */
+    public Float executeFloatSQL(String sql) {
+        Session session =  getSession();
+        Query sqlquery =session.createSQLQuery(sql);
+
+        String result = sqlquery.list()+"";
+        System.out.printf(result);
+
+        result = result.substring(1,result.length()-1);
+        float i = Float.parseFloat(result+"");
+
+        session.flush();
+        session.close();
+        return i;
+    }
 
 }

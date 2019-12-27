@@ -269,47 +269,55 @@ public class TestController {//登录  考核管理！！
     }
 
 
-    //我的考评获取数据~~~~~~~~~~~~~~~~~~~~~~~~~
-    @RequestMapping("/selectMyCheck/{type}")
-    @ResponseBody
-    public void selectMyCheck(Integer templateId,Integer empId,HttpServletResponse response,HttpSession session,@PathVariable(value = "type")String type) throws IOException {
+    /**
+     *  我的考评获取数据
+     */
 
-        System.out.println(type+",,"+templateId+",,"+empId);
+    @RequestMapping("/selectMyCheck") //考评结束显示数据！！
+    public void selectMyCheck(HttpServletResponse response,HttpSession session) throws IOException {
+        response.setCharacterEncoding("utf-8");
         List list = new ArrayList();
-        if("from".equals(type)){ //查询我的考评数据
-            //查出步骤类型
-            List  stepType = service.selectStepType(templateId);
-            System.out.println("checkStepType:"+stepType);
-//            if("checkStepType=学生评".equals(stepType.get(0)) && "checkStepType=领导评".equals(stepType.get(1))){
-//
-//            }
-//            else if("学生评".equals(stepType.get(0))){
-//
-//            }else if("领导评".equals(stepType.get(0))){
-//
-//            }
-            //查出数据
-            list = service.selectMyCheckProject(templateId,empId);
-            //String beginTime = service.selectTime(templateId);
-            //int total = service.selectTotal(templateId);
-
-            session.setAttribute("list",list);
-            System.out.println("list:"+list);
+        if(session.getAttribute("empId") != null){
+            list = service.selectOverCheck();
         }
-        if("table".equals(type)){ //获取我的考评数据
-            response.setCharacterEncoding("utf-8");
-            List list1 = (List) session.getAttribute("list");
-            JSONObject json = new JSONObject();
-            json.put("code",0);
-            json.put("msg","");
-            json.put("count",list.size());
-            json.put("data",list1);
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","");
+        json.put("count",list.size());
+        json.put("data",list);
 
-            PrintWriter out = response.getWriter();
-            out.print(json.toString());
+        PrintWriter out = response.getWriter();
+        out.print(json.toString());
 
-            System.out.println(json.toJSONString());
+        System.out.println(json.toJSONString());
+    }
+
+    @RequestMapping("toCheckScore/{templateId}") //去考评页
+    public String toCheckScore(@PathVariable(value = "templateId")Integer templateId,HttpSession session){
+        session.setAttribute("templateId",templateId);
+        return "checkScore";
+    }
+    @RequestMapping("checkScore")  //我的考评！！
+    public void checkScore(HttpServletResponse response,HttpSession session) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        List list = new ArrayList();
+        if(session.getAttribute("empId")!=null) {
+            System.out.println("进入！！");
+            int empId = (int) session.getAttribute("empId");
+            int templateId = (int) session.getAttribute("templateId");
+            list = service.selectMyCheck(templateId,empId); //查询我的考评数据
         }
+        JSONObject json = new JSONObject();
+        json.put("code",0);
+        json.put("msg","");
+        json.put("count",list.size());
+        json.put("data",list);
+
+        PrintWriter out = response.getWriter();
+        out.print(json.toString());
+
+        System.out.println(json.toJSONString());
+        //return "checkScore";
     }
 
     /**
@@ -464,6 +472,7 @@ public class TestController {//登录  考核管理！！
         //int depId = service.selectDepID(templateId);
         int i = service.update(templateId);
         if(i>0){
+            //增加考评人
             for(int t = 0,len =checkPeople.size();t<len ;t++){
                 peopleVo.setTemplateId(templateId);
                 String empId = (checkPeople.get(t) + "").substring(7,(checkPeople.get(t) + "").length() - 1);
@@ -476,19 +485,53 @@ public class TestController {//登录  考核管理！！
             }
         }
     }
+    @RequestMapping("/closeCheck/{templateId}/{depName}") //关闭考评
+    public void closeCheck(HttpSession session,@PathVariable(value = "templateId")Integer templateId
+            ,@PathVariable(value = "depName")String depName,checkScoerVo scoerVo){
+        System.out.println("进入关闭考评！！"+templateId+",,"+depName);
+        session.setAttribute("depName",depName);
+
+        //int depId = service.selectDepID(templateId);
+        int i = service.updateClose(templateId);
+        if(i>0 &&session.getAttribute("empId")!=null) {
+            int empId = (int) session.getAttribute("empId");
+
+            //根据权重算出总得分
+            Float studentWeight = service.selectWeight(templateId);
+            Float leadWeight = service.selectWeight2(templateId);
+            //获取学生,领导评分
+            float studentScore = service.selectScore(empId)*studentWeight;
+            float leadScore = service.selectScore2(empId)*leadWeight;
+            float total = studentScore + leadScore ;
+            //存取总考评成绩
+            scoerVo.setTemplateId(templateId);
+            scoerVo.setEmpId(empId);
+            scoerVo.setStudentComment(studentScore);
+            scoerVo.setLeadComment(leadScore);
+            scoerVo.setTotal(total);
+            int d = service.addCheckScore(scoerVo);
+            int t = service.deletePeople(templateId);
+            if(t>0 && d>0){
+                System.out.println("关闭考评成功！！");
+            }
+        }
+    }
+
 
     @RequestMapping("/table4") //获取开启考评的模板数据！！
     public void table4(HttpServletResponse response ,HttpSession session) throws Exception {
         response.setCharacterEncoding("utf-8");
         List list = new ArrayList();
-        //只有开启的教研部考评才会显示
+        //只有开启的教研部和学工部考评才会显示
         if(session.getAttribute("studentId") != null){
+            System.out.println("学生！");
             int depId = service.selectDepId();
-           int key = 0 ;
+            session.setAttribute("teacherType",depId);
+            int key = 0 ;
             if (session.getAttribute("key") != null){
-                 key = (int) session.getAttribute("key");
+                key = (int) session.getAttribute("key");
             }
-            if(depId==2 &&key!=2){
+            if((depId==2 ||depId == 3) &&key!=2){
                 list = service.selectTable4();
             }
         }
@@ -498,6 +541,7 @@ public class TestController {//登录  考核管理！！
             int leadEmpId = service.selectLead(empId);
 
             if(empId ==leadEmpId){
+                System.out.println("领导！");
                 list = service.selectTable4();
             }
         }
@@ -520,8 +564,16 @@ public class TestController {//登录  考核管理！！
         if(session.getAttribute("studentId") !=null) {
             //获取classId
             int stuId = (int) session.getAttribute("studentId");
-            String teacher = service.selectTeacher(stuId);//查出班主任
-            session.setAttribute("teacher",teacher);
+            if(session.getAttribute("teacherType")!=null){
+                int depId = (int) session.getAttribute("teacherType");
+                if(depId==3){
+                    String teacher = service.selectTeacher(stuId);//查出班主任
+                    session.setAttribute("teacher",teacher);
+                }else if(depId == 2){
+                    String teacher = service.selectTeacher2(stuId);//查出任课老师
+                    session.setAttribute("teacher",teacher);
+                }
+            }
         }
         //领导
         else if(session.getAttribute("empId") !=null){
@@ -547,8 +599,8 @@ public class TestController {//登录  考核管理！！
     }
     @RequestMapping("addMark")  //打分！！！！！
     public String addMark(studentCheckScoreVo scoreVo,leadCheckScoreVo leadCheckScoreVo,HttpSession session,
-        @RequestParam(value = "projectId", required = false) int[] projectId,
-        @RequestParam(value = "checkScore", required = false) int[] checkScore){
+                          @RequestParam(value = "projectId", required = false) int[] projectId,
+                          @RequestParam(value = "checkScore", required = false) int[] checkScore){
 
         //学生打分
         if(session.getAttribute("studentId") !=null){
