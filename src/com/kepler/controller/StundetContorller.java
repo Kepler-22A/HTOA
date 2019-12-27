@@ -116,6 +116,29 @@ public class StundetContorller {
         return "redirect:/student/studenthuor";
     }
 
+    @RequestMapping("/selFloor")
+    public void selFloor(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        List list = sts.selFloor();
+
+        JSONArray ja = new JSONArray();
+
+        for (Object o : list){
+            Map map = (HashMap)o;
+
+            ja.add(map);
+        }
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.println(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @RequestMapping("/updateHour/{hourid}")
     public String updateHour(StudentHuorVo studentHuorVo, @PathVariable(value = "hourid")int hourid){

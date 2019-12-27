@@ -87,6 +87,16 @@
             }
         });
 
+        $.post("/student/selFloor",{},function (data) {
+            var form = layui.form;
+            var SelectHour_any = "";
+            $.each(data,function (index,obj) {
+                SelectHour_any += "<option value='" + obj.floorId + "'>" + obj.floorName + "</option>";
+            });
+            $("#SelectHour").html(SelectHour_any);
+            form.render('select');
+        },"json");
+
     }
     //修改
     function  update(hourid) {
@@ -166,10 +176,12 @@
             <input id="huoeIddsc" type="text" name="huoeIddsc" required  lay-verify="required" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">宿舍楼栋</label>
+
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <label class="layui-form-label" style="width: 80px;">宿舍楼栋</label>
         <div class="layui-input-inline">
-            <input id="floorId" type="text" name="floorId" required  lay-verify="required" autocomplete="off" class="layui-input">
+            <select id="SelectHour" name="floorId" style="width: 150px">
+            </select>
         </div>
     </div>
    <%-- <div class="layui-form-item">

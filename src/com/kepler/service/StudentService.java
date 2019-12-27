@@ -16,6 +16,8 @@ public interface StudentService {
     public List<StudentHuorVo>  listhour();
     //添加宿舍信息
     public void addhour(StudentHuorVo studentHuorVo);
+    ////查楼栋
+    public List selFloor();
     //修改宿舍信息
     public void updatehour(StudentHuorVo studentHuorVo);
     //根据id查找宿舍信息

@@ -580,7 +580,6 @@ public String feedback(){
     @RequestMapping(value = "/addFeedback")
     public String addFeedback(HttpSession session,HttpServletRequest request ,FeedbackVo vo,MultipartFile file){
 
-
             //学生id
          int id = (int)session.getAttribute("studentId");
 
@@ -649,7 +648,7 @@ public String feedback(){
 
     //添加
     @RequestMapping("/addMessage")
-    public String addMessage( HttpSession session, FeedbackMsgVo vo, Model model, int feedbackId ){
+    public String addMessage( HttpSession session, FeedbackMsgVo vo,Model model, int feedbackId ){
         int empId = (int)session.getAttribute("empId");
         List<empVo> empVoList = new ArrayList<>();
         empVoList = sys.selectEmpById(empId);
@@ -676,10 +675,7 @@ public String feedback(){
     }
 
 
-    //--------------------------------------附属：学生宿舍.查看宿舍学生---------------------------------------------------------
-    /*@RequestMapping("/selHuorStudent/{name}")
-    public void selHuorStudenta(HttpServletResponse response,@PathVariable(value = "name") String name)throws IOException{
-        name = new String(name.getBytes("ISO-8859-1"),"UTF-8");*/
+    //--------------------------------------附属：学生宿舍.查看宿舍学生---------------------------------------------------
         @RequestMapping("/selHuorStudent")
         public void selHuorStudenta(HttpServletResponse response, String name)throws IOException{
             name = new String(name.getBytes("ISO-8859-1"),"UTF-8");
@@ -688,7 +684,6 @@ public String feedback(){
         PrintWriter pwt = response.getWriter();
         JSONObject json = new JSONObject();
         List sum = sys.selHourStudent(name);
-            System.out.println(sum.size());
         json.put("code",0);
         json.put("count",sum.size());
         json.put("msg","");

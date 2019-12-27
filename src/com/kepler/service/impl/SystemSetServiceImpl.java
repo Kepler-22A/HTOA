@@ -322,15 +322,11 @@ public class SystemSetServiceImpl extends BaseDao implements SystemSetService {
         return sqlQuery("select * from FeedbackMsg where feedbackId="+feedbackId);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
     @Override
     public List selHourStudent(String huorName) {
         return sqlQuery("select s.*,h.huorName from Student s left join StudentHuor h  on s.huor = h.huorName where h.huorName = '"+huorName+"'");
     }
 
-//    @Override
-//    public List selHourStudent(String huorName) {
-//        return sqlQuery("select s.*,h.huorName from Student s left join StudentHuor h  on s.huor = h."+"'"+huorName+"'");
-//    }
-    //------------------------------------------------------------------------------------------------------------------
 
 }

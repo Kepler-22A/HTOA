@@ -29,6 +29,11 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     }
 
     @Override
+    public List selFloor() {
+        return sqlQuery("select * from StudentFloor");
+    }
+
+    @Override
     public void updatehour(StudentHuorVo studentHuorVo) {
         update(studentHuorVo);
     }
