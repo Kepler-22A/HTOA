@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.SimpleFormatter;
 
 import static oracle.net.aso.C00.*;
 
@@ -230,11 +231,21 @@ public class TestController {//登录  考核管理！！
 
     }
     @RequestMapping("/table3")
-    public void table3(HttpServletResponse response) throws IOException {
+    public void table3(HttpServletResponse response,HttpSession session) throws IOException {
         response.setCharacterEncoding("utf-8");
         List list = service.selectTable3();
 
         JSONObject json = new JSONObject();
+//        if(session.getAttribute("empId")!=null){
+//            int empId= (int) session.getAttribute("empId");
+//            int leadEmpId = service.selectLead(empId);
+//            if(empId ==leadEmpId){
+//                System.out.println("领导！");
+//                json.put("code",1);
+//            }else{
+//                json.put("code",0);
+//            }
+//        }
         json.put("code",0);
         json.put("msg","");
         json.put("count",list.size());
@@ -382,18 +393,23 @@ public class TestController {//登录  考核管理！！
         else if("setp".equals(type)){
             String setpType = setpvo.getCheckStepType();
             System.out.printf(beginTimeEX + "  " + endTimeEX);
+//
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+//            Date d1 = null;
+//            Date d2 = null;
+//            try {
+//                d1 = sdf.parse(beginTimeEX);
+//                d2 = sdf.parse(endTimeEX);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//            setpvo.setBeginTime(d1);
+//            setpvo.setEndTime(d2);
+
             //转换时间
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-            Date d1 = null;
-            Date d2 = null;
-            try {
-                d1 = sdf.parse(beginTimeEX);
-                d2 = sdf.parse(endTimeEX);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            setpvo.setBeginTime(d1);
-            setpvo.setEndTime(d2);
+            Date date = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            setpvo.setBeginTime(format.format(date));
             //判断步骤类型
             if("学生评".equals(setpType)){
                 setpvo.setStep(1);

@@ -273,23 +273,13 @@
         <div class="layui-input-inline" style="height: 38px">
             <select name="weight" lay-filter="type">
                 <option value=""></option>
-                <option value="0.100">10%</option>
-                <option value="0.200">20%</option>
-                <option value="0.300" >30%</option>
-                <option value="0.500">50%</option>
+                <option value="0.100">20%</option>
+                <option value="0.200">30%</option>
+                <option value="0.300" >50%</option>
+                <option value="0.500">70%</option>
+                <option value="0.500">80%</option>
+                <option value="0.500">100%</option>
             </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">考评开始时间</label>
-        <div class="layui-input-inline" style="width: 140px">
-            <input name="beginTimeEX" type="datetime-local">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">考评结束时间</label>
-        <div class="layui-input-inline">
-            <input name="endTimeEX" type="datetime-local">
         </div>
     </div>
     <div class="layui-form-item">

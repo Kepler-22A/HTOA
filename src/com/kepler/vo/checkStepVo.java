@@ -1,10 +1,5 @@
 package com.kepler.vo;
 
-
-
-import org.h2.store.Data;
-import org.joda.time.DateTime;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -19,9 +14,15 @@ public class checkStepVo {
     private int step ;//步骤  1学生评，领导评
     private String checkStepType ;//步骤类型
     private float  weight ;//权重
-    private Date beginTime ;//开始时间
-    private Date endTime ;//结束时间
+    private String beginTime ; //开始时间
 
+    public String getBeginTime() {
+        return beginTime;
+    }
+
+    public void setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
+    }
 
     public int getCheckStepId() {
         return checkStepId;
@@ -71,21 +72,6 @@ public class checkStepVo {
         this.weight = weight;
     }
 
-    public Date getBeginTime() {
-        return beginTime;
-    }
-
-    public void setBeginTime(Date beginTime) {
-        this.beginTime = beginTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
 
     @Override
     public String toString() {
@@ -97,7 +83,6 @@ public class checkStepVo {
                 ", checkStepType='" + checkStepType + '\'' +
                 ", weight=" + weight +
                 ", beginTime=" + beginTime +
-                ", endTime=" + endTime +
                 '}';
     }
 }
