@@ -1,4 +1,7 @@
-<%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.ParseException" %>
+<%@ page import="java.util.Calendar" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2019/12/25
@@ -56,13 +59,13 @@
                         </p>
                     </a>
                     <br>
-                    <a href="javascript:" style="text-decoration: none">
+                    <a href="javascript:addTab('我的周报')" style="text-decoration: none">
                         <p id="thisWooklyP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             本周工作周报（<span id="thisWooklyNumber">未完成</span>）&nbsp;&nbsp;<span style="font-size: 12px;color: red">周日17:00前提交</span>
                         </p>
                     </a>
                     <br>
-                    <a href="javascript:" style="text-decoration: none">
+                    <a href="javascript:addTab('谈心记录')" style="text-decoration: none">
                         <p id="moothCharRecordP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             月谈心记录（<span id="moothCharRecordNumber">0</span>）&nbsp;&nbsp;<span style="font-size: 12px;color: red">每月需完成5个</span>
                         </p>
@@ -74,6 +77,7 @@
 </div>
 </body>
 <script>
+
 function reloadPage() {
     <%--    获取员工请假待审核数--%>
     $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskNumber",dataType:'json'
@@ -107,7 +111,25 @@ function reloadPage() {
             layer.msg("获取未读邮件数数失败")
         }});
 
+    //    获取提交的本周周报数
+    $.ajax({url:"${pageContext.request.contextPath}/emp/selWeeklyNotPush",dataType:'json'
+        ,success:function (data) {
+        if (data.count < 1){
+            $("#thisWooklyNumber").html("未完成");
+        }else {
+            $("#thisWooklyNumber").html("已完成");
+        }
+        },error:function () {
+            layer.msg("获取未读邮件数数失败")
+        }});
 
+    //    获取提交的谈心记录数
+    $.ajax({url:"${pageContext.request.contextPath}/emp/selChatRecord",dataType:'json'
+        ,success:function (data) {
+            $("#moothCharRecordNumber").html(data.count);
+        },error:function () {
+            layer.msg("获取谈心记录数失败")
+        }});
 }
 
 reloadPage();
@@ -136,6 +158,14 @@ reloadPage();
             url = "${pageContext.request.contextPath}/message/toEmailPage";
             id = 193;
             title = "我的邮件"
+        }else if(type == '我的周报'){
+            url = "${pageContext.request.contextPath}/emp/toMyWeeklyPage";
+            id = 194;
+            title = "我的周报"
+        }else if(type == '谈心记录'){
+            url = "${pageContext.request.contextPath}/emp/chatRecord";
+            id = 195;
+            title = "谈心记录"
         }
 
         parent.active.tabAdd(url,id,title);

@@ -6,10 +6,9 @@ import com.kepler.service.EmpService;
 import com.kepler.vo.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -306,5 +305,59 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     @Override
     public List selectChecking() {
         return sqlQuery("select *,(select empName from empVo e where w.empId = e.empId) as empName from weekly w");
+    }
+
+    @Override
+    public int selWeeklyNotPush(int empId) {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date dt = new Date();
+        Calendar rightNow = Calendar.getInstance();
+        Calendar leftNow = Calendar.getInstance();
+        leftNow.setTime(dt);
+        rightNow.setTime(dt);
+        if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == 1){
+            leftNow.add(Calendar.DAY_OF_WEEK,-7);
+            rightNow.add(Calendar.DAY_OF_WEEK,7);
+        }else {
+            leftNow.add(Calendar.DAY_OF_WEEK,-(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)-2));
+            rightNow.add(Calendar.DAY_OF_WEEK,(8-Calendar.getInstance().get(Calendar.DAY_OF_WEEK)));
+        }
+        Date dr = rightNow.getTime();
+        Date dl = leftNow.getTime();
+        String dls = sdf.format(dl);
+        String drs = sdf.format(dr);
+
+        dls = dls.substring(0,dls.indexOf(' ')) + " 00:00";
+        drs = drs.substring(0,drs.indexOf(' ')) + " 17:00";
+
+        int count = executeIntSQL("select count(*) from weekly where Workday > '"+dls+"' and Workday < '"+drs+"' and empId = " + empId);
+
+        return count;
+
+    }
+
+    @Override
+    public int selChatRecord(int empId) {
+        Calendar cale = Calendar.getInstance();
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String firstday, lastday;
+        // 获取前月的第一天
+        cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 0);
+        cale.set(Calendar.DAY_OF_MONTH, 1);
+        firstday = format.format(cale.getTime());
+        // 获取下个月第一天
+        cale = Calendar.getInstance();
+        cale.add(Calendar.MONTH, 1);
+        cale.set(Calendar.DAY_OF_MONTH, 1);
+        lastday = format.format(cale.getTime());
+        firstday = firstday + " 00:00";
+        lastday = lastday + " 00:00";
+        System.out.println("本月第一天和下个月第一天分别是 ： " + firstday + " and " + lastday);
+
+        int count = executeIntSQL("select count(*) from ChatRecord where chatDate > '"+firstday+"' and chatDate < '"+lastday+"' and teacher = "+empId);
+
+        return count;
     }
 }

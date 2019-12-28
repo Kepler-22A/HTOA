@@ -19,10 +19,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -696,5 +693,46 @@ public class EmpController {//员工的Controller
         jsonObject.put("msg","");
         jsonObject.put("data",list);
         ptw.print(jsonObject.toJSONString());
+    }
+
+    @RequestMapping(value = "/selWeeklyNotPush")
+    @ResponseBody
+    public void selWeeklyNotPush(HttpServletResponse response,HttpSession session){ //查看当前周周报有没有提交
+        int empId = Integer.parseInt(session.getAttribute("empId")+"");
+
+        int count = es.selWeeklyNotPush(empId);
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("count",count);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/selChatRecord")
+    @ResponseBody
+    public void selChatRecord(HttpServletResponse response,HttpSession session){ //查看当前月提交了多少份谈心记录
+        response.setCharacterEncoding("utf-8");
+
+        int count = es.selChatRecord(Integer.parseInt(session.getAttribute("empId")+""));
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("count",count);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

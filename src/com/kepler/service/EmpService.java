@@ -50,4 +50,7 @@ public interface EmpService {
     void updateCharRecord(ChatRecordVo vo);//修改谈心记录
     void delectCharRecord(ChatRecordVo vo);//删除谈心记录
     List selectChecking();//查询出考勤管理
+
+    int selWeeklyNotPush(int empId);//检测当前员工有没有提交本周周报
+    int selChatRecord(int empId);//根据empId查看当前月提交了多少份谈心记录
 }
