@@ -683,11 +683,12 @@ public class EmpController {//员工的Controller
      * 查询考勤管理
      * */
     @RequestMapping(value = "/selectChecking")
-    public void selectChecking(HttpServletResponse response) throws IOException {
+    public void selectChecking(HttpServletResponse response,HttpSession session) throws IOException {
+        int empid = (int) session.getAttribute("empId");
         response.setCharacterEncoding("utf-8");
         PrintWriter ptw = response.getWriter();
         JSONObject jsonObject = new JSONObject();
-        List list = es.selectChecking();
+        List list = es.selectChecking(empid);
         jsonObject.put("code",0);
         jsonObject.put("count",list.size());
         jsonObject.put("msg","");
@@ -734,5 +735,85 @@ public class EmpController {//员工的Controller
             e.printStackTrace();
         }
 
+    }
+    /*
+     * 新增未打卡说明
+     * */
+    @RequestMapping(value = "/addChecking")
+    public String addChecking(String shijian,CheckingVo vo,HttpSession session,String time){
+        int empid = (int) session.getAttribute("empId");
+        String date = shijian +" "+ time;
+        vo.setNOdate(date);
+        vo.setEmpID(empid);
+        vo.setState(3);
+        List id = es.selectshangjiID(empid);
+        Map map = (Map) id.get(0);
+        vo.setSuperiorempID((Integer) map.get("depid"));
+        es.addChecking(vo);
+        return "redirect:/emp/Checking";
+    }
+    /*
+     * 跳转到我的审批
+     * */
+    @RequestMapping(value = "/manChecking")
+    public String manChecking(){
+        return "manChecking";
+    }
+    /*
+     * 查询我的审批
+     * */
+    @RequestMapping(value = "/selectXiaJiChecking")
+    public void selectXiaJiChecking(HttpServletResponse response,HttpSession session) throws IOException {
+        int empid = (int) session.getAttribute("empId");
+        response.setCharacterEncoding("utf-8");
+        PrintWriter ptw = response.getWriter();
+        JSONObject jsonObject = new JSONObject();
+        List list = es.selectXiaJiChecking(empid);
+        Map map = new HashMap();
+        for(int i=0;i<list.size();i++){
+            map= (Map) list.get(i);
+        }
+        System.out.println("这是值"+(Integer)map.get("state"));
+        if((Integer) map.get("state") == 3){   //还没有审核的表
+            System.out.println("进来了还没有审核的表");
+            jsonObject.put("code",0);
+            jsonObject.put("count",list.size());
+            jsonObject.put("msg","");
+            jsonObject.put("data",list);
+            ptw.print(jsonObject.toJSONString());
+        }else if((Integer) map.get("state") == 1){//通过审批
+            System.out.println("进来了审核的表");
+            jsonObject.put("code",0);
+            jsonObject.put("count",list.size());
+            jsonObject.put("msg","");
+            jsonObject.put("data",list);
+            ptw.print(jsonObject.toJSONString());
+        }
+
+    }
+    /*
+     * 通过审批
+     * */
+    @RequestMapping(value = "/updatestate/{id}/{ok}")
+    @ResponseBody
+    public void updatestate(@PathVariable(value = "id") int id,@PathVariable(value = "ok") int ok,CheckingVo vo){
+        List list = es.selectCheckings(id);
+        Map map = new HashMap();
+        for(int i=0;i<list.size();i++){
+            map= (Map) list.get(i);
+        }
+        vo.setNOdate((String) map.get("NOdate"));
+        vo.setCauseReamk((String) map.get("causeReamk"));
+        vo.setEmpID((Integer) map.get("empID"));
+        vo.setSuperiorempID((Integer) map.get("superiorempID"));
+        vo.setCheckingID(id);
+        vo.setAuditdate(new Date());
+        vo.setState(1);
+        if(ok == 1){
+            vo.setReamk("属实");
+        }else if(ok == 2){
+            vo.setReamk("不属实");
+        }
+        es.updatestate(vo);
     }
 }

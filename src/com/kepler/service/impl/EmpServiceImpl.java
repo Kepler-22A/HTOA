@@ -303,8 +303,33 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     }
 
     @Override
-    public List selectChecking() {
-        return sqlQuery("select *,(select empName from empVo e where w.empId = e.empId) as empName from weekly w");
+    public List selectChecking(int id) {
+        return sqlQuery("select CheckingID,NOdate,auditdate,causeReamk,state,reamk,e.empName,p.chairman from Checking c left join empVo e on c.empID = e.empId left join dep p  on c.superiorempID = p.depid where c.empID ="+ id);
+    }
+
+    @Override
+    public List selectshangjiID(int id) {
+        return sqlQuery("select depid from dep where depId = (select depId from post where postId = (select postId from empVo where empId ="+id+"))");
+    }
+
+    @Override
+    public void addChecking(CheckingVo vo) {
+        save(vo);
+    }
+
+    @Override
+    public List selectXiaJiChecking(int id) {
+        return sqlQuery("select CheckingID,NOdate,auditdate,causeReamk,state,reamk,e.empName from Checking c left join empVo e on c.empID = e.empId left join dep p on c.superiorempID = p.depid where p.depid = (select depid from dep where depId = (select depId from post where postId = (select postId from empVo where empId = "+id+"))) and  not e.empId =" + id);
+    }
+
+    @Override
+    public void updatestate(CheckingVo vo) {
+        update(vo);
+    }
+
+    @Override
+    public List selectCheckings(int id) {
+        return sqlQuery("select * from Checking where CheckingID ="+id);
     }
 
     @Override

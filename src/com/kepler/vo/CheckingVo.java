@@ -10,13 +10,13 @@ public class CheckingVo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int CheckingID;//编号
-    private int empID;//员工id
-    private Date NOdate;//未打卡时间
-    private String causeReamk;//原因说明
-    private int superiorempID;//上级员工id
+    private int empID;//员工id 1
+    private String NOdate;//未打卡时间 1
+    private String causeReamk;//原因说明1
+    private int superiorempID;//上级员工id1
     private Date auditdate;//审核时间
-    private String reamk;//说明
-    private int state;//状态  1 通过  2 没有通过  3 还没审核  4 正在审核
+    private String reamk;//审核说明
+    private int state;//状态  1 通过   3 还没审核  4 正在审核1
 
     @Override
     public String toString() {
@@ -48,11 +48,11 @@ public class CheckingVo {
         this.empID = empID;
     }
 
-    public Date getNOdate() {
+    public String getNOdate() {
         return NOdate;
     }
 
-    public void setNOdate(Date NOdate) {
+    public void setNOdate(String NOdate) {
         this.NOdate = NOdate;
     }
 
