@@ -73,6 +73,7 @@ public class TestController {//登录  考核管理！！
         int empId = service.selectInt(empVo.getEmpName()); //获的当前登陆的是谁
         session.setAttribute("empId",empId);//把当前员工信息存起来
         session.setAttribute("empName",empVo.getEmpName());
+        session.setAttribute("postName",service.selEmpType(empId));//存储员工岗位
 
         session.removeAttribute("studentId");
         session.removeAttribute("stuName");
@@ -98,6 +99,7 @@ public class TestController {//登录  考核管理！！
 
         session.removeAttribute("empId");
         session.removeAttribute("empName");
+        session.removeAttribute("postName");
 
         return "main";
     }

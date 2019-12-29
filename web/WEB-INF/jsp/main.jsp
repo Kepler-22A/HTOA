@@ -29,8 +29,7 @@
                     <span id="userNameSpan"></span>
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a data-url="${pageContext.request.contextPath}/emp/toEmpBase" data-id="140" data-title="我的信息"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的信息</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item headName"><a href="${pageContext.request.contextPath}/Controller/loginOut">登出</a></li>
@@ -266,7 +265,8 @@
 
         $("#leftLi_examine_kaoping_myKaoping").css("display","none");
 
-        $(".headName").css("display","block");
+        $(".headName").css("display","inline-block");
+        $(".headName dl dd").css("display","none");
 
     }else if (array == 2){
     }

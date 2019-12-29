@@ -59,4 +59,9 @@ public interface EmpService {
     List selectXiaJiChecking(int id);//查询我的下级审批
     void updatestate(CheckingVo vo);//审批通过或者不通过
     List selectCheckings(int id);//根据id查询出所有值
+
+    List selEmpBaseByEmpId(int empId);//查看员工的基本信息
+    List selEmpEducation(int empId);//查出员工的教育经历
+    List selEmpJobList(int empId);//查出员工的工作经历
+    List selEmpFamilyList(int empId);//查出员工的家庭联系人列表
 }
