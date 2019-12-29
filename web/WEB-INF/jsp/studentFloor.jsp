@@ -57,12 +57,16 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>楼栋管理</legend>
 </fieldset>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="add()" type="button" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i> 添加</button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="addBtn" onclick="add()" type="button" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i> 添加</button>
 
 <div class="layui-form">
     <table class="layui-table" align="center" id="studentFloorTable">
         </tbody>
         <script>
+            if (${postName != '后勤主任'}){
+                $("#addBtn").css("display","none");
+            }
+
             layui.use('table', function(){
                 var table = layui.table;
                 table.render({
@@ -90,9 +94,13 @@
             });
         </script>
         <script type="text/html" id="dus">
-            <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="delfloor('{{ d.floorId }}')">
-                <i class="layui-icon layui-icon-delete"></i> 删除
-            </button>
+            {{# if(${postName == '后勤主任'}){ }}
+                <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="delfloor('{{ d.floorId }}')">
+                    <i class="layui-icon layui-icon-delete"></i> 删除
+                </button>
+            {{# }else{ }}
+                没有权限……
+            {{# } }}
         </script>
     </table>
 </div>

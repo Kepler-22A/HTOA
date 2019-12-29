@@ -76,7 +76,7 @@
                         <dd><a data-url="${pageContext.request.contextPath}/student/SelectclassType" data-id="26" data-title="课程类别"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">课程类别</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/course" data-id="27" data-title="课程管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">课程管理</a></dd>
                         <dd><a data-url="${pageContext.request.contextPath}/student/Trial" data-id="28" data-title="试讲培训"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">试讲培训</a></dd>
-                        <dd><a href="javascript:;">值班管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/emp/toXexPage" data-id="142" data-title="值班管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">值班管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"  id="leftLi_logistics">
@@ -253,6 +253,9 @@
         $("#leftLi_message").css("display","block");
         $("#leftLi_question").css("display","block");
         $("#leftLi_examine").css("display","block");
+        $("#leftLi_logistics").css("display","block");
+        $("#leftLi_logistics dl dd:nth-child(1)").css("display","none");
+        $("#leftLi_logistics dl dd:nth-child(2)").css("display","none");
 
 
         $("#leftLi_examine dl dd:nth-child(1)").css("display","none");

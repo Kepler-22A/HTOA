@@ -86,7 +86,7 @@ public class TestController {//登录  考核管理！！
      */
     @RequestMapping("/studentLogin")
     public String studentLogin(StudentVo studentVo,HttpSession  session){
-        if (Integer.parseInt(session.getAttribute("array")+"") == 0){
+        if (session.getAttribute("array") == null || Integer.parseInt(session.getAttribute("array")+"") == 0){
             return "redirect:/Controller/Test";
         }
         System.out.println("学生登录");

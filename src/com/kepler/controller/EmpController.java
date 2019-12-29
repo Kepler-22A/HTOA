@@ -837,4 +837,12 @@ public class EmpController {//员工的Controller
 
         return "empBase";
     }
+
+    /**
+     * 值班管理的转跳
+     * **/
+    @RequestMapping(value = "/toXexPage")
+    public String toXexPage(){
+        return "xex";
+    }
 }

@@ -25,13 +25,15 @@
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" onclick="add()">请假</button>
             <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
-            <a class="layui-btn layui-btn-sm" href="${pageContext.request.contextPath }/leave/toMyTaskPage">我的任务</a>
+            {{# if(${postName == '教研主任' || postName == '学工主任' || postName == '校长'}){ }}
+                <a class="layui-btn layui-btn-sm" href="${pageContext.request.contextPath }/leave/toMyTaskPage">我的任务</a>
+            {{# } }}
         </div>
     </script>
 
     <%--    每行员工信息的操作按钮    --%>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/leave/lookComment" lay-event="edit">查看批注</a>
+        <a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/leave/lookComment/{{ d.holidayID }}" lay-event="edit">查看批注</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath }/leave/lookTaskImg/{{ d.holidayID }}/holidayID">办理进度</a>
     </script>
 

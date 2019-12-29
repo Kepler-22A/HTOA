@@ -36,7 +36,7 @@
 
 <%--    每行员工信息的操作按钮    --%>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/leave/lookCommentStudent" lay-event="edit">查看批注</a>
+    <a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/leave/lookCommentStudent/{{ d.holidayid }}" lay-event="edit">查看批注</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath }/leave/lookTaskImgStudent/{{ d.holidayid }}/holidayStudentID">办理进度</a>
 </script>
 

@@ -40,7 +40,9 @@
     <script type="text/html" id="toolbarDemo">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" onclick="add()">添加未打卡说明</button>
-            <a href="${pageContext.request.contextPath}/emp/manChecking"><button class="layui-btn layui-btn-normal layui-btn-sm">我的审批</button></a>
+            {{# if(${postName == '教研主任' || postName == '学工主任' || postName == '校长'}){ }}
+                <a href="${pageContext.request.contextPath}/emp/manChecking"><button class="layui-btn layui-btn-normal layui-btn-sm">我的审批</button></a>
+            {{# } }}
             <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
         </div>
     </script>

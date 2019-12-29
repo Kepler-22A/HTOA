@@ -25,7 +25,7 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>宿舍管理</legend>
 </fieldset>
-<button onclick="add()" type="button" class="layui-btn layui-btn-normal" style="margin-left:30px"><i class="layui-icon layui-icon-add-1"></i>添加</button>
+<button id="addBtn" onclick="add()" type="button" class="layui-btn layui-btn-normal" style="margin-left:30px"><i class="layui-icon layui-icon-add-1"></i>添加</button>
 <div class="layui-form">
     <table id="studentHourTable" class="layui-table" align="center">
     </table>
@@ -35,6 +35,11 @@
     </table>
 </div>
 <script>
+
+if (${postName != '后勤主任'}){
+    $("#addBtn").css("display","none");
+}
+
     layui.use('form', function(){
         var form = layui.form;
         form.render("select");
@@ -153,15 +158,20 @@
 </script>
 <script type="text/html" id="dus">
 
-    <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="delhour('{{ d.hourid }}')">
-        <i class="layui-icon layui-icon-delete"></i> 删除
-    </button>
-    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{ d.hourid }}')">
-        <i class="layui-icon layui-icon-edit"></i>编辑
-    </button>
-    &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="selHuorStudent('{{d.huorName}}')">
-        <i class="layui-icon layui-icon-search"></i>查看宿舍学员
-    </button>
+    {{# if(${postName == '后勤主任'}){ }}
+        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="delhour('{{ d.hourid }}')">
+            <i class="layui-icon layui-icon-delete"></i> 删除
+        </button>
+        &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{ d.hourid }}')">
+            <i class="layui-icon layui-icon-edit"></i>编辑
+        </button>
+        &nbsp;&nbsp;<button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="selHuorStudent('{{d.huorName}}')">
+            <i class="layui-icon layui-icon-search"></i>查看宿舍学员
+        </button>
+    {{# }else{ }}
+        没有权限……
+    {{# } }}
+
 </script>
 <%--弹出层--%>
 <form  class="layui-form" id="test" style="display:none"  method="post"  action="${pageContext.request.contextPath}/student/addhour">
