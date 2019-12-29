@@ -91,11 +91,30 @@
     function rederr() {
         layui.use('table', function () {
             var table = layui.table;
+            // var manage = [ //管理表头
+            //     {field: 'templateId', width: 100, title: '模板Id'}
+            //     , {field: 'templateName', width: 150, title: '考核名称'}
+            //     , {field: 'depName', width: 100, title: '考核部门'}
+            //     , {field: 'templateType', width: 100, title: '考核类型'}
+            //     , {field: 'empName', width: 100, title: '创建人'}
+            //     , {field: 'templateTime', width: 180, title: '创建日期', templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+            //     , {field: 'remark', title: '备注', Width: 350}
+            //     , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 300}
+            // ];
+            // var common  = [
+            //     {field: 'templateId', width: 100, title: '模板Id'}
+            //     , {field: 'templateName', width: 150, title: '考核名称'}
+            //     , {field: 'depName', width: 100, title: '考核部门'}
+            //     , {field: 'templateType', width: 100, title: '考核类型'}
+            //     , {field: 'empName', width: 100, title: '创建人'}
+            //     , {field: 'templateTime', width: 180, title: '创建日期', templet: '<span>{{layui.util.toDateString(d.templateTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+            //     , {field: 'remark', title: '备注', Width: 350}
+            // ]
             table.render(
                 {
                     elem: '#test'
                     , url: '/Controller/table3'
-                    , cols: [[
+                    , cols: [[ //管理表头
                         {field: 'templateId', width: 100, title: '模板Id'}
                         , {field: 'templateName', width: 150, title: '考核名称'}
                         , {field: 'depName', width: 100, title: '考核部门'}
@@ -106,6 +125,19 @@
                         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 300}
                     ]]
                     , page: true
+                    // ,parseData: function(res){ //res 即为原始返回的数据
+                    //     if(res.code==1){//判断是否是管理员 1是管理员
+                    //         this.cols[0]=manage //管理员表头
+                    //     }else{
+                    //         this.cols[0]=common//普通用户表头
+                    //     }
+                    //     return {
+                    //         "code": res.code, //解析接口状态
+                    //         "msg": res.msg, //解析提示文本
+                    //         "count": res.count, //解析数据长度
+                    //         "data": res.data//解析数据列表
+                    //     };
+                    // }
                 }
             );
             //监听行单击事件
@@ -145,8 +177,8 @@
                         {field: 'step', edit: true, title: '步骤'},
                         {field: 'checkStepType', edit: true, title: '类型'},
                         {field: 'weight', edit: true, title: '权重'},
-                        {field: 'beginTime', edit: true, title: '开始时间',templet : '<span>{{layui.util.toDateString(d.beginTime,"yyyy-MM-dd HH:mm:ss")}}</span>'},
-                        {field: 'endTime', edit: true, title: '结束时间',templet : '<span>{{layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</span>'},
+                        {field: 'beginTime', edit: true, title: '开始时间',templet: '<span>{{layui.util.toDateString(d.beginTime,"yyyy-MM-dd HH:mm:ss")}}</span>'},
+                        //{field: 'endTime', edit: true, title: '结束时间',templet : '<span>{{layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</span>'},
                         {toolbar: '#table_tool2', title: '操作', fixed: 'right', align: 'center', width: 120}
                     ]]
                 }
@@ -155,8 +187,8 @@
                 {
                     elem: '#testTable3',
                     height: 400,
-                    url:'/Controller/templateTable/table3/'+templateId,
-                    type:'POST',
+                    url: '/Controller/templateTable/table3/' + templateId,
+                    type: 'POST',
                     cols: [[
                         {field: 'grade', edit: true, title: '等级名称'},
                         {field: 'min', edit: true, title: '最低分'},
@@ -164,8 +196,7 @@
                         {field: 'remark', edit: true, title: '评语'},
                         {toolbar: '#table_tool3', title: '操作', fixed: 'right', align: 'center', width: 120}
                     ]]
-                }
-            );
+                });
         });
     }
     //新增tab页

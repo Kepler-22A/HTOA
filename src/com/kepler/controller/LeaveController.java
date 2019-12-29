@@ -747,9 +747,17 @@ public class LeaveController {
     public void selStuApply(HttpSession session,HttpServletResponse response){
         response.setCharacterEncoding("utf-8");
 
-        int studentId = Integer.parseInt((session.getAttribute("studentId")+""));
+        List list = new ArrayList();
+        if (session.getAttribute("studentId") != null){
+            int studentId = Integer.parseInt((session.getAttribute("studentId")+""));
 
-        List list = ls.selStudentLeaveList(studentId);
+            list = ls.selStudentLeaveList(studentId);
+        }else {
+            HashMap map = new HashMap();
+            map.put("massage","当前员工登录");
+            list.add(map);
+        }
+
 
         JSONObject jo = new JSONObject();
 

@@ -49,5 +49,14 @@ public interface EmpService {
     List selectCharRecord(int id);//根据id查询出谈心记录
     void updateCharRecord(ChatRecordVo vo);//修改谈心记录
     void delectCharRecord(ChatRecordVo vo);//删除谈心记录
-    List selectChecking();//查询出考勤管理
+    List selectChecking(int id);//查询出考勤管理
+
+    int selWeeklyNotPush(int empId);//检测当前员工有没有提交本周周报
+    int selChatRecord(int empId);//根据empId查看当前月提交了多少份谈心记录
+
+    List selectshangjiID(int id);//查询上级id
+    void addChecking(CheckingVo vo);//新增考勤管理
+    List selectXiaJiChecking(int id);//查询我的下级审批
+    void updatestate(CheckingVo vo);//审批通过或者不通过
+    List selectCheckings(int id);//根据id查询出所有值
 }
