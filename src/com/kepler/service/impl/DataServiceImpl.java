@@ -40,11 +40,35 @@ public class DataServiceImpl extends BaseDao implements DataService {
 
     @Override
     public List selEnrollData() {
-        return sqlQuery("select * from emrollment");
+        return sqlQuery("select e.*,em.empName,ct.classTypeName,d.deptName from enrollment e " +
+                "left join empVo em on e.empid=em.empId left join classType ct on e.studType=ct.calssTypeId " +
+                "left join Dept d on e.majorId=d.deptID");
     }
 
     @Override
     public void addEnrllor(EnrollmentVo vo) {
         save(vo);
+    }
+
+    @Override
+    public List selMajor(){
+        return sqlQuery("select * from Dept");
+
+    }
+    @Override
+    public List selClassType(){
+        return sqlQuery("select * from classType");
+
+    }
+    @Override
+    public List selEmp(){
+        return sqlQuery("select * from empVo");
+    }
+
+    @Override
+    public void delEnrllor(int id){
+        EnrollmentVo vo = new EnrollmentVo();
+        vo.setEnrollmentid(id);
+        delete(vo);
     }
 }

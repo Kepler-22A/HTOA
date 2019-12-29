@@ -105,6 +105,12 @@
                         </dd>
                     </dl>
                 </li>
+                <li class="layui-nav-item" id="leftLi_zhaosheng">
+                    <a href="#">招生就业</a>
+                    <dl class="layui-nav-child">
+                        <dd><a data-url="/data/enrollment" data-id="309" data-title="招生信息" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">招生信息</a></dd>
+                    </dl>
+                </li>
                 <li class="layui-nav-item" id="leftLi_question">
                     <a href="#">问题反馈</a>
                     <dl class="layui-nav-child">

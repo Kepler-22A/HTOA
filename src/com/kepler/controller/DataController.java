@@ -1,5 +1,6 @@
 package com.kepler.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kepler.dao.FileUpload;
 import com.kepler.service.DataService;
@@ -139,10 +140,88 @@ public class DataController {
     }
 
     //添加
-    @RequestMapping("/addenroll")
+    @RequestMapping(value="/addenroll")
 
     public String addenroll(EnrollmentVo vo){
+        vo.setAmount(300);
+        vo.setStartTime(new Date());
         ds.addEnrllor(vo);
-        return "success";
+        return "redirect:/data/enrollment";
+    }
+
+    //查询专业
+    @RequestMapping(value = "/selMajor")
+    public void selMajor(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        List list = ds.selMajor();
+
+        JSONArray ja = new JSONArray();
+
+        for (Object o : list){
+            Map map = (HashMap)o;
+
+            ja.add(map);
+        }
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.println(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //查询班级类别
+    @RequestMapping(value = "/selClassType")
+    public void selClassType(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        List list = ds.selClassType();
+
+        JSONArray ja = new JSONArray();
+
+        for (Object o : list){
+            Map map = (HashMap)o;
+
+            ja.add(map);
+        }
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.println(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //查询招生老师
+    @RequestMapping(value = "/selEmp")
+    public void selEmp(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+
+        List list = ds.selEmp();
+
+        JSONArray ja = new JSONArray();
+
+        for (Object o : list){
+            Map map = (HashMap)o;
+
+            ja.add(map);
+        }
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.println(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping("/delEnroll")
+    public String delEnroll(EnrollmentVo vo){
+        ds.delEnrllor(vo.getEnrollmentid());
+       return"redirect:/data/enrollment";
     }
 }

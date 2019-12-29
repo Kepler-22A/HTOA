@@ -24,4 +24,13 @@ public interface DataService {
 
     //添加
     public void addEnrllor(EnrollmentVo vo);
+    //查询专业
+    public List selMajor();
+    //查询班级类别
+    public List selClassType();
+    //查询招生老师
+    public List selEmp();
+
+    //删除
+    public void delEnrllor(int id );
 }
