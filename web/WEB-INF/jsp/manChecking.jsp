@@ -88,8 +88,10 @@
         </div>
     </script>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" href="javascript:OK('{{ d.CheckingID }}','{{1}}')" lay-event="edit">属实</a>
-        <a class="layui-btn layui-btn-warm layui-btn-xs" href="javascript:OK('{{ d.CheckingID }}','{{2}}')" lay-event="edit">不属实</a>
+        {{# if(d.reamk != '属实'){ }}
+            <a class="layui-btn layui-btn-xs" href="javascript:OK('{{ d.CheckingID }}','{{1}}')" lay-event="edit">属实</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs" href="javascript:OK('{{ d.CheckingID }}','{{2}}')" lay-event="edit">不属实</a>
+        {{# } }}
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="deleteWorkExprience('{{ d.CheckingID }}')">删除</a>
     </script>
 </body>
