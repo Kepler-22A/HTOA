@@ -33,7 +33,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/Controller/Test">退出登录</a></li>
+            <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/Controller/loginOut">登出</a></li>
         </ul>
     </div>
 

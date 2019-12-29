@@ -63,10 +63,13 @@ public class TestController {//登录  考核管理！！
      */
     @RequestMapping("/login")
     public String login(empVo empVo,HttpSession  session){
-        if (Integer.parseInt(session.getAttribute("array")+"") == 0){
+        if (session.getAttribute("array") == null || Integer.parseInt(session.getAttribute("array")+"") == 0){
             return "redirect:/Controller/Test";
         }
         System.out.println("员工登录");
+        if (empVo.getEmpName() == null){
+            return "redirect:/Controller/Test";
+        }
         int empId = service.selectInt(empVo.getEmpName()); //获的当前登陆的是谁
         session.setAttribute("empId",empId);//把当前员工信息存起来
         session.setAttribute("empName",empVo.getEmpName());
@@ -98,13 +101,11 @@ public class TestController {//登录  考核管理！！
 
     @RequestMapping(value = "/loginOut")
     public String loginOut(HttpSession session){
-        if (session.getAttribute("empId") != null){
-            session.removeAttribute("empId");
-            session.removeAttribute("empName");
-        }else if (session.getAttribute("studentId") != null){
-            session.removeAttribute("studentId");
-            session.removeAttribute("stuName");
-        }
+        session.removeAttribute("empId");
+        session.removeAttribute("empName");
+        session.removeAttribute("studentId");
+        session.removeAttribute("stuName");
+        session.removeAttribute("array");
 
         return "redirect:/";
     }
