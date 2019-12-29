@@ -67,7 +67,7 @@ public class TestController {//登录  考核管理！！
             return "redirect:/Controller/Test";
         }
         System.out.println("员工登录");
-        if (empVo.getEmpName() == null){
+        if (empVo.getEmpName() == null || "".equals(empVo.getEmpName())){
             return "redirect:/Controller/Test";
         }
         int empId = service.selectInt(empVo.getEmpName()); //获的当前登陆的是谁
@@ -89,9 +89,12 @@ public class TestController {//登录  考核管理！！
             return "redirect:/Controller/Test";
         }
         System.out.println("学生登录");
+        if (studentVo.getStuname() == null || "".equals(studentVo.getStuname())){
+            return "redirect:/Controller/Test";
+        }
         int  StdentId = service.selStudentId(studentVo.getStuname()); //获的当前登陆的是谁
         session.setAttribute("studentId",StdentId);//把当前学生信息存起来
-        session.setAttribute("stuName",studentVo.getStudid());
+        session.setAttribute("stuName",studentVo.getStuname());
 
         session.removeAttribute("empId");
         session.removeAttribute("empName");

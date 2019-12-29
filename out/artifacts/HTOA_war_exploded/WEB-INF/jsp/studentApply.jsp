@@ -56,24 +56,38 @@
         layui.use('table', function(){
             var table = layui.table;
 
-            //第一个实例
-            table.render({
-                elem: '#empLeaveTable'
-                ,height: 523
-                ,url: '/leave/selStuApply' //数据接口
-                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-                ,page: true //开启分页
-                ,cols: [[ //表头
-                    {field: 'holidayid', title: '编号', width:150, sort: true, fixed: 'left'}
-                    ,{field: 'stuname', title: '请假人', width:150}
-                    ,{field: 'holidayDay', title: '请假时长', width:150,templet:'<span>{{getHolidayString(d.holidayDay)}}</span>'}
-                    ,{field: 'startTime', title: '开始时间', width:200,templet : '<span>{{layui.util.toDateString(d.startTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
-                    ,{field: 'endTime', title: '结束时间', width: 200,templet : '<span>{{layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
-                    ,{field: 'Status', title: '状态', width: 150,templet:'#statusShow'}
-                    ,{field: 'Remark', title: '备注', width: 300}
-                    ,{field: '', title: '操作', width: 180 ,toolbar:'#barDemo'}
-                ]]
-            });
+            if (${studentId == null}){
+                //第一个实例
+                table.render({
+                    elem: '#empLeaveTable'
+                    ,height: 523
+                    ,url: '/leave/selStuApply' //数据接口
+                    ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                    ,page: true //开启分页
+                    ,cols: [[ //表头
+                        {field: 'massage', title: '', width:1500, fixed: 'center'}
+                    ]]
+                });
+            }else {
+                //第一个实例
+                table.render({
+                    elem: '#empLeaveTable'
+                    ,height: 523
+                    ,url: '/leave/selStuApply' //数据接口
+                    ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                    ,page: true //开启分页
+                    ,cols: [[ //表头
+                        {field: 'holidayid', title: '编号', width:150, sort: true, fixed: 'left'}
+                        ,{field: 'stuname', title: '请假人', width:150}
+                        ,{field: 'holidayDay', title: '请假时长', width:150,templet:'<span>{{getHolidayString(d.holidayDay)}}</span>'}
+                        ,{field: 'startTime', title: '开始时间', width:200,templet : '<span>{{layui.util.toDateString(d.startTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+                        ,{field: 'endTime', title: '结束时间', width: 200,templet : '<span>{{layui.util.toDateString(d.endTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
+                        ,{field: 'Status', title: '状态', width: 150,templet:'#statusShow'}
+                        ,{field: 'Remark', title: '备注', width: 300}
+                        ,{field: '', title: '操作', width: 180 ,toolbar:'#barDemo'}
+                    ]]
+                });
+            }
 
         });
     };

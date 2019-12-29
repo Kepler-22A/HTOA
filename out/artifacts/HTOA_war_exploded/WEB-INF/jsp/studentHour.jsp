@@ -25,12 +25,12 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>宿舍管理</legend>
 </fieldset>
-<button onclick="add()" type="button" class="layui-btn layui-btn-normal"><i class="layui-icon layui-icon-add-1"></i>添加</button>
+<button onclick="add()" type="button" class="layui-btn layui-btn-normal" style="margin-left:30px"><i class="layui-icon layui-icon-add-1"></i>添加</button>
 <div class="layui-form">
     <table id="studentHourTable" class="layui-table" align="center">
     </table>
 </div >
-<div  class="layui-form" style="display: none">
+<div  id="hourstudent" class="layui-form" style="display: none">
     <table id="Huorstudent" class="layui-table" align="center">
     </table>
 </div>
@@ -87,6 +87,16 @@
             }
         });
 
+        $.post("/student/selFloor",{},function (data) {
+            var form = layui.form;
+            var SelectHour_any = "";
+            $.each(data,function (index,obj) {
+                SelectHour_any += "<option value='" + obj.floorId + "'>" + obj.floorName + "</option>";
+            });
+            $("#SelectHour").html(SelectHour_any);
+            form.render('select');
+        },"json");
+
     }
     //修改
     function  update(hourid) {
@@ -132,51 +142,13 @@
                 time: 2000 //20s后自动关闭
                 //btn: ['明白了', '知道了']
             });
-
         });
 
-        //查询宿舍学员
-        function selhuorStudent(huorName) {
-            layer.open({
-                title:'查看宿舍学员',
-                type:1,
-                content:$('#Huorstudent'),
-                area: ['600px', '550px'],
-                resize:false,
-            });
-            layui.use('table',function () {
-                var table =layui.table;
-                table.render({
-                    elem: "Huorstudent",
-                    height: 350,
-                    url: '${pageContext.request.contextPath}/system/selHuorStudent'+huorName,
-                    cols: [[
-                        {field: 'huorName', width: 250, title: '宿舍房号'}
-                        , {field: 'clazz', width: 250, title: '所在班级'}
-                        , {field: 'stuname', width: 240, title: '学生名字'}
-                        , {field: 'intrphone', width: 150, title: '电话'}
-                    ]]
-                    , page: true
-                });
-            })
-        }
 
 
-        //关闭
-        function guanbi() {
 
 
-            // parent.location.reload();
-            url:'${pageContext.request.contextPath}/student/studenthuor'
-            $("#addfloor").hide(); //jquery方式关闭
-            layer.close(layer.index);
-            // // 获得frame索引
-            // var index = parent.layer.getFrameIndex(window.name);
-            // //关闭当前frame
-            // parent.layer.close(index);
-            // window.parent.location.reload();
-            // parent.location.reload();
-        }
+
     };
 </script>
 <script type="text/html" id="dus">
@@ -204,10 +176,12 @@
             <input id="huoeIddsc" type="text" name="huoeIddsc" required  lay-verify="required" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">宿舍楼栋</label>
+
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <label class="layui-form-label" style="width: 80px;">宿舍楼栋</label>
         <div class="layui-input-inline">
-            <input id="floorId" type="text" name="floorId" required  lay-verify="required" autocomplete="off" class="layui-input">
+            <select id="SelectHour" name="floorId" style="width: 150px">
+            </select>
         </div>
     </div>
    <%-- <div class="layui-form-item">
@@ -255,4 +229,45 @@
 </form>
 
 </body>
+<script type="text/javascript">
+    //关闭
+    function guanbi() {
+        // parent.location.reload();
+        $("#addfloor").hide(); //jquery方式关闭
+        layer.close(layer.index);
+        // // 获得frame索引
+        // var index = parent.layer.getFrameIndex(window.name);
+        // //关闭当前frame
+        // parent.layer.close(index);
+        // window.parent.location.reload();
+        // parent.location.reload();
+    }
+    //查询宿舍学员
+    function selHuorStudent(huorName) {
+        layer.open({
+            title:'查看宿舍学员',
+            type:1,
+            content:$('#hourstudent'),
+            area: ['600px', '450px'],
+            resize:false,
+        });
+        layui.use('table',function () {
+            var table =layui.table;
+            table.render({
+                elem: "#Huorstudent",
+                height: 350,
+                url: '${pageContext.request.contextPath}/system/selHuorStudent',
+                where: {name:huorName},
+                cols: [[
+                    {field: 'huorName', width: 150, title: '宿舍房号'}
+                    , {field: 'clazz', width: 150, title: '所在班级'}
+                    , {field: 'stuname', width: 120, title: '学生名字'}
+                    , {field: 'intrphone', width: 175, title: '电话'}
+                ]]
+                , page: true
+            });
+
+        })
+    }
+</script>
 </html>

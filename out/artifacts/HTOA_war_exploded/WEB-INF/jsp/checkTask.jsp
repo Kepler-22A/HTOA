@@ -20,9 +20,6 @@
 </fieldset>
 <button class="layui-btn" onclick="rederr()">刷新</button>
 <table class="layui-hide" id="test" lay-filter="testTable"></table>
-<form  class="layui-form" id="projectFrom" style="display:none" method="post" >
-
-</form>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="addTab('{{d.templateId}}')" >去打分</a>
 </script>
@@ -56,17 +53,6 @@
         parent.active.tabAdd("/Controller/checkMark/"+templateId, 47, "考评打分");
         parent.active.tabChange(47)
     }
-    // function add() {
-    //     layer.open({
-    //         type: 1,
-    //         title:"教师考评打分",
-    //         area:['70%','70%'],
-    //         content: $("#projectFrom"),
-    //         closeBtn :0, //隐藏弹出层的关闭按钮
-    //         yes:function(index,layero){
-    //         }
-    //     });
-    // }
 </script>
 </body>
 

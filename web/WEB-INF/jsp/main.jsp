@@ -23,17 +23,17 @@
         <div class="layui-logo">学校管理后台</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
+            <li class="layui-nav-item headName">
+                <a href="javascript:">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    ${empName}
+                    <span id="userNameSpan"></span>
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/Controller/loginOut">登出</a></li>
+            <li class="layui-nav-item headName"><a href="${pageContext.request.contextPath}/Controller/loginOut">登出</a></li>
         </ul>
     </div>
 
@@ -49,7 +49,7 @@
                         <dd><a data-url="/leave/toStuApplyPage" data-id="130" data-title="学生请假"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">学生请假</a></dd>
                         <dd><a data-url="/emp//toMyWeeklyPage" data-id="129" data-title="我的周报"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">我的周报</a></dd>
                         <dd><a data-url="/emp/Checking" data-id="132" data-title="考勤管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">考勤管理</a></dd>
-                        <dd><a href="javascript:;">离职申请</a></dd>
+                        <dd><a data-url="/leave/toDimissionPage" data-id="134" data-title="离职申请"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">离职申请</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"  id="leftLi_message">
@@ -164,6 +164,12 @@
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
 
+    if (${empId == null}){
+        $("#userNameSpan").html('${stuName}');
+    }else {
+        $("#userNameSpan").html('${empName}');
+    }
+
     layui.use('element',function() {
         var $ = layui.jquery;
         var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
@@ -259,6 +265,8 @@
         $("#leftLi_examine_empKaohe").css("display","none");
 
         $("#leftLi_examine_kaoping_myKaoping").css("display","none");
+
+        $(".headName").css("display","block");
 
     }else if (array == 2){
     }

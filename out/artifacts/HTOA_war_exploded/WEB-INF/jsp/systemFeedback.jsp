@@ -126,7 +126,7 @@
     <script type="text/html"  id="chuli">
         {{# if(d.status == 0){ }}
         未处理
-        {{# }else if(d.depId == 1){ }}
+        {{# }else if(d.status == 1){ }}
         已处理
         {{# } }}
     </script>

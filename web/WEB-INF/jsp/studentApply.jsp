@@ -65,7 +65,7 @@
                     ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头
-                        {field: 'massage', title: '', width:1480, fixed: 'center'}
+                        {field: 'massage', title: '', width:1500, fixed: 'center'}
                     ]]
                 });
             }else {
