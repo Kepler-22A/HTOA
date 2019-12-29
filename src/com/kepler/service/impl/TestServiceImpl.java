@@ -15,7 +15,7 @@ import java.util.List;
 public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int selectLogin(String name, String pwd) {
-        return executeIntSQL("select  count(*) from empVo where empName='"+name+"' and password='"+pwd+"'");
+        return executeIntSQL("select  count(*) from empVo where empName='"+name+"' and password='"+pwd+"' and status = 1");
     }
 
     @Override
