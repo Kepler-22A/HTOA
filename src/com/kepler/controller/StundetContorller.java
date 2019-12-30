@@ -298,11 +298,13 @@ public class StundetContorller {
         return "studentData";
     }
     @RequestMapping(value = "/data")
-    public void Data(HttpServletResponse response) throws IOException {
+    public void Data(HttpServletResponse response,HttpSession session) throws IOException {
         response.setCharacterEncoding("utf-8");
         PrintWriter pwt = response.getWriter();
         JSONObject json = new JSONObject();
-        List<StudentVo> sum = sts.liststudentdata();
+        int empId = Integer.parseInt(session.getAttribute("empId")+"");
+        String postName = session.getAttribute("postName")+"";
+        List<StudentVo> sum = sts.liststudentdata(empId,postName);
         json.put("code",0);
         json.put("count",sum.size());
         json.put("msg","");

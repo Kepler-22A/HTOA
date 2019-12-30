@@ -216,12 +216,11 @@ public class TestController {//登录  考核管理！！
 
     }
     @RequestMapping("/table2")
-    public void table2(HttpServletResponse response) throws IOException {
+    public void table2(HttpServletResponse response,HttpSession session) throws IOException {
         System.out.println("进入table1!!!");
         response.setCharacterEncoding("utf-8");
 
-        List list = service.selectTable2();
-
+        List list = service.selectTable2(session.getAttribute("empName")+"",Integer.parseInt(session.getAttribute("empId")+""));
 
         JSONObject json = new JSONObject();
         json.put("code",0);

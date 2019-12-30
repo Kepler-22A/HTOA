@@ -630,7 +630,7 @@
                     ,{field:'computer', title:'是否送电脑'}
                     ,{field:'parents', title:'家长姓名' }
                     ,{field:'qkMoney', title:'欠款金额' }
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                    ,{fixed: 'right', title:'操作',width:150, toolbar: '#barDemo'}
                 ]]
                 ,page: true
             });

@@ -51,8 +51,8 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
-    public List selectTable2() {
-        return sqlQuery("select m.auditName,e.empName, a.* from AuditLog a,empVo e,AuditModel m where  a.empID = e.empID and a.auditModelID= m.auditModelID");
+    public List selectTable2(String empName,int empId) {
+        return sqlQuery("select (select m.auditName from AuditModel m where a.auditModelID = m.auditModelID) as auditName,(select e.empName from empVo e where a.empID = e.empID) as empName, a.* from AuditLog a where a.auditPerson = '"+empName+"' or a.empId = " + empId);
     }
 
     @Override

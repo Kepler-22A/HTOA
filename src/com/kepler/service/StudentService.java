@@ -41,7 +41,7 @@ public interface StudentService {
     //删除设备维修记录
     public void delEquipment(int id);
     //查询学生资料
-    public List<StudentVo> liststudentdata();
+    public List<StudentVo> liststudentdata(int empId,String postName);
     //添加学生
     public void studentADD(StudentVo vo);
     //根据学生id查询出数据

@@ -15,10 +15,10 @@
 </head>
 <body>
     <table class="layui-hide" id="test" lay-filter="testTable"></table>
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <fieldset class="layui-elem-field layui-field-title newExamine" style="margin-top: 50px;">
         <legend>新增指标</legend>
     </fieldset>
-    <form class="layui-form layui-form-pane" method="post" action="${pageContext.request.contextPath}/Controller/addExamine">
+    <form class="layui-form layui-form-pane newExamine" method="post" action="${pageContext.request.contextPath}/Controller/addExamine">
         <div class="layui-form-item">
             <label class="layui-form-label">考核内容</label>
             <div class="layui-input-block">
@@ -55,10 +55,19 @@
         </div>
     </form>
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-danger layui-btn-xs"  onclick="del('{{ d.auditModelID }}')">删除</a>
+        {{# if(${postName == '后勤主任'}){ }}
+            <a class="layui-btn layui-btn-danger layui-btn-xs"  onclick="del('{{ d.auditModelID }}')">删除</a>
+        {{# }else{ }}
+            <span>没有权限……</span>
+        {{# } }}
     </script>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 <script>
+
+    if (${postName != '后勤主任'}){
+        $(".newExamine").css("display","none");
+    }
+
     rederr()
     function rederr(){
         layui.use('table', function(){

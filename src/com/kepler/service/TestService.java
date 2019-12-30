@@ -13,7 +13,7 @@ public interface TestService {
     public int selectInt2(String name);
     int selStudentId(String stuname);
     public List selectTable();//数据
-    public List selectTable2();
+    public List selectTable2(String empName,int empId);
     public List selectTable3();
     public List selectTable4();
     public List selectTable5();

@@ -74,7 +74,7 @@
 <script id="youIsReadSpan" type="text/html">
     {{# if (d.youIsRead == 1) { }}
         已读
-    {{# } else if(d.noticeType == 2) { }}
+    {{# } else if(d.youIsRead == 2) { }}
         未读
     {{# } else { }}
         你是发送人

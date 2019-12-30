@@ -103,9 +103,15 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     }
 
     @Override
-    public List<StudentVo> liststudentdata() {
-        return sqlQuery("select studid,stuname,stuno,sex,cardid,phone,className,huor,stat,collar,grants,computer,parents,qkMoney\n" +
-                "from Student s left join StudentClass c on s.clazz = c.classid");
+    public List<StudentVo> liststudentdata(int empId,String postName) {
+        if ("讲师".equals(postName) || "教研副主任".equals(postName) || "教研主任".equals(postName)){
+            return sqlQuery("select studid,stuname,stuno,sex,cardid,phone,className,huor,stat,collar,grants,computer,parents,qkMoney from Student s left join StudentClass c on s.clazz = c.classid where s.clazz in (select classid from StudentClass where teacher = "+empId+")");
+        }else if ("专职班主任".equals(postName) || "学工副主任".equals(postName) || "学工主任".equals(postName)){
+            return sqlQuery("select studid,stuname,stuno,sex,cardid,phone,className,huor,stat,collar,grants,computer,parents,qkMoney from Student s left join StudentClass c on s.clazz = c.classid where s.clazz in (select classid from StudentClass where classTeacher = "+empId+")");
+        }
+
+        return null;
+
     }
 
     @Override
