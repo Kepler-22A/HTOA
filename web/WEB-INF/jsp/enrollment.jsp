@@ -304,7 +304,7 @@
                     ,{field:'reviewerTime',width:180,title: '审核时间',templet:'#reviewerTime'}
                     ,{field:'classTypeName',width:150,title: '班级类别'}
                     ,{field:'deptName',width:200,title: '专业'}
-                    ,{fixed: 'right',width:300, title: '操作', toolbar:'#dus' }
+                    ,{fixed: 'right',width:200, title: '操作', toolbar:'#dus' }
                 ]]
                 ,page: true
             });
