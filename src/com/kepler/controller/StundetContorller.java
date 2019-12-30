@@ -357,14 +357,24 @@ public class StundetContorller {
     @RequestMapping(value = "/delstudent/{Studid}")
     @ResponseBody
     public void delstudent(@PathVariable(value = "Studid")int Studid,StudentVo vo){
+        //查询这个学生是否有学号
+        List xuehao = sts.selectStudentIdData(Studid);
         vo.setStudid(Studid);
-        //再删除考试成绩和答辩成绩
-       List list =  sts.selectStudent_score(Studid);
-       Map map = (Map) list.get(0);
-       Student_scoreVo ss = new Student_scoreVo();
-       ss.setScoreId((Integer) map.get("scoreId"));
-        sts.deleteStudent_score_id(ss);
-        sts.deleStudentDatas(vo);
+        Map map1 = new HashMap();
+        for(int i=0;i<xuehao.size();i++){
+           map1 = (Map) xuehao.get(i);
+        }
+        if(map1.get("stuno")!=null){//判断这个学生是否是试学那里过来的
+            //再删除考试成绩和答辩成绩
+            List list =  sts.selectStudent_score(Studid);
+            Map map = (Map) list.get(0);
+            Student_scoreVo ss = new Student_scoreVo();
+            ss.setScoreId((Integer) map.get("scoreId"));
+            sts.deleteStudent_score_id(ss);
+            sts.deleStudentDatas(vo);
+        }else {
+            sts.deleStudentDatas(vo);
+        }
     }
     //林12-9写查询学生成绩页面
     @RequestMapping(value = "/studentScore")//跳转到学生成绩页面

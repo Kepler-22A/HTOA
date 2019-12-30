@@ -566,6 +566,15 @@
     <!--图像表-->
     <div id="main" style="display: none;height:480px;width:950px"></div>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+    <script type="textml" id="testType2">
+    {{# if (d.stat=== 1) { }}
+        笔试
+    {{# } else if(d.stat=== 2) { }}
+        机试
+    {{# } else { }}
+        模拟面试
+    {{# } }}
+</script>
     <script type="textml" id="roleTpl">
     {{# if (d.stat=== 1) { }}
         在校
@@ -575,6 +584,18 @@
         我也不晓得
     {{# } }}
 </script>
+    <script type="textml" id="testType3">
+    {{# if (d.stat=== 1) { }}
+        第一学期
+    {{# } else if(d.stat=== 2) { }}
+        第二学期
+    {{# } else if(d.stat=== 3) { }}
+          第三学期
+    {{# } else { }}
+        第四学期
+    {{# } }}
+</script>
+
 </body>
 <script>
     reload();
@@ -696,8 +717,8 @@
                     ,{field:'score', title: '分数', sort: true}
                     ,{field:'Rescore', title: '补考分数'}
                     ,{field:'courseName', title: '课程名称'}
-                    ,{field:'testType', title: '考试类别', align: 'center'} //单元格内容水平居中
-                    ,{field:'termid', title: '在读学期',  align: 'right'} //单元格内容水平居中
+                    ,{field:'testType', title: '考试类别', align: 'center',templet: '#testType2'} //单元格内容水平居中
+                    ,{field:'termid', title: '在读学期',  align: 'right',templet: '#testType3'} //单元格内容水平居中
                     ,{field: 'scoreTime', title: '考试时间', width:200,templet : '<span>{{layui.util.toDateString(d.scoreTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
                     ,{field:'empName', title: '录入人员', sort: true, align: 'right'}
                     ,{field: '', title: '操作',templet:'#secondTable2RowCZ'}
