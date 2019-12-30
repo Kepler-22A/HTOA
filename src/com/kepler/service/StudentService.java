@@ -79,7 +79,7 @@ public interface StudentService {
     //根据班级分配时间来查询这一年有的班级
     public List selectClass(String id);
     //根据点击班级分配然后查询数据
-    public List Customss(String cuntom);
+    public List Customss(int Classid);
     //查询出没有分班的学生
    public List selectNOClassStudentData();
    //增加学生答辩成绩

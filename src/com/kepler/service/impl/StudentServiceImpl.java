@@ -194,7 +194,7 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     }
     @Override
     public List listClasstree() {
-        return sqlQuery("select * from StudentClass");
+        return sqlQuery("select distinct falled from StudentClass");
     }
 
     @Override
@@ -203,14 +203,14 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
     }
 
     @Override
-    public List Customss(String cuntom) {
-        return sqlQuery("select Studid,className,stuname,sex,phone from Student s,StudentClass t where s.clazz = t.classno and className = '"+cuntom+"'");
+    public List Customss(int Classid) {
+        return sqlQuery("select s.Studid,t.className,s.stuname,s.sex,s.phone from Student s left join StudentClass t on s.clazz = t.classid\n" +
+                "where clazz ="+Classid);
     }
 
     @Override
     public List selectNOClassStudentData() {
-        return sqlQuery("select distinct Studid,stuname,cardid,sex,phone,middleschool,clazz,introduretech,classTypeName from Student t left join StudentClass s on t.clazz = s.classid left join classType\n" +
-                "e on s.classid = e.calssTypeId");
+        return sqlQuery("select e.enrollmentid,e.studName,e.card,e.sex,e.tell,e.school,e.classes,o.empName,classTypeName from enrollment e left join empVo o on e.empid = o.empid left join classType c on e.studType = c.calssTypeId where e.status = 4");
     }
 
     @Override

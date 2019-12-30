@@ -213,7 +213,7 @@
                     ,{field:'amount',width:120,title: '预定报名费'}
                     ,{field:'enrollMoneyTime',width:180,title: '发放时间',templet:'#enrollMoneyTime'}
                     ,{field:'testTime',width:180,title: '试学时间',templet:'#testTime'}
-                    ,{field:'status',width:60,title: '状态'}
+                    ,{field:'status',width:120,title: '状态',templet:'#statusSpan'}
                     ,{field:'startTime',width:180,title: '录入时间',templet:'#startTime'}
                     ,{field:'empName',width:150,title: '招生老师'}
                     ,{field:'reviewer',width:150,title: '审核人'}
@@ -235,6 +235,20 @@
                 };
             });
         });
+    </script>
+    <script id="statusSpan" type="text/html">
+<%--        意向学生 2 、预定报名学生 3 、试学学生 4 、在读学生 1 、已毕业学生 5--%>
+        {{# if(d.status == 1){ }}
+            <span>在读学生</span>
+        {{# }else if(d.status == 2){ }}
+            <span>意向学生</span>
+        {{# }else if(d.status == 3){ }}
+            <span>预定报名学生</span>
+        {{# }else if(d.status == 4){ }}
+            <span>试学学生</span>
+        {{# }else if(d.status == 5){ }}
+            <span>已毕业学生</span>
+        {{# } }}
     </script>
     <script type="text/html" id="dus">
 <%--        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{d.majorID}}')">--%>

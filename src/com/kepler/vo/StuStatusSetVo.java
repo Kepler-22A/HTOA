@@ -9,7 +9,7 @@ public class StuStatusSetVo {//学生状态表
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int statusId; //学生状态id
-    private String statusName;//状态名称：意向学生、预定报名学生、试学学生、在读学生、已毕业学生
+    private String statusName;//状态名称：意向学生 2 、预定报名学生 3 、试学学生 4 、在读学生 1 、已毕业学生 5
     private String remark;//说明
 
     public int getStatusId() {

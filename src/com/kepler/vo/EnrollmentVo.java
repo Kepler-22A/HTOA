@@ -23,9 +23,9 @@ public class EnrollmentVo {
     private int  amount;        //预定报名费
     private String computer;    //是否送电脑(是/否)
     private Date testTime;      //试学时间
-    private Date startTime;     //录入时间
-    private Date signdate;      //员工id关联员工表
-    private int empid;          //
+    private Date startTime;     //入学时间
+    private Date signdate;      //录入时间
+    private int empid;          //员工id关联员工表
     private int status;         //关联学生状态表
     private String remark;      //备注
     private int studType;       //班级类别,关联班级类别表

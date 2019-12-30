@@ -240,7 +240,6 @@
     });
 
     var array = ${array};
-    console.log("array:"+array);
 
     if (array == 3){//如果是学生登录
         $(".layui-nav-item").css("display","none");
