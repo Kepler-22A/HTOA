@@ -32,6 +32,9 @@
             <tr>
                 <td>籍贯</td><td>${emp.nation}</td><td>手机号</td><td>${emp.Phone}</td>
             </tr>
+            <tr>
+                <td>职务名称</td><td>${emp.postName}</td>
+            </tr>
         </c:forEach>
         <tr>
             <th colspan="4" style="text-align: center">工作经历</th>
