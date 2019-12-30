@@ -22,9 +22,9 @@ public class MessageServiceImpl extends BaseDao implements MessageService {
     @Override
     public List selectNotice(int userType,int receiver) {
         if (userType == 1){
-            return sqlQuery("select noticeId,aaa,ccc,content,noticeTime,title,noticeType,empName from notice n left join empVo e on n.empid = e.empId where n.noticeId in (select noticeId from noticeReceiver where (userType = "+userType+" and receiver = "+receiver+") or n.empid = "+receiver+")");
+            return sqlQuery("select noticeId,aaa,ccc,content,noticeTime,title,noticeType,empName,(select nor.isRead from noticeReceiver nor where receiver = "+receiver+" and userType = "+userType+" and nor.noticeId = n.noticeId) as youIsRead from notice n left join empVo e on n.empid = e.empId where n.noticeId in (select noticeId from noticeReceiver where (userType = "+userType+" and receiver = "+receiver+") or n.empid = "+receiver+")");
         }else{
-            return sqlQuery("select noticeId,aaa,ccc,content,noticeTime,title,noticeType,empName from notice n left join empVo e on n.empid = e.empId where n.noticeId in (select noticeId from noticeReceiver where userType = "+userType+" and receiver = "+receiver+")");
+            return sqlQuery("select noticeId,aaa,ccc,content,noticeTime,title,noticeType,empName,(select nor.isRead from noticeReceiver nor where receiver = "+receiver+" and userType = "+userType+" and nor.noticeId = n.noticeId) as youIsRead from notice n left join empVo e on n.empid = e.empId where n.noticeId in (select noticeId from noticeReceiver where userType = "+userType+" and receiver = "+receiver+")");
         }
 
     }
