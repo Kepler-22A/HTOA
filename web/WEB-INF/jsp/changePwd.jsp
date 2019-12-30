@@ -83,7 +83,9 @@
             $.ajax({url:'${pageContext.request.contextPath}/emp/changePwd',dataType:'json',data:$("#changePwdForm").serialize(),success:function (data) {
                     if (data.count == 1){
                         layer.msg("修改成功！");
-                        top.location.href = "${pageContext.request.contextPath}/Controller/loginOut";
+                        setTimeout(function () {
+                            top.location.href = "${pageContext.request.contextPath}/Controller/loginOut";
+                        },1500);
                     }else {
                         layer.msg("修改失败！");
                     }

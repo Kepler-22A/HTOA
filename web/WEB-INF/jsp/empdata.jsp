@@ -1329,7 +1329,9 @@
             ,success:function (data) {
                 if (data.count == 1){
                     layer.msg("已初始化");
-                    top.location.href = "${pageContext.request.contextPath}/Controller/loginOut";
+                    setTimeout(function () {
+                        top.location.href = "${pageContext.request.contextPath}/Controller/loginOut";
+                    },1500);
                 }else{
                     layer.msg("初始化异常");
                 }
