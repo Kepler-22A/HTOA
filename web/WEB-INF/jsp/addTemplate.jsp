@@ -262,7 +262,6 @@
         <div class="layui-input-inline" style="height: 38px">
             <select name="checkStepType" lay-filter="type">
                 <option value=""></option>
-                <option value="自评">自评</option>
                 <option value="学生评" >学生评</option>
                 <option value="领导评">领导评</option>
             </select>
@@ -273,12 +272,12 @@
         <div class="layui-input-inline" style="height: 38px">
             <select name="weight" lay-filter="type">
                 <option value=""></option>
-                <option value="0.100">20%</option>
-                <option value="0.200">30%</option>
-                <option value="0.300" >50%</option>
-                <option value="0.500">70%</option>
-                <option value="0.500">80%</option>
-                <option value="0.500">100%</option>
+                <option value="0.20000000">20%</option>
+                <option value="0.30000000">30%</option>
+                <option value="0.50000000" >50%</option>
+                <option value="0.70000000">70%</option>
+                <option value="0.80000000">80%</option>
+                <option value="1">100%</option>
             </select>
         </div>
     </div>

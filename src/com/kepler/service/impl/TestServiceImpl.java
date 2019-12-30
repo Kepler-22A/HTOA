@@ -17,7 +17,7 @@ import java.util.Map;
 public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int selectLogin(String name, String pwd) {
-        return executeIntSQL("select  count(*) from empVo where empName='"+name+"' and password='"+pwd+"' and status = 1");
+        return executeIntSQL("select  count(*) from empVo where empName='"+name+"' and password='"+pwd+"'");
     }
 
     @Override
@@ -183,6 +183,16 @@ public class TestServiceImpl extends BaseDao implements TestService {
     }
 
     @Override
+    public int selectProjectCount(int templateId) {
+        return executeIntSQL("select COUNT(projectName) from checkProject where templateId = "+templateId+"");
+    }
+
+    @Override
+    public int selectEmpScoreCount(int empId) {
+        return executeIntSQL("select  COUNT(checkScore) from leadCheckScore where empId = "+empId+"");
+    }
+
+    @Override
     public String selectTeacher(int stuId) {
         return executeStringSQL("select empName from empVo where empId =(select c.empId from classTeacher c where c.classId = (select clazz from Student where Studid = "+stuId+"))");
     }
@@ -195,6 +205,11 @@ public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int selectTeacherId(int stuId) {
         return executeIntSQL("select c.empId from classTeacher c where  c.classId = (select clazz from Student where Studid = "+stuId+")");
+    }
+
+    @Override
+    public int selectTeacherId2(int stuId) {
+        return executeIntSQL("select teacher from StudentClass where classid = (select clazz from Student where Studid = "+stuId+")");
     }
 
     @Override
@@ -265,6 +280,11 @@ public class TestServiceImpl extends BaseDao implements TestService {
         return executeIntSQL("select empId from empVo where empName = ( select chairman from dep where depId = (select o.depId from empVo e left join dep o on e.depId = o.depId where e.empId = "+empId+" ))");
     }
 
+    @Override
+    public String selectLeadState(int empId) {
+        return executeStringSQL("select leadState from checkPeople where empId = "+empId+"");
+    }
+
 
     @Override
     public int OKAccount(String account, String pwd) {
@@ -285,4 +305,5 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
         return postName;
     }
+
 }

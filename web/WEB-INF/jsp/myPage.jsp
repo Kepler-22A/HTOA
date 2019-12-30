@@ -21,7 +21,7 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;border: none">
-    <legend>上班捞！不要眯梦捞！<a class="layui-btn layui-btn-xs" onclick="reloadPage()">刷新数据</a></legend>
+    <legend><span id="myTitle">上班捞！不要眯梦捞！</span><a class="layui-btn layui-btn-xs" onclick="reloadPage()">刷新数据</a></legend>
 </fieldset>
 
 <div style="width:450px;height: 350px;padding: 5px;background-color: rgb(65,111,177)">
@@ -84,6 +84,7 @@
         $("#container a").css("display","none");
         $("#container br").css("display","none");
         $("#noticeA").css("display","block");
+        $("#myTitle").html("上课捞！不要迷梦捞！");
     }
 
     function reloadPage() {
