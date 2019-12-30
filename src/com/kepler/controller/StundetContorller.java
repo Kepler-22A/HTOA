@@ -557,9 +557,8 @@ public class StundetContorller {
     }
     //点击班级分配信息查询出班级信息
     @RequestMapping(value = "/selectClassTree/{SJ}")
-    public void selectClassTree(@PathVariable(value = "SJ") String ClassName,HttpServletResponse response) throws IOException {
-        ClassName = new String(ClassName.getBytes("ISO-8859-1"),"UTF-8");
-        List list = sts.Customss(ClassName);
+    public void selectClassTree(@PathVariable(value = "SJ")int Classid,HttpServletResponse response) throws IOException {
+        List list = sts.Customss(Classid);
         response.setCharacterEncoding("utf-8");
         PrintWriter ptw = response.getWriter();
         JSONObject jsonObject = new JSONObject();

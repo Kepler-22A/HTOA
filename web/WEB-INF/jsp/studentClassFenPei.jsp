@@ -95,7 +95,7 @@
         onClick:function (node) {//当前点击的节点
             if(node.id!=-1){
                 // alert(node.id+""+node.text);//得到当前节点
-                var SJ = node.text;
+                var SJ = node.id;
                 sks("${pageContext.request.contextPath}/student/selectClassTree/"+SJ);//实现无缝天空一号观月计划无线对接数据 A
             }
         }
@@ -122,18 +122,6 @@
 
     layui.use('table', function(){
         var table = layui.table;
-
-        table.render({
-            elem: '#test'
-            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            ,cols: [[
-                {field:'id', title: 'ID', sort: true}
-                ,{field:'username', title: '班级昵称'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                ,{field:'sex', title: '学生姓名', sort: true}
-                ,{field:'city', title: '性别'}
-                ,{field:'sign', title: '电话号码'}
-            ]]
-        });
         table.render({
             elem: '#studentData'
             ,url:'${pageContext.request.contextPath}/student/selectNOClassStudentData'
@@ -141,41 +129,17 @@
             ,cellMinWidth: 100 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
-                ,{field:'Studid', title: 'ID', }
-                ,{field:'stuname', title: '学生姓名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                ,{field:'cardid', title: '身份证'}
+                ,{field:'enrollmentid', title: 'ID', }
+                ,{field:'studName', title: '学生姓名'} //width 支持：数字、百分比和不填写。你还可以通过 minWidth 参数局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'card', title: '身份证'}
                 ,{field:'sex', title: '性别'}
-                ,{field:'phone', title: '电话号码'}
-                ,{field:'middleschool', title: '学校'}
-                ,{field:'clazz', title: '班级'}
-                ,{field:'introduretech', title: '招生老师'}
+                ,{field:'tell', title: '电话号码'}
+                ,{field:'school', title: '学校'}
+                ,{field:'classes', title: '班级'}
+                ,{field:'empName', title: '招生老师'}
                 ,{field:'classTypeName', title: '班级类别'}
             ]]
         });
-        //头工具栏事件
-        table.on('toolbar(studentData)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
-                case 'getCheckData':
-                    var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
-                    break;
-                case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
-                    break;
-                case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选');
-                    break;
-
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
-            };
-        });
-
-
     });
 
 </script>
