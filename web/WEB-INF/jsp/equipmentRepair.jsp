@@ -26,6 +26,8 @@
     </div>
 </script>
 <form  class="layui-form" id="sss" style="display:none" method="post"  action="${pageContext.request.contextPath}/student/addequipment" >
+    <input id="userIdInput" type="hidden" name="Student" value="userId">
+    <input id="userTypeInput" type="hidden" name="userType" value="1为学生，2为员工">
     <div style="width: 56%;height: auto;margin-top: 1%">
         <div style="width:170%;height:93%;float: left;padding: 10px;">
             <div class="layui-form-item">
@@ -35,25 +37,11 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">姓名</label>
-                <div class="layui-input-block">
-                    <input id="Student" type="text" name="Student" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
-                </div>
-
-            </div>
-            <div class="layui-form-item">
                 <label class="layui-form-label">班级或部门</label>
                 <div class="layui-input-inline">
                     <select id="classSelect" name="ClassID" style="width: 150px">
                         <option value="0">--未选择--</option>
                     </select>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">类别</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="userType" value="1" title="学生">
-                    <input type="radio" name="userType" value="2" title="员工" >
                 </div>
             </div>
             <div class="layui-form-item">
@@ -68,15 +56,19 @@
 </form>
 
 <script type="text/html" id="barDemo">
-    {{# if(d.status == 0){ }}
-    <a id="ok" class="layui-btn layui-btn-xs" lay-event="ok" onclick="fulfill('{{ d.equipmentId }}','{{d.status}}')">完成</a>
-    <a class="layui-btn layui-btn-xs" onclick="update('{{ d.equipmentId }}')">修改</a>
+    {{# if(d.status == 0 && ${postName == '后勤主任'}){ }}
+        <a id="ok" class="layui-btn layui-btn-xs" lay-event="ok" onclick="fulfill('{{ d.equipmentId }}','{{d.status}}')">完成</a>
+        <a class="layui-btn layui-btn-xs" onclick="update('{{ d.equipmentId }}')">修改</a>
     {{# }else{ }}
-    <a  class="layui-btn layui-btn-xs layui-btn-disabled" >完成</a>
-    <a class="layui-btn layui-btn-xs layui-btn-disabled" >修改</a>
+        <a  class="layui-btn layui-btn-xs layui-btn-disabled" >完成</a>
+        <a class="layui-btn layui-btn-xs layui-btn-disabled" >修改</a>
     {{# } }}
 
-    <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delhour('{{ d.equipmentId}}')">删除</a>
+    {{# if(${postName == '后勤主任'}){ }}
+        <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="delhour('{{ d.equipmentId}}')">删除</a>
+    {{# }else{ }}
+        <a class="layui-btn layui-btn-danger layui-btn-xs layui-btn-disabled">删除</a>
+    {{# } }}
 </script>
 
 </body>
@@ -88,7 +80,7 @@
         layer.open({
             type: 1,
             title:"新增",
-            area:['420px','420px'],
+            area:['450px','270px'],
             content: $("#sss"),
             closeBtn :0, //隐藏弹出层的关闭按钮
             yes:function(index,layero){
@@ -317,6 +309,14 @@
         });
     });
 
+
+    if (${empId != null}){
+        $("#userIdInput").val('${empName}');
+        $("#userTypeInput").val(2);
+    }else {
+        $("#userIdInput").val('${stuName}');
+        $("#userTypeInput").val(1);
+    }
 
 </script>
 </html>

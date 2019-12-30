@@ -214,7 +214,9 @@
         <%--    员工表表头工具    --%>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
-                <button class="layui-btn layui-btn-sm" onclick="add()">添加员工</button>
+                {{# if(${postName == '教研主任' || postName == '学工主任' || postName == '校长'}){ }}
+                    <button class="layui-btn layui-btn-sm" onclick="add()">添加员工</button>
+                {{# } }}
                 <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="reload()">刷新表格</button>
             </div>
         </script>
@@ -1115,7 +1117,7 @@
         layer.open({
             type: 1,
             title:"新增",
-            area:['45%','75%'],
+            area:['55%','85%'],
             content: $("#empDataForm"),
             closeBtn :0, //隐藏弹出层的关闭按钮
             yes:function(index,layero){

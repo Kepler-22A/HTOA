@@ -333,6 +333,26 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     }
 
     @Override
+    public List selEmpBaseByEmpId(int empId) {
+        return sqlQuery("select *,(select depName from dep d where e.depId = d.depid) as depName from empVo e where empId = " + empId);
+    }
+
+    @Override
+    public List selEmpEducation(int empId) {
+        return sqlQuery("select * from education where empId = " + empId);
+    }
+
+    @Override
+    public List selEmpJobList(int empId) {
+        return sqlQuery("select * from job where EmpId = " + empId);
+    }
+
+    @Override
+    public List selEmpFamilyList(int empId) {
+        return sqlQuery("select * from familyInfo where empId = " + empId);
+    }
+
+    @Override
     public int selWeeklyNotPush(int empId) {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date dt = new Date();

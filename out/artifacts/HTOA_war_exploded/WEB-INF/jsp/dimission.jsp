@@ -11,6 +11,6 @@
     <title>离职申请</title>
 </head>
 <body>
-$END$
+未完成的功能……待续……
 </body>
 </html>

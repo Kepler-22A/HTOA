@@ -17,54 +17,7 @@
     <script src="${pageContext.request.contextPath}/layui/layui.all.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/jquery-3.3.1.min.js" charset="utf-8"></script>
     <script src="${pageContext.request.contextPath}/layui/lay/modules/layer.js" charset="utf-8"></script>
-    <script type="text/javascript">
-        /* 时间戳转化开始 */
-        Date.prototype.format = function (fmt) { //author: meizz  
-            var o = {
-                "M+": this.getMonth() + 1, //月份  
-                "d+": this.getDate(), //日  
-                "h+": this.getHours(), //小时  
-                "m+": this.getMinutes(), //分  
-                "s+": this.getSeconds(), //秒   
-                "q+": Math.floor((this.getMonth() + 3) / 3),    //q是季度
-                "S": this.getMilliseconds() //毫秒  
-            };
-            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o)
-                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
-        }
 
-        String.prototype.format = function (args) {
-            var result = this;
-            if (arguments.length > 0) {
-                if (arguments.length == 1 && typeof (args) == "loginTime") {
-                    for (var key in args) {
-                        if (args[key] != undefined) {
-                            var reg = new RegExp("({" + key + "})", "g");
-                            result = result.replace(reg, args[key]);
-                        }
-                    }
-                }
-                else {
-                    for (var i = 0; i < arguments.length; i++) {
-                        if (arguments[i] != undefined) {
-                            //var reg = new RegExp("({[" + i + "]})", "g");//这个在索引大于9时会有问题  
-                            var reg = new RegExp("({)" + i + "(})", "g");
-                            result = result.replace(reg, arguments[i]);
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-        function dateFormat(value) {
-            return value ? new Date(value).format("yyyy-MM-dd hh:mm:ss") : "";
-        }
-    </script>
-    <script  type="text/html" id="optime">
-        {{ dateFormat(d.optime) }}
-    </script>
     <style type="text/css">
         .layui-btn-llb{
             height: 22px;
@@ -117,6 +70,54 @@
     </div>
 </div>
 </body>
+<script type="text/javascript">
+    /* 时间戳转化开始 */
+    Date.prototype.format = function (fmt) { //author: meizz  
+        var o = {
+            "M+": this.getMonth() + 1, //月份  
+            "d+": this.getDate(), //日  
+            "h+": this.getHours(), //小时  
+            "m+": this.getMinutes(), //分  
+            "s+": this.getSeconds(), //秒   
+            "q+": Math.floor((this.getMonth() + 3) / 3),    //q是季度
+            "S": this.getMilliseconds() //毫秒  
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+
+    String.prototype.format = function (args) {
+        var result = this;
+        if (arguments.length > 0) {
+            if (arguments.length == 1 && typeof (args) == "loginTime") {
+                for (var key in args) {
+                    if (args[key] != undefined) {
+                        var reg = new RegExp("({" + key + "})", "g");
+                        result = result.replace(reg, args[key]);
+                    }
+                }
+            }
+            else {
+                for (var i = 0; i < arguments.length; i++) {
+                    if (arguments[i] != undefined) {
+                        //var reg = new RegExp("({[" + i + "]})", "g");//这个在索引大于9时会有问题  
+                        var reg = new RegExp("({)" + i + "(})", "g");
+                        result = result.replace(reg, arguments[i]);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+    function dateFormat(value) {
+        return value ? new Date(value).format("yyyy-MM-dd hh:mm:ss") : "";
+    }
+</script>
+<script  type="text/html" id="optime">
+    {{ dateFormat(d.optime) }}
+</script>
 <script>
     layui.use(['table','upload'], function() {
         var table = layui.table;

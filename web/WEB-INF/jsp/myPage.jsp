@@ -87,57 +87,68 @@
     }
 
     function reloadPage() {
-        <%--    获取员工请假待审核数--%>
-        $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskNumber",dataType:'json'
-            ,success:function (data) {
-                $("#empLeavaCrossNumber").html(data.count);
-            },error:function () {
-                layer.msg("获取员工请假待审核数失败")
-            }});
+        if (${studentId != null}){
+            //    获取未读公告数
+            $.ajax({url:"${pageContext.request.contextPath}/message/selNoticeReceiverNumber",dataType:'json'
+                ,success:function (data) {
+                    $("#noticeWaitNumber").html(data.count);
+                },error:function () {
+                    layer.msg("获取未读公告数失败")
+                }});
+        }else {
+            <%--    获取员工请假待审核数--%>
+            $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskNumber",dataType:'json'
+                ,success:function (data) {
+                    $("#empLeavaCrossNumber").html(data.count);
+                },error:function () {
+                    layer.msg("获取员工请假待审核数失败")
+                }});
 
-    //    获取学生请假待审核数
-        $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskStudentNumber",dataType:'json'
-            ,success:function (data) {
-                $("#stuLeavaCrossNumber").html(data.count);
-            },error:function () {
-                layer.msg("获取学生请假待审核数失败")
-            }});
+            //    获取学生请假待审核数
+            $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskStudentNumber",dataType:'json'
+                ,success:function (data) {
+                    $("#stuLeavaCrossNumber").html(data.count);
+                },error:function () {
+                    layer.msg("获取学生请假待审核数失败")
+                }});
 
-    //    获取未读公告数
-        $.ajax({url:"${pageContext.request.contextPath}/message/selNoticeReceiverNumber",dataType:'json'
-            ,success:function (data) {
-                $("#noticeWaitNumber").html(data.count);
-            },error:function () {
-                layer.msg("获取未读公告数失败")
-            }});
+            //    获取未读公告数
+            $.ajax({url:"${pageContext.request.contextPath}/message/selNoticeReceiverNumber",dataType:'json'
+                ,success:function (data) {
+                    $("#noticeWaitNumber").html(data.count);
+                },error:function () {
+                    layer.msg("获取未读公告数失败")
+                }});
 
-        //    获取未读邮件数
-        $.ajax({url:"${pageContext.request.contextPath}/message/selEmailIsReadNotNumber",dataType:'json'
-            ,success:function (data) {
-                $("#emailWaitNumber").html(data.count);
-            },error:function () {
-                layer.msg("获取未读邮件数数失败")
-            }});
+            //    获取未读邮件数
+            $.ajax({url:"${pageContext.request.contextPath}/message/selEmailIsReadNotNumber",dataType:'json'
+                ,success:function (data) {
+                    $("#emailWaitNumber").html(data.count);
+                },error:function () {
+                    layer.msg("获取未读邮件数数失败")
+                }});
 
-        //    获取提交的本周周报数
-        $.ajax({url:"${pageContext.request.contextPath}/emp/selWeeklyNotPush",dataType:'json'
-            ,success:function (data) {
-            if (data.count < 1){
-                $("#thisWooklyNumber").html("未完成");
-            }else {
-                $("#thisWooklyNumber").html("已完成");
-            }
-            },error:function () {
-                layer.msg("获取未读邮件数数失败")
-            }});
+            //    获取提交的本周周报数
+            $.ajax({url:"${pageContext.request.contextPath}/emp/selWeeklyNotPush",dataType:'json'
+                ,success:function (data) {
+                    if (data.count < 1){
+                        $("#thisWooklyNumber").html("未完成");
+                    }else {
+                        $("#thisWooklyNumber").html("已完成");
+                    }
+                },error:function () {
+                    layer.msg("获取未读邮件数数失败")
+                }});
 
-        //    获取提交的谈心记录数
-        $.ajax({url:"${pageContext.request.contextPath}/emp/selChatRecord",dataType:'json'
-            ,success:function (data) {
-                $("#moothCharRecordNumber").html(data.count);
-            },error:function () {
-                layer.msg("获取谈心记录数失败")
-            }});
+            //    获取提交的谈心记录数
+            $.ajax({url:"${pageContext.request.contextPath}/emp/selChatRecord",dataType:'json'
+                ,success:function (data) {
+                    $("#moothCharRecordNumber").html(data.count);
+                },error:function () {
+                    layer.msg("获取谈心记录数失败")
+                }});
+        }
+
     }
 
     reloadPage();

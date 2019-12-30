@@ -648,10 +648,10 @@ public class LeaveController {
     /**
      * 我的单据- 查看备注
      */
-    @RequestMapping("/lookComment")
-    public String lookComment(HttpSession session,Model model){
+    @RequestMapping("/lookComment/{holidayID}")
+    public String lookComment(HttpSession session,Model model,@PathVariable(value = "holidayID")int holidayID){
         //通过jobID查询历史变量对象
-        HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("empId",session.getAttribute("empId")).singleResult();
+        HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holidayId",holidayID).singleResult();
         //获取流程实例id （查询历史批注）
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
         List empNameList = new ArrayList();
@@ -778,10 +778,10 @@ public class LeaveController {
     /**
      * 我的单据- 查看备注 学生
      */
-    @RequestMapping("/lookCommentStudent")
-    public String lookCommentStudent(HttpSession session,Model model){
+    @RequestMapping("/lookCommentStudent/{holidayStudentId}")
+    public String lookCommentStudent(HttpSession session,Model model,@PathVariable(value = "holidayStudentId")int holidayStudentId){
         //通过jobID查询历史变量对象
-        HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("stuId",session.getAttribute("studentId")).singleResult();
+        HistoricVariableInstance hvi = historyService.createHistoricVariableInstanceQuery().variableValueEquals("holidayStudentID",holidayStudentId).singleResult();
         //获取流程实例id （查询历史批注）
         List<Comment> commentList = taskService.getProcessInstanceComments(hvi.getProcessInstanceId());
         List empNameList = new ArrayList();

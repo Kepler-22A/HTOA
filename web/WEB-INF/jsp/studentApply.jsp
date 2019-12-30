@@ -36,7 +36,7 @@
 
 <%--    每行员工信息的操作按钮    --%>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/leave/lookCommentStudent" lay-event="edit">查看批注</a>
+    <a class="layui-btn layui-btn-xs" href="${pageContext.request.contextPath}/leave/lookCommentStudent/{{ d.holidayid }}" lay-event="edit">查看批注</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" href="${pageContext.request.contextPath }/leave/lookTaskImgStudent/{{ d.holidayid }}/holidayStudentID">办理进度</a>
 </script>
 
@@ -65,7 +65,7 @@
                     ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                     ,page: true //开启分页
                     ,cols: [[ //表头
-                        {field: 'massage', title: '', width:1480, fixed: 'center'}
+                        {field: 'massage', title: '', width:1500, fixed: 'center'}
                     ]]
                 });
             }else {

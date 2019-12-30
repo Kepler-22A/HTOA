@@ -26,6 +26,7 @@
 
         #fdiv{
             background-color: rgba(45, 59, 74, 0.67);
+            transition: background-color 0.5s linear;
         }
 
         #fdiv:hover{
@@ -41,13 +42,13 @@
             transition:background-color 0.2s linear;">
         <form id="ff" class="layui-form" method="post" action="${pageContext.request.contextPath}/Controller/checkUser/" style="width:310px;margin: 0 auto">
             <div class="layui-form-item">
-                <label class="layui-form-label" style="width: 60px">名字：</label>
+                <label class="layui-form-label" style="width: 60px;color: #00FFFF">名字：</label>
                 <div class="layui-input-inline">
                     <input id="nameInput" type="text" name="empName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item" >
-                <label class="layui-form-label" style="width: 60px">密码：</label>
+                <label class="layui-form-label" style="width: 60px;color: #00FFFF">密码：</label>
                 <div class="layui-input-inline">
                     <input id="passwordInput" type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>

@@ -6,7 +6,9 @@ import com.kepler.vo.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ASUS on 2019/12/4.
@@ -15,7 +17,7 @@ import java.util.List;
 public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int selectLogin(String name, String pwd) {
-        return executeIntSQL("select  count(*) from empVo where empName='"+name+"' and password='"+pwd+"'");
+        return executeIntSQL("select  count(*) from empVo where empName='"+name+"' and password='"+pwd+"' and status = 1");
     }
 
     @Override
@@ -267,5 +269,20 @@ public class TestServiceImpl extends BaseDao implements TestService {
     @Override
     public int OKAccount(String account, String pwd) {
         return executeIntSQL("select empId from empVo where empName = '"+account+"' and password = '"+pwd+"'");
+    }
+
+    @Override
+    public String selEmpType(int empId) {
+        List list = sqlQuery("select postName from empVo where empId = "+ empId);
+
+        String postName = "";
+
+        for (Object o : list){
+            Map map = (HashMap)o;
+
+            postName = map.get("postName")+"";
+        }
+
+        return postName;
     }
 }

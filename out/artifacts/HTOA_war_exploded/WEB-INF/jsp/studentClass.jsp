@@ -71,7 +71,7 @@
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
         <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
         <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-        <button class="layui-btn layui-btn-sm" onclick="add()">添加学生</button>
+        <button class="layui-btn layui-btn-sm" onclick="add()">添加班级</button>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -180,7 +180,7 @@
             }]
             ,title: '用户数据表'
             ,cols: [[
-                {type: 'checkbox', fixed: 'left'}
+                {type: 'checkbox', fixed: 'left', width:80}
                 ,{field:'classid', title:'序号', width:80, fixed: 'left', unresize: true, sort: true}
                 ,{field:'classno', title:'班级编号', width:120, edit: 'text'}
                 ,{field:'className', title:'班级昵称', width:150, edit: 'text', sort: true}

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.kepler.service.EmpService;
 import com.kepler.vo.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -815,5 +816,33 @@ public class EmpController {//员工的Controller
             vo.setReamk("不属实");
         }
         es.updatestate(vo);
+    }
+
+    /**
+     * 员工基本信息单
+     * */
+    @RequestMapping(value = "/toEmpBase")
+    public String toEmpBase(HttpSession session, Model model){
+        int empId = Integer.parseInt(session.getAttribute("empId")+"");
+
+        List empList = es.selEmpBaseByEmpId(empId);
+        List educationList = es.selEmpEducation(empId);
+        List jobList = es.selEmpJobList(empId);
+        List familyList = es.selEmpFamilyList(empId);
+
+        model.addAttribute("empList",empList);
+        model.addAttribute("educationList",educationList);
+        model.addAttribute("jobList",jobList);
+        model.addAttribute("familyList",familyList);
+
+        return "empBase";
+    }
+
+    /**
+     * 值班管理的转跳
+     * **/
+    @RequestMapping(value = "/toXexPage")
+    public String toXexPage(){
+        return "xex";
     }
 }
