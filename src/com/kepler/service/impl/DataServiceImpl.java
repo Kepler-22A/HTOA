@@ -6,6 +6,7 @@ import com.kepler.vo.DataDocVo;
 import com.kepler.vo.EnrollmentVo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,6 +66,24 @@ public class DataServiceImpl extends BaseDao implements DataService {
         return sqlQuery("select * from empVo");
     }
 
+    @Override
+    public List<EnrollmentVo> selectEnrollById(int id) {
+        return  sqlQuery("select e.*,em.empName,ct.classTypeName,d.deptName from enrollment e "  +
+                "left join empVo em on e.empid=em.empId left join classType ct on e.studType=ct.calssTypeId "  +
+                "left join Dept d on e.majorId=d.deptID where enrollmentid ="+id);
+    }
+
+    @Override
+    public List listEnrollbyId(Class className, int id) {
+        List list = new ArrayList();
+        list.add(getObject(className,id));
+        return list;
+    }
+
+    @Override
+    public void updateEnrollData(EnrollmentVo vo) {
+        update(vo);
+    }
     @Override
     public void delEnrllor(int id){
         EnrollmentVo vo = new EnrollmentVo();

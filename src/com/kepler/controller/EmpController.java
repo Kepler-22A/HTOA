@@ -845,4 +845,85 @@ public class EmpController {//员工的Controller
     public String toXexPage(){
         return "xex";
     }
+
+    /**
+     * 去修改密码页面
+     * */
+    @RequestMapping(value = "/toChangePwdPage")
+    public String toChangePwdPage(){
+        return "changePwd";
+    }
+
+    /**
+    * 验证旧密码
+    * */
+    @RequestMapping(value = "/checkOldPwd")
+    @ResponseBody
+    public void checkOldPwd(HttpSession session,HttpServletResponse response,int userId,String password){
+        String userType = "";
+        if(session.getAttribute("empId") == null){
+            userType = "student";
+        }else {
+            userType = "emp";
+        }
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("count",es.checkOldPassword(userId,password,userType));
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 修改密码
+     * */
+    @RequestMapping(value = "/changePwd")
+    @ResponseBody
+    public void changePwd(HttpSession session,HttpServletResponse response,int userId,String password){
+        String userType = "";
+        if(session.getAttribute("empId") == null){
+            userType = "student";
+        }else {
+            userType = "emp";
+        }
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("count",es.changePwd(userId,password,userType));
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 把密码初始化
+     * */
+    @RequestMapping(value = "/changePwdToIniti/{empId}")
+    @ResponseBody
+    public void changePwdToIniti(@PathVariable(value = "empId")int empId,HttpServletResponse response){
+        es.changePwd(empId,"123456","emp");
+
+        JSONObject jo = new JSONObject();
+
+        jo.put("count",1);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(jo.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

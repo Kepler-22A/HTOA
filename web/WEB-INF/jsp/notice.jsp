@@ -57,18 +57,27 @@
 </script>
 <script type="text/html" id="barDemo">
     <a href="${pageContext.request.contextPath}/message/selectNoticeOK/{{ d.noticeId }}" class="layui-btn layui-btn-xs">查看</a>
-    <a href="${pageContext.request.contextPath}/message/toUpdateNoticeOK/{{d.noticeId}}" class="layui-btn layui-btn-warm layui-btn-xs">编辑</a>
-    <c:if test="${stuName == null}">
+    {{# if(d.empName == '${empName}'){ }}
+        <a href="${pageContext.request.contextPath}/message/toUpdateNoticeOK/{{d.noticeId}}" class="layui-btn layui-btn-warm layui-btn-xs">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs"onclick="deleteEmp('{{ d.noticeId }}')">删除</a>
-    </c:if>
+    {{# } }}
 </script>
 <script type="textml" id="roleTpl">
-    {{# if (d.noticeType=== 3) { }}
+    {{# if (d.noticeType == 3) { }}
         全体学生
-    {{# } else if(d.noticeType=== 2) { }}
+    {{# } else if(d.noticeType == 2) { }}
         全体员工
     {{# } else { }}
         班级发送
+    {{# } }}
+</script>
+<script id="youIsReadSpan" type="text/html">
+    {{# if (d.youIsRead == 1) { }}
+        已读
+    {{# } else if(d.noticeType == 2) { }}
+        未读
+    {{# } else { }}
+        你是发送人
     {{# } }}
 </script>
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
@@ -89,11 +98,12 @@
                     ,{field:'noticeType', title: '类型',templet: '#roleTpl'}
                     ,{field:'content', title: '通知内容'}
                     ,{field:'empName', title: '发布人', align: 'center'} //单元格内容水平居中
-                    // ,{field:'noticeTime', title: '发布时间',  align: 'right'} //单元格内容水平居中
+                    // ,{field:'noticeTime', title: '发布时间',  align: 'center'} //单元格内容水平居中
                     ,{field: 'noticeTime', title: '发布时间', width:200,templet : '<span>{{layui.util.toDateString(d.noticeTime,"yyyy-MM-dd HH:mm:ss")}}</span>'}
-                    ,{field:'aaa', title: '已读人数',width:100,sort: true}
-                    ,{field:'ccc', title: '未读人数',width:100,sort: true}
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                    ,{field:'aaa', title: '已读人数',sort: true}
+                    ,{field:'ccc', title: '未读人数',sort: true}
+                    ,{field:'youIsRead', title: '你已读',sort: true,templet:'#youIsReadSpan'}
+                    ,{fixed: 'right', title:'操作',width: 200,toolbar: '#barDemo'}
                 ]]
             });
         });

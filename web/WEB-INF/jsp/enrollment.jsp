@@ -66,18 +66,30 @@
             },"json");
         }
         //修改
-        function  update(majorID) {
+        function  update(enrollmentid) {
 
-            $.post("${pageContext.request.contextPath}/system/selectMajorID",{id : majorID},function (d) {
-                $("#addfloor").attr("action","${pageContext.request.contextPath}/system/UpdateMajorID/" + d.MajorVo.majorID);
-                $("#majorID").val(d.MajorVo.majorID);
-                $("#majorName").val(d.MajorVo.majorName);
-                $("#remark").val(d.MajorVo.remark);
+            $.post("${pageContext.request.contextPath}/data/selectEnrollID",{id : enrollmentid},function (d) {
+                $("#addfloor").attr("action","${pageContext.request.contextPath}/data/UpdateEnrollID/" + d.Enroll.enrollmentid);
+                $("#enrollmentid").val(d.Enroll.enrollmentid);
+                $("#studName").val(d.Enroll.studName);
+                $("#card").val(d.Enroll.card);
+                $("#sex").val(d.Enroll.sex);
+                $("#qq").val(d.Enroll.qq);
+                $("#tell").val(d.Enroll.tell);
+                $("#school").val(d.Enroll.school);
+                $("#classes").val(d.Enroll.classes);
+                $("#score").val(d.Enroll.score);
+                $("#status").val(d.Enroll.status);
+                $("#EmpSelect").val(d.Enroll.empId);
+                $("#ClassSelect").val(d.Enroll.studType);
+                $("#deptSelect").val(d.Enroll.majorId);
+                $("#remark").val(d.Enroll.remark);
+                $("#computerSelect").val(d.Enroll.computer);
             },"json");
             layer.open({
                 type: 1,
                 title:"修改",
-                area:['400px','300px'],
+                area:['800px','500px'],
                 content: $("#addfloor"),
                 closeBtn :1,
                 cancel:function(index,layero){
@@ -86,7 +98,38 @@
                     return false;
                 }
             });
+            $.post("/data/selMajor",{},function (data) {
+                var form = layui.form;
+                var deptSelect_any = "";
+                $.each(data,function (index,obj) {
+                    deptSelect_any += "<option value='" + obj.deptID + "'>" + obj.deptName + "</option>";
+                });
+                $("#deptSelect").html(deptSelect_any);
+                form.render('select');
+            },"json");
+
+            $.post("/data/selClassType",{},function (data) {
+                console.log(data);
+                var form = layui.form;
+                var ClassSelect_any = "";
+                $.each(data,function (index,obj) {
+                    ClassSelect_any += "<option value='" + obj.calssTypeId + "'>" + obj.classTypeName + "</option>";
+                });
+                $("#ClassSelect").html(ClassSelect_any);
+                form.render('select');
+            },"json");
+
+            $.post("/data/selEmp",{},function (data) {
+                var form = layui.form;
+                var EmpSelect_any = "";
+                $.each(data,function (index,obj) {
+                    EmpSelect_any += "<option value='" + obj.empId + "'>" + obj.empName + "</option>";
+                });
+                $("#EmpSelect").html(EmpSelect_any);
+                form.render('select');
+            },"json");
         }
+
 
         //删除
         function  del(enrollmentid) {
@@ -113,7 +156,48 @@
             });
         }
     </script>
+<%--    预定报名费--%>
     <script>
+        //添加预定报名费
+        function addmoeny(enrollmentid,amount) {
+            if (amount>1){
+                layer.msg('已添加过预定报名费', {
+                    icon: 0,
+                    time:2000
+                });
+                return false;
+            }
+            document.getElementById("addfloor").reset();  //清空表单
+            $('#enrollmentid').val(enrollmentid);
+           var i = layer.open({
+                type: 1,
+                title: "新增",
+                area: ['400px', '200px'],
+                content: $('#addmoeny'),
+                closeBtn: 1, //显示弹出层的关闭按钮，0是不显示
+                btn: ['确定'],
+                yes:function(index, layero){
+                    var enrollmentid = $('#enrollmentid').val();
+                    var amount = $('#amount').val();
+                    $.post("${pageContext.request.contextPath}/data/addmoeny",{
+                        enrollmentid :enrollmentid,
+                        amount : amount
+                    },function (d) {
+                        layer.close(i);
+                        $(".layui-laypage-btn")[0].click();
+                    },'json');
+                },
+                btnAlign: 'c',
+                cancel: function (index, layero) {
+                    layer.close(index);
+                    $("#addmoeny").hide(); //jquery方式关闭
+                    return false;
+                }
+            });
+        }
+
+
+
     </script>
     <script type="text/javascript">
         /* 时间戳转化开始 */
@@ -220,7 +304,7 @@
                     ,{field:'reviewerTime',width:180,title: '审核时间',templet:'#reviewerTime'}
                     ,{field:'classTypeName',width:150,title: '班级类别'}
                     ,{field:'deptName',width:200,title: '专业'}
-                    ,{width:180, title: '操作', toolbar:'#dus' }
+                    ,{fixed: 'right',width:200, title: '操作', toolbar:'#dus' }
                 ]]
                 ,page: true
             });
@@ -251,16 +335,36 @@
         {{# } }}
     </script>
     <script type="text/html" id="dus">
-<%--        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{d.majorID}}')">--%>
-<%--            <i class="layui-icon layui-icon-edit"></i>编辑--%>
-<%--        </button>--%>
-        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="del('{{ d.enrollmentid }}')">
+       <a class="layui-btn layui-btn-xs " onclick="addmoeny('{{ d.enrollmentid}}','{{d.amount}}')">预定报名费</a>
+       <a class="layui-btn layui-btn-xs" onclick="update('{{ d.enrollmentid}}')">编辑</a>
+       <a class="layui-btn layui-btn-danger layui-btn-xs" onclick="del('{{ d.enrollmentid}}')">删除</a>
+  <%--      <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="del('{{ d.enrollmentid }}')">
             <i class="layui-icon layui-icon-delete"></i> 删除
-        </button>
-
+        </button>--%>
     </script>
 
 </div>
+
+<div class="layui-form" id="addmoeny" style="display: none" action="">
+    <input id="enrollmentid" type="hidden" value="">
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <label class="layui-form-label" style="width: 100px;">预定报名费:</label>
+        <div class="layui-input-inline">
+            <input id="amount" type="text" name="amount" required  lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+</div>
+
+<div class="layui-form" id="zhaosheng" style="display: none" action="">
+    <input id="id" type="hidden" value="">
+    <div class="layui-form-item" style="margin-top: 20px;">
+        <label class="layui-form-label" style="width: 100px;">招生老师:</label>
+        <div class="layui-input-inline">
+            <input id="empid" type="text" name="empid" required  lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+</div>
+
 <form  class="layui-form" id="addfloor" style="display: none" method="post" action="${pageContext.request.contextPath}/data/addenroll">
     <div class="layui-form-item" style="margin-top: 20px;">
         <label class="layui-form-label" style="width: 100px;">新生姓名:</label>
@@ -334,6 +438,13 @@
             <select id="computerSelect" name="computer" style="width: 150px">
                 <option value="是"> 是</option>
                 <option value="否">否</option>
+            </select>
+        </div>
+        <label class="layui-form-label" style="width: 100px;">审核</label>
+        <div class="layui-input-inline">
+            <select id="reviewStatus" name="reviewStatus" style="width: 150px">
+                <option value="1">未审核</option>
+                <option value="2">已审核</option>
             </select>
         </div>
     </div>

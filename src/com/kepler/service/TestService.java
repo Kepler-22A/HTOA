@@ -37,6 +37,7 @@ public interface TestService {
     public List selectMyCheck(int templateId,int empId);
     public List selectMyCheckProject(int template,int empId); //根据模板Id和empId 查询总得分
     public int selectLead(int empId);
+    String selectLeadState(int empId); //查是否已考评！
     public int update(int templateId);
     int update2(int empId);
     int updateClose(int template);
@@ -47,12 +48,15 @@ public interface TestService {
     float selectWeight(int templateId);
     float selectWeight2(int templateId);
     int addCheckScore(checkScoerVo scoreVo );
+    int  selectProjectCount(int templateId);
+    int selectEmpScoreCount(int empId);
     /**
      * 考评打分
      */
     String selectTeacher(int stuId);//查出班主任
     String selectTeacher2(int stuId); //查出任课老师
     int selectTeacherId(int stuId);//查出班主任Id
+    int selectTeacherId2(int stuId);//查出任课老师Id
     int selectStuClassId(int stuId);//查出班级Id
     int  selectTeacherID(String empName);
     int selectDepId();
@@ -68,5 +72,6 @@ public interface TestService {
     public int OKAccount(String account,String pwd);
 
     public String selEmpType(int empId);//查询员工类型
+
 
 }

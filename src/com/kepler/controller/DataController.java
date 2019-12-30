@@ -8,6 +8,7 @@ import com.kepler.vo.DataDocVo;
 import com.kepler.vo.EnrollmentVo;
 import com.kepler.vo.empVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -142,8 +144,15 @@ public class DataController {
     //添加
     @RequestMapping(value="/addenroll")
 
-    public String addenroll(EnrollmentVo vo){
-        vo.setAmount(300);
+    public String addenroll(HttpSession session, EnrollmentVo vo,int reviewStatus){
+        String name = (String)session.getAttribute("empName");
+        if (reviewStatus==1){
+            vo.setReviewStatus(1);
+        }else {
+            vo.setReviewStatus(2);
+            vo.setReviewer(name);
+            vo.setReviewerTime(new Date());
+        }
         vo.setStartTime(new Date());
         ds.addEnrllor(vo);
         return "redirect:/data/enrollment";
@@ -218,6 +227,57 @@ public class DataController {
             e.printStackTrace();
         }
     }
+
+    //根据id查询出数据
+    @RequestMapping(value = "/selectEnrollID")
+    public void selectEnrollID(int id,HttpServletResponse response) throws IOException {
+        List list = ds.selectEnrollById(id);
+        response.setCharacterEncoding("utf-8");
+        PrintWriter pwt = response.getWriter();
+        JSONObject json = new JSONObject();
+        for (Object o : list){
+            json.put("Enroll",o);//返回的数据格式一定要和前端的格式一样
+        }
+//        System.out.println("json:"+json);
+        pwt.print(json.toJSONString());
+    }
+
+    //修改数据
+    @RequestMapping(value = "/UpdateEnrollID/{enrollmentid}")
+    public String UpdateMajorID(@PathVariable(value = "enrollmentid")int enrollmentid,HttpSession session){
+        String name = (String)session.getAttribute("empName");
+        List list = ds.listEnrollbyId(EnrollmentVo.class,enrollmentid);
+        EnrollmentVo erv = new EnrollmentVo();
+        for (Object o : list){
+            erv = (EnrollmentVo)o;
+        }
+
+        if (erv.getReviewStatus()==1){
+        }else {
+            erv.setReviewer(name);
+            erv.setReviewerTime(new Date());
+        }
+        ds.updateEnrollData(erv);
+        return "redirect:/data/enrollment";
+    }
+
+    //预定报名费
+    @RequestMapping("/addmoeny")
+    @ResponseBody
+    public String addmoeny(int enrollmentid,int amount){
+        List list = ds.listEnrollbyId(EnrollmentVo.class,enrollmentid);
+        EnrollmentVo erv = new EnrollmentVo();
+        for (Object o : list){
+            erv = (EnrollmentVo)o;
+        }
+        erv.setAmount(amount);
+        erv.setEnrollMoneyTime(new Date());
+        erv.setStatus(3);
+        ds.updateEnrollData(erv);
+        return "success";
+    }
+
+
 
     @RequestMapping("/delEnroll")
     public String delEnroll(EnrollmentVo vo){

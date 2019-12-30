@@ -30,7 +30,12 @@ public interface DataService {
     public List selClassType();
     //查询招生老师
     public List selEmp();
+//
+    public List<EnrollmentVo> selectEnrollById(int id);
+    //根据id查找信息
+    public List listEnrollbyId(Class className, int id);
 
+    public void updateEnrollData(EnrollmentVo vo);
     //删除
     public void delEnrllor(int id );
 }

@@ -353,6 +353,31 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     }
 
     @Override
+    public int checkOldPassword(int userId, String password, String userType) {
+        if ("emp".equals(userType)){
+
+            return executeIntSQL("select count(*) from empVo where empId = " + userId + " and password = '" + password + "'");
+        }else {
+
+            return executeIntSQL("select count(*) from Student where Studid = " + userId + " and password = '" + password + "'");
+        }
+    }
+
+    @Override
+    public int changePwd(int userId, String password, String userType) {
+        if ("emp".equals(userType)){
+            empVo empVo = (com.kepler.vo.empVo)getObject(com.kepler.vo.empVo.class,userId);
+            empVo.setPassword(password);
+            update(empVo);
+        }else {
+            StudentVo studentVo = (StudentVo)getObject(StudentVo.class,userId);
+            studentVo.setPassword(password);
+            update(studentVo);
+        }
+        return 1;
+    }
+
+    @Override
     public int selWeeklyNotPush(int empId) {
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date dt = new Date();
