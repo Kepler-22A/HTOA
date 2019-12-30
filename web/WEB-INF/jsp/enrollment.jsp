@@ -24,7 +24,7 @@
             layer.open({
                 type: 1,
                 title:"新增",
-                area:['800px','600px'],
+                area:['800px','500px'],
                 content: $("#addfloor"),
                 closeBtn :1, //显示弹出层的关闭按钮，0是不显示
                 cancel: function(index, layero){
