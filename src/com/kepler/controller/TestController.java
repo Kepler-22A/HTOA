@@ -144,7 +144,6 @@ public class TestController {//登录  考核管理！！
     public String cheshi(){
         return "cheshi";
     }
-
     /**
      * 考核管理！！
      * @return
@@ -516,25 +515,38 @@ public class TestController {//登录  考核管理！！
         //int depId = service.selectDepID(templateId);
         int i = service.updateClose(templateId);
         if(i>0 &&session.getAttribute("empId")!=null) {
-            int empId = (int) session.getAttribute("empId");
+            List checkPeople = service.selectCheckPeople(templateId);
 
             //根据权重算出总得分
             Float studentWeight = service.selectWeight(templateId);
             Float leadWeight = service.selectWeight2(templateId);
             //获取学生,领导评分
-            float studentScore = service.selectScore(empId)*studentWeight;
-            float leadScore = service.selectScore2(empId)*leadWeight;
-            float total = studentScore + leadScore ;
-            //存取总考评成绩
-            scoerVo.setTemplateId(templateId);
-            scoerVo.setEmpId(empId);
-            scoerVo.setStudentComment(studentScore);
-            scoerVo.setLeadComment(leadScore);
-            scoerVo.setTotal(total);
-            int d = service.addCheckScore(scoerVo);
-            int t = service.deletePeople(templateId);
-            if(t>0 && d>0){
-                System.out.println("关闭考评成功！！");
+            int projectSize = service.selectProjectCount(templateId); //项目条数
+            //int empSize = 0 ;
+
+            for(int t = 0,len =checkPeople.size();t<len ;t++){
+                String empId = (checkPeople.get(t) + "").substring(7,(checkPeople.get(t) + "").length() - 1);
+                String leadState = service.selectLeadState(Integer.parseInt(empId));
+                if("已考评".equals(leadState)) {
+                    int empSize = service.selectEmpScoreCount(Integer.parseInt(empId)); //得分条数
+                    int size = empSize / projectSize; //评分人数
+
+                    float studentScore = (service.selectScore(Integer.parseInt(empId)) / size) * studentWeight;
+                    float leadScore = service.selectScore2(Integer.parseInt(empId))* leadWeight;
+                    float total = studentScore + leadScore;
+                    System.out.println("得分：" + studentScore + ",," + leadScore);
+                    //存取总考评成绩
+                    scoerVo.setTemplateId(templateId);
+                    scoerVo.setEmpId(Integer.parseInt(empId));
+                    scoerVo.setStudentComment(studentScore);
+                    scoerVo.setLeadComment(leadScore);
+                    scoerVo.setTotal(total);
+                    int d = service.addCheckScore(scoerVo);
+                    int c = service.deletePeople(templateId);
+                    if (c > 0 && d > 0) {
+                        System.out.println("关闭考评成功！！");
+                    }
+                }
             }
         }
     }
@@ -547,13 +559,16 @@ public class TestController {//登录  考核管理！！
         //只有开启的教研部和学工部考评才会显示
         if(session.getAttribute("studentId") != null){
             System.out.println("学生！");
-            int depId = service.selectDepId();
+            int depId = 0 ;
+            if (!("".equals(service.selectDepId()))) {
+                depId = service.selectDepId();
+            }
             session.setAttribute("teacherType",depId);
             int key = 0 ;
             if (session.getAttribute("key") != null){
                 key = (int) session.getAttribute("key");
             }
-            if((depId==2 ||depId == 3) &&key!=2){
+            if((depId==2 ||depId == 3) && key!=2){
                 list = service.selectTable4();
             }
         }
@@ -561,7 +576,6 @@ public class TestController {//登录  考核管理！！
         else if(session.getAttribute("empId") !=null){
             int empId= (int) session.getAttribute("empId");
             int leadEmpId = service.selectLead(empId);
-
             if(empId ==leadEmpId){
                 System.out.println("领导！");
                 list = service.selectTable4();
@@ -628,7 +642,14 @@ public class TestController {//登录  考核管理！！
         if(session.getAttribute("studentId") !=null){
             int  stuId = (int) session.getAttribute("studentId");
 
-            int teacherId = service.selectTeacherId(stuId);//查出班主任Id
+
+            int depId = (int) session.getAttribute("teacherType");
+            int teacherId = 0;
+            if(depId==3){
+                teacherId = service.selectTeacherId(stuId);//查出班主任Id
+            }else if(depId == 2){
+                teacherId = service.selectTeacherId2(stuId);//查出任课老师Id
+            }
             int stuclassId  = service.selectStuClassId(stuId);
             int markTemplateId = (int) session.getAttribute("markTemplateId");
 
@@ -672,8 +693,6 @@ public class TestController {//登录  考核管理！！
         }
         return "checkMark";
     }
-
-
 
 }
 
