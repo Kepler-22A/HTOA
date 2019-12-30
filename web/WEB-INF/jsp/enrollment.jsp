@@ -66,10 +66,10 @@
             },"json");
         }
         //修改
-        function  update(majorID) {
+        function  update(enrollmentid) {
 
-            $.post("${pageContext.request.contextPath}/system/selectMajorID",{id : majorID},function (d) {
-                $("#addfloor").attr("action","${pageContext.request.contextPath}/system/UpdateMajorID/" + d.MajorVo.majorID);
+            $.post("${pageContext.request.contextPath}/data/selectEnrollID",{id : majorID},function (d) {
+                $("#addfloor").attr("action","${pageContext.request.contextPath}/data/UpdateEnrollID/" + d.MajorVo.enrollmentid);
                 $("#majorID").val(d.MajorVo.majorID);
                 $("#majorName").val(d.MajorVo.majorName);
                 $("#remark").val(d.MajorVo.remark);
@@ -220,7 +220,7 @@
                     ,{field:'reviewerTime',width:180,title: '审核时间',templet:'#reviewerTime'}
                     ,{field:'classTypeName',width:150,title: '班级类别'}
                     ,{field:'deptName',width:200,title: '专业'}
-                    ,{width:180, title: '操作', toolbar:'#dus' }
+                    ,{fixed: 'right',width:180, title: '操作', toolbar:'#dus' }
                 ]]
                 ,page: true
             });
@@ -237,9 +237,9 @@
         });
     </script>
     <script type="text/html" id="dus">
-<%--        <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{d.majorID}}')">--%>
-<%--            <i class="layui-icon layui-icon-edit"></i>编辑--%>
-<%--        </button>--%>
+       <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="update('{{d.enrollmentid}}')">
+           <i class="layui-icon layui-icon-edit"></i>编辑
+        </button>-
         <button type="button" class="layui-btn layui-btn-sm layui-btn-normal" onclick="del('{{ d.enrollmentid }}')">
             <i class="layui-icon layui-icon-delete"></i> 删除
         </button>
