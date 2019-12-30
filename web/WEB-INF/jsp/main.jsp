@@ -97,7 +97,7 @@
                             <li id="leftLi_examine_kaoping" class="layui-nav-item">
                                 <a href="javascript:;">教师考评</a>
                                 <dl class="layui-nav-child">
-                                    <dd><a data-url="/Controller/template" data-id="43" data-title="考评模板" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评模板</a></dd>
+                                    <dd id="leftLi_examine_kaoping_model"><a data-url="/Controller/template" data-id="43" data-title="考评模板" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评模板</a></dd>
                                     <dd id="leftLi_examine_kaoping_mission"><a data-url="/Controller/checkTask" data-id="44" data-title="考评任务" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">考评任务</a></dd>
                                     <dd id="leftLi_examine_kaoping_myKaoping"><a data-url="/Controller/myCheck" data-id="45" data-title="我的考评" class="site-demo-active" data-type="tabAdd" style="cursor:pointer">我的考评</a></dd>
                                 </dl>
@@ -272,6 +272,13 @@
         $(".headName dl dd:nth-child(1)").css("display","none");
 
     }else if (array == 2){
+        if (${postName == '校长'}|| ${postName == '教研主任'} || ${postName == '学工主任'} || ${postName == '后勤主任'}){
+            $("#leftLi_examine_kaoping_model").css("display","block");
+            $("#leftLi_examine_kaoping_myKaoping").css("display","none");
+        }else {
+            $("#leftLi_examine_kaoping_model").css("display","none");
+            $("#leftLi_examine_kaoping_myKaoping").css("display","block");
+        }
     }
 </script>
 </body>

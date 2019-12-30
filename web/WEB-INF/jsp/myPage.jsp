@@ -29,24 +29,25 @@
         <div style="width:100%;height: 100%;padding: 5px;background-color: #e85cff">
             <div style="width:100%;height: 100%;padding: 5px;background-color: #65ff9f">
                 <div style="width:100%;height: 100%;padding: 5px;background-color: #ffc6bd" id="container">
-                    <a href="javascript:addTab('员工请假')" style="text-decoration: none">
+                    <br id="studentBR">
+                    <a class="highClass" href="javascript:addTab('员工请假')" style="text-decoration: none">
                         <p id="empLeavaCrossP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             员工请假待审批（<span id="empLeavaCrossNumber">0</span>）
                         </p>
                     </a>
-                    <br>
+                    <br class="highClass">
                     <a href="javascript:addTab('学生请假')" style="text-decoration: none">
                         <p id="stuLeavaCrossP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             学生请假待审批（<span id="stuLeavaCrossNumber">0</span>）
                         </p>
                     </a>
                     <br>
-                    <a href="javascript:" style="text-decoration: none">
+                    <a class="highClass" href="javascript:" style="text-decoration: none">
                         <p id="dimissionCrossP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             未打卡待审批（<span id="dimissionCrossNumber">0</span>）
                         </p>
                     </a>
-                    <br>
+                    <br class="highClass">
                     <a href="javascript:addTab('公告')" style="text-decoration: none" id="noticeA">
                         <p id="noticeWaitP" style="color:#333;background-color: #ffe5d7;width: 90%;border-radius: 3px;padding-left: 3px">
                             未读公告（<span id="noticeWaitNumber">0</span>）
@@ -83,8 +84,13 @@
     if (${studentId != null}){
         $("#container a").css("display","none");
         $("#container br").css("display","none");
+        $("#studentBR").css("display","block");
         $("#noticeA").css("display","block");
         $("#myTitle").html("上课捞！不要迷梦捞！");
+    }
+
+    if (${postName == '讲师' || postName == '专职班主任' || postName == '教研副主任'}){
+        $(".highClass").css("display","none");
     }
 
     function reloadPage() {
@@ -97,13 +103,15 @@
                     layer.msg("获取未读公告数失败")
                 }});
         }else {
-            <%--    获取员工请假待审核数--%>
-            $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskNumber",dataType:'json'
-                ,success:function (data) {
-                    $("#empLeavaCrossNumber").html(data.count);
-                },error:function () {
-                    layer.msg("获取员工请假待审核数失败")
-                }});
+            if (${postName != '讲师' || postName != '专职班主任' || postName != '教研副主任'}){
+                <%--    获取员工请假待审核数--%>
+                $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskNumber",dataType:'json'
+                    ,success:function (data) {
+                        $("#empLeavaCrossNumber").html(data.count);
+                    },error:function () {
+                        layer.msg("获取员工请假待审核数失败")
+                    }});
+            }
 
             //    获取学生请假待审核数
             $.ajax({url:"${pageContext.request.contextPath}/leave/selMyTaskStudentNumber",dataType:'json'
