@@ -64,4 +64,6 @@ public interface EmpService {
     List selEmpEducation(int empId);//查出员工的教育经历
     List selEmpJobList(int empId);//查出员工的工作经历
     List selEmpFamilyList(int empId);//查出员工的家庭联系人列表
+    int checkOldPassword(int userId,String password,String userType);//验证旧密码是否正确
+    int changePwd(int userId,String password,String userType);//修改密码
 }

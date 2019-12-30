@@ -211,6 +211,15 @@
 
         </script>
 
+<%--            修改密码为初始密码--%>
+        <script id="changePwdToIniti" type="text/html">
+            {{# if(d.empId == '${empId}'){ }}
+                <a style="color: #01AAED" href="javascript:changPwd('{{d.empId}}')">初始化密码</a>
+            {{# }else{ }}
+                <span style="color: #ccc">您没有权限</span>
+            {{# } }}
+        </script>
+
         <%--    员工表表头工具    --%>
         <script type="text/html" id="toolbarDemo">
             <div class="layui-btn-container">
@@ -503,7 +512,7 @@
                         ,{field: 'address', title: '家庭住址', width: 200}
                         ,{field: 'status', title: '状态', width: 60}
                         ,{field: '', title: '设置状态', width: 100,templet:'#empStatusA'}
-                        ,{field: 'password', title: '初始密码', width: 135}
+                        ,{field: 'password', title: '初始密码', width: 135,templet:'#changePwdToIniti'}
                         ,{field: '', title: '操作', width: 115 ,toolbar:'#barDemo'}
                     ]]
                 });
@@ -1312,6 +1321,24 @@
             addShiOption($("#nation_1").val());
         },"json");
     });
+
+    function changPwd(empId) {
+        $.ajax({
+            url:'${pageContext.request.contextPath}/emp/changePwdToIniti/'+empId
+            ,dataType:'json'
+            ,success:function (data) {
+                if (data.count == 1){
+                    layer.msg("已初始化");
+                    top.location.href = "${pageContext.request.contextPath}/Controller/loginOut";
+                }else{
+                    layer.msg("初始化异常");
+                }
+            }
+            ,error:function (data) {
+                layer.msg("程序出现未知异常");
+            }
+        });
+    }
 </script>
 
 </body>
