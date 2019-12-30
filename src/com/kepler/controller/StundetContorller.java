@@ -893,4 +893,52 @@ public class StundetContorller {
         vo.setTrialID(classid);
         sts.delectTrialID(vo);
     }
+    //分班操作
+    @RequestMapping(value = "/AddStudentClassFenPei/{ID}/{classID}")
+    @ResponseBody
+    public void AddStudentClassFenPei(@PathVariable(value = "ID") int ID,@PathVariable(value = "classID")int classID){
+        System.out.println("进来了");
+        //查询出这个试学学生的信息
+        List list = sts.slectEnrollmentID(ID);
+        Map map = new HashMap();
+        for(int i=0;i<list.size();i++){
+            map = (Map) list.get(i);
+        }
+        StudentVo vo = new StudentVo();
+        vo.setStuname((String) map.get("studName"));
+        vo.setPassword("123456");
+        vo.setMiddleschool((String) map.get("school"));
+        vo.setSex((String) map.get("sex"));
+        vo.setPhone((String) map.get("tell"));
+        vo.setClazz(classID);
+        vo.setEntertime((Date) map.get("startTime"));
+        vo.setIntroduretech((String.valueOf(map.get("empid"))));//介绍老师
+        vo.setStat((Integer) map.get("status"));
+        vo.setCardid((String) map.get("card"));
+        vo.setRemark((String) map.get("remark"));
+        vo.setComputer((String) map.get("computer"));
+        sts.studentADD(vo);//增加一个学学
+        //然后将试学学生状态改掉
+        EnrollmentVo enrollmentVo = new EnrollmentVo();
+        enrollmentVo.setEnrollmentid(ID);
+        enrollmentVo.setStatus(1);
+//        enrollmentVo.setStudName((String) map.get("studName"));
+//        enrollmentVo.setCard((String) map.get("card"));
+//        enrollmentVo.setSex((String) map.get("sex"));
+//        enrollmentVo.setTell((String) map.get("tell"));
+//        enrollmentVo.setQq((String) map.get("qq"));
+//        enrollmentVo.setSchool((String) map.get("school"));
+//        enrollmentVo.setClasses((String) map.get("classes"));
+//        enrollmentVo.setAmount((Integer) map.get("amount"));
+//        enrollmentVo.setComputer((String) map.get("computer"));
+//        enrollmentVo.setTestTime((Date) map.get("testTime"));
+//        enrollmentVo.setStartTime((Date) map.get("startTime"));
+//        enrollmentVo.setSigndate((Date) map.get("signdate"));
+//        enrollmentVo.setEmpid((Integer) map.get("empid"));
+//        enrollmentVo.setRemark((String) map.get("remark"));
+//        enrollmentVo.setStudType((Integer) map.get("studType"));
+//        enrollmentVo.setPaymentTime((Date) map.get("paymentTime"));
+//        enrollmentVo.set
+        sts.updateEnrollmentID(enrollmentVo);
+    }
 }

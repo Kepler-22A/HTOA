@@ -140,4 +140,8 @@ public interface StudentService {
     public void updateTrialID(TrialVo vo);
     //删除试讲培训
     public void delectTrialID(TrialVo vo);
+    //根据id查询试学学生值
+    public List slectEnrollmentID(int id);
+    //根据id修改试学学生
+    public void updateEnrollmentID(EnrollmentVo vo);
 }

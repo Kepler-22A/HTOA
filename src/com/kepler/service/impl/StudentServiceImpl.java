@@ -363,5 +363,15 @@ public class StudentServiceImpl extends BaseDao implements StudentService {
         delete(vo);
     }
 
+    @Override
+    public List slectEnrollmentID(int id) {
+        return sqlQuery("select * from enrollment where enrollmentid =" + id);
+    }
+
+    @Override
+    public void updateEnrollmentID(EnrollmentVo vo) {
+        delete(vo);
+    }
+
 
 }
