@@ -21,7 +21,7 @@
             layer.open({
                 type: 1,
                 title:"未打卡说明",
-                area:['35%','40%'],
+                area:['35%','45%'],
                 content: $("#secondTable1Form"),
                 closeBtn :0, //隐藏弹出层的关闭按钮
                 yes:function(index,layero){

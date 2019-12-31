@@ -31,6 +31,8 @@
                     , {field: 'studentComment', width: 150, title: '学生评分'}
                     , {field: 'leadComment', width: 150, title: '领导评分'}
                     , {field: 'total', width: 150, title: '总得分'}
+                    , {field: 'grade', width: 150, title: '等级'}
+                    , {field: 'remark', width: 150, title: '评语'}
                 ]]
                 , page: true
             }

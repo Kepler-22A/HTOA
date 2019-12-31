@@ -126,14 +126,14 @@
                 <li class="layui-nav-item" id="leftLi_systemReport">
                     <a href="#">系统报表</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">系统报表</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/emp/toXexPage" data-id="160" data-title="系统报表"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">系统报表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="leftLi_safe">
                     <a href="#">安全管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">权限管理</a></dd>
-                        <dd><a href="javascript:;">系统日志</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/emp/toXexPage" data-id="161" data-title="权限管理"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">权限管理</a></dd>
+                        <dd><a data-url="${pageContext.request.contextPath}/emp/toXexPage" data-id="162" data-title="系统日志"  class="site-demo-active" style="cursor:pointer" data-type="tabAdd">系统日志</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item" id="leftLi_systemSet">

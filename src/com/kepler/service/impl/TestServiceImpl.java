@@ -138,7 +138,7 @@ public class TestServiceImpl extends BaseDao implements TestService {
 
     @Override
     public List selectMyCheck(int templateId, int empId) {
-        return sqlQuery("select t.templateName,e.empName ,s.studentComment,s.leadComment,s.total from checkScoer s LEFT JOIN template t on s.templateId = t.templateId LEFT JOIN empVo e on s.empId = e.empId where s.templateId = "+templateId+" and s.empId = "+empId+"");
+        return sqlQuery("select t.templateName,e.empName ,s.studentComment,s.leadComment,s.total,r.grade,r.remark from checkScoer s LEFT JOIN template t on s.templateId = t.templateId LEFT JOIN empVo e on s.empId = e.empId LEFT JOIN checkResult r on  r.templateId = t.templateId  where s.templateId =  "+templateId+" and  e.empId = "+empId+" and  (s.total > r.[min] and s.total <r.[max])");
     }
 
     @Override //学生评价查询
