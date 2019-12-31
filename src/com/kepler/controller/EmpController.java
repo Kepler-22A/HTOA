@@ -496,6 +496,45 @@ public class EmpController {//员工的Controller
         }
     }
 
+    //新增员工考核
+    @RequestMapping(value = "/addAudit")
+    public String addAudit(HttpSession session,AuditLogVo auditLogVo,int amID){
+        auditLogVo.setAuditModelID(amID);
+        System.out.println(auditLogVo);
+        es.addAuditLog(auditLogVo);
+
+        return "redirect:/emp/toEmpData";
+    }
+
+    //查出考核指标
+    @RequestMapping(value = "/selAuditModel")
+    @ResponseBody
+    public void selAuditModel(HttpServletResponse response){
+        response.setCharacterEncoding("utf-8");
+        JSONArray ja = new JSONArray();
+
+
+        List list = es.selAuditModel();
+
+        for (Object o : list){
+            JSONObject jo = new JSONObject();
+            Map map = (HashMap)o;
+            jo.put("auditModelID",map.get("auditModelID"));
+            jo.put("auditName",map.get("auditName"));
+            ja.add(jo);
+        }
+
+        System.out.println(ja);
+
+        try {
+            PrintWriter pw = response.getWriter();
+
+            pw.print(ja.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //周报详情页
     @RequestMapping(value = "/toWeeklyDetails/{worklogid}")
     public ModelAndView toWeeklyDetails(ModelAndView mv,@PathVariable(value = "worklogid") int worklogid, HttpServletRequest request){

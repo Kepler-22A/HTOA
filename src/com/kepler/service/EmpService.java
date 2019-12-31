@@ -36,6 +36,8 @@ public interface EmpService {
     void addFamilyInfo(FamilyInfoVo familyInfoVo);//新增员工家庭联系信息
     void updateFamilyInfo(FamilyInfoVo familyInfoVo);//修改员工家庭联系信息
     void deleteFamilyInfo(int familyId);//删除员工家庭联系信息
+    void addAuditLog(AuditLogVo auditLogVo);//新增员工考核
+    List selAuditModel();//查出考核指标
     List selWeekly();//查找员工周报表信息
     List selWeeklyAndDepName(int worklogid);//查找员工周报表信息和部门名称
     List selWeeklyByEmpId(int empId);//查找员工周报表信息根据员工的ID

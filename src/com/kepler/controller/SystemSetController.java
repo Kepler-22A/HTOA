@@ -463,23 +463,27 @@ public class SystemSetController {
         List<Map> account = sys.listDeptree();
         JSONArray Aaa = new JSONArray();
         for(Map m : account){//增强for循环
-            Map map1 = new HashMap();
-            map1.put("id",m.get("depid"));
-            map1.put("text",m.get("depName"));
-            List<Map> account1 = sys.selectDep(String.valueOf(m.get("parentId")));
-            JSONArray Bbb = new JSONArray();
-            for(Map mm : account1){
-                Map map2 = new HashMap();
-                map2.put("id",mm.get("depid"));
-                map2.put("text",mm.get("depName"));
-                Bbb.add(map2);
+            if (!String.valueOf(m.get("parentId")).equals(0)) {
+                Map map1 = new HashMap();
+                map1.put("id",m.get("depid"));
+                map1.put("text",m.get("depName"));
+                Aaa.add(map1);
             }
-            map1.put("children",Bbb);
-            Aaa.add(map1);
-            map.put("children",Aaa);
+
+//            List<Map> account1 = sys.selectDep(String.valueOf(m.get("parentId")));
+//            JSONArray Bbb = new JSONArray();
+//            for(Map mm : account1){
+//                Map map2 = new HashMap();
+//                map2.put("id",mm.get("depid"));
+//                map2.put("text",mm.get("depName"));
+//                Bbb.add(map2);
+//            }
+//            map1.put("children",Bbb);
+
         }
+        map.put("children",Aaa);
         objects.add(map);
-//        System.out.println(objects.toJSONString());
+        System.out.println(objects.toJSONString());
         out.print(objects.toJSONString());
     }
 

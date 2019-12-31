@@ -441,18 +441,19 @@
                     </script>
 
                     <%--   员工考核信息的form表单    --%>
-                    <form id="secondTable4Form" action="" method="post" style="display: none" class="layui-form">
+                    <form id="secondTable4Form" action="${pageContext.request.contextPath}/emp/addAudit" method="post" style="display: none" class="layui-form">
                         <input id="auditLogId" type="hidden" name="auditLogID" value="0">
                         <input id="auditModelId" type="hidden" name="auditModelID" value="0">
-                        <input id="auditPerson" type="hidden" name="auditPerson" value="">
+                        <input id="auditPerson" type="hidden" name="auditPerson" value="${empName}">
                         <input id="auditEmpId" type="hidden" name="empID" value="">
                         <input id="auditImage" type="hidden" name="image" value="">
-                        <input id="auditDate" type="hidden" name="auditDate" value="">
 
                         <div class="layui-form-item">
                             <label class="layui-form-label">考核指标</label>
                             <div class="layui-input-inline">
-                                <input id="ST4AuditName" type="text" name="auditName" lay-verify="ST4AuditName" autocomplete="off" placeholder="" class="layui-input">
+                                <select id="ST4AuditName" name="amID">
+
+                                </select>
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -759,28 +760,44 @@
 
         //新增员工考核****************************************************************************************************
         function addAudit(empName,empId) {
-            <%--$("#secondTable4Form").attr("action","${pageContext.request.contextPath}/emp/addAudit");--%>
-            <%--$("#auditEmpId").val(empId);--%>
-            <%--layer.open({--%>
-            <%--    type: 1,--%>
-            <%--    title:"新增" + empName + "的员工考核",--%>
-            <%--    area:['25%','50%'],--%>
-            <%--    content: $("#secondTable4Form"),--%>
-            <%--    closeBtn :0, //隐藏弹出层的关闭按钮--%>
-            <%--    yes:function(index,layero){--%>
-            <%--    }--%>
-            <%--});--%>
+            $("#secondTable4Form").attr("action","${pageContext.request.contextPath}/emp/addAudit");
+            $("#auditEmpId").val(empId);
+
+            $.ajax({
+                url:"${pageContext.request.contextPath}/emp/selAuditModel",
+                dataType:'json',
+                success:function (data) {
+                    var auditModelNode = "";
+                    $.each(data,function (index,obj) {
+                        auditModelNode += "<option value='"+obj.auditModelID+"'>"+obj.auditName+"</option>";
+                    })
+
+                    $("#ST4AuditName").html(auditModelNode);
+                    var form = layui.form;
+                    form.render('select');
+                }
+            });
+
+            layer.open({
+                type: 1,
+                title:"新增" + empName + "的员工考核",
+                area:['25%','50%'],
+                content: $("#secondTable4Form"),
+                closeBtn :0, //隐藏弹出层的关闭按钮
+                yes:function(index,layero){
+                }
+            });
         }
 
         //关闭员工考核的弹窗
         function closeAudit(){
-            // layer.closeAll();
-            // $("#familyInfoFamilyId").val(0);
-            // $("#familyInfoEmpId").val(0);
-            // $("#ST3ContactName").val("");
-            // $("#ST3Phone").val("");
-            // $("#ST3Relationship").val("");
-            // $("#ST3Remark").val("");
+            layer.closeAll();
+            $("#familyInfoFamilyId").val(0);
+            $("#familyInfoEmpId").val(0);
+            $("#ST3ContactName").val("");
+            $("#ST3Phone").val("");
+            $("#ST3Relationship").val("");
+            $("#ST3Remark").val("");
         }
 
         //修改员工考核的弹窗打开

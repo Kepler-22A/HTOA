@@ -229,6 +229,16 @@ public class EmpServiceImpl extends BaseDao implements EmpService {
     }
 
     @Override
+    public void addAuditLog(AuditLogVo auditLogVo) {
+        save(auditLogVo);
+    }
+
+    @Override
+    public List selAuditModel() {
+        return sqlQuery("select * from AuditModel");
+    }
+
+    @Override
     public List selWeekly() {
         return sqlQuery("select *,(select empName from empVo e where w.empId = e.empId) as empName from weekly w");
     }
